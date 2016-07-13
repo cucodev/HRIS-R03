@@ -1,0 +1,2409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HRISEntities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="_purpose">
+          <Key>
+            <PropertyRef Name="purposeID" />
+          </Key>
+          <Property Name="purposeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="purposeName" Type="nchar" MaxLength="30" />
+          <Property Name="purposeDescription" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="_transaction">
+          <Key>
+            <PropertyRef Name="txID" />
+          </Key>
+          <Property Name="txID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="purposeID" Type="int" />
+          <Property Name="purposeStatus" Type="int" />
+          <Property Name="idvRequest" Type="int" />
+          <Property Name="idvApproval" Type="int" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="catID" />
+          </Key>
+          <Property Name="catID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="catParentID" Type="int" />
+          <Property Name="catCode" Type="nchar" MaxLength="20" />
+          <Property Name="catName" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="categoryParent">
+          <Key>
+            <PropertyRef Name="catID" />
+          </Key>
+          <Property Name="catID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="catParentID" Type="int" />
+          <Property Name="catCode" Type="nchar" MaxLength="20" />
+          <Property Name="catName" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="UID_ABSENCE" Type="int" />
+          <Property Name="joinDate" Type="date" />
+          <Property Name="resignDate" Type="date" />
+          <Property Name="employmentStatus" Type="int" />
+          <Property Name="contract1Start" Type="date" />
+          <Property Name="contract1End" Type="date" />
+          <Property Name="contract2Start" Type="date" />
+          <Property Name="contract2End" Type="date" />
+          <Property Name="contract3Start" Type="date" />
+          <Property Name="contract3End" Type="date" />
+          <Property Name="active" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="file">
+          <Key>
+            <PropertyRef Name="fileID" />
+          </Key>
+          <Property Name="fileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fileName" Type="nvarchar(max)" />
+          <Property Name="fileDescription" Type="nvarchar(max)" />
+          <Property Name="fileUploadTime" Type="datetime" />
+          <Property Name="ContentType" Type="nvarchar(max)" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codeNumParent" Type="nchar" MaxLength="10" />
+          <Property Name="codeNum" Type="bigint" />
+          <Property Name="codeISOParent" Type="nchar" MaxLength="10" />
+          <Property Name="codeISO" Type="nchar" MaxLength="10" />
+          <Property Name="codeUN" Type="nchar" MaxLength="10" />
+          <Property Name="dialingCode" Type="nchar" MaxLength="10" />
+          <Property Name="locationType" Type="int" />
+          <Property Name="locationName" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="organization">
+          <Key>
+            <PropertyRef Name="orgID" />
+          </Key>
+          <Property Name="orgID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="orgParentID" Type="int" Nullable="false" />
+          <Property Name="orgCode" Type="nchar" MaxLength="20" />
+          <Property Name="orgName" Type="varchar(max)" />
+          <Property Name="orgLocation" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="IDV" />
+          </Key>
+          <Property Name="IDV" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrganizationID" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="personAddress">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="Address" Type="varchar(max)" />
+          <Property Name="AddressPhone" Type="nchar" MaxLength="20" />
+          <Property Name="AddressKel" Type="varchar" MaxLength="200" />
+          <Property Name="AddressKec" Type="int" />
+          <Property Name="AddressKab" Type="int" />
+          <Property Name="AddressProv" Type="int" />
+          <Property Name="AddressCountry" Type="int" />
+          <Property Name="AddressPostalCode" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+        </EntityType>
+        <EntityType Name="personBankAccount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="BankName" Type="nchar" MaxLength="50" />
+          <Property Name="BankNumber" Type="nchar" MaxLength="30" />
+          <Property Name="BankAccount" Type="nchar" MaxLength="40" />
+          <Property Name="BankNote" Type="varchar(max)" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+        </EntityType>
+        <EntityType Name="personCertification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="certificationName" Type="nchar" MaxLength="100" />
+          <Property Name="issuedCountry" Type="int" />
+          <Property Name="issuedCity" Type="int" />
+          <Property Name="issuedDate" Type="date" />
+          <Property Name="issuedExpiredDate" Type="date" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="personContact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="Phone1" Type="nchar" MaxLength="20" />
+          <Property Name="Phone2" Type="nchar" MaxLength="20" />
+          <Property Name="Email1" Type="nchar" MaxLength="50" />
+          <Property Name="Email2" Type="nchar" MaxLength="50" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+        </EntityType>
+        <EntityType Name="personDependent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="IDVDependent" Type="int" />
+          <Property Name="relationType" Type="int" />
+          <Property Name="insuranceCovered" Type="int" />
+          <Property Name="taxDependent" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="tempNIP" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="personDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="NIP" Type="nchar" MaxLength="10" />
+          <Property Name="Name" Type="nchar" MaxLength="200" />
+          <Property Name="NickName" Type="nchar" MaxLength="50" />
+          <Property Name="Nationality" Type="int" />
+          <Property Name="Birthplace" Type="nchar" MaxLength="100" />
+          <Property Name="Birthdate" Type="date" />
+          <Property Name="Marital" Type="int" />
+          <Property Name="Religion" Type="int" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="OrganizationID" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="personEdu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="eduLevel" Type="int" />
+          <Property Name="eduMajor" Type="nchar" MaxLength="100" />
+          <Property Name="eduGraduate" Type="date" />
+          <Property Name="eduValue" Type="float" />
+          <Property Name="eduCountry" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="personEmergency">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="IDVEmergencyContact" Type="int" />
+          <Property Name="relationshipType" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+        </EntityType>
+        <EntityType Name="personIdentity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="idType" Type="int" />
+          <Property Name="idNumber" Type="nchar" MaxLength="50" />
+          <Property Name="issuedCountry" Type="int" />
+          <Property Name="expiredDate" Type="datetime" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+        </EntityType>
+        <EntityType Name="personJob">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="parentIDV" Type="int" />
+          <Property Name="jobName" Type="nchar" MaxLength="50" />
+          <Property Name="JobDivision" Type="int" />
+          <Property Name="JobDepartement" Type="int" />
+          <Property Name="JobPosition" Type="int" />
+          <Property Name="JobLocation" Type="nchar" MaxLength="100" />
+          <Property Name="startDate" Type="date" />
+          <Property Name="endDate" Type="date" />
+          <Property Name="employmentStatus" Type="int" />
+          <Property Name="Note" Type="varchar(max)" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="personLanguage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="languageName" Type="nchar" MaxLength="50" />
+          <Property Name="spoken" Type="int" />
+          <Property Name="written" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="personSkill">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="skillName" Type="nchar" MaxLength="100" />
+          <Property Name="skillLevel" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="personTraining">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="TrainingName" Type="varchar" MaxLength="200" />
+          <Property Name="TrainingSponsor" Type="varchar" MaxLength="100" />
+          <Property Name="Certificate" Type="int" />
+          <Property Name="startDate" Type="date" />
+          <Property Name="endDate" Type="date" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="personWorkExperience">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="companyName" Type="nchar" MaxLength="100" />
+          <Property Name="lastPosition" Type="nchar" MaxLength="100" />
+          <Property Name="Start" Type="date" />
+          <Property Name="Stop" Type="date" />
+          <Property Name="reason" Type="nchar" MaxLength="200" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Tokens">
+          <Key>
+            <PropertyRef Name="TokenId" />
+          </Key>
+          <Property Name="TokenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AuthToken" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IssuedOn" Type="datetime" Nullable="false" />
+          <Property Name="ExpiresOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IDV" Type="int" Nullable="false" />
+          <Property Name="IDVMAIL" Type="varchar" MaxLength="200" />
+          <Property Name="IDVMAILPASSWORD" Type="varchar" MaxLength="50" />
+          <Property Name="IDVROLE" Type="int" />
+        </EntityType>
+        <Association Name="catID_parentCategory">
+          <End Role="categoryParent" Type="Self.categoryParent" Multiplicity="0..1" />
+          <End Role="category" Type="Self.category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoryParent">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="category">
+              <PropertyRef Name="catParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_personDetail_Gender">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="personDetail" Type="Self.personDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="personDetail">
+              <PropertyRef Name="Gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_personDetail_Marital">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="personDetail" Type="Self.personDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="personDetail">
+              <PropertyRef Name="Marital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_personDetail_Religion">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="personDetail" Type="Self.personDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="personDetail">
+              <PropertyRef Name="Religion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tokens_User">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="Tokens" Type="Self.Tokens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_Address">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personAddress" Type="Self.personAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personAddress">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_BankAccount">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personBankAccount" Type="Self.personBankAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personBankAccount">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_Contact">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personContact" Type="Self.personContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personContact">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_employee">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_perseonDependent">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personDependent" Type="Self.personDependent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personDependent">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personCertification">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personCertification" Type="Self.personCertification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personCertification">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personDetail">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personDetail" Type="Self.personDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personDetail">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personEdu">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personEdu" Type="Self.personEdu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personEdu">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personEmergency">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personEmergency" Type="Self.personEmergency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personEmergency">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personIdentity">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personIdentity" Type="Self.personIdentity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personIdentity">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personImage">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personJob">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personJob" Type="Self.personJob" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personJob">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personLanguage">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personLanguage" Type="Self.personLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personLanguage">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personSkill">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personSkill" Type="Self.personSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personSkill">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personTraining">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personTraining" Type="Self.personTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personTraining">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personWorkExperience">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personWorkExperience" Type="Self.personWorkExperience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personWorkExperience">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_user">
+          <End Role="person" Type="Self.person" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrgID">
+          <End Role="organization" Type="Self.organization" Multiplicity="0..1" />
+          <End Role="person" Type="Self.person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organization">
+              <PropertyRef Name="orgID" />
+            </Principal>
+            <Dependent Role="person">
+              <PropertyRef Name="OrganizationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="purposeType">
+          <End Role="_purpose" Type="Self._purpose" Multiplicity="0..1" />
+          <End Role="_transaction" Type="Self._transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="_purpose">
+              <PropertyRef Name="purposeID" />
+            </Principal>
+            <Dependent Role="_transaction">
+              <PropertyRef Name="purposeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="spoken_personLanguage">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="personLanguage" Type="Self.personLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="personLanguage">
+              <PropertyRef Name="spoken" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="written_personLanguage">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="personLanguage" Type="Self.personLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="personLanguage">
+              <PropertyRef Name="written" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HRISEntitiesStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="_purpose" EntityType="Self._purpose" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="_transaction" EntityType="Self._transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categoryParent" EntityType="Self.categoryParent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="file" EntityType="Self.file" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="location" EntityType="Self.location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="organization" EntityType="Self.organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="person" EntityType="Self.person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personAddress" EntityType="Self.personAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personBankAccount" EntityType="Self.personBankAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personCertification" EntityType="Self.personCertification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personContact" EntityType="Self.personContact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personDependent" EntityType="Self.personDependent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personDetail" EntityType="Self.personDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personEdu" EntityType="Self.personEdu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personEmergency" EntityType="Self.personEmergency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personIdentity" EntityType="Self.personIdentity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personJob" EntityType="Self.personJob" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personLanguage" EntityType="Self.personLanguage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personSkill" EntityType="Self.personSkill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personTraining" EntityType="Self.personTraining" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personWorkExperience" EntityType="Self.personWorkExperience" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="catID_parentCategory" Association="Self.catID_parentCategory">
+            <End Role="categoryParent" EntitySet="categoryParent" />
+            <End Role="category" EntitySet="category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_personDetail_Gender" Association="Self.FK_personDetail_Gender">
+            <End Role="category" EntitySet="category" />
+            <End Role="personDetail" EntitySet="personDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_personDetail_Marital" Association="Self.FK_personDetail_Marital">
+            <End Role="category" EntitySet="category" />
+            <End Role="personDetail" EntitySet="personDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_personDetail_Religion" Association="Self.FK_personDetail_Religion">
+            <End Role="category" EntitySet="category" />
+            <End Role="personDetail" EntitySet="personDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tokens_User" Association="Self.FK_Tokens_User">
+            <End Role="user" EntitySet="user" />
+            <End Role="Tokens" EntitySet="Tokens" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_Address" Association="Self.IDV_Address">
+            <End Role="person" EntitySet="person" />
+            <End Role="personAddress" EntitySet="personAddress" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_BankAccount" Association="Self.IDV_BankAccount">
+            <End Role="person" EntitySet="person" />
+            <End Role="personBankAccount" EntitySet="personBankAccount" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_Contact" Association="Self.IDV_Contact">
+            <End Role="person" EntitySet="person" />
+            <End Role="personContact" EntitySet="personContact" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_employee" Association="Self.IDV_employee">
+            <End Role="person" EntitySet="person" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_perseonDependent" Association="Self.IDV_perseonDependent">
+            <End Role="person" EntitySet="person" />
+            <End Role="personDependent" EntitySet="personDependent" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personCertification" Association="Self.IDV_personCertification">
+            <End Role="person" EntitySet="person" />
+            <End Role="personCertification" EntitySet="personCertification" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personDetail" Association="Self.IDV_personDetail">
+            <End Role="person" EntitySet="person" />
+            <End Role="personDetail" EntitySet="personDetail" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personEdu" Association="Self.IDV_personEdu">
+            <End Role="person" EntitySet="person" />
+            <End Role="personEdu" EntitySet="personEdu" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personEmergency" Association="Self.IDV_personEmergency">
+            <End Role="person" EntitySet="person" />
+            <End Role="personEmergency" EntitySet="personEmergency" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personIdentity" Association="Self.IDV_personIdentity">
+            <End Role="person" EntitySet="person" />
+            <End Role="personIdentity" EntitySet="personIdentity" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personImage" Association="Self.IDV_personImage">
+            <End Role="person" EntitySet="person" />
+            <End Role="file" EntitySet="file" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personJob" Association="Self.IDV_personJob">
+            <End Role="person" EntitySet="person" />
+            <End Role="personJob" EntitySet="personJob" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personLanguage" Association="Self.IDV_personLanguage">
+            <End Role="person" EntitySet="person" />
+            <End Role="personLanguage" EntitySet="personLanguage" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personSkill" Association="Self.IDV_personSkill">
+            <End Role="person" EntitySet="person" />
+            <End Role="personSkill" EntitySet="personSkill" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personTraining" Association="Self.IDV_personTraining">
+            <End Role="person" EntitySet="person" />
+            <End Role="personTraining" EntitySet="personTraining" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personWorkExperience" Association="Self.IDV_personWorkExperience">
+            <End Role="person" EntitySet="person" />
+            <End Role="personWorkExperience" EntitySet="personWorkExperience" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_user" Association="Self.IDV_user">
+            <End Role="person" EntitySet="person" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="OrgID" Association="Self.OrgID">
+            <End Role="organization" EntitySet="organization" />
+            <End Role="person" EntitySet="person" />
+          </AssociationSet>
+          <AssociationSet Name="purposeType" Association="Self.purposeType">
+            <End Role="_purpose" EntitySet="_purpose" />
+            <End Role="_transaction" EntitySet="_transaction" />
+          </AssociationSet>
+          <AssociationSet Name="spoken_personLanguage" Association="Self.spoken_personLanguage">
+            <End Role="category" EntitySet="category" />
+            <End Role="personLanguage" EntitySet="personLanguage" />
+          </AssociationSet>
+          <AssociationSet Name="written_personLanguage" Association="Self.written_personLanguage">
+            <End Role="category" EntitySet="category" />
+            <End Role="personLanguage" EntitySet="personLanguage" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HRISEntities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="C_purpose">
+          <Key>
+            <PropertyRef Name="purposeID" />
+          </Key>
+          <Property Name="purposeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="purposeName" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="purposeDescription" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="C_transaction" Relationship="Self.purposeType" FromRole="C_purpose" ToRole="C_transaction" />
+        </EntityType>
+        <EntityType Name="C_transaction">
+          <Key>
+            <PropertyRef Name="txID" />
+          </Key>
+          <Property Name="txID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="purposeID" Type="Int32" />
+          <Property Name="purposeStatus" Type="Int32" />
+          <Property Name="idvRequest" Type="Int32" />
+          <Property Name="idvApproval" Type="Int32" />
+          <NavigationProperty Name="C_purpose" Relationship="Self.purposeType" FromRole="C_transaction" ToRole="C_purpose" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="catID" />
+          </Key>
+          <Property Name="catID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="catParentID" Type="Int32" />
+          <Property Name="catCode" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="catName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="categoryParent" Relationship="Self.catID_parentCategory" FromRole="category" ToRole="categoryParent" />
+          <NavigationProperty Name="personDetails" Relationship="Self.FK_personDetail_Gender" FromRole="category" ToRole="personDetail" />
+          <NavigationProperty Name="personDetails1" Relationship="Self.FK_personDetail_Marital" FromRole="category" ToRole="personDetail" />
+          <NavigationProperty Name="personDetails2" Relationship="Self.FK_personDetail_Religion" FromRole="category" ToRole="personDetail" />
+          <NavigationProperty Name="personLanguages" Relationship="Self.spoken_personLanguage" FromRole="category" ToRole="personLanguage" />
+          <NavigationProperty Name="personLanguages1" Relationship="Self.written_personLanguage" FromRole="category" ToRole="personLanguage" />
+          <NavigationProperty Name="categoryParent1" Relationship="HRISEntities.catID_parentCategory1" FromRole="category" ToRole="categoryParent" />
+        </EntityType>
+        <EntityType Name="categoryParent">
+          <Key>
+            <PropertyRef Name="catID" />
+          </Key>
+          <Property Name="catID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="catParentID" Type="Int32" />
+          <Property Name="catCode" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="catName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="category" Relationship="Self.catID_parentCategory" FromRole="categoryParent" ToRole="category" />
+          <NavigationProperty Name="categories" Relationship="HRISEntities.catID_parentCategory1" FromRole="categoryParent" ToRole="category" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="UID_ABSENCE" Type="Int32" />
+          <Property Name="joinDate" Type="DateTime" Precision="0" />
+          <Property Name="resignDate" Type="DateTime" Precision="0" />
+          <Property Name="contract1Start" Type="DateTime" Precision="0" />
+          <Property Name="contract1End" Type="DateTime" Precision="0" />
+          <Property Name="contract2Start" Type="DateTime" Precision="0" />
+          <Property Name="contract2End" Type="DateTime" Precision="0" />
+          <Property Name="contract3Start" Type="DateTime" Precision="0" />
+          <Property Name="contract3End" Type="DateTime" Precision="0" />
+          <Property Name="active" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_employee" FromRole="employee" ToRole="person" />
+          <Property Name="employmentStatus" Type="Int32" />
+        </EntityType>
+        <EntityType Name="file">
+          <Key>
+            <PropertyRef Name="fileID" />
+          </Key>
+          <Property Name="fileID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fileDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fileUploadTime" Type="DateTime" Precision="3" />
+          <Property Name="ContentType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personImage" FromRole="file" ToRole="person" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codeNumParent" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="codeNum" Type="Int64" />
+          <Property Name="codeISOParent" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="codeISO" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="codeUN" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="dialingCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="locationType" Type="Int32" />
+          <Property Name="locationName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="organization">
+          <Key>
+            <PropertyRef Name="orgID" />
+          </Key>
+          <Property Name="orgID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orgParentID" Type="Int32" Nullable="false" />
+          <Property Name="orgCode" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="orgName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="orgLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="people" Relationship="Self.OrgID" FromRole="organization" ToRole="person" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="IDV" />
+          </Key>
+          <Property Name="IDV" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrganizationID" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="employees" Relationship="Self.IDV_employee" FromRole="person" ToRole="employee" />
+          <NavigationProperty Name="files" Relationship="Self.IDV_personImage" FromRole="person" ToRole="file" />
+          <NavigationProperty Name="organization" Relationship="Self.OrgID" FromRole="person" ToRole="organization" />
+          <NavigationProperty Name="personAddresses" Relationship="Self.IDV_Address" FromRole="person" ToRole="personAddress" />
+          <NavigationProperty Name="personBankAccounts" Relationship="Self.IDV_BankAccount" FromRole="person" ToRole="personBankAccount" />
+          <NavigationProperty Name="personContacts" Relationship="Self.IDV_Contact" FromRole="person" ToRole="personContact" />
+          <NavigationProperty Name="personDependents" Relationship="Self.IDV_perseonDependent" FromRole="person" ToRole="personDependent" />
+          <NavigationProperty Name="personCertifications" Relationship="Self.IDV_personCertification" FromRole="person" ToRole="personCertification" />
+          <NavigationProperty Name="personDetails" Relationship="Self.IDV_personDetail" FromRole="person" ToRole="personDetail" />
+          <NavigationProperty Name="personEdus" Relationship="Self.IDV_personEdu" FromRole="person" ToRole="personEdu" />
+          <NavigationProperty Name="personEmergencies" Relationship="Self.IDV_personEmergency" FromRole="person" ToRole="personEmergency" />
+          <NavigationProperty Name="personIdentities" Relationship="Self.IDV_personIdentity" FromRole="person" ToRole="personIdentity" />
+          <NavigationProperty Name="personJobs" Relationship="Self.IDV_personJob" FromRole="person" ToRole="personJob" />
+          <NavigationProperty Name="personLanguages" Relationship="Self.IDV_personLanguage" FromRole="person" ToRole="personLanguage" />
+          <NavigationProperty Name="personSkills" Relationship="Self.IDV_personSkill" FromRole="person" ToRole="personSkill" />
+          <NavigationProperty Name="personTrainings" Relationship="Self.IDV_personTraining" FromRole="person" ToRole="personTraining" />
+          <NavigationProperty Name="personWorkExperiences" Relationship="Self.IDV_personWorkExperience" FromRole="person" ToRole="personWorkExperience" />
+          <NavigationProperty Name="users" Relationship="Self.IDV_user" FromRole="person" ToRole="user" />
+        </EntityType>
+        <EntityType Name="personAddress">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AddressPhone" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="AddressKel" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="AddressKec" Type="Int32" />
+          <Property Name="AddressKab" Type="Int32" />
+          <Property Name="AddressProv" Type="Int32" />
+          <Property Name="AddressCountry" Type="Int32" />
+          <Property Name="AddressPostalCode" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_Address" FromRole="personAddress" ToRole="person" />
+        </EntityType>
+        <EntityType Name="personBankAccount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="BankName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="BankNumber" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="BankAccount" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
+          <Property Name="BankNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_BankAccount" FromRole="personBankAccount" ToRole="person" />
+        </EntityType>
+        <EntityType Name="personCertification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="certificationName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="issuedCountry" Type="Int32" />
+          <Property Name="issuedCity" Type="Int32" />
+          <Property Name="issuedDate" Type="DateTime" Precision="0" />
+          <Property Name="issuedExpiredDate" Type="DateTime" Precision="0" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personCertification" FromRole="personCertification" ToRole="person" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="personContact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="Phone1" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Phone2" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Email1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Email2" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_Contact" FromRole="personContact" ToRole="person" />
+        </EntityType>
+        <EntityType Name="personDependent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="IDVDependent" Type="Int32" />
+          <Property Name="relationType" Type="Int32" />
+          <Property Name="insuranceCovered" Type="Int32" />
+          <Property Name="taxDependent" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_perseonDependent" FromRole="personDependent" ToRole="person" />
+          <Property Name="tempNIP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="personDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="NIP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Nationality" Type="Int32" />
+          <Property Name="Birthplace" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Birthdate" Type="DateTime" Precision="0" />
+          <Property Name="Marital" Type="Int32" />
+          <Property Name="Religion" Type="Int32" />
+          <Property Name="Gender" Type="Int32" />
+          <Property Name="OrganizationID" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="category" Relationship="Self.FK_personDetail_Gender" FromRole="personDetail" ToRole="category" />
+          <NavigationProperty Name="category1" Relationship="Self.FK_personDetail_Marital" FromRole="personDetail" ToRole="category" />
+          <NavigationProperty Name="category2" Relationship="Self.FK_personDetail_Religion" FromRole="personDetail" ToRole="category" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personDetail" FromRole="personDetail" ToRole="person" />
+        </EntityType>
+        <EntityType Name="personEdu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="eduLevel" Type="Int32" />
+          <Property Name="eduMajor" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="eduGraduate" Type="DateTime" Precision="0" />
+          <Property Name="eduValue" Type="Double" />
+          <Property Name="eduCountry" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personEdu" FromRole="personEdu" ToRole="person" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="personEmergency">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="IDVEmergencyContact" Type="Int32" />
+          <Property Name="relationshipType" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personEmergency" FromRole="personEmergency" ToRole="person" />
+        </EntityType>
+        <EntityType Name="personIdentity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="idType" Type="Int32" />
+          <Property Name="idNumber" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="issuedCountry" Type="Int32" />
+          <Property Name="expiredDate" Type="DateTime" Precision="3" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personIdentity" FromRole="personIdentity" ToRole="person" />
+        </EntityType>
+        <EntityType Name="personJob">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="parentIDV" Type="Int32" />
+          <Property Name="jobName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="JobDivision" Type="Int32" />
+          <Property Name="JobDepartement" Type="Int32" />
+          <Property Name="JobPosition" Type="Int32" />
+          <Property Name="JobLocation" Type="String" MaxLength="100" Unicode="true" FixedLength="true" />
+          <Property Name="startDate" Type="DateTime" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Precision="0" />
+          <Property Name="employmentStatus" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personJob" FromRole="personJob" ToRole="person" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="personLanguage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="languageName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="spoken" Type="Int32" />
+          <Property Name="written" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="category" Relationship="Self.spoken_personLanguage" FromRole="personLanguage" ToRole="category" />
+          <NavigationProperty Name="category1" Relationship="Self.written_personLanguage" FromRole="personLanguage" ToRole="category" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personLanguage" FromRole="personLanguage" ToRole="person" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="personSkill">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="skillName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="skillLevel" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personSkill" FromRole="personSkill" ToRole="person" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="personTraining">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="TrainingName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TrainingSponsor" Type="String" />
+          <Property Name="Certificate" Type="Int32" />
+          <Property Name="startDate" Type="DateTime" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Precision="0" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personTraining" FromRole="personTraining" ToRole="person" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="personWorkExperience">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="companyName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="lastPosition" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Start" Type="DateTime" Precision="0" />
+          <Property Name="Stop" Type="DateTime" Precision="0" />
+          <Property Name="reason" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personWorkExperience" FromRole="personWorkExperience" ToRole="person" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="TokenId" />
+          </Key>
+          <Property Name="TokenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AuthToken" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IssuedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpiresOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="user" Relationship="Self.FK_Tokens_User" FromRole="Tokens" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDV" Type="Int32" Nullable="false" />
+          <Property Name="IDVMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IDVMAILPASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDVROLE" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_user" FromRole="user" ToRole="person" />
+          <NavigationProperty Name="Tokens" Relationship="Self.FK_Tokens_User" FromRole="user" ToRole="Tokens" />
+        </EntityType>
+        <Association Name="purposeType">
+          <End Role="C_purpose" Type="Self.C_purpose" Multiplicity="0..1" />
+          <End Role="C_transaction" Type="Self.C_transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_purpose">
+              <PropertyRef Name="purposeID" />
+            </Principal>
+            <Dependent Role="C_transaction">
+              <PropertyRef Name="purposeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="catID_parentCategory">
+          <End Role="categoryParent" Type="Self.categoryParent" Multiplicity="1" />
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="categoryParent">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="category">
+              <PropertyRef Name="catID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_personDetail_Gender">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="personDetail" Type="Self.personDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="personDetail">
+              <PropertyRef Name="Gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_personDetail_Marital">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="personDetail" Type="Self.personDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="personDetail">
+              <PropertyRef Name="Marital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_personDetail_Religion">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="personDetail" Type="Self.personDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="personDetail">
+              <PropertyRef Name="Religion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="spoken_personLanguage">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="personLanguage" Type="Self.personLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="personLanguage">
+              <PropertyRef Name="spoken" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="written_personLanguage">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="personLanguage" Type="Self.personLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="personLanguage">
+              <PropertyRef Name="written" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_employee">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personImage">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrgID">
+          <End Role="organization" Type="Self.organization" Multiplicity="0..1" />
+          <End Role="person" Type="Self.person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organization">
+              <PropertyRef Name="orgID" />
+            </Principal>
+            <Dependent Role="person">
+              <PropertyRef Name="OrganizationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_Address">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personAddress" Type="Self.personAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personAddress">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_BankAccount">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personBankAccount" Type="Self.personBankAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personBankAccount">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_Contact">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personContact" Type="Self.personContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personContact">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_perseonDependent">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personDependent" Type="Self.personDependent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personDependent">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personCertification">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personCertification" Type="Self.personCertification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personCertification">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personDetail">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personDetail" Type="Self.personDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personDetail">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personEdu">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personEdu" Type="Self.personEdu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personEdu">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personEmergency">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personEmergency" Type="Self.personEmergency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personEmergency">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personIdentity">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personIdentity" Type="Self.personIdentity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personIdentity">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personJob">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personJob" Type="Self.personJob" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personJob">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personLanguage">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personLanguage" Type="Self.personLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personLanguage">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personSkill">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personSkill" Type="Self.personSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personSkill">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personTraining">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personTraining" Type="Self.personTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personTraining">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_personWorkExperience">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="personWorkExperience" Type="Self.personWorkExperience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="personWorkExperience">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IDV_user">
+          <End Role="person" Type="Self.person" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tokens_User">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="Tokens" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="HRISDBConnection" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="C_purpose" EntityType="Self.C_purpose" />
+          <EntitySet Name="C_transaction" EntityType="Self.C_transaction" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="categories" EntityType="Self.category" />
+          <EntitySet Name="categoryParents" EntityType="Self.categoryParent" />
+          <EntitySet Name="employees" EntityType="Self.employee" />
+          <EntitySet Name="files" EntityType="Self.file" />
+          <EntitySet Name="locations" EntityType="Self.location" />
+          <EntitySet Name="organizations" EntityType="Self.organization" />
+          <EntitySet Name="people" EntityType="Self.person" />
+          <EntitySet Name="personAddresses" EntityType="Self.personAddress" />
+          <EntitySet Name="personBankAccounts" EntityType="Self.personBankAccount" />
+          <EntitySet Name="personCertifications" EntityType="Self.personCertification" />
+          <EntitySet Name="personContacts" EntityType="Self.personContact" />
+          <EntitySet Name="personDependents" EntityType="Self.personDependent" />
+          <EntitySet Name="personDetails" EntityType="Self.personDetail" />
+          <EntitySet Name="personEdus" EntityType="Self.personEdu" />
+          <EntitySet Name="personEmergencies" EntityType="Self.personEmergency" />
+          <EntitySet Name="personIdentities" EntityType="Self.personIdentity" />
+          <EntitySet Name="personJobs" EntityType="Self.personJob" />
+          <EntitySet Name="personLanguages" EntityType="Self.personLanguage" />
+          <EntitySet Name="personSkills" EntityType="Self.personSkill" />
+          <EntitySet Name="personTrainings" EntityType="Self.personTraining" />
+          <EntitySet Name="personWorkExperiences" EntityType="Self.personWorkExperience" />
+          <EntitySet Name="Tokens" EntityType="Self.Token" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="purposeType" Association="Self.purposeType">
+            <End Role="C_purpose" EntitySet="C_purpose" />
+            <End Role="C_transaction" EntitySet="C_transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="catID_parentCategory" Association="Self.catID_parentCategory">
+            <End Role="categoryParent" EntitySet="categoryParents" />
+            <End Role="category" EntitySet="categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_personDetail_Gender" Association="Self.FK_personDetail_Gender">
+            <End Role="category" EntitySet="categories" />
+            <End Role="personDetail" EntitySet="personDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_personDetail_Marital" Association="Self.FK_personDetail_Marital">
+            <End Role="category" EntitySet="categories" />
+            <End Role="personDetail" EntitySet="personDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_personDetail_Religion" Association="Self.FK_personDetail_Religion">
+            <End Role="category" EntitySet="categories" />
+            <End Role="personDetail" EntitySet="personDetails" />
+          </AssociationSet>
+          <AssociationSet Name="spoken_personLanguage" Association="Self.spoken_personLanguage">
+            <End Role="category" EntitySet="categories" />
+            <End Role="personLanguage" EntitySet="personLanguages" />
+          </AssociationSet>
+          <AssociationSet Name="written_personLanguage" Association="Self.written_personLanguage">
+            <End Role="category" EntitySet="categories" />
+            <End Role="personLanguage" EntitySet="personLanguages" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_employee" Association="Self.IDV_employee">
+            <End Role="person" EntitySet="people" />
+            <End Role="employee" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personImage" Association="Self.IDV_personImage">
+            <End Role="person" EntitySet="people" />
+            <End Role="file" EntitySet="files" />
+          </AssociationSet>
+          <AssociationSet Name="OrgID" Association="Self.OrgID">
+            <End Role="organization" EntitySet="organizations" />
+            <End Role="person" EntitySet="people" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_Address" Association="Self.IDV_Address">
+            <End Role="person" EntitySet="people" />
+            <End Role="personAddress" EntitySet="personAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_BankAccount" Association="Self.IDV_BankAccount">
+            <End Role="person" EntitySet="people" />
+            <End Role="personBankAccount" EntitySet="personBankAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_Contact" Association="Self.IDV_Contact">
+            <End Role="person" EntitySet="people" />
+            <End Role="personContact" EntitySet="personContacts" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_perseonDependent" Association="Self.IDV_perseonDependent">
+            <End Role="person" EntitySet="people" />
+            <End Role="personDependent" EntitySet="personDependents" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personCertification" Association="Self.IDV_personCertification">
+            <End Role="person" EntitySet="people" />
+            <End Role="personCertification" EntitySet="personCertifications" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personDetail" Association="Self.IDV_personDetail">
+            <End Role="person" EntitySet="people" />
+            <End Role="personDetail" EntitySet="personDetails" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personEdu" Association="Self.IDV_personEdu">
+            <End Role="person" EntitySet="people" />
+            <End Role="personEdu" EntitySet="personEdus" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personEmergency" Association="Self.IDV_personEmergency">
+            <End Role="person" EntitySet="people" />
+            <End Role="personEmergency" EntitySet="personEmergencies" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personIdentity" Association="Self.IDV_personIdentity">
+            <End Role="person" EntitySet="people" />
+            <End Role="personIdentity" EntitySet="personIdentities" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personJob" Association="Self.IDV_personJob">
+            <End Role="person" EntitySet="people" />
+            <End Role="personJob" EntitySet="personJobs" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personLanguage" Association="Self.IDV_personLanguage">
+            <End Role="person" EntitySet="people" />
+            <End Role="personLanguage" EntitySet="personLanguages" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personSkill" Association="Self.IDV_personSkill">
+            <End Role="person" EntitySet="people" />
+            <End Role="personSkill" EntitySet="personSkills" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personTraining" Association="Self.IDV_personTraining">
+            <End Role="person" EntitySet="people" />
+            <End Role="personTraining" EntitySet="personTrainings" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_personWorkExperience" Association="Self.IDV_personWorkExperience">
+            <End Role="person" EntitySet="people" />
+            <End Role="personWorkExperience" EntitySet="personWorkExperiences" />
+          </AssociationSet>
+          <AssociationSet Name="IDV_user" Association="Self.IDV_user">
+            <End Role="person" EntitySet="people" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tokens_User" Association="Self.FK_Tokens_User">
+            <End Role="user" EntitySet="users" />
+            <End Role="Tokens" EntitySet="Tokens" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="catID_parentCategory1" Association="HRISEntities.catID_parentCategory1">
+            <End Role="categoryParent" EntitySet="categoryParents" />
+            <End Role="category" EntitySet="categories" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="catID_parentCategory1">
+          <End Type="HRISEntities.categoryParent" Role="categoryParent" Multiplicity="0..1" />
+          <End Type="HRISEntities.category" Role="category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoryParent">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="category">
+              <PropertyRef Name="catParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HRISEntitiesStoreContainer" CdmEntityContainer="HRISDBConnection">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="HRISEntities.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_purpose">
+            <EntityTypeMapping TypeName="HRISEntities.C_purpose">
+              <MappingFragment StoreEntitySet="_purpose">
+                <ScalarProperty Name="purposeID" ColumnName="purposeID" />
+                <ScalarProperty Name="purposeName" ColumnName="purposeName" />
+                <ScalarProperty Name="purposeDescription" ColumnName="purposeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_transaction">
+            <EntityTypeMapping TypeName="HRISEntities.C_transaction">
+              <MappingFragment StoreEntitySet="_transaction">
+                <ScalarProperty Name="txID" ColumnName="txID" />
+                <ScalarProperty Name="purposeID" ColumnName="purposeID" />
+                <ScalarProperty Name="purposeStatus" ColumnName="purposeStatus" />
+                <ScalarProperty Name="idvRequest" ColumnName="idvRequest" />
+                <ScalarProperty Name="idvApproval" ColumnName="idvApproval" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="HRISEntities.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="HRISEntities.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="HRISEntities.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="HRISEntities.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="HRISEntities.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="catID" ColumnName="catID" />
+                <ScalarProperty Name="catParentID" ColumnName="catParentID" />
+                <ScalarProperty Name="catCode" ColumnName="catCode" />
+                <ScalarProperty Name="catName" ColumnName="catName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categoryParents">
+            <EntityTypeMapping TypeName="HRISEntities.categoryParent">
+              <MappingFragment StoreEntitySet="categoryParent">
+                <ScalarProperty Name="catID" ColumnName="catID" />
+                <ScalarProperty Name="catParentID" ColumnName="catParentID" />
+                <ScalarProperty Name="catCode" ColumnName="catCode" />
+                <ScalarProperty Name="catName" ColumnName="catName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="HRISEntities.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="UID_ABSENCE" ColumnName="UID_ABSENCE" />
+                <ScalarProperty Name="joinDate" ColumnName="joinDate" />
+                <ScalarProperty Name="resignDate" ColumnName="resignDate" />
+                <ScalarProperty Name="contract1Start" ColumnName="contract1Start" />
+                <ScalarProperty Name="contract1End" ColumnName="contract1End" />
+                <ScalarProperty Name="contract2Start" ColumnName="contract2Start" />
+                <ScalarProperty Name="contract2End" ColumnName="contract2End" />
+                <ScalarProperty Name="contract3Start" ColumnName="contract3Start" />
+                <ScalarProperty Name="contract3End" ColumnName="contract3End" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="files">
+            <EntityTypeMapping TypeName="HRISEntities.file">
+              <MappingFragment StoreEntitySet="file">
+                <ScalarProperty Name="fileID" ColumnName="fileID" />
+                <ScalarProperty Name="fileName" ColumnName="fileName" />
+                <ScalarProperty Name="fileDescription" ColumnName="fileDescription" />
+                <ScalarProperty Name="fileUploadTime" ColumnName="fileUploadTime" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="locations">
+            <EntityTypeMapping TypeName="HRISEntities.location">
+              <MappingFragment StoreEntitySet="location">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="codeNumParent" ColumnName="codeNumParent" />
+                <ScalarProperty Name="codeNum" ColumnName="codeNum" />
+                <ScalarProperty Name="codeISOParent" ColumnName="codeISOParent" />
+                <ScalarProperty Name="codeISO" ColumnName="codeISO" />
+                <ScalarProperty Name="codeUN" ColumnName="codeUN" />
+                <ScalarProperty Name="dialingCode" ColumnName="dialingCode" />
+                <ScalarProperty Name="locationType" ColumnName="locationType" />
+                <ScalarProperty Name="locationName" ColumnName="locationName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizations">
+            <EntityTypeMapping TypeName="HRISEntities.organization">
+              <MappingFragment StoreEntitySet="organization">
+                <ScalarProperty Name="orgID" ColumnName="orgID" />
+                <ScalarProperty Name="orgParentID" ColumnName="orgParentID" />
+                <ScalarProperty Name="orgCode" ColumnName="orgCode" />
+                <ScalarProperty Name="orgName" ColumnName="orgName" />
+                <ScalarProperty Name="orgLocation" ColumnName="orgLocation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="people">
+            <EntityTypeMapping TypeName="HRISEntities.person">
+              <MappingFragment StoreEntitySet="person">
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personAddresses">
+            <EntityTypeMapping TypeName="HRISEntities.personAddress">
+              <MappingFragment StoreEntitySet="personAddress">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="AddressPhone" ColumnName="AddressPhone" />
+                <ScalarProperty Name="AddressKel" ColumnName="AddressKel" />
+                <ScalarProperty Name="AddressKec" ColumnName="AddressKec" />
+                <ScalarProperty Name="AddressKab" ColumnName="AddressKab" />
+                <ScalarProperty Name="AddressProv" ColumnName="AddressProv" />
+                <ScalarProperty Name="AddressCountry" ColumnName="AddressCountry" />
+                <ScalarProperty Name="AddressPostalCode" ColumnName="AddressPostalCode" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personBankAccounts">
+            <EntityTypeMapping TypeName="HRISEntities.personBankAccount">
+              <MappingFragment StoreEntitySet="personBankAccount">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="BankNumber" ColumnName="BankNumber" />
+                <ScalarProperty Name="BankAccount" ColumnName="BankAccount" />
+                <ScalarProperty Name="BankNote" ColumnName="BankNote" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personCertifications">
+            <EntityTypeMapping TypeName="HRISEntities.personCertification">
+              <MappingFragment StoreEntitySet="personCertification">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="certificationName" ColumnName="certificationName" />
+                <ScalarProperty Name="issuedCountry" ColumnName="issuedCountry" />
+                <ScalarProperty Name="issuedCity" ColumnName="issuedCity" />
+                <ScalarProperty Name="issuedDate" ColumnName="issuedDate" />
+                <ScalarProperty Name="issuedExpiredDate" ColumnName="issuedExpiredDate" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personContacts">
+            <EntityTypeMapping TypeName="HRISEntities.personContact">
+              <MappingFragment StoreEntitySet="personContact">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="Phone1" ColumnName="Phone1" />
+                <ScalarProperty Name="Phone2" ColumnName="Phone2" />
+                <ScalarProperty Name="Email1" ColumnName="Email1" />
+                <ScalarProperty Name="Email2" ColumnName="Email2" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personDependents">
+            <EntityTypeMapping TypeName="HRISEntities.personDependent">
+              <MappingFragment StoreEntitySet="personDependent">
+                <ScalarProperty Name="tempNIP" ColumnName="tempNIP" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="IDVDependent" ColumnName="IDVDependent" />
+                <ScalarProperty Name="relationType" ColumnName="relationType" />
+                <ScalarProperty Name="insuranceCovered" ColumnName="insuranceCovered" />
+                <ScalarProperty Name="taxDependent" ColumnName="taxDependent" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personDetails">
+            <EntityTypeMapping TypeName="HRISEntities.personDetail">
+              <MappingFragment StoreEntitySet="personDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="NIP" ColumnName="NIP" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="Marital" ColumnName="Marital" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personEdus">
+            <EntityTypeMapping TypeName="HRISEntities.personEdu">
+              <MappingFragment StoreEntitySet="personEdu">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="eduLevel" ColumnName="eduLevel" />
+                <ScalarProperty Name="eduMajor" ColumnName="eduMajor" />
+                <ScalarProperty Name="eduGraduate" ColumnName="eduGraduate" />
+                <ScalarProperty Name="eduValue" ColumnName="eduValue" />
+                <ScalarProperty Name="eduCountry" ColumnName="eduCountry" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personEmergencies">
+            <EntityTypeMapping TypeName="HRISEntities.personEmergency">
+              <MappingFragment StoreEntitySet="personEmergency">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="IDVEmergencyContact" ColumnName="IDVEmergencyContact" />
+                <ScalarProperty Name="relationshipType" ColumnName="relationshipType" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personIdentities">
+            <EntityTypeMapping TypeName="HRISEntities.personIdentity">
+              <MappingFragment StoreEntitySet="personIdentity">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="idType" ColumnName="idType" />
+                <ScalarProperty Name="idNumber" ColumnName="idNumber" />
+                <ScalarProperty Name="issuedCountry" ColumnName="issuedCountry" />
+                <ScalarProperty Name="expiredDate" ColumnName="expiredDate" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personJobs">
+            <EntityTypeMapping TypeName="HRISEntities.personJob">
+              <MappingFragment StoreEntitySet="personJob">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="parentIDV" ColumnName="parentIDV" />
+                <ScalarProperty Name="jobName" ColumnName="jobName" />
+                <ScalarProperty Name="JobDivision" ColumnName="JobDivision" />
+                <ScalarProperty Name="JobDepartement" ColumnName="JobDepartement" />
+                <ScalarProperty Name="JobPosition" ColumnName="JobPosition" />
+                <ScalarProperty Name="JobLocation" ColumnName="JobLocation" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personLanguages">
+            <EntityTypeMapping TypeName="HRISEntities.personLanguage">
+              <MappingFragment StoreEntitySet="personLanguage">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="languageName" ColumnName="languageName" />
+                <ScalarProperty Name="spoken" ColumnName="spoken" />
+                <ScalarProperty Name="written" ColumnName="written" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personSkills">
+            <EntityTypeMapping TypeName="HRISEntities.personSkill">
+              <MappingFragment StoreEntitySet="personSkill">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="skillName" ColumnName="skillName" />
+                <ScalarProperty Name="skillLevel" ColumnName="skillLevel" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personTrainings">
+            <EntityTypeMapping TypeName="HRISEntities.personTraining">
+              <MappingFragment StoreEntitySet="personTraining">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="TrainingName" ColumnName="TrainingName" />
+                <ScalarProperty Name="TrainingSponsor" ColumnName="TrainingSponsor" />
+                <ScalarProperty Name="Certificate" ColumnName="Certificate" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personWorkExperiences">
+            <EntityTypeMapping TypeName="HRISEntities.personWorkExperience">
+              <MappingFragment StoreEntitySet="personWorkExperience">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="companyName" ColumnName="companyName" />
+                <ScalarProperty Name="lastPosition" ColumnName="lastPosition" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="Stop" ColumnName="Stop" />
+                <ScalarProperty Name="reason" ColumnName="reason" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tokens">
+            <EntityTypeMapping TypeName="HRISEntities.Token">
+              <MappingFragment StoreEntitySet="Tokens">
+                <ScalarProperty Name="TokenId" ColumnName="TokenId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AuthToken" ColumnName="AuthToken" />
+                <ScalarProperty Name="IssuedOn" ColumnName="IssuedOn" />
+                <ScalarProperty Name="ExpiresOn" ColumnName="ExpiresOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="HRISEntities.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="IDVMAIL" ColumnName="IDVMAIL" />
+                <ScalarProperty Name="IDVMAILPASSWORD" ColumnName="IDVMAILPASSWORD" />
+                <ScalarProperty Name="IDVROLE" ColumnName="IDVROLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="HRISEntities.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0623b4878ecc489c860019f63e113bbd" Name="Diagram1">
+        <EntityTypeShape EntityType="HRISEntities.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.C_purpose" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.C_transaction" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.AspNetRole" Width="1.5" PointX="8.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.AspNetUserClaim" Width="1.5" PointX="13.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.AspNetUserLogin" Width="1.5" PointX="13.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.AspNetUser" Width="1.5" PointX="11" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.category" Width="1.5" PointX="6" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.categoryParent" Width="1.5" PointX="3.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.employee" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.file" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.location" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.organization" Width="1.5" PointX="0.75" PointY="32.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.person" Width="1.5" PointX="3" PointY="31.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personAddress" Width="1.5" PointX="5.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personBankAccount" Width="1.5" PointX="5.25" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personCertification" Width="1.5" PointX="5.25" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personContact" Width="1.5" PointX="5.25" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personDependent" Width="1.5" PointX="5.25" PointY="30.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personDetail" Width="1.5" PointX="8.25" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personEdu" Width="1.5" PointX="5.25" PointY="39" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personEmergency" Width="1.5" PointX="5.25" PointY="42.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personIdentity" Width="1.5" PointX="5.25" PointY="45.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personJob" Width="1.5" PointX="5.25" PointY="48.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personLanguage" Width="1.5" PointX="5.25" PointY="34.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personSkill" Width="1.5" PointX="5.25" PointY="56.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personTraining" Width="1.5" PointX="5.25" PointY="59.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.personWorkExperience" Width="1.5" PointX="5.25" PointY="62.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.Token" Width="1.5" PointX="7.5" PointY="66.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISEntities.user" Width="1.5" PointX="5.25" PointY="66.125" IsExpanded="true" />
+        <AssociationConnector Association="HRISEntities.purposeType" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.catID_parentCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.FK_personDetail_Gender" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.FK_personDetail_Marital" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.FK_personDetail_Religion" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.spoken_personLanguage" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.written_personLanguage" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_personImage" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.OrgID" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_Address" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_BankAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_Contact" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_perseonDependent" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_personCertification" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_personDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_personEdu" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_personEmergency" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_personIdentity" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_personJob" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_personLanguage" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_personSkill" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_personTraining" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_personWorkExperience" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.IDV_user" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.FK_Tokens_User" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISEntities.catID_parentCategory1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
