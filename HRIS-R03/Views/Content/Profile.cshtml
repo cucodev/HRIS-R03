@@ -189,7 +189,7 @@
 
                     function bindDateTime(div) {
                         try {
-                            $("#" + div).jqxDateTimeInput({ disabled: vStatus, theme: th, height: '35px' });
+                            $("#" + div).jqxDateTimeInput({ disabled: vStatus, theme: th, height: '35px', width: '100%' });
                             var str = eval('dt.' + div);
                             $('#' + div).val(str);
                         } catch (err) {
@@ -321,7 +321,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md12">
+    <div class="col-md-12">
         <hr />
     </div>
 </div>
@@ -348,7 +348,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nip">NIP</label>
-                                <input type="text" class="form-control" id="NIP" placeholder="NIP" required>
+                                <input type="text" class="form-control" id="NIP" />
                             </div>
                         </div>
                     </div>
@@ -619,9 +619,9 @@
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
-            <div class="container-fluid">
+            
                 <!--EMPLOYEE-->
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -653,9 +653,7 @@
                         </div>
                     </div>
                 </div>
-
-
-            </div>
+                    -->
         </div>
 
             <!--SUBMIT-->
