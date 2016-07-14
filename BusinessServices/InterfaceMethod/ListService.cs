@@ -21,6 +21,7 @@ namespace BusinessServices.InterfaceMethod
         const string lov_gender = "pGender";
         const string lov_religion = "pReligion";
         const string lov_ID = "pID";
+        const string lov_employeeStatus = "empStatus";
         const string lov_country = "pCountry";
         const string lov_province = "pProv";
         const string lov_kabupaten = "pKab";
@@ -119,7 +120,7 @@ namespace BusinessServices.InterfaceMethod
                 {
                     LOV xx = new LOV();
 
-                    xx.label = n.catName;
+                    xx.label = (n.catName).TrimEnd();
                     xx.value = n.catID;
 
 
@@ -129,7 +130,7 @@ namespace BusinessServices.InterfaceMethod
                     {
                         LOV pI = new LOV();
                         pI.value = nn.catID;
-                        pI.label = nn.catName;
+                        pI.label = (nn.catName).TrimEnd();
                         dep.Add(pI);
                     }
                     xx.child = dep;
@@ -147,6 +148,30 @@ namespace BusinessServices.InterfaceMethod
 
             List<LOV> ms = new List<LOV>();
             var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_skillLevel);
+            var vDataDiv = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == vparentID.catID);
+
+            if (vDataDiv.Any())
+            {
+                foreach (category n in vDataDiv)
+                {
+                    LOV xx = new LOV();
+
+                    xx.label = n.catName;
+                    xx.value = n.catID;
+                    ms.Add(xx);
+                }
+
+                return ms.AsEnumerable();
+            }
+            else { return null; };
+
+        }
+
+        public IEnumerable<LOV> getEmpStatus()
+        {
+
+            List<LOV> ms = new List<LOV>();
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_employeeStatus);
             var vDataDiv = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == vparentID.catID);
 
             if (vDataDiv.Any())

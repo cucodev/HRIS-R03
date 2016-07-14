@@ -7,8 +7,6 @@
 @section scripts
 {
     <link href="@Url.Content("~/Content/csProfile.css")" rel="stylesheet" />
-    <script type="text/javascript" src="@Url.Content("~/Scripts/List/jsVar.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/List/jsMasterList.js")"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -25,17 +23,7 @@
 
             var value = $.jStorage.get("idv");
             var i = 0;
-            var MasterList = [];
-
-            var MasterCategory = JSON.parse('@Html.Raw(Json.Encode(this.ViewData["ParentList"]))');
-
-            $.each(MasterCategory, function (index, dt) {
-                var name = dt.cID;
-                var name = dt.cUID;
-                MasterList[name] = dt.cID;
-                $.jStorage.set(name, dt.CID);
-                i++;
-            });
+            
 
 
             if (!value) {
@@ -50,9 +38,7 @@
 
 
             var index = $.jStorage.index();
-            console.log(index);
-            console.log(MasterList);
-
+            
             var uri = '/api/profile/' + $.jStorage.get('idv');
             var sourceProfile = {
                 dataType: 'json',
@@ -120,23 +106,23 @@
                     //bindInput("UID");
                     bindInput("Name");
                     bindInput("NickName");
-                    bindCategory("Religion", MasterList["empReligion"]);
-                    bindCategory("Gender", MasterList["empGender"]);
-                    bindCategory("Marital", MasterList["empMarital"]);
+                    bindCategory("Religion", "getReligion");
+                    bindCategory("Gender", "getGender");
+                    bindCategory("Marital", "getMarital");
                     bindInput("NIP");
 
                     bindDateTime("Birthdate");
                     bindInput("Birthplace");
-                    bindCategory("Nationality", MasterList["empCountry"]);
+                    bindCategory("Nationality", "getCountry");
 
-                    bindCategory("empEdu", MasterList["empEdu"]);
+                    bindCategory("empEdu", "getEdu");
                     bindInput("empEduMajor");
 
-                    bindCategory("empDepartement", MasterList["empDep"]);
-                    bindCategory("empDivision", MasterList["empDiv"]);
-                    bindCategory("empJobLevel", MasterList["empDiv"]);
+                    bindCategory("empDepartement", "getDepartment");
+                    //bindCategory("empDivision", MasterList["empDiv"]);
+                    bindCategory("empJobLevel", "getDivision");
                     bindInput("empOfficeLocation");
-                    bindCategory("empPosition", MasterList["empPos"]);
+                    bindCategory("empPosition", "getPosition");
 
                     bindInput("Phone1");
                     bindInput("Phone2");
@@ -152,7 +138,7 @@
 
 
                     //bindInput("UID_ABSENCE");
-                    bindCategory("empStatus", MasterList["empStatus"]);
+                    bindCategory("empStatus", "getEmployeeStatus");
                     //bindCategory("rowStatus", "rowStatus");
 
                     bindInput("IDVDependent");
@@ -165,6 +151,23 @@
 
                     bindButton("SubmitButton");
                     //==========================================================================================================
+
+                    function jsLOV(name) {
+                        var Locationsource = {
+                            datatype: "json",
+                            dataFields: [
+                                { name: 'value', type: 'number' },
+                                { name: 'label', type: 'string' }
+                            ],
+                            url: '/api/list/' + name,
+                            async: false
+                        };
+
+                        return jsListLocation = new $.jqx.dataAdapter(Locationsource, {
+                            autoBind: true,
+                            contentType: 'application/json; charset=utf-8'
+                        });
+                    }
 
                     function bindButton(div) {
                         try {
@@ -208,11 +211,10 @@
                         }
                     }
 
-
                     function bindCategory(div, value) {
                         try {
                             var th = $.jStorage.get("th");
-                            $("#" + div).jqxDropDownList({ source: jsCategory(value), theme: th, disabled: false, displayMember: "uidname", valueMember: "id", width: '100%' });
+                            $("#" + div).jqxDropDownList({ source: jsLOV(value), theme: th, disabled: false, displayMember: "label", valueMember: "value", width: '100%' });
                             var str = eval('dt.' + div);
                             $("#" + div).jqxDropDownList('val', str);
                         } catch (err) {

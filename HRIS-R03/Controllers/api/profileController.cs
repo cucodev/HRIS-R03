@@ -59,12 +59,12 @@ namespace HRIS_R03.Controllers.api
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("profile")]
         [System.Web.Http.Route("api/profile/{id}")]
-        public HttpResponseMessage Profile(int id)
+        public HttpResponseMessage profile(int id)
         {
             var p = _pServices.GetProfileById(id);
             if (p != null)
                 return Request.CreateResponse(HttpStatusCode.OK, p);
-            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No product found for this id");
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Person not found for this id");
         }
 
         // POST api/product

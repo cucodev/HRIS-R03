@@ -72,6 +72,23 @@ namespace HRIS_R03.Controllers.api
 
         // GET: api/list
         [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getEmpStatus")]
+        [System.Web.Http.Route("api/list/getEmpStatus")]
+        public IEnumerable<LOV> getEmpStatus()
+        {
+            var p = _pServices.getEmpStatus();//.getParentCategory();
+            if (p != null)
+            {
+                var pEntities = p as List<LOV> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getMarital")]
         [System.Web.Http.Route("api/list/getMarital")]
         public IEnumerable<LOV> getMarital()

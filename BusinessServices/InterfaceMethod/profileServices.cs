@@ -278,14 +278,14 @@ namespace BusinessServices.InterfaceMethod
             //throw new NotImplementedException();
             
             profileEntities ms = new profileEntities();
-            var vperson = _unitOfWork.personRepository.GetMany(b => b.IDV == personIDV);//.GetAll().ToList();
-
+            var vperson = _unitOfWork.personRepository.GetMany(b => b.IDV == personIDV).ToList();//.GetAll().ToList();
+            System.Diagnostics.Debug.WriteLine("personIDV: " + personIDV);
             if (vperson.Any())
             {
+                profileEntities x = new profileEntities();
                 foreach (person n in vperson)
-                {
-                    profileEntities x = new profileEntities();
-
+                {          
+                    System.Diagnostics.Debug.WriteLine("person: " + n.IDV);
                     //person
                     x.IDV = n.IDV;
                     x.OrganizationID = n.OrganizationID;
@@ -446,7 +446,7 @@ namespace BusinessServices.InterfaceMethod
                     x.personIdentities = pI;
                     //ms.Add(x);
                 }
-                return ms;
+                return x;
             }
             return null;
         }

@@ -17,6 +17,7 @@ namespace BusinessServices.Interface
         IEnumerable<listEntities> getParentCategory();
         IEnumerable<LOV> getOrg();
         IEnumerable<LOV> getSkillLevel();
+        IEnumerable<LOV> getEmpStatus();
         IEnumerable<LOV> getMarital();
         IEnumerable<LOV> getGender();
         IEnumerable<LOV> getReligion();
@@ -28,7 +29,6 @@ namespace BusinessServices.Interface
         IEnumerable<LocationEntities> getProvince();
         IEnumerable<LocationEntities> getKabupaten();
         IEnumerable<LocationEntities> getKecamatan();
-
 
         //IEnumerable<listEntities> getListCategory(int parentID);
         //IEnumerable<listEntities> getListparentCategory(int parentID);
