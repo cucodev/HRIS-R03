@@ -22,6 +22,7 @@ namespace BusinessServices.Interface
         IEnumerable<LOV> getGender();
         IEnumerable<LOV> getReligion();
         IEnumerable<LOV> getID();
+        IEnumerable<LOV> getName();
 
         IEnumerable<LocationEntities> getCountry();
         IEnumerable<LocationEntities> getLocation(long id);

@@ -36,7 +36,33 @@ namespace BusinessServices.InterfaceMethod
         {
             _unitOfWork = new UnitOfWork();
         }
-       
+
+        public IEnumerable<LOV> getName()
+        {
+
+            List<LOV> ms = new List<LOV>();
+            var vDataDiv = _unitOfWork.personDetailRepository.GetMany(b => b.isDeleted != 1);
+            //var vDataDiv = _unitOfWork.categoryParentRepository.GetMany(b => b.catParentID == vparentID.catID);
+
+            if (vDataDiv.Any())
+            {
+                foreach (personDetail n in vDataDiv)
+                {
+                    LOV xx = new LOV();
+
+                    xx.label = (n.Name).TrimEnd();
+                    xx.value = n.IDV.HasValue ? n.IDV.Value : 0;
+
+                    ms.Add(xx);
+                }
+
+                return ms.AsEnumerable();
+            }
+            else { return null; };
+
+        }
+
+
         public IEnumerable<LOV> getDivision()
         {
             List<LOV> ms = new List<LOV>();

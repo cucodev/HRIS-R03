@@ -21,6 +21,24 @@ namespace HRIS_R03.Controllers.api
 
         // GET: api/list
         [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getName")]
+        [System.Web.Http.Route("api/list/getName")]
+        public IEnumerable<LOV> getName()
+        {
+            var p = _pServices.getName();
+            if (p != null)
+            {
+                var pEntities = p as List<LOV> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getParentCategory")]
         [System.Web.Http.Route("api/list/getParentCategory")]
         public IEnumerable<listEntities> getParentCategory()
