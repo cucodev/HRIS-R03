@@ -155,6 +155,13 @@
                     bindCategory("empStatus", MasterList["empStatus"]);
                     //bindCategory("rowStatus", "rowStatus");
 
+                    bindInput("IDVDependent");
+                    bindInput("relationType");
+
+                    bindInput("idType");
+                    bindInput("idNumber");
+                    bindInput("issuedCountry");
+                    bindInput("expiredDate");
 
                     bindButton("SubmitButton");
                     //==========================================================================================================
@@ -182,7 +189,7 @@
 
                     function bindDateTime(div) {
                         try {
-                            $("#" + div).jqxDateTimeInput({ disabled: vStatus, theme: th, height: '35px' });
+                            $("#" + div).jqxDateTimeInput({ disabled: vStatus, theme: th, height: '35px', width: '100%' });
                             var str = eval('dt.' + div);
                             $('#' + div).val(str);
                         } catch (err) {
@@ -314,7 +321,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md12">
+    <div class="col-md-12">
         <hr />
     </div>
 </div>
@@ -329,6 +336,9 @@
             <li>Education</li>
             <li>Work</li>
             <li>Image</li>
+            <li>Dependent</li>
+            <li>Identity</li>
+            <li>Employee</li>
         </ul>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             <div class="container-fluid">
@@ -338,7 +348,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nip">NIP</label>
-                                <input type="text" class="form-control" id="NIP" placeholder="NIP" required>
+                                <input type="text" class="form-control" id="NIP" />
                             </div>
                         </div>
                     </div>
@@ -389,7 +399,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-6">
@@ -420,8 +429,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!--EMPLOYEE STATUS-->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-6">
@@ -430,7 +437,6 @@
                                 <div id='empStatus'></div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -541,7 +547,6 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="empOfficeLocation">Office Location</label>
@@ -550,12 +555,109 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-        <div></div>
-        <!--SUBMIT-->
-    </div>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px">
+            Image
+            </div>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px">
+            <div class="container-fluid">
+                <!--DEPENDENT-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IDVDependent">IDVDependent</label>
+                                <input class="form-control" id="IDVDependent" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="relationType">relationType</label>
+                                <input class="form-control" id="relationType" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px">
+            <div class="container-fluid">
+                <!--IDENTITY-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="idType">idType</label>
+                                <input class="form-control" id="idType" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="idNumber">idNumber</label>
+                                <input class="form-control" id="idNumber" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="issuedCountry">issuedCountry</label>
+                                <input class="form-control" id="issuedCountry" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="expiredDate">expiredDate</label>
+                                <input class="form-control" id="expiredDate" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px">
+            
+                <!--EMPLOYEE-->
+                <!--<div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="idType">idType</label>
+                                <input class="form-control" id="idType" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="idNumber">idNumber</label>
+                                <input class="form-control" id="idNumber" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="issuedCountry">issuedCountry</label>
+                                <input class="form-control" id="issuedCountry" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="expiredDate">expiredDate</label>
+                                <input class="form-control" id="expiredDate" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    -->
+        </div>
+
+            <!--SUBMIT-->
+        </div>
 </div>
 
 <div class="row">
