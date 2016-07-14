@@ -36,7 +36,6 @@ namespace HRIS_R03.Controllers.api
             return null;
         }
 
-
         // GET: api/list
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getParentCategory")]
