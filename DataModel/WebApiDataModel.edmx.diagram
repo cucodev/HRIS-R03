@@ -16,7 +16,6 @@
         <EntityTypeShape EntityType="HRISEntities.categoryParent" Width="1.5" PointX="3.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="HRISEntities.employee" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="HRISEntities.file" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISEntities.location" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HRISEntities.organization" Width="1.5" PointX="0.75" PointY="32.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HRISEntities.person" Width="1.5" PointX="3" PointY="31.375" IsExpanded="true" />
         <EntityTypeShape EntityType="HRISEntities.personAddress" Width="1.5" PointX="5.25" PointY="16.5" IsExpanded="true" />
@@ -65,6 +64,8 @@
         <AssociationConnector Association="HRISEntities.FK_Tokens_User" ManuallyRouted="false" />
         <AssociationConnector Association="HRISEntities.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="HRISEntities.catID_parentCategory1" />
+        <EntityTypeShape EntityType="HRISEntities.location" Width="1.5" PointX="8.25" PointY="4.875" />
+        <AssociationConnector Association="HRISEntities.FK_locationParent_categoryParent" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

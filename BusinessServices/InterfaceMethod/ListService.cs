@@ -21,6 +21,10 @@ namespace BusinessServices.InterfaceMethod
         const string lov_gender = "pGender";
         const string lov_religion = "pReligion";
         const string lov_ID = "pID";
+        const string lov_country = "pCountry";
+        const string lov_province = "pProv";
+        const string lov_kabupaten = "pKab";
+        const string lov_kecamatan = "pKec";
         const string lov_relationType = "pRelType";
         const string lov_orgDivision = "empDiv";
         const string lov_orgDepartemen = "empDep";
@@ -242,6 +246,130 @@ namespace BusinessServices.InterfaceMethod
 
                     xx.label = n.catName;
                     xx.value = n.catID;
+                    ms.Add(xx);
+                }
+
+                return ms.AsEnumerable();
+            }
+            else { return null; };
+        }
+
+        public IEnumerable<LocationEntities> getCountry()
+        {
+            List<LocationEntities> ms = new List<LocationEntities>();
+            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == lov_country);
+            if (vparentID.catID != 0)
+            {
+                System.Diagnostics.Debug.WriteLine("Country parentID:" + vparentID.catID);
+                var vDataDiv = _unitOfWork.locationParentRepository.GetMany(b => b.locationType == vparentID.catID);
+                if (vDataDiv.Any())
+                {
+                    foreach (location n in vDataDiv)
+                    {
+                        LocationEntities xx = new LocationEntities();
+                        System.Diagnostics.Debug.WriteLine("Label:" + vparentID.catName + "Value: " + vparentID.catID);
+                        xx.label = n.locationName;
+                        xx.value = n.codeNum;
+                        ms.Add(xx);
+                    }
+                    return ms.AsEnumerable();
+                } else {
+                    System.Diagnostics.Debug.WriteLine("locationparent Repository Not Found:");
+                }
+            } else {
+                System.Diagnostics.Debug.WriteLine("Not Found:");
+               
+            };
+            return null;
+        }
+
+        public IEnumerable<LocationEntities> getLocation(long parentID)
+        {
+            List<LocationEntities> ms = new List<LocationEntities>();
+            //var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_country);
+            var vDataDiv = _unitOfWork.locationParentRepository.GetMany(b => b.codeNumParent == parentID);
+
+            if (vDataDiv.Any())
+            {
+                foreach (location n in vDataDiv)
+                {
+                    LocationEntities xx = new LocationEntities();
+
+                    xx.label = n.locationName;
+                    xx.value = n.codeNum;
+                    ms.Add(xx);
+                }
+
+                return ms.AsEnumerable();
+            }
+            else { return null; };
+        }
+
+        public IEnumerable<LocationEntities> getProvince()
+        {
+            List<LocationEntities> ms = new List<LocationEntities>();
+            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == lov_province);
+            if (vparentID.catID != 0)
+            {
+                var vDataDiv = _unitOfWork.locationParentRepository.GetMany(b => b.locationType == vparentID.catID);
+
+                if (vDataDiv.Any())
+                {
+                    foreach (location n in vDataDiv)
+                    {
+                        LocationEntities xx = new LocationEntities();
+
+                        xx.label = n.locationName;
+                        xx.value = n.codeNum;
+                        ms.Add(xx);
+                    }
+
+                    return ms.AsEnumerable();
+                }
+                else { return null; };
+            } else {
+                System.Diagnostics.Debug.WriteLine("category parent not found !!!");
+                return null;
+            };
+
+        }
+
+        public IEnumerable<LocationEntities> getKabupaten()
+        {
+            List<LocationEntities> ms = new List<LocationEntities>();
+            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == lov_kabupaten);
+            var vDataDiv = _unitOfWork.locationParentRepository.GetMany(b => b.locationType == vparentID.catID);
+
+            if (vDataDiv.Any())
+            {
+                foreach (location n in vDataDiv)
+                {
+                    LocationEntities xx = new LocationEntities();
+
+                    xx.label = n.locationName;
+                    xx.value = n.codeNum;
+                    ms.Add(xx);
+                }
+
+                return ms.AsEnumerable();
+            }
+            else { return null; };
+        }
+
+        public IEnumerable<LocationEntities> getKecamatan()
+        {
+            List<LocationEntities> ms = new List<LocationEntities>();
+            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == lov_kecamatan);
+            var vDataDiv = _unitOfWork.locationParentRepository.GetMany(b => b.locationType == vparentID.catID);
+
+            if (vDataDiv.Any())
+            {
+                foreach (location n in vDataDiv)
+                {
+                    LocationEntities xx = new LocationEntities();
+
+                    xx.label = n.locationName;
+                    xx.value = n.codeNum;
                     ms.Add(xx);
                 }
 

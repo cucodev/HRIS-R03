@@ -169,6 +169,94 @@ namespace HRIS_R03.Controllers.api
             return null;
         }
 
+ 
+        //Country
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getCountry")]
+        [System.Web.Http.Route("api/list/getCountry")]
+        public IEnumerable<LocationEntities> getCountry()
+        {
+            var p = _pServices.getCountry();
+            if (p != null)
+            {
+                var pEntities = p as List<LocationEntities> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        //Province
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getLocation")]
+        [System.Web.Http.Route("api/list/getLocation/{id}")]
+        public IEnumerable<LocationEntities> getLocaton(long id)
+        {
+            var p = _pServices.getLocation(id);
+            if (p != null)
+            {
+                var pEntities = p as List<LocationEntities> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+
+        //Province
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getProvince")]
+        [System.Web.Http.Route("api/list/getProvince")]
+        public IEnumerable<LocationEntities> getProvince()
+        {
+            var p = _pServices.getProvince();
+            if (p != null)
+            {
+                var pEntities = p as List<LocationEntities> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        //Kabupaten Kota
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getKabupaten")]
+        [System.Web.Http.Route("api/list/getKabupaten")]
+        public IEnumerable<LocationEntities> getKabupaten()
+        {
+            var p = _pServices.getKabupaten();
+            if (p != null)
+            {
+                var pEntities = p as List<LocationEntities> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        //Kabupaten Kota
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getKecamatan")]
+        [System.Web.Http.Route("api/list/getKecamatan")]
+        public IEnumerable<LocationEntities> getKecamatan()
+        {
+            var p = _pServices.getKecamatan();
+            if (p != null)
+            {
+                var pEntities = p as List<LocationEntities> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        
         //Department shows nothing, because its parent to Division each
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getDepartment")]

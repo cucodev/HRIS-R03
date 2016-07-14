@@ -99,7 +99,7 @@
           </Key>
           <Property Name="catID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="catParentID" Type="int" />
-          <Property Name="catCode" Type="nchar" MaxLength="20" />
+          <Property Name="catCode" Type="nchar" MaxLength="20" Nullable="false" />
           <Property Name="catName" Type="nchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="employee">
@@ -143,11 +143,10 @@
         </EntityType>
         <EntityType Name="location">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="codeNum" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="codeNumParent" Type="nchar" MaxLength="10" />
-          <Property Name="codeNum" Type="bigint" />
+          <Property Name="codeNum" Type="bigint" Nullable="false" />
+          <Property Name="codeNumParent" Type="bigint" />
           <Property Name="codeISOParent" Type="nchar" MaxLength="10" />
           <Property Name="codeISO" Type="nchar" MaxLength="10" />
           <Property Name="codeUN" Type="nchar" MaxLength="10" />
@@ -490,6 +489,18 @@
             </Principal>
             <Dependent Role="AspNetUserRoles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_locationParent_categoryParent">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="location" Type="Self.location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="location">
+              <PropertyRef Name="locationType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -845,6 +856,10 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_locationParent_categoryParent" Association="Self.FK_locationParent_categoryParent">
+            <End Role="category" EntitySet="category" />
+            <End Role="location" EntitySet="location" />
+          </AssociationSet>
           <AssociationSet Name="FK_personDetail_Gender" Association="Self.FK_personDetail_Gender">
             <End Role="category" EntitySet="category" />
             <End Role="personDetail" EntitySet="personDetail" />
@@ -1044,6 +1059,7 @@
           <NavigationProperty Name="personLanguages" Relationship="Self.spoken_personLanguage" FromRole="category" ToRole="personLanguage" />
           <NavigationProperty Name="personLanguages1" Relationship="Self.written_personLanguage" FromRole="category" ToRole="personLanguage" />
           <NavigationProperty Name="categoryParent1" Relationship="HRISEntities.catID_parentCategory1" FromRole="category" ToRole="categoryParent" />
+          <NavigationProperty Name="locations" Relationship="HRISEntities.FK_locationParent_categoryParent" FromRole="category" ToRole="location" />
         </EntityType>
         <EntityType Name="categoryParent">
           <Key>
@@ -1051,7 +1067,7 @@
           </Key>
           <Property Name="catID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="catParentID" Type="Int32" />
-          <Property Name="catCode" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="catCode" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="catName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="category" Relationship="Self.catID_parentCategory" FromRole="categoryParent" ToRole="category" />
           <NavigationProperty Name="categories" Relationship="HRISEntities.catID_parentCategory1" FromRole="categoryParent" ToRole="category" />
@@ -1096,20 +1112,6 @@
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="person" Relationship="Self.IDV_personImage" FromRole="file" ToRole="person" />
-        </EntityType>
-        <EntityType Name="location">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="codeNumParent" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="codeNum" Type="Int64" />
-          <Property Name="codeISOParent" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="codeISO" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="codeUN" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="dialingCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="locationType" Type="Int32" />
-          <Property Name="locationName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="organization">
           <Key>
@@ -1370,7 +1372,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDV" Type="Int32" />
           <Property Name="TrainingName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TrainingSponsor" Type="String" />
+          <Property Name="TrainingSponsor" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="Certificate" Type="Int32" />
           <Property Name="startDate" Type="DateTime" Precision="0" />
           <Property Name="endDate" Type="DateTime" Precision="0" />
@@ -1778,7 +1780,6 @@
           <EntitySet Name="categoryParents" EntityType="Self.categoryParent" />
           <EntitySet Name="employees" EntityType="Self.employee" />
           <EntitySet Name="files" EntityType="Self.file" />
-          <EntitySet Name="locations" EntityType="Self.location" />
           <EntitySet Name="organizations" EntityType="Self.organization" />
           <EntitySet Name="people" EntityType="Self.person" />
           <EntitySet Name="personAddresses" EntityType="Self.personAddress" />
@@ -1917,6 +1918,11 @@
             <End Role="categoryParent" EntitySet="categoryParents" />
             <End Role="category" EntitySet="categories" />
           </AssociationSet>
+          <EntitySet Name="locations" EntityType="HRISEntities.location" />
+          <AssociationSet Name="FK_locationParent_categoryParent" Association="HRISEntities.FK_locationParent_categoryParent">
+            <End Role="category" EntitySet="categories" />
+            <End Role="location" EntitySet="locations" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="catID_parentCategory1">
           <End Type="HRISEntities.categoryParent" Role="categoryParent" Multiplicity="0..1" />
@@ -1927,6 +1933,32 @@
             </Principal>
             <Dependent Role="category">
               <PropertyRef Name="catParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="codeNum" />
+          </Key>
+          <Property Name="codeNum" Type="Int64" Nullable="false" />
+          <Property Name="codeNumParent" Type="Int64" />
+          <Property Name="codeISOParent" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="codeISO" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="codeUN" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="dialingCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="locationType" Type="Int32" />
+          <Property Name="locationName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="category" Relationship="HRISEntities.FK_locationParent_categoryParent" FromRole="location" ToRole="category" />
+        </EntityType>
+        <Association Name="FK_locationParent_categoryParent">
+          <End Type="HRISEntities.category" Role="category" Multiplicity="0..1" />
+          <End Type="HRISEntities.location" Role="location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="location">
+              <PropertyRef Name="locationType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2069,21 +2101,6 @@
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
                 <ScalarProperty Name="createTime" ColumnName="createTime" />
                 <ScalarProperty Name="updateTime" ColumnName="updateTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="locations">
-            <EntityTypeMapping TypeName="HRISEntities.location">
-              <MappingFragment StoreEntitySet="location">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="codeNumParent" ColumnName="codeNumParent" />
-                <ScalarProperty Name="codeNum" ColumnName="codeNum" />
-                <ScalarProperty Name="codeISOParent" ColumnName="codeISOParent" />
-                <ScalarProperty Name="codeISO" ColumnName="codeISO" />
-                <ScalarProperty Name="codeUN" ColumnName="codeUN" />
-                <ScalarProperty Name="dialingCode" ColumnName="dialingCode" />
-                <ScalarProperty Name="locationType" ColumnName="locationType" />
-                <ScalarProperty Name="locationName" ColumnName="locationName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2383,7 +2400,21 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="locations">
+            <EntityTypeMapping TypeName="HRISEntities.location">
+              <MappingFragment StoreEntitySet="location">
+                <ScalarProperty Name="locationName" ColumnName="locationName" />
+                <ScalarProperty Name="locationType" ColumnName="locationType" />
+                <ScalarProperty Name="dialingCode" ColumnName="dialingCode" />
+                <ScalarProperty Name="codeUN" ColumnName="codeUN" />
+                <ScalarProperty Name="codeISO" ColumnName="codeISO" />
+                <ScalarProperty Name="codeISOParent" ColumnName="codeISOParent" />
+                <ScalarProperty Name="codeNumParent" ColumnName="codeNumParent" />
+                <ScalarProperty Name="codeNum" ColumnName="codeNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -2398,7 +2429,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

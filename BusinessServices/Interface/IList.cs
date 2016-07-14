@@ -22,6 +22,13 @@ namespace BusinessServices.Interface
         IEnumerable<LOV> getReligion();
         IEnumerable<LOV> getID();
 
+        IEnumerable<LocationEntities> getCountry();
+        IEnumerable<LocationEntities> getLocation(long id);
+
+        IEnumerable<LocationEntities> getProvince();
+        IEnumerable<LocationEntities> getKabupaten();
+        IEnumerable<LocationEntities> getKecamatan();
+
 
         //IEnumerable<listEntities> getListCategory(int parentID);
         //IEnumerable<listEntities> getListparentCategory(int parentID);

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CrudEntities\listEntities.cs" />
+    <Compile Include="CrudEntities\LocationEntities.cs" />
     <Compile Include="CrudEntities\LOV.cs" />
     <Compile Include="Entities\categoryEntities.cs" />
     <Compile Include="Entities\categoryParentEntities.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Entities\C_transactionEntities.cs" />
     <Compile Include="Entities\employeeEntities.cs" />
     <Compile Include="Entities\file.cs" />
+    <Compile Include="Entities\locationEntities.cs" />
     <Compile Include="Entities\organizatioEntities.cs" />
     <Compile Include="Entities\personAddressEntities.cs" />
     <Compile Include="Entities\personBankAccountEntities.cs" />

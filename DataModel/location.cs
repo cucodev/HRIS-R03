@@ -14,14 +14,15 @@ namespace DataModel
     
     public partial class location
     {
-        public int ID { get; set; }
-        public string codeNumParent { get; set; }
-        public Nullable<long> codeNum { get; set; }
+        public long codeNum { get; set; }
+        public Nullable<long> codeNumParent { get; set; }
         public string codeISOParent { get; set; }
         public string codeISO { get; set; }
         public string codeUN { get; set; }
         public string dialingCode { get; set; }
         public Nullable<int> locationType { get; set; }
         public string locationName { get; set; }
+    
+        public virtual category category { get; set; }
     }
 }

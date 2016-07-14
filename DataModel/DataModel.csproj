@@ -168,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="WebApiDataModel.edmx.diagram">
       <DependentUpon>WebApiDataModel.edmx</DependentUpon>

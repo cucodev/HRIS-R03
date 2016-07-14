@@ -36,7 +36,6 @@ namespace DataModel
         public virtual DbSet<categoryParent> categoryParents { get; set; }
         public virtual DbSet<employee> employees { get; set; }
         public virtual DbSet<file> files { get; set; }
-        public virtual DbSet<location> locations { get; set; }
         public virtual DbSet<organization> organizations { get; set; }
         public virtual DbSet<person> people { get; set; }
         public virtual DbSet<personAddress> personAddresses { get; set; }
@@ -55,5 +54,6 @@ namespace DataModel
         public virtual DbSet<personWorkExperience> personWorkExperiences { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<location> locations { get; set; }
     }
 }

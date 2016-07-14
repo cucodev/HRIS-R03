@@ -39,7 +39,7 @@ namespace DataModel.UnitOfWork
         private GenericRepository<category> _categoryRepository;
         private GenericRepository<categoryParent> _categoryParentRepository;
         private GenericRepository<file> _fileRepository;
-        private GenericRepository<location> _locationRepository;
+        private GenericRepository<location> _locationParentRepository;
         private GenericRepository<organization> _organizationRepository;
         private GenericRepository<user> _userRepository;
         private GenericRepository<Token> _tokenRepository;
@@ -107,13 +107,13 @@ namespace DataModel.UnitOfWork
                 return _fileRepository;
             }
         }
-        public GenericRepository<location> locationRepository
+        public GenericRepository<location> locationParentRepository
         {
             get
             {
-                if (this._locationRepository == null)
-                    this._locationRepository = new GenericRepository<location>(_context);
-                return _locationRepository;
+                if (this._locationParentRepository == null)
+                    this._locationParentRepository = new GenericRepository<location>(_context);
+                return _locationParentRepository;
             }
         }
         public GenericRepository<organization> organizationRepository
