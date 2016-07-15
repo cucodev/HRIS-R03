@@ -195,7 +195,7 @@
                             $("#" + div).jqxDateTimeInput({ disabled: vStatus, theme: th, height: '35px', width: '100%' });
                             var str = eval('dt.' + div);
                             console.log("str date time",str);
-                            $('#' + div).val(str);
+                            $('#' + div).jqxDateTimeInput({ value: new Date(str) });
                         } catch (err) {
                             console.log('Error: ', err)
                         }
