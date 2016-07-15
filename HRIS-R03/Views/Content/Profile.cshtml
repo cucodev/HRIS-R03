@@ -81,7 +81,8 @@
 
                     { name: 'UID_ABSENCE', type: 'number' },
                     { name: 'empStatus', type: 'string' },
-                    { name: 'rowStatus', type: 'string' }
+                    { name: 'rowStatus', type: 'string' },
+                    { name: 'personDependent', type: 'string'}
 
 
                 ],
@@ -96,7 +97,6 @@
                 loadComplete: function (records) {
                     var dataRecord = dataAdapter.records;
                     var dt = records;
-
                     var vStatus = false;
                     var th = $.jStorage.get("th");
                     var i = 1;
@@ -141,7 +141,7 @@
                     bindCategory("empStatus", "getEmployeeStatus");
                     //bindCategory("rowStatus", "rowStatus");
 
-                    bindInput("IDVDependent");
+                    bindInput("personDependent");
                     bindInput("relationType");
 
                     bindInput("idType");
@@ -194,6 +194,7 @@
                         try {
                             $("#" + div).jqxDateTimeInput({ disabled: vStatus, theme: th, height: '35px', width: '100%' });
                             var str = eval('dt.' + div);
+                            console.log("str date time",str);
                             $('#' + div).val(str);
                         } catch (err) {
                             console.log('Error: ', err)
@@ -280,12 +281,68 @@
                         //console.log(i + ': bindOnChanged :' + $("#" + divChanged).val() + ':' + divChanged + ':' + divInit + ':' + strInit);
 
                     }
+
+                    // Initialize grid dt.personIdentities ====================================
+                    var observableArray = new $.jqx.observableArray(dt.personIdentities, function (changed) {
+                        //updateLog(this);
+                    });
+                    var sourceGrid =
+            {
+                localdata: observableArray,
+                datafields: [
+                    { name: 'IDV', type: 'integer'},
+                    { name: 'idNumber', type: 'integer'},
+                    { name: 'idType', type: 'integer'},
+                    { name: 'issuedCountry', type: 'integer'}
+                ],
+                datatype: "observableArray"
+            };
+                    var dataGridAdapter = new $.jqx.dataAdapter(sourceGrid);
+                    $('#dataIdentitiy').jqxGrid({
+                        width: '100%',
+                        source: dataGridAdapter,
+                        sortable: true,
+                        columns: [
+                          { text: 'IDV', datafield: 'IDV', width: 200 },
+                          { text: 'Id Number', datafield: 'idNumber', width: 150 },
+                          { text: 'Identity Type', datafield: 'idType', width: 100 },
+                          { text: 'Country', datafield: 'issuedCountry', width: 100 }
+                        ]
+                    });
+
+                    // Initialize grid dt.personIdentities =========================
+                    var observableArray = new $.jqx.observableArray(dt.personDependent, function (changed) {
+                        //updateLog(this);
+                    });
+                    var sourceGrid =
+            {
+                localdata: observableArray,
+                datafields: [
+                    { name: 'IDV', type: 'integer'},
+                    { name: 'insuranceCovered', type: 'integer'},
+                    { name: 'relationType', type: 'integer'},
+                    { name: 'taxDependent', type: 'integer'}
+                ],
+                datatype: "observableArray"
+            };
+                    var dataGridAdapter = new $.jqx.dataAdapter(sourceGrid);
+                    $('#dataDependent').jqxGrid({
+                        width: '100%',
+                        source: dataGridAdapter,
+                        sortable: true,
+                        columns: [
+                          { text: 'IDV', datafield: 'IDV', width: 200 },
+                          { text: 'Insurance Covered', datafield: 'insuranceCovered', width: 150 },
+                          { text: 'Relation Type', datafield: 'relationType', width: 100 },
+                          { text: 'Tax', datafield: 'taxDependent', width: 100 }
+                        ]
+                    });
                 },
                 loadError: function (jqXHR, status, error) {
                     console.log('Retrieve Error : ', jqXHR.responseText);
                 },
                 beforeLoadComplete: function (records) {
-                    // console.log
+                    // console.log(records);
                 }
             });
 
@@ -565,97 +622,19 @@
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             <div class="container-fluid">
                 <!--DEPENDENT-->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="IDVDependent">IDVDependent</label>
-                                <input class="form-control" id="IDVDependent" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="relationType">relationType</label>
-                                <input class="form-control" id="relationType" type="text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div id="dataDependent"></div>
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             <div class="container-fluid">
                 <!--IDENTITY-->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="idType">idType</label>
-                                <input class="form-control" id="idType" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="idNumber">idNumber</label>
-                                <input class="form-control" id="idNumber" type="text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="issuedCountry">issuedCountry</label>
-                                <input class="form-control" id="issuedCountry" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="expiredDate">expiredDate</label>
-                                <input class="form-control" id="expiredDate" type="text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div id="dataIdentitiy"></div>
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             
                 <!--EMPLOYEE-->
-                <!--<div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="idType">idType</label>
-                                <input class="form-control" id="idType" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="idNumber">idNumber</label>
-                                <input class="form-control" id="idNumber" type="text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="issuedCountry">issuedCountry</label>
-                                <input class="form-control" id="issuedCountry" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="expiredDate">expiredDate</label>
-                                <input class="form-control" id="expiredDate" type="text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    -->
+                
         </div>
 
             <!--SUBMIT-->
