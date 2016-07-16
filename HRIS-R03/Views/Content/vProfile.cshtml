@@ -23,7 +23,7 @@
 
             var value = $.jStorage.get("idv");
             var i = 0;
-            
+
 
 
             if (!value) {
@@ -38,50 +38,51 @@
 
 
             var index = $.jStorage.index();
-            
+
             var uri = '/api/profile/' + $.jStorage.get('idv');
             var sourceProfile = {
                 dataType: 'json',
                 dataFields: [
 
-                    { name: 'ID', type: 'number' },
-                  //  { name: 'IDParentName', value: 'IDParent', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
-                    { name: 'IDParent', type: 'number' },
-                    { name: 'IDParentLevel', type: 'number' },
-                    { name: 'UID', type: 'string' },
-                    { name: 'Name', type: 'string' },
-                    { name: 'NickName', type: 'string' },
-                    { name: 'Religion', type: 'string' },
-                    { name: 'Gender', type: 'string' },
-                    { name: 'Marital', type: 'string' },
-                    { name: 'NIP', type: 'string' },
+                { name: 'ID', type: 'number' },
+                // { name: 'IDParentName', value: 'IDParent', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                { name: 'IDParent', type: 'number' },
+                { name: 'IDParentLevel', type: 'number' },
+                { name: 'UID', type: 'string' },
+                { name: 'Name', type: 'string' },
+                { name: 'NickName', type: 'string' },
+                { name: 'Religion', type: 'string' },
+                { name: 'Gender', type: 'string' },
+                { name: 'Marital', type: 'string' },
+                { name: 'NIP', type: 'string' },
 
-                    { name: 'Birthdate', type: 'string' },
-                    { name: 'Birthplace', type: 'string' },
-                    { name: 'Nationality', type: 'string' },
+                { name: 'Birthdate', type: 'string' },
+                { name: 'Birthplace', type: 'string' },
+                { name: 'Nationality', type: 'string' },
 
-                    { name: 'empEdu', type: 'string' },
-                    { name: 'empEduMajor', type: 'string' },
+                { name: 'empEdu', type: 'string' },
+                { name: 'empEduMajor', type: 'string' },
 
-                    { name: 'empDepartement', type: 'string' },
-                    { name: 'empDivision', type: 'string' },
-                    { name: 'empJobLevel', type: 'string' },
-                    { name: 'empOfficeLocation', type: 'string' },
-                    { name: 'empPosition', type: 'string' },
+                { name: 'empDepartement', type: 'string' },
+                { name: 'empDivision', type: 'string' },
+                { name: 'empJobLevel', type: 'string' },
+                { name: 'empOfficeLocation', type: 'string' },
+                { name: 'empPosition', type: 'string' },
 
 
-                    { name: 'Phone1', type: 'string' },
-                    { name: 'Phone2', type: 'string' },
+                { name: 'Phone1', type: 'string' },
+                { name: 'Phone2', type: 'string' },
 
-                    { name: 'Address', type: 'string' },
-                    { name: 'AddressKab', type: 'number' },
-                    { name: 'AddressKec', type: 'number' },
-                    { name: 'AddressKel', type: 'string' },
-                    { name: 'AddressProv', type: 'number' },
+                { name: 'Address', type: 'string' },
+                { name: 'AddressKab', type: 'number' },
+                { name: 'AddressKec', type: 'number' },
+                { name: 'AddressKel', type: 'string' },
+                { name: 'AddressProv', type: 'number' },
 
-                    { name: 'UID_ABSENCE', type: 'number' },
-                    { name: 'empStatus', type: 'string' },
-                    { name: 'rowStatus', type: 'string' }
+                { name: 'UID_ABSENCE', type: 'number' },
+                { name: 'empStatus', type: 'string' },
+                { name: 'rowStatus', type: 'string' },
+                { name: 'personDependent', type: 'string'}
 
 
                 ],
@@ -96,7 +97,6 @@
                 loadComplete: function (records) {
                     var dataRecord = dataAdapter.records;
                     var dt = records;
-
                     var vStatus = false;
                     var th = $.jStorage.get("th");
                     var i = 1;
@@ -110,13 +110,15 @@
                     bindCategory("Gender", "getGender");
                     bindCategory("Marital", "getMarital");
                     bindInput("NIP");
-
                     bindDateTime("Birthdate");
                     bindInput("Birthplace");
                     bindCategory("Nationality", "getCountry");
 
-                    bindCategory("empEdu", "getEdu");
-                    bindInput("empEduMajor");
+                    bindCategory("eduCountry", "getCountry");
+                    bindCategory("eduGraduate", "getCountry");
+                    bindCategory("eduLevel", "getSkillLevel");
+                    bindInput("eduMajor");
+                    bindInput("eduValue");
 
                     bindCategory("empDepartement", "getDepartment");
                     //bindCategory("empDivision", MasterList["empDiv"]);
@@ -134,20 +136,6 @@
                     bindLocation("AddressKec");
 
                     bindOnChange("AddressProv", "AddressKab", "AddressKec");
-                    //bindOnChange("AddressKab", "AddressKec");
-
-
-                    //bindInput("UID_ABSENCE");
-                    bindCategory("empStatus", "getEmployeeStatus");
-                    //bindCategory("rowStatus", "rowStatus");
-
-                    bindInput("IDVDependent");
-                    bindInput("relationType");
-
-                    bindInput("idType");
-                    bindInput("idNumber");
-                    bindInput("issuedCountry");
-                    bindInput("expiredDate");
 
                     bindButton("SubmitButton");
                     //==========================================================================================================
@@ -156,14 +144,31 @@
                         var Locationsource = {
                             datatype: "json",
                             dataFields: [
-                                { name: 'value', type: 'number' },
-                                { name: 'label', type: 'string' }
+                            { name: 'value', type: 'number' },
+                            { name: 'label', type: 'string' }
                             ],
                             url: '/api/list/' + name,
                             async: false
                         };
 
                         return jsListLocation = new $.jqx.dataAdapter(Locationsource, {
+                            autoBind: true,
+                            contentType: 'application/json; charset=utf-8'
+                        });
+                    }
+
+                    function jsRegion(id){
+                        var source = {
+                            datatype: "json",
+                            dataFields: [
+                            { name: 'value', type: 'number' },
+                            { name: 'label', type: 'string' }
+                            ],
+                            url: '/api/list/getLocation/' + id,
+                            async: false
+                        };
+
+                        return jsListRegion = new $.jqx.dataAdapter(source, {
                             autoBind: true,
                             contentType: 'application/json; charset=utf-8'
                         });
@@ -194,7 +199,7 @@
                         try {
                             $("#" + div).jqxDateTimeInput({ disabled: vStatus, theme: th, height: '35px', width: '100%' });
                             var str = eval('dt.' + div);
-                            $('#' + div).val(str);
+                            $('#' + div).jqxDateTimeInput({ value: new Date(str) });
                         } catch (err) {
                             console.log('Error: ', err)
                         }
@@ -225,10 +230,10 @@
                     function bindLocation(div, value) {
                         try {
                             var th = $.jStorage.get("th");
-                            $("#" + div).jqxDropDownList({ source: jsRegion(value), theme: th, disabled: false, displayMember: "uidname", valueMember: "id", width: '100%' });
+                            $("#" + div).jqxDropDownList({ source: jsRegion(value), theme: th, disabled: false, displayMember: "label", valueMember: "value", width: '100%' });
                             var str = eval('dt.' + div);
-                            $("#" + div).val(str);
-                            console.log(div + ' current value ' +  $("#" + div).val() + ': With Value : ' + str) ;
+                            $("#" + div).jqxDropDownList('val', str);
+                            console.log(div + ' current value ' + $("#" + div).val() + ': With Value : ' + str) ;
                         } catch (err) {
                             console.log('Error: ', err)
                         }
@@ -280,12 +285,68 @@
                         //console.log(i + ': bindOnChanged :' + $("#" + divChanged).val() + ':' + divChanged + ':' + divInit + ':' + strInit);
 
                     }
+
+                    // Initialize grid dt.personIdentities ====================================
+                    var observableArray = new $.jqx.observableArray(dt.personIdentities, function (changed) {
+                        //updateLog(this);
+                    });
+                    var sourceGrid =
+                    {
+                        localdata: observableArray,
+                        datafields: [
+                        { name: 'IDV', type: 'integer'},
+                        { name: 'idNumber', type: 'integer'},
+                        { name: 'idType', type: 'integer'},
+                        { name: 'issuedCountry', type: 'integer'}
+                        ],
+                        datatype: "observableArray"
+                    };
+                    var dataGridAdapter = new $.jqx.dataAdapter(sourceGrid);
+                    $('#dataIdentitiy').jqxGrid({
+                        width: '100%',
+                        source: dataGridAdapter,
+                        sortable: true,
+                        columns: [
+                        { text: 'IDV', datafield: 'IDV', width: 200 },
+                        { text: 'Id Number', datafield: 'idNumber', width: 150 },
+                        { text: 'Identity Type', datafield: 'idType', width: 100 },
+                        { text: 'Country', datafield: 'issuedCountry', width: 100 }
+                        ]
+                    });
+
+                    // Initialize grid dt.personIdentities =========================
+                    var observableArray = new $.jqx.observableArray(dt.personDependent, function (changed) {
+                        //updateLog(this);
+                    });
+                    var sourceGrid =
+                    {
+                        localdata: observableArray,
+                        datafields: [
+                        { name: 'IDV', type: 'integer'},
+                        { name: 'insuranceCovered', type: 'integer'},
+                        { name: 'relationType', type: 'integer'},
+                        { name: 'taxDependent', type: 'integer'}
+                        ],
+                        datatype: "observableArray"
+                    };
+                    var dataGridAdapter = new $.jqx.dataAdapter(sourceGrid);
+                    $('#dataDependent').jqxGrid({
+                        width: '100%',
+                        source: dataGridAdapter,
+                        sortable: true,
+                        columns: [
+                        { text: 'IDV', datafield: 'IDV', width: 200 },
+                        { text: 'Insurance Covered', datafield: 'insuranceCovered', width: 150 },
+                        { text: 'Relation Type', datafield: 'relationType', width: 100 },
+                        { text: 'Tax', datafield: 'taxDependent', width: 100 }
+                        ]
+                    });
                 },
                 loadError: function (jqXHR, status, error) {
                     console.log('Retrieve Error : ', jqXHR.responseText);
                 },
                 beforeLoadComplete: function (records) {
-                    // console.log
+                    // console.log(records);
                 }
             });
 
@@ -350,7 +411,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nip">NIP</label>
-                                <input type="text" class="form-control" id="NIP" />
+                                <input type="text" class="form-control" id="NIP" placeholder="NIP" />
                             </div>
                         </div>
                     </div>
@@ -431,16 +492,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="empStatus">Employee Status</label>
-                                <div id='empStatus'></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
@@ -482,8 +533,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="AddressKel"></label>
-                                <input type="text" placeholder="Kelurahan" id="AddressKel">
+                                <label for="AddressKel">Kelurahan</label>
+                                <input class="form-control" type="text" placeholder="Kelurahan" id="AddressKel">
                             </div>
                         </div>
                     </div>
@@ -496,16 +547,50 @@
                 <!--EDUCATION-->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-6">
+                        <div class="col-lg-4">
                             <div class="form-group">
-                                <label for="empEdu">Education Level</label>
-                                <div id='empEdu'></div>
+                                <label for="eduCountry">Education Country</label>
+                                <div id='eduCountry'></div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-lg-4">
                             <div class="form-group">
-                                <label for="empEduMajor">Major</label>
-                                <input type="text" class="form-control" id="empEduMajor" placeholder="Major">
+                                <label for="eduGraduate">Education Graduate</label>
+                                <div id='eduGraduate'></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="eduLevel">Education Level</label>
+                                <div id='eduLevel'></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="eduMajor">Major</label>
+                                <input type="text" class="form-control" id="eduMajor" placeholder="Major">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="eduValue">Value</label>
+                                <input type="text" class="form-control" id="eduValue" placeholder="Value">
                             </div>
                         </div>
                     </div>
@@ -561,105 +646,27 @@
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             Image
-            </div>
+        </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             <div class="container-fluid">
                 <!--DEPENDENT-->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="IDVDependent">IDVDependent</label>
-                                <input class="form-control" id="IDVDependent" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="relationType">relationType</label>
-                                <input class="form-control" id="relationType" type="text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div id="dataDependent"></div>
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             <div class="container-fluid">
                 <!--IDENTITY-->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="idType">idType</label>
-                                <input class="form-control" id="idType" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="idNumber">idNumber</label>
-                                <input class="form-control" id="idNumber" type="text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="issuedCountry">issuedCountry</label>
-                                <input class="form-control" id="issuedCountry" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="expiredDate">expiredDate</label>
-                                <input class="form-control" id="expiredDate" type="text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div id="dataIdentitiy"></div>
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
-            
-                <!--EMPLOYEE-->
-                <!--<div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="idType">idType</label>
-                                <input class="form-control" id="idType" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="idNumber">idNumber</label>
-                                <input class="form-control" id="idNumber" type="text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="issuedCountry">issuedCountry</label>
-                                <input class="form-control" id="issuedCountry" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="expiredDate">expiredDate</label>
-                                <input class="form-control" id="expiredDate" type="text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    -->
+
+            <!--EMPLOYEE-->
+
         </div>
 
-            <!--SUBMIT-->
-        </div>
+        <!--SUBMIT-->
+    </div>
 </div>
 
 <div class="row">
