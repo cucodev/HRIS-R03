@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessEntities.CrudEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,18 +9,23 @@ namespace HRIS_R03.Controllers
 {
     public class ContentController : Controller
     {
+        
+        
         // GET: Content
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Profile()
+        public ActionResult vProfile()
         {
-
-           // ViewBag.cUser = dt.cUser;
-            ViewBag.cIDV = 3;
-            ViewBag.cIDVParent = 40;
+            
+            //profileEntities dt = new ViewData["UserCred"] as profileEntities();
+            
+            var dt = (profileEntities)Session[GlobalVariable.UserCred];
+            // ViewBag.cUser = dt.cUser;
+            ViewBag.cIDV = dt.IDV;
+            ViewBag.cIDVParent = dt.parentIDV;
             /*ViewBag.cIDVParentLevel = dt.cIDParentLevel;
             ViewBag.cName = dt.cName;
             ViewBag.cNickName = dt.cNickName;

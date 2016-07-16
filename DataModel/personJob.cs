@@ -31,6 +31,7 @@ namespace DataModel
         public Nullable<int> isDeleted { get; set; }
         public Nullable<System.DateTime> createTime { get; set; }
         public Nullable<System.DateTime> updateTime { get; set; }
+        public Nullable<int> JobLevel { get; set; }
     
         public virtual person person { get; set; }
     }

@@ -125,6 +125,16 @@
           <Property Name="createTime" Type="datetime" />
           <Property Name="updateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="employeeRoleBased">
+          <Key>
+            <PropertyRef Name="IDV" />
+          </Key>
+          <Property Name="IDV" Type="int" Nullable="false" />
+          <Property Name="catCode" Type="int" />
+          <Property Name="valueType" Type="int" />
+          <Property Name="value" Type="nchar" MaxLength="10" />
+          <Property Name="balance" Type="nchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="file">
           <Key>
             <PropertyRef Name="fileID" />
@@ -331,6 +341,7 @@
           <Property Name="JobDepartement" Type="int" />
           <Property Name="JobPosition" Type="int" />
           <Property Name="JobLocation" Type="nchar" MaxLength="100" />
+          <Property Name="JobLevel" Type="int" />
           <Property Name="startDate" Type="date" />
           <Property Name="endDate" Type="date" />
           <Property Name="employmentStatus" Type="int" />
@@ -403,6 +414,16 @@
           <Property Name="isDeleted" Type="int" />
           <Property Name="createTime" Type="datetime" />
           <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="roleBased">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="policyType" Type="int" />
+          <Property Name="empLevel" Type="int" />
+          <Property Name="valueType" Type="int" />
+          <Property Name="value" Type="int" />
         </EntityType>
         <EntityType Name="Tokens">
           <Key>
@@ -816,6 +837,7 @@
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="categoryParent" EntityType="Self.categoryParent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employeeRoleBased" EntityType="Self.employeeRoleBased" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="file" EntityType="Self.file" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="location" EntityType="Self.location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="organization" EntityType="Self.organization" Schema="dbo" store:Type="Tables" />
@@ -834,6 +856,7 @@
           <EntitySet Name="personSkill" EntityType="Self.personSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="personTraining" EntityType="Self.personTraining" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="personWorkExperience" EntityType="Self.personWorkExperience" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="roleBased" EntityType="Self.roleBased" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="catID_parentCategory" Association="Self.catID_parentCategory">
@@ -1331,6 +1354,7 @@
           <Property Name="isDeleted" Type="Int32" />
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <Property Name="JobLevel" Type="Int32" />
         </EntityType>
         <EntityType Name="personLanguage">
           <Key>
@@ -1923,6 +1947,8 @@
             <End Role="category" EntitySet="categories" />
             <End Role="location" EntitySet="locations" />
           </AssociationSet>
+          <EntitySet Name="employeeRoleBaseds" EntityType="HRISEntities.employeeRoleBased" />
+          <EntitySet Name="roleBaseds" EntityType="HRISEntities.roleBased" />
         </EntityContainer>
         <Association Name="catID_parentCategory1">
           <End Type="HRISEntities.categoryParent" Role="categoryParent" Multiplicity="0..1" />
@@ -1962,6 +1988,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="employeeRoleBased">
+          <Key>
+            <PropertyRef Name="IDV" />
+          </Key>
+          <Property Name="IDV" Type="Int32" Nullable="false" />
+          <Property Name="catCode" Type="Int32" />
+          <Property Name="valueType" Type="Int32" />
+          <Property Name="value" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="balance" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="roleBased">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="policyType" Type="Int32" />
+          <Property Name="empLevel" Type="Int32" />
+          <Property Name="valueType" Type="Int32" />
+          <Property Name="value" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2283,6 +2329,7 @@
           <EntitySetMapping Name="personJobs">
             <EntityTypeMapping TypeName="HRISEntities.personJob">
               <MappingFragment StoreEntitySet="personJob">
+                <ScalarProperty Name="JobLevel" ColumnName="JobLevel" />
                 <ScalarProperty Name="updateTime" ColumnName="updateTime" />
                 <ScalarProperty Name="createTime" ColumnName="createTime" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
@@ -2411,6 +2458,28 @@
                 <ScalarProperty Name="codeISOParent" ColumnName="codeISOParent" />
                 <ScalarProperty Name="codeNumParent" ColumnName="codeNumParent" />
                 <ScalarProperty Name="codeNum" ColumnName="codeNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employeeRoleBaseds">
+            <EntityTypeMapping TypeName="HRISEntities.employeeRoleBased">
+              <MappingFragment StoreEntitySet="employeeRoleBased">
+                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="valueType" ColumnName="valueType" />
+                <ScalarProperty Name="catCode" ColumnName="catCode" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roleBaseds">
+            <EntityTypeMapping TypeName="HRISEntities.roleBased">
+              <MappingFragment StoreEntitySet="roleBased">
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="valueType" ColumnName="valueType" />
+                <ScalarProperty Name="empLevel" ColumnName="empLevel" />
+                <ScalarProperty Name="policyType" ColumnName="policyType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -66,6 +66,8 @@
         <AssociationConnector Association="HRISEntities.catID_parentCategory1" />
         <EntityTypeShape EntityType="HRISEntities.location" Width="1.5" PointX="8.25" PointY="4.875" />
         <AssociationConnector Association="HRISEntities.FK_locationParent_categoryParent" />
+        <EntityTypeShape EntityType="HRISEntities.employeeRoleBased" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HRISEntities.roleBased" Width="1.5" PointX="0.75" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

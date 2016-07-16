@@ -24,12 +24,12 @@ namespace BusinessServices.Interface
         IEnumerable<LOV> getID();
         IEnumerable<LOV> getName();
 
-        IEnumerable<LocationEntities> getCountry();
-        IEnumerable<LocationEntities> getLocation(long id);
+        IEnumerable<LOVLocation> getCountry();
+        IEnumerable<LOVLocation> getLocation(long id);
 
-        IEnumerable<LocationEntities> getProvince();
-        IEnumerable<LocationEntities> getKabupaten();
-        IEnumerable<LocationEntities> getKecamatan();
+        IEnumerable<LOVLocation> getProvince();
+        IEnumerable<LOVLocation> getKabupaten();
+        IEnumerable<LOVLocation> getKecamatan();
 
         //IEnumerable<listEntities> getListCategory(int parentID);
         //IEnumerable<listEntities> getListparentCategory(int parentID);

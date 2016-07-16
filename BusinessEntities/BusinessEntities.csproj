@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrudEntities\listEntities.cs" />
-    <Compile Include="CrudEntities\LocationEntities.cs" />
+    <Compile Include="CrudEntities\dataSetupEntities.cs" />
+    <Compile Include="CrudEntities\employeeEntities.cs" />
+    <Compile Include="CrudEntities\GlobalVariable.cs" />
     <Compile Include="CrudEntities\LOV.cs" />
+    <Compile Include="CrudEntities\sessionEntities.cs" />
     <Compile Include="Entities\categoryEntities.cs" />
     <Compile Include="Entities\categoryParentEntities.cs" />
     <Compile Include="Entities\Class1.cs" />

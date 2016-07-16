@@ -52,6 +52,7 @@ namespace BusinessEntities.CrudEntities
         public Nullable<int> JobDivision { get; set; }
         public Nullable<int> JobDepartement { get; set; }
         public Nullable<int> JobPosition { get; set; }
+        public Nullable<int> JobLevel { get; set; }
         public string JobLocation { get; set; }
         public Nullable<System.DateTime> startDate { get; set; }
         public Nullable<System.DateTime> endDate { get; set; }
@@ -113,4 +114,10 @@ namespace BusinessEntities.CrudEntities
 
 
     }
+
+    public class profileDependentEntities
+    {
+
+    }
+
 }

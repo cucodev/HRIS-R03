@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\sofyan\Documents\Visual Studio 2015\Projects\HRIS-R03\DataModel\WebApiDataModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\sofyan\documents\visual studio 2015\Projects\HRIS-R03\DataModel\WebApiDataModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

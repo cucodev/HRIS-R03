@@ -55,5 +55,7 @@ namespace DataModel
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<location> locations { get; set; }
+        public virtual DbSet<employeeRoleBased> employeeRoleBaseds { get; set; }
+        public virtual DbSet<roleBased> roleBaseds { get; set; }
     }
 }

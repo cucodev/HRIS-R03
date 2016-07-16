@@ -15,23 +15,7 @@ namespace BusinessServices.InterfaceMethod
     public class ListService : IList
     {
         private readonly UnitOfWork _unitOfWork;
-
-        const string lov_skillLevel = "pSkillLevel";
-        const string lov_marital = "pMarital";
-        const string lov_gender = "pGender";
-        const string lov_religion = "pReligion";
-        const string lov_ID = "pID";
-        const string lov_employeeStatus = "empStatus";
-        const string lov_country = "pCountry";
-        const string lov_province = "pProv";
-        const string lov_kabupaten = "pKab";
-        const string lov_kecamatan = "pKec";
-        const string lov_relationType = "pRelType";
-        const string lov_orgDivision = "empDiv";
-        const string lov_orgDepartemen = "empDep";
-        const string lov_orgPosition = "empPos";
-
-
+        
         public ListService()
         {
             _unitOfWork = new UnitOfWork();
@@ -62,11 +46,10 @@ namespace BusinessServices.InterfaceMethod
 
         }
 
-
         public IEnumerable<LOV> getDivision()
         {
             List<LOV> ms = new List<LOV>();
-            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_orgDivision);
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_orgDivision);
             var vData = _unitOfWork.categoryParentRepository.GetMany(b => b.catParentID == vparentID.catID);
             
             if (vData.Any())
@@ -87,7 +70,7 @@ namespace BusinessServices.InterfaceMethod
         public IEnumerable<LOV> getDepartment()
         {
             List<LOV> ms = new List<LOV>();
-            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_orgDepartemen);
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_orgDepartemen);
             var vData = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == vparentID.catID);
 
             if (vData.Any())
@@ -108,7 +91,7 @@ namespace BusinessServices.InterfaceMethod
         {
             
             List<LOV> ms = new List<LOV>();
-            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_orgPosition);
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_orgPosition);
             if (vparentID.catID != 0)
             {
                 var vData = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == vparentID.catID);
@@ -126,7 +109,7 @@ namespace BusinessServices.InterfaceMethod
                     return ms.AsEnumerable();
                 }
                 System.Diagnostics.Debug.WriteLine("vData: " , vData.ToString());
-            } else { System.Diagnostics.Debug.WriteLine("vparentID is null, Variable lov_orgPosition: " + lov_orgPosition + " vparentID: "  ) ; }
+            } else { System.Diagnostics.Debug.WriteLine("vparentID is null, Variable lov_orgPosition: " + GlobalVariable.lov_orgPosition + " vparentID: "  ) ; }
             
 
             return null; 
@@ -137,7 +120,7 @@ namespace BusinessServices.InterfaceMethod
         {
 
             List<LOV> ms = new List<LOV>();
-            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_orgDivision);
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_orgDivision);
             var vDataDiv = _unitOfWork.categoryParentRepository.GetMany(b => b.catParentID == vparentID.catID);
 
             if (vDataDiv.Any())
@@ -173,7 +156,7 @@ namespace BusinessServices.InterfaceMethod
         {
 
             List<LOV> ms = new List<LOV>();
-            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_skillLevel);
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_skillLevel);
             var vDataDiv = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == vparentID.catID);
 
             if (vDataDiv.Any())
@@ -197,7 +180,7 @@ namespace BusinessServices.InterfaceMethod
         {
 
             List<LOV> ms = new List<LOV>();
-            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_employeeStatus);
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_employeeStatus);
             var vDataDiv = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == vparentID.catID);
 
             if (vDataDiv.Any())
@@ -220,7 +203,7 @@ namespace BusinessServices.InterfaceMethod
         public IEnumerable<LOV> getMarital()
         {
             List<LOV> ms = new List<LOV>();
-            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_marital);
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_marital);
             var vDataDiv = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == vparentID.catID);
 
             if (vDataDiv.Any())
@@ -242,7 +225,7 @@ namespace BusinessServices.InterfaceMethod
         public IEnumerable<LOV> getGender()
         {
             List<LOV> ms = new List<LOV>();
-            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_gender);
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_gender);
             var vDataDiv = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == vparentID.catID);
 
             if (vDataDiv.Any())
@@ -264,7 +247,7 @@ namespace BusinessServices.InterfaceMethod
         public IEnumerable<LOV> getReligion()
         {
             List<LOV> ms = new List<LOV>();
-            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_religion);
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_religion);
             var vDataDiv = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == vparentID.catID);
 
             if (vDataDiv.Any())
@@ -286,7 +269,7 @@ namespace BusinessServices.InterfaceMethod
         public IEnumerable<LOV> getID()
         {
             List<LOV> ms = new List<LOV>();
-            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_ID);
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_ID);
             var vDataDiv = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == vparentID.catID);
 
             if (vDataDiv.Any())
@@ -305,10 +288,10 @@ namespace BusinessServices.InterfaceMethod
             else { return null; };
         }
 
-        public IEnumerable<LocationEntities> getCountry()
+        public IEnumerable<LOVLocation> getCountry()
         {
-            List<LocationEntities> ms = new List<LocationEntities>();
-            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == lov_country);
+            List<LOVLocation> ms = new List<LOVLocation>();
+            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_country);
             if (vparentID.catID != 0)
             {
                 System.Diagnostics.Debug.WriteLine("Country parentID:" + vparentID.catID);
@@ -317,7 +300,7 @@ namespace BusinessServices.InterfaceMethod
                 {
                     foreach (location n in vDataDiv)
                     {
-                        LocationEntities xx = new LocationEntities();
+                        LOVLocation xx = new LOVLocation();
                         System.Diagnostics.Debug.WriteLine("Label:" + vparentID.catName + "Value: " + vparentID.catID);
                         xx.label = n.locationName;
                         xx.value = n.codeNum;
@@ -334,9 +317,9 @@ namespace BusinessServices.InterfaceMethod
             return null;
         }
 
-        public IEnumerable<LocationEntities> getLocation(long parentID)
+        public IEnumerable<LOVLocation> getLocation(long parentID)
         {
-            List<LocationEntities> ms = new List<LocationEntities>();
+            List<LOVLocation> ms = new List<LOVLocation>();
             //var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == lov_country);
             var vDataDiv = _unitOfWork.locationParentRepository.GetMany(b => b.codeNumParent == parentID);
 
@@ -344,7 +327,7 @@ namespace BusinessServices.InterfaceMethod
             {
                 foreach (location n in vDataDiv)
                 {
-                    LocationEntities xx = new LocationEntities();
+                    LOVLocation xx = new LOVLocation();
 
                     xx.label = n.locationName;
                     xx.value = n.codeNum;
@@ -356,10 +339,10 @@ namespace BusinessServices.InterfaceMethod
             else { return null; };
         }
 
-        public IEnumerable<LocationEntities> getProvince()
+        public IEnumerable<LOVLocation> getProvince()
         {
-            List<LocationEntities> ms = new List<LocationEntities>();
-            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == lov_province);
+            List<LOVLocation> ms = new List<LOVLocation>();
+            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_province);
             if (vparentID.catID != 0)
             {
                 var vDataDiv = _unitOfWork.locationParentRepository.GetMany(b => b.locationType == vparentID.catID);
@@ -368,7 +351,7 @@ namespace BusinessServices.InterfaceMethod
                 {
                     foreach (location n in vDataDiv)
                     {
-                        LocationEntities xx = new LocationEntities();
+                        LOVLocation xx = new LOVLocation();
 
                         xx.label = n.locationName;
                         xx.value = n.codeNum;
@@ -385,17 +368,17 @@ namespace BusinessServices.InterfaceMethod
 
         }
 
-        public IEnumerable<LocationEntities> getKabupaten()
+        public IEnumerable<LOVLocation> getKabupaten()
         {
-            List<LocationEntities> ms = new List<LocationEntities>();
-            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == lov_kabupaten);
+            List<LOVLocation> ms = new List<LOVLocation>();
+            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_kabupaten);
             var vDataDiv = _unitOfWork.locationParentRepository.GetMany(b => b.locationType == vparentID.catID);
 
             if (vDataDiv.Any())
             {
                 foreach (location n in vDataDiv)
                 {
-                    LocationEntities xx = new LocationEntities();
+                    LOVLocation xx = new LOVLocation();
 
                     xx.label = n.locationName;
                     xx.value = n.codeNum;
@@ -407,17 +390,17 @@ namespace BusinessServices.InterfaceMethod
             else { return null; };
         }
 
-        public IEnumerable<LocationEntities> getKecamatan()
+        public IEnumerable<LOVLocation> getKecamatan()
         {
-            List<LocationEntities> ms = new List<LocationEntities>();
-            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == lov_kecamatan);
+            List<LOVLocation> ms = new List<LOVLocation>();
+            var vparentID = _unitOfWork.categoryRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_kecamatan);
             var vDataDiv = _unitOfWork.locationParentRepository.GetMany(b => b.locationType == vparentID.catID);
 
             if (vDataDiv.Any())
             {
                 foreach (location n in vDataDiv)
                 {
-                    LocationEntities xx = new LocationEntities();
+                    LOVLocation xx = new LOVLocation();
 
                     xx.label = n.locationName;
                     xx.value = n.codeNum;

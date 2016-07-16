@@ -208,12 +208,12 @@ namespace HRIS_R03.Controllers.api
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getCountry")]
         [System.Web.Http.Route("api/list/getCountry")]
-        public IEnumerable<LocationEntities> getCountry()
+        public IEnumerable<LOVLocation> getCountry()
         {
             var p = _pServices.getCountry();
             if (p != null)
             {
-                var pEntities = p as List<LocationEntities> ?? p.ToList();
+                var pEntities = p as List<LOVLocation> ?? p.ToList();
                 if (pEntities.Any())
                     return pEntities;
             }
@@ -225,12 +225,12 @@ namespace HRIS_R03.Controllers.api
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getLocation")]
         [System.Web.Http.Route("api/list/getLocation/{id}")]
-        public IEnumerable<LocationEntities> getLocaton(long id)
+        public IEnumerable<LOVLocation> getLocaton(long id)
         {
             var p = _pServices.getLocation(id);
             if (p != null)
             {
-                var pEntities = p as List<LocationEntities> ?? p.ToList();
+                var pEntities = p as List<LOVLocation> ?? p.ToList();
                 if (pEntities.Any())
                     return pEntities;
             }
@@ -243,12 +243,12 @@ namespace HRIS_R03.Controllers.api
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getProvince")]
         [System.Web.Http.Route("api/list/getProvince")]
-        public IEnumerable<LocationEntities> getProvince()
+        public IEnumerable<LOVLocation> getProvince()
         {
             var p = _pServices.getProvince();
             if (p != null)
             {
-                var pEntities = p as List<LocationEntities> ?? p.ToList();
+                var pEntities = p as List<LOVLocation> ?? p.ToList();
                 if (pEntities.Any())
                     return pEntities;
             }
@@ -260,12 +260,12 @@ namespace HRIS_R03.Controllers.api
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getKabupaten")]
         [System.Web.Http.Route("api/list/getKabupaten")]
-        public IEnumerable<LocationEntities> getKabupaten()
+        public IEnumerable<LOVLocation> getKabupaten()
         {
             var p = _pServices.getKabupaten();
             if (p != null)
             {
-                var pEntities = p as List<LocationEntities> ?? p.ToList();
+                var pEntities = p as List<LOVLocation> ?? p.ToList();
                 if (pEntities.Any())
                     return pEntities;
             }
@@ -277,12 +277,12 @@ namespace HRIS_R03.Controllers.api
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getKecamatan")]
         [System.Web.Http.Route("api/list/getKecamatan")]
-        public IEnumerable<LocationEntities> getKecamatan()
+        public IEnumerable<LOVLocation> getKecamatan()
         {
             var p = _pServices.getKecamatan();
             if (p != null)
             {
-                var pEntities = p as List<LocationEntities> ?? p.ToList();
+                var pEntities = p as List<LOVLocation> ?? p.ToList();
                 if (pEntities.Any())
                     return pEntities;
             }

@@ -47,9 +47,10 @@
   <ItemGroup>
     <Compile Include="InterfaceMethod\ListService.cs" />
     <Compile Include="InterfaceMethod\profileServices.cs" />
+    <Compile Include="InterfaceMethod\SecurityClass.cs" />
+    <Compile Include="Interface\IdataSetup.cs" />
+    <Compile Include="Interface\Isecurity.cs" />
     <Compile Include="Interface\IList.cs" />
-    <Compile Include="Interface\IprofileDependent.cs" />
-    <Compile Include="Interface\IprofileIdentity.cs" />
     <Compile Include="Interface\IprofileServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
