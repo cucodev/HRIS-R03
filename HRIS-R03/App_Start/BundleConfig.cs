@@ -10,7 +10,7 @@ namespace HRIS_R03
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                           // "~/Scripts/jquery-1.11.3.js"));
-                          "~/Scripts/jquery-3.0.0.js"));
+                          "~/Scripts/jquery-1.11.3.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

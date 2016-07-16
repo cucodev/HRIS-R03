@@ -855,6 +855,7 @@
     <Content Include="Views\Content\vProfile.cshtml" />
     <Content Include="Views\Default\LogOn.cshtml" />
     <Content Include="Views\AdminHR\MaintainData.cshtml" />
+    <Content Include="Views\SharedMaintainData\_categoryRoleBased.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
