@@ -41,9 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrudEntities\dataSetupEntities.cs" />
+    <Compile Include="CrudEntities\classificationEntities.cs" />
+    <Compile Include="CrudEntities\setupEntities.cs" />
     <Compile Include="CrudEntities\employeeEntities.cs" />
-    <Compile Include="CrudEntities\GlobalVariable.cs" />
+    <Compile Include="GlobalVariable.cs" />
     <Compile Include="CrudEntities\LOV.cs" />
     <Compile Include="CrudEntities\sessionEntities.cs" />
     <Compile Include="Entities\categoryEntities.cs" />

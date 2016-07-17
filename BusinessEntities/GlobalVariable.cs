@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessEntities.CrudEntities
+namespace BusinessEntities
 {
     
 
@@ -12,6 +12,13 @@ namespace BusinessEntities.CrudEntities
     {
         public const string UserCred = "UserCred";
 
+        //Category Medical & Leave
+        public const string policyType = "policyType";
+        public const string policyTypeRoot = "policyTypeRoot";
+
+        //Employee Level
+        public const string lov_level = "empLevel";
+        public const string lov_levelRoot = "empLevelRoot";
 
         public const string lov_skillLevel = "pSkillLevel";
         public const string lov_marital = "pMarital";
@@ -27,5 +34,6 @@ namespace BusinessEntities.CrudEntities
         public const string lov_orgDivision = "empDiv";
         public const string lov_orgDepartemen = "empDep";
         public const string lov_orgPosition = "empPos";
+        public const string lov_edu = "pEdu";
     }
 }

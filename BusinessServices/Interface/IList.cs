@@ -14,7 +14,7 @@ namespace BusinessServices.Interface
         IEnumerable<LOV> getDivision();
         IEnumerable<LOV> getDepartment();
         IEnumerable<LOV> getPosition();
-        IEnumerable<listEntities> getParentCategory();
+        IEnumerable<classificationEntities> getParentCategory();
         IEnumerable<LOV> getOrg();
         IEnumerable<LOV> getSkillLevel();
         IEnumerable<LOV> getEmpStatus();
@@ -23,6 +23,7 @@ namespace BusinessServices.Interface
         IEnumerable<LOV> getReligion();
         IEnumerable<LOV> getID();
         IEnumerable<LOV> getName();
+        IEnumerable<LOV> getEdu();
 
         IEnumerable<LOVLocation> getCountry();
         IEnumerable<LOVLocation> getLocation(long id);
@@ -30,6 +31,10 @@ namespace BusinessServices.Interface
         IEnumerable<LOVLocation> getProvince();
         IEnumerable<LOVLocation> getKabupaten();
         IEnumerable<LOVLocation> getKecamatan();
+
+        IEnumerable<LOVTree> getRoleBasedTree();
+        IEnumerable<LOV> getLevel();
+        IEnumerable<LOVTree> getLevelTree();
 
         //IEnumerable<listEntities> getListCategory(int parentID);
         //IEnumerable<listEntities> getListparentCategory(int parentID);

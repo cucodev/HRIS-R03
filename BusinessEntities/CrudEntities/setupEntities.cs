@@ -16,4 +16,5 @@ namespace BusinessEntities.CrudEntities
         public Nullable<int> value { get; set; }
     }
 
+   
 }

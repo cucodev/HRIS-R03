@@ -1,4 +1,5 @@
-﻿using BusinessEntities.CrudEntities;
+﻿using BusinessEntities;
+using BusinessEntities.CrudEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

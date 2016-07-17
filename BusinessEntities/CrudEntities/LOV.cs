@@ -22,25 +22,15 @@ namespace BusinessEntities.CrudEntities
         public virtual IEnumerable<LOV> child { get; set; }
     }
 
-    public class listEntities
+    public class LOVTree
     {
-        public int catID { get; set; }
-        public Nullable<int> catParentID { get; set; }
-        public string catCode { get; set; }
-        public string catName { get; set; }
-
-        public virtual categoryEntities category { get; set; }
-        public virtual ICollection<categoryEntities> categories { get; set; }
+        public int id { get; set; }
+        public int parentid { get; set; }
+        public string text { get; set; }
+        public int value { get; set; }
     }
 
-    public class categoryEntities
-    {
-        public int catID { get; set; }
-        public Nullable<int> catParentID { get; set; }
-        public string catCode { get; set; }
-        public string catName { get; set; }
 
-        public virtual categoryEntities category { get; set; }
-        public virtual ICollection<categoryEntities> categories { get; set; }
-    }
+
+
 }

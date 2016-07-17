@@ -1,4 +1,4 @@
-﻿@model  BusinessEntities.CrudEntities.categoryEntities
+﻿@model  BusinessEntities.CrudEntities.classificationEntities
 
 @{
     Layout = null;
@@ -9,9 +9,140 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title></title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // prepare the data
+
+            //Level
+            var sourceLevel =
+            {
+                datatype: 'json',
+                datafields: [
+                    { name: 'value', type: 'number' },
+                    { name: 'label', type: 'string' }
+                ],
+                async: false,
+                url: '/api/list/getLevel'
+            };
+            var dataLevel = new $.jqx.dataAdapter(sourceLevel);
+
+            //Grid
+            var source =
+            {
+                datatype: 'json',
+                datafields: [
+                    { name: 'empLevel', type: 'number' },
+                    { name: 'LevelName', value: 'empLevel', values: { source: dataLevel.records, value: 'value', name: 'label' } },
+                    { name: 'policyType', type: 'number' },
+                    { name: 'value', type: 'number'},
+                    { name: 'valueType', type: 'number'}
+                ],
+                async: false,
+                url: '/api/list/getLevel'
+            };
+
+
+            var dataAdapter = new $.jqx.dataAdapter(source, {
+                //autoBind: true
+            });
+            $("#jqxgrid").jqxGrid(
+            {
+                width: '100%',
+                source: dataAdapter,
+                theme: 'metro',
+                editable: true,
+                //columnsresize: true,
+                columns: [
+                  { text: 'Level', datafield: 'empLevel', width: '20%' },
+                  {
+                      text: 'Level', datafield: 'LevelName', width: '60%', columntype: 'dropdownlist',
+                      createeditor: function (row, value, editor) {
+                          editor.jqxDropDownList({ source: dataLevel, displayMember: 'label', valueMember: 'value' });
+                      }
+                  },
+                  { text: 'policyType', datafield: 'policytype', hidden: true, width: 250 },
+                  { text: 'Value', datafield: 'value', width: '20%' },
+                  { text: 'valueType', datafield: 'valueType', hidden: true, width: 120 }
+                ]
+            });
+
+
+
+
+
+            //TREE
+            var treesource =
+            {
+                datatype: 'json',
+                datafields: [
+                    { name: 'id', type: 'number' },
+                    { name: 'parentid', type: 'number' },
+                    { name: 'text', type: 'string' },
+                    { name: 'value', type: 'number' }
+                ],
+                id: 'id',
+                async: false, 
+                url: '/api/list/getRoleBasedTree'
+            };
+            var dataAdapter = new $.jqx.dataAdapter(treesource, {
+                //autoBind: true,
+                contentType: 'application/json; charset=utf-8', 
+                loadComplete: function (records) {
+                    console.log('OK : ', records);
+                },
+                loadError: function (jqXHR, status, error) {
+                    console.log('Retrieve Error : ', jqXHR.responseText);
+                },
+                beforeLoadComplete: function (records) {
+                    // console.log(records);
+                }
+            });
+            dataAdapter.dataBind();
+            var records = dataAdapter.getRecordsHierarchy('id', 'parentid', 'items', [{ name: 'text', map: 'label' }]);
+            $('#jqxWidget').jqxTree({ theme: 'orange', source: records, width: '450px', height: '400px' });
+
+
+            //Event
+            $('#jqxWidget').on('itemClick', function (event) {
+                var args = event.args;
+                var item = $('#jqxWidget').jqxTree('getItem', args.element);
+                var label = item.label;
+                console.log("ID " + item.id);
+                console.log("parentID " + item.parentid);
+                console.log("Name " + item.text);
+                console.log("Value " + item.value);
+            });
+        });
+    </script>
+
 </head>
 <body>
-    <h1>Maintain Matrix Role Category </h1>
+
+    
+    
+   
+
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Matrix Standard</h1>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div id='jqxWidget'></div>
+                </div>
+                <div class="col-md-6">
+                    <div id='jqxgrid'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
 

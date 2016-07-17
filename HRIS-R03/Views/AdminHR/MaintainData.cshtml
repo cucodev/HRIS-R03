@@ -4,17 +4,29 @@
     Layout = "~/Views/Shared/_LayoutNavigation.cshtml";
 }
 
-<h2>MaintainData</h2>
+<script type="text/javascript">
+    $(document).ready(function () {
+        th = "ui-redmond";
+        $('#dataForm').jqxTabs({ theme: th, width: '100%', height: 550 });
+    })
+</script>
 
 <div class="row">
     <div class="col-md-5">
-        <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">EMPLOYEE PROFILE</h1>
+        <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">Maintain Master Data</h1>
         <h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Master Data</h2>
     </div>
-
-    Html.RenderPartial("~/Views/Shared/_Product.cshtml", product);
-    
-
 </div>
+<hr />
 
+    <div class="row">
+        <div class="col-md-9" id="dataForm">
+            <ul>
+                <li style="margin-left:30px">Matrix Role</li>
+            </ul>
+            <div style="overflow: hidden; margin-right:20px;margin-top:20px; margin-left:30px">
+                @{ Html.RenderPartial("~/Views/SharedMaintainData/_categoryRoleBased.cshtml"); }
+            </div>
+        </div>
+    </div>
 

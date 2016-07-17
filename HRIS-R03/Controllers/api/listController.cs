@@ -16,7 +16,7 @@ namespace HRIS_R03.Controllers.api
 
         public listController()
         {
-            _pServices = new ListService();// ProductServices();
+            _pServices = new ListServices();// ProductServices();
         }
 
         // GET: api/list
@@ -40,12 +40,12 @@ namespace HRIS_R03.Controllers.api
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getParentCategory")]
         [System.Web.Http.Route("api/list/getParentCategory")]
-        public IEnumerable<listEntities> getParentCategory()
+        public IEnumerable<classificationEntities> getParentCategory()
         {
             var p = _pServices.getParentCategory();
             if (p != null)
             {
-                var pEntities = p as List<listEntities> ?? p.ToList();
+                var pEntities = p as List<classificationEntities> ?? p.ToList();
                 if (pEntities.Any())
                     return pEntities;
             }
@@ -60,6 +60,58 @@ namespace HRIS_R03.Controllers.api
         public IEnumerable<LOV> getOrg()
         {
             var p = _pServices.getOrg();//.getParentCategory();
+            if (p != null)
+            {
+                var pEntities = p as List<LOV> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getEdu")]
+        [System.Web.Http.Route("api/list/getEdu")]
+        public IEnumerable<LOV> getEdu()
+        {
+            var p = _pServices.getEdu();//.getParentCategory();
+            if (p != null)
+            {
+                var pEntities = p as List<LOV> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getLevelTree")]
+        [System.Web.Http.Route("api/list/getLevelTree")]
+        public IEnumerable<LOVTree> getLevelTree()
+        {
+            var p = _pServices.getLevelTree();//.getParentCategory();
+            if (p != null)
+            {
+                var pEntities = p as List<LOVTree> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getLevel")]
+        [System.Web.Http.Route("api/list/getLevel")]
+        public IEnumerable<LOV> getLevel()
+        {
+            var p = _pServices.getLevel();//.getParentCategory();
             if (p != null)
             {
                 var pEntities = p as List<LOV> ?? p.ToList();
@@ -290,7 +342,24 @@ namespace HRIS_R03.Controllers.api
             return null;
         }
 
-        
+        //Kabupaten Kota
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getRoleBasedTree")]
+        [System.Web.Http.Route("api/list/getRoleBasedTree")]
+        public IEnumerable<LOVTree> getRoleBasedTree()
+        {
+            var p = _pServices.getRoleBasedTree();
+            if (p != null)
+            {
+                var pEntities = p as List<LOVTree> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+
         //Department shows nothing, because its parent to Division each
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getDepartment")]

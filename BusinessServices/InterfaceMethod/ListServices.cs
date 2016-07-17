@@ -12,13 +12,26 @@ using BusinessEntities;
 
 namespace BusinessServices.InterfaceMethod
 {
-    public class ListService : IList
+    public class ListServices : IList
     {
         private readonly UnitOfWork _unitOfWork;
         
-        public ListService()
+        public ListServices()
         {
             _unitOfWork = new UnitOfWork();
+        }
+
+        public IEnumerable<LOV> getEdu()
+        {
+            //return null;
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_edu);
+            //If id has tree
+            if (isHasSubTreeInCategory(vparentID.catID))
+            {
+                getSubinCategory(vparentID.catID);
+            }
+
+            return msLOV.AsEnumerable();
         }
 
         public IEnumerable<LOV> getName()
@@ -175,6 +188,142 @@ namespace BusinessServices.InterfaceMethod
             else { return null; };
 
         }
+
+        List<LOV> msLOV = new List<LOV>();
+        public IEnumerable<LOV> getLevel()
+        {
+            //return null;
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_levelRoot);
+            //If id has tree
+            if (isHasSubTreeInparentCategory(vparentID.catID))
+            {
+                getSubinParentCategory(vparentID.catID);
+            }
+
+            return msLOV.AsEnumerable();
+        }
+
+        //categoryParent Only
+        private bool isHasSubTreeInCategory(int parentID)
+        {
+            //subTreeID;
+            var memberID = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == parentID);
+
+            if (memberID.Any())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+
+        //categoryParent Only
+        private bool isHasSubTreeInparentCategory(int parentID)
+        {
+            //subTreeID;
+            var memberID = _unitOfWork.categoryParentRepository.GetMany(b => b.catParentID == parentID);
+
+            if (memberID.Any())
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+            
+        }
+
+        //categoryParent Only, get member in parentCategory
+        private void getSubinParentCategory(int parentID)
+        {
+            var rootID = _unitOfWork.categoryParentRepository.GetMany(b => b.catParentID == parentID);
+            if (rootID.Any())
+            {
+
+                foreach (categoryParent n in rootID)
+                {
+                    if (isHasSubTreeInparentCategory(n.catID))
+                    {
+                        getSubinParentCategory(n.catID);
+                    }
+
+                    LOV xx = new LOV();
+                    xx.value = n.catID;
+                    xx.label = n.catName;
+                    msLOV.Add(xx);
+                }
+
+            }
+        }
+
+        //category Only, get member in parentCategory
+        private void getSubinCategory(int parentID)
+        {
+            var rootID = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == parentID);
+            if (rootID.Any())
+            {
+
+                foreach (category n in rootID)
+                {
+                    if (isHasSubTreeInparentCategory(n.catID))
+                    {
+                        getSubinCategory(n.catID);
+                    }
+
+                    LOV xx = new LOV();
+                    xx.value = n.catID;
+                    xx.label = n.catName;
+                    msLOV.Add(xx);
+                }
+
+            }
+        }
+
+        //categoryParent Only
+        private void getSubTree(int parentID)
+        {
+            var rootID = _unitOfWork.categoryParentRepository.GetMany(b => b.catParentID == parentID);
+            if (rootID.Any())
+            {
+               
+                foreach (categoryParent n in rootID)
+                {
+                    if (isHasSubTreeInparentCategory(n.catID))
+                    {
+                        getSubTree(n.catID);
+                    }
+
+                    LOVTree xx = new LOVTree();
+                    xx.id = n.catID;
+                    xx.parentid = n.catParentID.HasValue ? n.catParentID.Value : 0;
+                    xx.text = n.catName;
+                    xx.value = n.catID;
+                    msTree.Add(xx);
+                }
+
+            }
+        }
+
+        List<LOVTree> msTree = new List<LOVTree>();
+        public IEnumerable<LOVTree> getLevelTree()
+        {
+
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_levelRoot);
+            
+            //If id has tree
+            if (isHasSubTreeInparentCategory(vparentID.catID))
+            {
+                getSubTree(vparentID.catID);
+            }
+
+            return msTree.AsEnumerable();
+           
+        }
+
 
         public IEnumerable<LOV> getEmpStatus()
         {
@@ -412,16 +561,57 @@ namespace BusinessServices.InterfaceMethod
             else { return null; };
         }
 
-        public IEnumerable<listEntities> getParentCategory()
+        public IEnumerable<LOVTree> getRoleBasedTree()
+        {
+            List<LOVTree> ms = new List<LOVTree>();
+            var vRootID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.policyTypeRoot);
+            var vParentID = _unitOfWork.categoryParentRepository.GetMany(b => b.catParentID == vRootID.catID);
+
+            if (vRootID.catID != 0)
+            {
+                if (vParentID.Any())
+                {
+                    foreach (categoryParent n in vParentID)
+                    {
+                        LOVTree x = new LOVTree();
+                        x.id = n.catID;
+                        x.parentid = n.catParentID.HasValue ? n.catParentID.Value : 0;
+                        x.text = (n.catName).TrimEnd();
+                        x.value = n.catID;
+                        ms.Add(x);
+
+                        var vDataID = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == n.catID);
+                        if (vDataID.Any())
+                        {
+                            foreach (category nn in vDataID)
+                            {
+                                LOVTree xx = new LOVTree();
+                                xx.id = nn.catID;
+                                xx.parentid = nn.catParentID.HasValue ? nn.catParentID.Value : 0;
+                                xx.text = (nn.catName).TrimEnd();
+                                xx.value = nn.catID;
+                                ms.Add(xx);
+                            }
+                        }
+                        
+                    }
+                    
+                }
+
+            }
+            return ms.AsEnumerable();
+        }
+
+        public IEnumerable<classificationEntities> getParentCategory()
         {
 
-            List<listEntities> ms = new List<listEntities>();
+            List<classificationEntities> ms = new List<classificationEntities>();
             var vparent = _unitOfWork.categoryParentRepository.GetAll();
             if (vparent.Any())
             {
                 foreach (categoryParent nn in vparent)
                 {
-                    listEntities x = new listEntities();
+                    classificationEntities x = new classificationEntities();
                     x.catID = nn.catID;
                     x.catCode = nn.catCode;
                     x.catParentID = nn.catParentID;
@@ -437,5 +627,7 @@ namespace BusinessServices.InterfaceMethod
             return null;
 
         }
+
+        
     }
 }

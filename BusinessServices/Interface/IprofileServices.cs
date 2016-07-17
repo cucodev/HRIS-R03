@@ -8,6 +8,14 @@ using BusinessEntities.CrudEntities;
 
 namespace BusinessServices.Interface
 {
+    //Maintain Matrix Role of Employee
+    public interface IprofileRoleBased
+    {
+        IEnumerable<roleBasedEntities> getRoleBased(int IDV);
+        int CreateRoleBased(roleBasedEntities EroleBased);
+        bool UpdateRoleBased(roleBasedEntities EroleBased);
+    }
+
     public interface IprofileServices
     {
         profileEntities GetProfileById(int personIDV);
