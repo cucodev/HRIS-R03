@@ -33,9 +33,9 @@ namespace BusinessServices.InterfaceMethod
 
         public IEnumerable<roleBasedEntities> getRoleBased()
         {
-            List<roleBasedEntities> ms = new List<roleBasedEntities>();
-            var vperson = _unitOfWork.personRepository.GetAll().ToList();
-
+            //List<roleBasedEntities> ms = new List<roleBasedEntities>();
+            //var vperson = _unitOfWork.personRepository.GetAll().ToList();
+            return null;
         }
 
         public IEnumerable<roleBasedEntities> getRoleBasedBypolicyType(int policyType)

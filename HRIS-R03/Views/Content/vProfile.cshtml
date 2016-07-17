@@ -116,15 +116,18 @@
 
                     bindCategory("eduCountry", "getCountry");
                     bindCategory("eduGraduate", "getCountry");
-                    bindCategory("eduLevel", "getSkillLevel");
+                    bindCategory("eduLevel", "getEdu");
                     bindInput("eduMajor");
                     bindInput("eduValue");
 
+
                     bindCategory("empDepartement", "getDepartment");
-                    //bindCategory("empDivision", MasterList["empDiv"]);
+                    bindCategory("empDivision", "getDivision");
                     bindCategory("empJobLevel", "getDivision");
                     bindInput("empOfficeLocation");
+                    bindInput("lastPosition");
                     bindCategory("empPosition", "getPosition");
+                    bindCategory("employmentStatus", "getEmpStatus");
 
                     bindInput("Phone1");
                     bindInput("Phone2");
@@ -221,6 +224,7 @@
                             var th = $.jStorage.get("th");
                             $("#" + div).jqxDropDownList({ source: jsLOV(value), theme: th, disabled: false, displayMember: "label", valueMember: "value", width: '100%' });
                             var str = eval('dt.' + div);
+                            console.log(div,str);
                             $("#" + div).jqxDropDownList('val', str);
                         } catch (err) {
                             console.log('Error: ', err)
@@ -602,13 +606,17 @@
                 <!--JOB-->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="empDepartement">Department</label>
                                 <div id="empDepartement"></div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="empDivision">Division</label>
                                 <div id="empDivision"></div>
@@ -618,13 +626,17 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="empPosition">Position</label>
                                 <div id="empPosition"></div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="empJobLevel">Job Level</label>
                                 <div id="empJobLevel"></div>
@@ -634,10 +646,30 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="empOfficeLocation">Office Location</label>
                                 <input type="text" class="form-control" id="empOfficeLocation" placeholder="Office Location">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="employmentStatus">Employee Status</label>
+                                <div id="employmentStatus"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lastPosition">Last Position</label>
+                                <input type="text" class="form-control" id="lastPosition" placeholder="Last Position"></input>
                             </div>
                         </div>
                     </div>
