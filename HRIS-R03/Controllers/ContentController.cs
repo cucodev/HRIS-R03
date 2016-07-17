@@ -1,5 +1,6 @@
 ﻿using BusinessEntities;
 using BusinessEntities.CrudEntities;
+using HRIS_R03.Controllers.shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Web.Mvc;
 
 namespace HRIS_R03.Controllers
 {
-    public class ContentController : Controller
+    public class ContentController : ApplicationController<LogOnModel>
     {
         
         

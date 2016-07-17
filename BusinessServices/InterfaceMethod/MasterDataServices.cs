@@ -18,6 +18,14 @@ namespace BusinessServices.InterfaceMethod
 
     public class RoleBasedServices : IRoleBased
     {
+
+        private readonly UnitOfWork _unitOfWork;
+
+        public RoleBasedServices()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
+
         public int CreateRoleBased(roleBasedEntities roleBasedEntities)
         {
             throw new NotImplementedException();
@@ -25,7 +33,9 @@ namespace BusinessServices.InterfaceMethod
 
         public IEnumerable<roleBasedEntities> getRoleBased()
         {
-            throw new NotImplementedException();
+            List<roleBasedEntities> ms = new List<roleBasedEntities>();
+            var vperson = _unitOfWork.personRepository.GetAll().ToList();
+
         }
 
         public IEnumerable<roleBasedEntities> getRoleBasedBypolicyType(int policyType)

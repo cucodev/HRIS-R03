@@ -41,6 +41,8 @@ namespace DataModel.UnitOfWork
         private GenericRepository<file> _fileRepository;
         private GenericRepository<location> _locationParentRepository;
         private GenericRepository<organization> _organizationRepository;
+        private GenericRepository<roleBased> _roleBasedRepository;
+
         private GenericRepository<user> _userRepository;
         private GenericRepository<Token> _tokenRepository;
         #endregion
@@ -53,6 +55,16 @@ namespace DataModel.UnitOfWork
 
         #region Public Repository Creation properties...
 
+        public GenericRepository<roleBased> roleBasedRepository
+        {
+            get
+            {
+                if (this._roleBasedRepository == null)
+                    this._roleBasedRepository = new GenericRepository<roleBased>(_context);
+                return _roleBasedRepository;
+            }
+        }
+
         public GenericRepository<C_purpose> purposeRepository
         {
             get
@@ -62,6 +74,7 @@ namespace DataModel.UnitOfWork
                 return _C_purposeRepository;
             }
         }
+
         public GenericRepository<C_transaction> transactionRepository
         {
             get
