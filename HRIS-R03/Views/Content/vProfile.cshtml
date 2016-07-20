@@ -19,7 +19,7 @@
 
 
             //console.log('ParentList: ', );
-            $('#dataForm').jqxTabs({ theme: th, width: '100%', height: 550 });
+            $('#dataForm').jqxTabs({ theme: th, width: '100%', autoHeight: false });
 
             var value = $.jStorage.get("idv");
             var i = 0;
@@ -113,21 +113,81 @@
                     bindDateTime("Birthdate");
                     bindInput("Birthplace");
                     bindCategory("Nationality", "getCountry");
+                    
+                    // Employee
+                    bindInput("employeeID");
+                    bindInput("UID_ABSENCE");
+                    bindCategory("employmentStatus", "getEmpStatus");
+                    bindDateTime("joinDate");
+                    bindDateTime("resignDate");
+                    bindDateTime("contract1Start");
+                    bindDateTime("contract1End");
+                    bindDateTime("contract2Start");
+                    bindDateTime("contract2End");
+                    bindDateTime("contract3Start");
+                    bindDateTime("contract3End");
+                    bindInput("active");
 
+                    // Job
+                    bindInput("personJobID");
+                    bindInput("parentIDV");
+                    bindInput("jobName");
+                    bindInput("JobDivision");
+                    bindInput("JobDepartement");
+                    bindInput("JobPosition");
+                    bindInput("JobLevel");
+                    bindInput("JobLocation");
+                    bindDateTime("startDate");
+                    bindDateTime("endDate");
+                    bindInput("Note");
+
+                    //Education
+                    bindInput("personEduID")
                     bindCategory("eduCountry", "getCountry");
                     bindCategory("eduGraduate", "getCountry");
                     bindCategory("eduLevel", "getEdu");
                     bindInput("eduMajor");
                     bindInput("eduValue");
 
+                    //Work Experience
+                    bindInput("personWorkExperienceID");
+                    bindInput("companyName");
+                    bindInput("lastPosition");
+                    bindDateTime("Start");
+                    bindDateTime("Stop");
+                    bindInput("reason");
+
+                    //Language
+                    bindInput("personLanguageID");
+                    bindInput("languageName");
+                    bindInput("spoken");
+                    bindInput("written");
+
+                    //Skill & Certification
+                    bindInput("personSkillID");
+                    bindInput("skillName");
+                    bindInput("skillLevel");
+                    bindInput("personCertificationID");
+                    bindInput("certificationName");
+                    bindInput("issuedCountry");
+                    bindInput("issuedCity");
+                    bindDateTime("issuedDate");
+                    bindDateTime("issuedExpiredDate");
+
+                    //Training
+                    bindInput("personTrainingID");
+                    bindInput("TrainingName");
+                    bindInput("TrainingSponsor");
+                    bindInput("TrainingCertificate");
+                    bindDateTime("TrainingStartDate");
+                    bindDateTime("TrainingEndDate");
 
                     bindCategory("empDepartement", "getDepartment");
                     bindCategory("empDivision", "getDivision");
                     bindCategory("empJobLevel", "getDivision");
                     bindInput("empOfficeLocation");
-                    bindInput("lastPosition");
+                    
                     bindCategory("empPosition", "getPosition");
-                    bindCategory("employmentStatus", "getEmpStatus");
 
                     bindInput("Phone1");
                     bindInput("Phone2");
@@ -399,13 +459,18 @@
     <div class="col-md-9" id="dataForm">
         <ul>
             <li style="margin-left:30px">Profile</li>
+            <li>Employee</li>
             <li>Address</li>
             <li>Education</li>
             <li>Work</li>
             <li>Image</li>
             <li>Dependent</li>
             <li>Identity</li>
-            <li>Employee</li>
+            <li>Job</li>
+            <li>Work Experience</li>
+            <li>Language</li>
+            <li>Skill & Certification</li>
+            <li>Training</li>
         </ul>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             <div class="container-fluid">
@@ -499,6 +564,130 @@
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
+            <!--EMPLOYEE-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="employeeID">Employee ID</label>
+                            <input type="text" class="form-control" placeholder="Employee ID" id="employeeID" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="UID_ABSENCE">UID Absence</label>
+                            <input type="text" class="form-control" placeholder="UID ABSENCE" id="UID_ABSENCE" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="employmentStatus">Employee Status</label>
+                            <div id="employmentStatus"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="joinDate">Join Date</label>
+                            <div id="joinDate"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="resignDate">Resign Date</label>
+                            <div id="resignDate"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <label>Contract #1</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="contract1Start">Start</label>
+                            <div id="contract1Start"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="contract1End">End</label>
+                            <div id="contract1End"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <label>Contract #2</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="contract2Start">Start</label>
+                            <div id="contract2Start"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="contract2End">End</label>
+                            <div id="contract2End"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <label>Contract #3</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="contract3Start">Start</label>
+                            <div id="contract3Start"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="contract3End">End</label>
+                            <div id="contract3End"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="active">Active</label>
+                            <input type="text" class="form-control" placeholder="Active" id="active"></input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             <div class="container-fluid">
                 <!--ADDRESS-->
                 <div class="row">
@@ -553,6 +742,16 @@
                     <div class="col-md-12">
                         <div class="col-lg-4">
                             <div class="form-group">
+                                <label for="personEduID">Education ID</label>
+                                <input type="text" class="form-control" placeholder="Education ID" id='personEduID' />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-lg-4">
+                            <div class="form-group">
                                 <label for="eduCountry">Education Country</label>
                                 <div id='eduCountry'></div>
                             </div>
@@ -603,7 +802,7 @@
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             <div class="container-fluid">
-                <!--JOB-->
+                <!--Work-->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-4">
@@ -664,16 +863,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="lastPosition">Last Position</label>
-                                <input type="text" class="form-control" id="lastPosition" placeholder="Last Position"></input>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
@@ -692,13 +882,369 @@
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
-
-            <!--EMPLOYEE-->
-
+            <div class="container-fluid">
+                <!--Job-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="personJobID">Job ID</label>
+                                <input type="text" class="form-control" placeholder="Job ID" id="personJobID" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="parentIDV">Job Parent ID</label>
+                                <input type="text" class="form-control" placeholder="Job Parent ID" id="parentIDV" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="JobDepartement">Department</label>
+                                <input type="text" class="form-control" placeholder="Department" id="JobDepartement" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="JobDivision">Division</label>
+                                <input type="text" class="form-control" placeholder="Division" id="JobDivision" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="JobPosition">Position</label>
+                                <input type="text" class="form-control" placeholder="Position" id="JobPosition" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="JobLocation">Location</label>
+                                <input type="text" class="form-control" placeholder="Location" id="JobLocation" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="startDate">Start Date</label>
+                                <div id="startDate"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="endDate">End Date</label>
+                                <div id="endDate"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Note">Note</label>
+                                <input type="text" class="form-control" placeholder="Note" id="Note" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!--SUBMIT-->
-    </div>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px">
+            <!-- Work Experience-->
+            <div class="container-fluid">
+                <!--Job-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="personWorkExperienceID">Work Experience ID</label>
+                                <input type="text" class="form-control" placeholder="Work Experience Id" id="personWorkExperienceID" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="companyName">Company Name</label>
+                                <input type="text" class="form-control" placeholder="Company Name" id="companyName" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lastPosition">Last Position</label>
+                                <input type="text" class="form-control" id="lastPosition" placeholder="Last Position"></input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Start">Start</label>
+                                <div id="Start"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Stop">Stop</label>
+                                <div id="Stop"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="reason">Reason</label>
+                                <input type="text" class="form-control" placeholder="Reason" id="reason" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px">
+            <!-- Language -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="personLanguageID">Language ID</label>
+                                <input type="text" class="form-control" placeholder="Language Id" id="personLanguageID" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="languageName">Language Name</label>
+                                <input type="text" class="form-control" placeholder="Language Name" id="languageName" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="spoken">Spoken</label>
+                                <input type="text" class="form-control" id="spoken" placeholder="Spoken" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="written">Written</label>
+                                <input type="text" class="form-control" id="written" placeholder="Written" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px">
+            <!-- Skill & Certification -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="personSkillID">Skill ID</label>
+                                <input type="text" class="form-control" placeholder="Skill Id" id="personSkillID" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="skillName">Skill Name</label>
+                                <input type="text" class="form-control" placeholder="Skill Name" id="skillName" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="skillLevel">Skill Level</label>
+                                <input type="text" class="form-control" id="skillLevel" placeholder="Skill Level" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="personCertificationID">Certification ID</label>
+                                <input type="text" class="form-control" id="personCertificationID" placeholder="Certification ID" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="certificationName">Certification Name</label>
+                                <input type="text" class="form-control" id="certificationName" placeholder="Certification Name" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="issuedCountry">Issued Country</label>
+                                <input type="text" class="form-control" id="issuedCountry" placeholder="Issued Country" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="issuedCity">Issued City</label>
+                                <input type="text" class="form-control" id="issuedCity" placeholder="Issued City" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="issuedDate">Issued Date</label>
+                                <div id="issuedDate"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="issuedExpiredDate">Issued Expired Date</label>
+                                <div id="issuedExpiredDate"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px">
+            <!-- Training -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="personTrainingID">Training ID</label>
+                                <input type="text" class="form-control" placeholder="Training ID" id="personTrainingID" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="TrainingName">Training Name</label>
+                                <input type="text" class="form-control" placeholder="Training Name" id="TrainingName" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="TrainingSponsor">Training Sponsor</label>
+                                <input type="text" class="form-control" id="TrainingSponsor" placeholder="Training Sponsor" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="TrainingCertificate">Certificate</label>
+                                <input type="text" class="form-control" id="TrainingCertificate" placeholder="Certificate" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="TrainingStartDate">Start Date</label>
+                                <div id="TrainingStartDate"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="TrainingEndDate">End Date</label>
+                                <div id="TrainingEndDate"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!--SUBMIT-->
+        </div>
 </div>
 
 <div class="row">
