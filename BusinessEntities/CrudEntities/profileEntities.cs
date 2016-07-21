@@ -108,11 +108,6 @@ namespace BusinessEntities.CrudEntities
         //personDependant
         public virtual ICollection<personDependentEntities> personDependent { get; set; }
         
-
-
-
-
-
     }
 
     public class profileDependentEntities
@@ -120,6 +115,35 @@ namespace BusinessEntities.CrudEntities
 
     }
 
-    
+    public class profileIdentityEntities
+    {
 
+    }
+
+    public class profileJobEntities
+    {
+
+        public int ID { get; set; }
+        public Nullable<int> IDV { get; set; }
+        public Nullable<int> parentIDV { get; set; }
+        public string jobName { get; set; }
+        public Nullable<int> JobDivision { get; set; }
+        public Nullable<int> JobDepartement { get; set; }
+        public Nullable<int> JobPosition { get; set; }
+        public string JobLocation { get; set; }
+        public Nullable<System.DateTime> startDate { get; set; }
+        public Nullable<System.DateTime> endDate { get; set; }
+        public Nullable<int> employmentStatus { get; set; }
+        public string Note { get; set; }
+        public Nullable<int> vCreatedBy { get; set; }
+        public Nullable<int> vUpdatedBy { get; set; }
+        public Nullable<int> isDeleted { get; set; }
+        public Nullable<System.DateTime> createTime { get; set; }
+        public Nullable<System.DateTime> updateTime { get; set; }
+        public Nullable<int> JobLevel { get; set; }
+
+        public virtual personEntities person { get; set; }
+
+
+    }
 }

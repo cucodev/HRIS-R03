@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessEntities", "Busines
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessServices", "BusinessServices\BusinessServices.csproj", "{076D9ABE-7F79-4418-B075-AA398A4FB8C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRIS", "HRIS\HRIS.csproj", "{4B780507-2CDE-4CCF-8715-DD4C07104C1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{076D9ABE-7F79-4418-B075-AA398A4FB8C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{076D9ABE-7F79-4418-B075-AA398A4FB8C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{076D9ABE-7F79-4418-B075-AA398A4FB8C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B780507-2CDE-4CCF-8715-DD4C07104C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B780507-2CDE-4CCF-8715-DD4C07104C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B780507-2CDE-4CCF-8715-DD4C07104C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B780507-2CDE-4CCF-8715-DD4C07104C1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

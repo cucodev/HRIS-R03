@@ -1,0 +1,274 @@
+﻿@model  BusinessEntities.CrudEntities.classificationEntities
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // themes
+            //============================================================================================================
+            $.jqx.theme = "orange";
+
+
+            //WIndows popup
+            //============================================================================================================
+            var main = $('body');
+            var offset = main.offset();
+            $('#customWindow').jqxWindow({
+                width: 400,
+                isModal: true,
+                modalOpacity: 0.9,
+                height: 265, resizable: false,
+                cancelButton: $('#cancelButton'),
+                position: { x: offset.left + 50, y: offset.top + 50 },
+                initContent: function () {
+                    hris.general.bindInput("valueData");
+                    hris.general.bindDropDown("getLevel",null);
+                    hris.general.bindDropDown("getValueType",null);
+                    hris.general.bindButton('submitButton');
+                    hris.general.bindButton('cancelButton');
+                    //$('#cancelButton').jqxButton({ width: '120px', height: '45px' });
+                }
+            });
+            $('#customWindow').jqxWindow('close');
+            $("#customWindow").css('visibility', 'visible');
+
+           
+            //Grid
+            //============================================================================================================
+            
+            var dataAdapter = hris.data._getRoleBased();
+
+            $("#dataTable").jqxGrid(
+            {
+                pageable: true,
+                theme: 'energyblue',
+                autoheight: true,
+                editable: true,
+                //selectionmode: 'multiplecellsadvanced',
+                width: '100%',
+                source: dataAdapter,
+                editable: true,
+                //columnsresize: true,
+                columns: [
+                    { text: ' ', columntype: 'checkbox', datafield: 'check' },
+                    { text: 'ID', datafield: 'ID', hidden: true },
+                    { text: 'Level', datafield: 'empLevel',hidden: true, width: '20%' },
+                  {
+                      text: 'Level', datafield: 'LevelName', width: '80%', columntype: 'dropdownlist', editable: false,
+                      createeditor: function (row, value, editor) {
+                          editor.jqxDropDownList({ source: dataLevel, displayMember: 'label', valueMember: 'value' });
+                      }
+                  },
+                  { text: 'policyType', datafield: 'policytype', hidden: true, width: 250, editable: false },
+                  { text: 'Value', datafield: 'value', width: '20%', editable: false },
+                  { text: 'valueType', datafield: 'valueType', hidden: true, width: 120, editable: false }
+                ]
+            });
+
+
+            //Button
+            //============================================================================================================
+            var txType;
+            $('#button').jqxButtonGroup({
+                mode: 'default',
+                theme: 'fresh'
+            });
+            $('#button').on('buttonclick', function (event) {
+                txType = event.args.index;
+                $('#customWindow').jqxWindow('open');
+            });
+
+
+
+            //TREE
+            //============================================================================================================
+            
+            var data = hris.data._getRoleBasedTree();
+            data.dataBind();
+            //dataAdapter.dataBind();
+            var records = data.getRecordsHierarchy('id', 'parentid', 'items', [{ name: 'text', map: 'label' }]);
+            $('#jqxWidget').jqxTree({ source: records, width: '450px', height: '400px' });
+
+
+            //Event
+            //============================================================================================================
+            var policy;
+
+            $('#jqxWidget').on('itemClick', function (event) {
+                var args = event.args;
+                var item = $('#jqxWidget').jqxTree('getItem', args.element);
+                var label = item.label;
+                console.log("ID " + item.id);
+                console.log("parentID " + item.parentid);
+                console.log("Name " + item.text);
+                console.log("Value " + item.value);
+                policy = item.value;
+            });
+
+            $("#submitButton").click(function () {
+                if (policy == null) {
+                    alert("Select Medical or Annual Leave first");
+                } else {
+                    var row = new Object();
+                    row.ID = null;
+                    row.empLevel = hris.general.getData("getLevel");
+                    row.valueType = hris.general.getData("getValueType");
+                    row.value = hris.general.getData("valueData");
+                    row.policyType = policy;
+                    console.log('txType:', txType );
+                    process(txType, row);
+                    $('#customWindow').jqxWindow('close');
+                }
+            });
+
+
+            //Data
+            //============================================================================================================
+            function process(txType, row) {
+                switch (txType) {
+                    case 0: 
+                        $.ajax({
+                                cache: false,
+                                dataType: 'json',
+                                url: '/api/role/createRoleBased',
+                                data: row,
+                                type: "POST",
+                                success: function (data, status, xhr) {
+                                    $('#dataTable').jqxGrid('updatebounddata');
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    console.log("Error " + errorThrown);
+                                }
+                        }); break;
+                    case 1:
+                        $.ajax({
+                            cache: false,
+                            dataType: 'json',
+                            url: '/api/role/updateRoleBased/' + row.ID,
+                            contentType: 'application/json',
+                            data: row,
+                            type: 'PUT',
+                            success: function (data, status, xhr) {
+                                $('#dataTable').jqxGrid('updatebounddata');
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log("Error " + errorThrown);
+                            }
+                        });
+                        break;
+                    case 2: break;
+                }
+            }
+            
+           
+
+
+        });
+    </script>
+    <style type="text/css">
+        body, html {
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+            width: 100%;
+            border: none;
+            overflow: hidden;
+        }
+
+        .required {
+            vertical-align: baseline;
+            color: red;
+            font-size: 10px;
+        }
+
+        .control-label {
+            white-space: nowrap;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Matrix Standard</h1>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div id='jqxWidget'></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id='dataTable'></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="align-content:stretch;">
+                            <div id='button'>
+                                <button style="padding:4px 16px;" id="buttonCreate">
+                                    Create
+                                </button>
+                                <button style="padding:4px 16px;" id="buttonUpdate">
+                                    Update
+                                </button>
+                                <button style="padding:4px 16px;" id="buttonDelete">
+                                    Delete
+                                </button>
+                            </div><br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="customWindow"  style="overflow: hidden; visibility: hidden;" >
+        <div id="customWindowHeader">
+            <span id="captureContainer" style="float: left">HR Based Matrix Form </span>
+        </div>
+        <div id="customWindowContent">
+            <div style="margin: 10px">
+                <div class="row">
+                        <div class="col-md-6">
+                            <label for="valueData">Amount</label><br />
+                            <input type="text" style="width: 175px; border: 1px solid #aaa" id="valueData" />
+                        </div>
+                        <div class="col-md-6"><label for="getValueType">Value Type</label><div id="getValueType"></div></div>
+                    
+                </div>
+                <div class="row">
+                        <div class="col-md-12">
+                            <label for="getValueType">Level</label>
+                            <div id="getLevel"></div>
+                        </div>             
+                </div>
+                
+                <hr />
+
+                <div class="row">
+                    <div class="col-md-6"><input type="button" value="Submit" style="margin-bottom: 5px;" id="submitButton" /></div>
+                   <div class="col-md-6"><input type="button" value="Cancel" id="cancelButton" /></div>
+                </div>
+
+                
+            </div>
+        </div>
+
+
+</body>
+</html>
+

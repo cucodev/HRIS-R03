@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 
+
 #endregion
 
 namespace DataModel.GenericRepository
@@ -17,7 +18,7 @@ namespace DataModel.GenericRepository
     public class GenericRepository<TEntity> where TEntity : class
     {
         #region Private member variables...
-        internal HRISDBConnection Context;
+        internal HRISEntities Context;
         internal DbSet<TEntity> DbSet;
         #endregion
 
@@ -26,7 +27,7 @@ namespace DataModel.GenericRepository
         /// Public Constructor,initializes privately declared local variables.
         /// </summary>
         /// <param name="context"></param>
-        public GenericRepository(HRISDBConnection context)
+        public GenericRepository(HRISEntities context)
         {
             this.Context = context;
             this.DbSet = context.Set<TEntity>();
@@ -56,18 +57,7 @@ namespace DataModel.GenericRepository
         }
 
 
-        /// <summary>
-        /// Generic get method on the basis of string code for Entities.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public virtual TEntity GetByCode(Func<TEntity, bool> where)
-        {
-            //var f = Context.SingleOrDefault(DbSet.codeName => DBSet.codeName == code);
-            return DbSet.Where(where).FirstOrDefault();
-
-            //return DbSet.Find(id);
-        }
+        
 
         /// <summary>
         /// generic Insert method for the entities
@@ -87,6 +77,29 @@ namespace DataModel.GenericRepository
             TEntity entityToDelete = DbSet.Find(id);
             Delete(entityToDelete);
         }
+
+
+        //Custom Start
+        //==========================================================================================
+        public virtual void DeleteCustom(TEntity entityToUpdate, TEntity entityToInsert)
+        {
+            UpdateCustom(entityToUpdate, entityToInsert);
+        }
+
+        public virtual void UpdateCustom(TEntity entityToUpdate, TEntity entityToInsert)
+        {
+            Update(entityToUpdate);
+            Insert(entityToInsert);
+        }
+
+        public virtual TEntity GetByCode(Func<TEntity, bool> where)
+        {
+            //var f = Context.SingleOrDefault(DbSet.codeName => DBSet.codeName == code);
+            return DbSet.Where(where).FirstOrDefault();
+
+            //return DbSet.Find(id);
+        }
+        //==========================================================================================
 
         /// <summary>
         /// Generic Delete method for the entities

@@ -21,6 +21,7 @@ namespace BusinessServices.Interface
         IEnumerable<roleBasedEntities> getRoleBasedBypolicyType(int policyType);
         int CreateRoleBased(roleBasedEntities roleBasedEntities);
         bool UpdateRoleBased(int ID, roleBasedEntities roleBasedEntities);
+        bool DeleteRoleBased(int id);
     }
 
     //Maintain Category Matrix Role

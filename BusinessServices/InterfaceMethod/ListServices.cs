@@ -21,6 +21,19 @@ namespace BusinessServices.InterfaceMethod
             _unitOfWork = new UnitOfWork();
         }
 
+        public IEnumerable<LOV> getValueType()
+        {
+            //return null;
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_valueType);
+            //If id has tree
+            if (isHasSubTreeInCategory(vparentID.catID))
+            {
+                getSubinCategory(vparentID.catID);
+            }
+
+            return msLOV.AsEnumerable();
+        }
+
         public IEnumerable<LOV> getEdu()
         {
             //return null;
@@ -253,7 +266,7 @@ namespace BusinessServices.InterfaceMethod
 
                     LOV xx = new LOV();
                     xx.value = n.catID;
-                    xx.label = n.catName;
+                    xx.label = (n.catName).TrimEnd();
                     msLOV.Add(xx);
                 }
 
@@ -276,7 +289,7 @@ namespace BusinessServices.InterfaceMethod
 
                     LOV xx = new LOV();
                     xx.value = n.catID;
-                    xx.label = n.catName;
+                    xx.label = (n.catName).TrimEnd();
                     msLOV.Add(xx);
                 }
 

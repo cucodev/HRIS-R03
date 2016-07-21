@@ -68,4 +68,16 @@ namespace BusinessEntities.CrudEntities
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class UserCredModel
+    {
+        public int IDV { get; set; }
+        public string IDVMail { get; set; }
+        public string Name { get; set; }
+        public int parentIDV { get; set; }
+        public string parentIDVMail { get; set; }
+        public int role { get; set; }
+        public DateTime timeLogin { get; set; }
+        public DateTime timeLogout { get; set; }
+    }
 }

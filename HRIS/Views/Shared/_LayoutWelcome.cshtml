@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - HRIS</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/jqwidgets")
+    @Styles.Render("~/Content/LoginStyle")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqwidgets")
+    @Scripts.Render("~/bundles/jstorage")
+
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

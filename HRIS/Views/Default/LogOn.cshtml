@@ -1,0 +1,198 @@
+﻿@model BusinessEntities.CrudEntities.LogOnModel
+
+@{
+    ViewBag.Title = ViewBag.LoginError;
+    Layout = "~/Views/Shared/_LayoutWelcome.cshtml";
+}
+
+@section scripts
+    {
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jsList.js")"></script>
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var theme = 'darkblue';
+        if ($.jStorage.storageAvailable()) {
+            $.jStorage.flush();
+        }
+
+        // Create ListBox
+        /*
+        $('#listbox').jqxListBox({
+            selectedIndex: 0,
+            source: listEmployee,
+            displayMember: "Name",
+            valueMember: "NickName",
+            itemHeight: 110,
+            height: '100%',
+            width: 380,
+            theme: theme,
+            renderer: function (index, label, value) {
+                var datarecord = listEmployee.records[index];
+                var imgurl = '/Content/photo/' + datarecord.UID.toLowerCase() + '.jpg';
+                var imgurls = imgurl.replace(/\s+/g, '');
+                var img = '<img height="100" width="90" src="' + imgurls + '"/>';
+                var table = '<table><tr><td rowspan="2">' + img + '</td><td>' + datarecord.Name + "<br>NIP " + datarecord.NIP + '</td></tr><tr><td> - </td></tr></table>';
+                return table;
+            }
+        }); */
+
+        // Create ListBox
+        $('#listbox').jqxListBox({
+            selectedIndex: 0,
+            source: listEmployee,
+            displayMember: "Name",
+            valueMember: "NickName",
+            itemHeight: 110,
+            height: '100%',
+            width: 380,
+            theme: theme,
+            renderer: function (index, label, value) {
+                var datarecord = listEmployee.records[index];
+               // if (datarecord.UID == ' ') {
+                    imgfile = 'person.png';
+                //} else {
+                  //  imgfile = datarecord.UID.toLowerCase() + '.jpg';
+               // }
+                var imgurl = '/Content/photo/' + imgfile;
+                var imgurls = imgurl.replace(/\s+/g, '');
+                var img = '<class="imgProfileContainer"><img class= "imgProfile" height="100" width="90" src="' + imgurls + '"/></div>';
+                var table = '<table style="min-width: 50px; min-height:100px"><tr><td style="width: 100px;" rowspan="2">' + img + '</td><td>' + datarecord.Name + "<br>NIP " + datarecord.NIP + '</td></tr><tr><td> - </td></tr></table>';
+                return table;
+            }
+        });
+
+
+        // Form Login.
+        //$("#login").jqxExpander({ theme: theme, toggleMode: 'none', width: '350px', showArrow: false });
+        //$('.jqx-expander-header').addClass("jqx-rc-bl");
+        //$("#annoucement").jqxExpander({ theme: theme, toggleMode: 'none', width: '350px', showArrow: false });
+        //$("#username").jqxInput({ placeHolder: "Enter Email", theme: theme, width: '207px', height: '30px' });
+        //$("#password").jqxPasswordInput({ placeHolder: "Passwords", theme: theme, width: '200px', height: '30px', showStrength: true, showStrengthPosition: "right" });
+        //$("#loginlink").jqxLinkButton({ theme: theme, width: '70px', height: '30' });
+        //$("#forgotlink").jqxLinkButton({ theme: theme, width: '137px', height: '30' });
+    });
+</script>
+
+<style>
+    body {
+        background-image: url("/Content/bg/bg2.jpg");
+        background-size: cover;
+        background-color: #fff;
+    }
+
+    .imgProfileContainer {
+        height: 100px;
+        width: 100px;
+        position: relative;
+        border-radius: 100%;
+        overflow: hidden;
+        background-color: black;
+    }
+
+    .imgProfile {
+        position: absolute;
+        /*left:-120%; right:-50%; */
+        top: 0;
+        margin: auto;
+        height: 100%;
+        width: auto;
+    }
+</style>
+
+<table width="80%" height="550px" align="center">
+    <tr>
+        <td>
+            <table class="tg" border="0" style="border-collapse: collapse; margin-top:0px" width="100%" height="550px">
+                <tr>
+                    <th class="tg-yw4l" colspan="4" align="right" height="75px">
+
+                        <div>
+                            <img src="~/Content/bg/hollit-logo-large.png" sizes="40%" /><br /><br />
+                            <h2>@ViewBag.LoginError</h2>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" width="370px" height="1px"></td>
+                    <td class="tg-yw4l" width="300px"></td>
+                    <td class="tg-yw4l" colspan="2"></td>
+                </tr>
+                <tr height="280px">
+                    <td class="tg-yw4l" rowspan="2">
+                        <div id='listbox' style="border: 0; height: 100%; border-radius: 25px; opacity: 0.7;"></div>
+                    </td>
+                    <td class="tg-yw4l" valign="top">
+                        <div style="margin-left: 10px; Verdana; font-size: 13px;
+                                        opacity: 0.7;
+                                        border: 0px solid darkblue; border-radius:25px; ">
+
+                            <div class="main" style="border-radius: 25px;">
+                                @using (Html.BeginForm("LogOn", "Default", FormMethod.Post))
+                                {
+                                    <div class="inset" style="border-radius: 25px;">
+                                        <fieldset>
+                                            <h1><span>Employee</span> <lable> Login </lable> </h1>
+
+                                            <div class="editor-label">
+                                                @Html.LabelFor(model => model.UserName)
+                                            </div>
+                                            <div class="editor-field">
+                                                <div style="margin-bottom:0px">@Html.TextBoxFor(model => model.UserName)</div>
+                                                <div style="margin-top:0px">
+                                                    @Html.ValidationMessageFor(model => model.UserName)
+                                                </div>
+                                            </div>
+
+                                            <div class="editor-label">
+                                                @Html.LabelFor(model => model.Password)
+                                            </div>
+                                            <div class="editor-field">
+                                                @Html.PasswordFor(model => model.Password)
+                                                @Html.ValidationMessageFor(model => model.Password)
+                                            </div>
+
+                                            <div class="editor-label">
+                                                @Html.CheckBoxFor(model => model.RememberMe)
+                                                @Html.LabelFor(model => model.RememberMe)
+                                            </div>
+
+
+                                        </fieldset>
+                                        <p class="p-container">
+                                            <span><a href="#">Forgot password ?</a></span>
+                                            <input type="submit" value="Log On" />
+                                        </p>
+                                    </div>
+                                }
+
+                                <center>
+                                    <h2><label style="color:red; background-color:white; padding: 5px 5px 5px 5px "> @ViewBag.Msg </label></h2>
+                                </center>
+                            </div>
+
+                        </div>
+                    </td>
+                    <td colspan="2" valign="top">
+                        <div id='annoucement'
+                             style="margin-left: 10px; //background-color: #0A192A;
+                                    border: 0px solid darkblue;
+                                    border-radius:5px">
+                            <div style="margin-left: 15px"><h3>Annoucement</h3></div>
+                            <hr />
+                            <div style="margin-left: 15px; background-color: white; ">
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+<iframe id="form-iframe" name="form-iframe" style="width: 800px; height: 1px;" frameborder="0"></iframe>
+
+

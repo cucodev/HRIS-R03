@@ -19,6 +19,7 @@ namespace DataModel
         public Nullable<int> UID_ABSENCE { get; set; }
         public Nullable<System.DateTime> joinDate { get; set; }
         public Nullable<System.DateTime> resignDate { get; set; }
+        public Nullable<int> employmentStatus { get; set; }
         public Nullable<System.DateTime> contract1Start { get; set; }
         public Nullable<System.DateTime> contract1End { get; set; }
         public Nullable<System.DateTime> contract2Start { get; set; }
@@ -31,7 +32,6 @@ namespace DataModel
         public Nullable<int> isDeleted { get; set; }
         public Nullable<System.DateTime> createTime { get; set; }
         public Nullable<System.DateTime> updateTime { get; set; }
-        public Nullable<int> employmentStatus { get; set; }
     
         public virtual person person { get; set; }
     }

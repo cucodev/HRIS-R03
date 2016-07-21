@@ -1,0 +1,136 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - HRIS</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/jsmenu")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/jqwidgets")
+
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jsmenu")
+    @Scripts.Render("~/bundles/jstorage")
+    @Scripts.Render("~/bundles/jqwidgets")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').css('zoom', '90%');
+        });      
+    </script>
+</head>
+
+<body>
+  
+
+
+    <main class="cd-main-content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <header class="cd-main-header" >
+                    <a href="#0" class="cd-logo"><img src="~/Content/bg/hollit-logo-small.png" alt="Logo" height="23"></a>
+
+                    <label>@ViewBag.cUsername</label>
+                   <!-- <a href="#0" class="cd-nav-trigger">Menu<span></span></a>-->
+                    <nav class="cd-nav">
+                        <label style="font-size:12px; font-family:Calibri; color:indianred; margin-right:30px">
+                            Credential Info: @ViewBag.cUser : @ViewBag.cIDV : Parent= @ViewBag.cIDVParent , ParentLevel= @ViewBag.cIDVParentLevel , Name= @ViewBag.cName
+                        </label>
+                    </nav>
+                </header> <!-- .cd-main-header -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <nav class="cd-side-nav">
+                    <ul>
+                        <li class="cd-label">Main</li>
+                        <li class="has-children overview">
+                            @Html.ActionLink("Dashboard", "Dashboard", "Content")
+                        </li>
+
+                        <li class="has-children comments">
+                            @Html.ActionLink("Timesheet", "Index", "vTimesheets")
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="cd-label">Submit & Approval</li>
+                        <li class="has-children overview">
+                            @Html.ActionLink("Leave", "vLeave", "Content")
+                        </li>
+                        <li class="has-children overview">
+                            @Html.ActionLink("Medical", "Index", "vMedicalClaim")
+                        </li>
+                        <li class="has-children overview">
+                            @Html.ActionLink("Approval", "Superior", "vApproval")
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="cd-label">Organization </li>
+                        <li class="has-children overview">
+                            @Html.ActionLink("Structure", "Index", "vOrganization")
+                        </li>
+                        <li class="has-children overview">
+                            @Html.ActionLink("Schedule", "Index", "vSchedule")
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="cd-label">Administration</li>
+                        <li class="bookmarks">@Html.ActionLink("Approval", "HRApproval", "vApproval") </li>
+                        <li class="bookmarks">@Html.ActionLink("Notification / News", "Index", "vNotifNews")</li>
+                        <li class="has-children comments">
+                            @Html.ActionLink("Timesheet Manager", "HRTimesheets", "vTimesheets")
+                        </li>
+                        <li class="has-children users">
+                            @Html.ActionLink("Employee Management", "HREmployeeManagement", "vEmployee")
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="cd-label">System Admin</li>
+                        <li class="bookmarks">
+                            @Html.ActionLink("Master Data", "MaintainData", "AdminHR")
+                        </li>
+                        <li class="bookmarks">@Html.ActionLink("HELP", "", "HELP")</li>
+<li><input type="button" value="Logout" id="logout" style="margin-left:20px" /></li>
+                    </ul>
+
+                </nav>
+            </div>
+            <div class="col-md-9" style="margin-top:75px">
+                @RenderBody()
+            </div>
+        </div>
+       
+
+        <div class="col">
+            <div class="col-sm-12">
+                <div class="footer">
+                    <hr />
+                </div>
+            </div>
+        </div>
+
+        <!--
+        <div class="content-wrapper">
+                
+        </div>  .content-wrapper -->
+        
+     
+    </main>
+    
+
+
+
+    @RenderSection("scripts", required: false)
+    @RenderSection("jsData", required: false)
+
+</body>
+</html>

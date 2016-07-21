@@ -47,8 +47,9 @@
   <ItemGroup>
     <Compile Include="InterfaceMethod\ListServices.cs" />
     <Compile Include="InterfaceMethod\MasterDataServices.cs" />
-    <Compile Include="InterfaceMethod\profileServices.cs" />
-    <Compile Include="InterfaceMethod\SecurityClass.cs" />
+    <Compile Include="InterfaceMethod\ProfileServices.cs" />
+    <Compile Include="InterfaceMethod\SecurityServices.cs" />
+    <Compile Include="Interface\IData.cs" />
     <Compile Include="Interface\IMasterDataServices.cs" />
     <Compile Include="Interface\Isecurity.cs" />
     <Compile Include="Interface\IList.cs" />

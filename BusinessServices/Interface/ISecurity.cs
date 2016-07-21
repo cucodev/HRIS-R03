@@ -14,6 +14,6 @@ namespace BusinessServices.Interface
         bool AuthenticateLocal(LogOnModel model);
         bool AuthenticateLDAP(LogOnModel model);
         void UserSession();
-        profileEntities getProfile(int id);
+        UserCredModel getUserCred(int id);
     }
 }

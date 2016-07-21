@@ -13,12 +13,12 @@ using System.Transactions;
 
 namespace BusinessServices.InterfaceMethod
 {
-    public class profileServices : IprofileServices
+    public class ProfileServices : IprofileServices
     {
         private readonly UnitOfWork _unitOfWork;
         private int isDelete = 0; // 0 means row is active, not in deleted status
 
-        public profileServices()
+        public ProfileServices()
         {
             _unitOfWork = new UnitOfWork();
         }
@@ -451,7 +451,6 @@ namespace BusinessServices.InterfaceMethod
             return null;
         }
 
-
         public bool UpdateProfile(int personID, profileEntities p)
         {
             var res = false;
@@ -567,6 +566,42 @@ namespace BusinessServices.InterfaceMethod
                 }
             }
             return res;
+        }
+    }
+
+    public class profileJobServices : IprofileJobServices
+    {
+        private readonly UnitOfWork _unitOfWork;
+        private int isDelete = 0;
+
+        public profileJobServices()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
+
+        public int addJob(int parentIDV, profileJobEntities personJobEntity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public profileJobEntities getJobByIDV(int IDV)
+        {
+            profileJobEntities ms = new profileJobEntities();
+            var x = _unitOfWork.personJobRepository.GetSingle(b => b.IDV == IDV && b.isDeleted == isDelete);
+            ms.ID = x.ID;
+            ms.IDV = x.IDV;
+            ms.parentIDV = x.parentIDV;
+            ms.JobLevel = x.JobLevel;
+            ms.jobName = x.jobName;
+            ms.JobPosition = x.JobPosition;
+            ms.JobDepartement = x.JobDepartement;
+            ms.JobDivision = x.JobDivision;    
+            return ms;
+        }
+
+        public bool UpdateJob(int parentIDV, profileJobEntities personJobEntity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -12,6 +12,9 @@ namespace BusinessEntities
     {
         public const string UserCred = "UserCred";
 
+        //General
+        public const string lov_valueType = "valueType";
+
         //Category Medical & Leave
         public const string policyType = "policyType";
         public const string policyTypeRoot = "policyTypeRoot";

@@ -28,12 +28,12 @@ namespace DataModel
             this.personEdus = new HashSet<personEdu>();
             this.personEmergencies = new HashSet<personEmergency>();
             this.personIdentities = new HashSet<personIdentity>();
-            this.personJobs = new HashSet<personJob>();
             this.personLanguages = new HashSet<personLanguage>();
             this.personSkills = new HashSet<personSkill>();
             this.personTrainings = new HashSet<personTraining>();
             this.personWorkExperiences = new HashSet<personWorkExperience>();
             this.users = new HashSet<user>();
+            this.employeeRoleBaseds = new HashSet<employeeRoleBased>();
         }
     
         public int IDV { get; set; }
@@ -68,8 +68,6 @@ namespace DataModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<personIdentity> personIdentities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<personJob> personJobs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<personLanguage> personLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<personSkill> personSkills { get; set; }
@@ -79,5 +77,7 @@ namespace DataModel
         public virtual ICollection<personWorkExperience> personWorkExperiences { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user> users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<employeeRoleBased> employeeRoleBaseds { get; set; }
     }
 }

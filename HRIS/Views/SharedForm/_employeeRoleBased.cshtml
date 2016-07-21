@@ -1,0 +1,133 @@
+﻿
+<script type="text/javascript">
+    $(document).ready(function () {
+        hris.general.bindButton('retrieve');
+
+        var layout = [{
+            type: 'layoutGroup',
+            orientation: 'horizontal',
+            items: [{
+                type: 'layoutGroup',
+                orientation: 'vertical',
+                allowPin: false,
+                width: 300,
+                items: [{
+                    type: 'tabbedGroup',
+                    height: 300,
+                    pinnedHeight: 30,
+                    items: [{
+                        type: 'layoutPanel',
+                        title: 'Teams',
+                        contentContainer: 'TeamsPanel',
+                        initContent: function () {
+                            initTeamDataTable();
+                        }
+                    }]
+                }, {
+                    type: 'tabbedGroup',
+                    height: 300,
+                    allowClose: true,
+                    allowPin: false,
+                    pinnedHeight: 30,
+                    items: [{
+                        type: 'layoutPanel',
+                        title: 'Team Projects',
+                        contentContainer: 'ProjectsPanel',
+                        initContent: function () {
+                            initProjectsListBox();
+                        }
+                    }, {
+                        type: 'layoutPanel',
+                        title: 'Projects Timeline',
+                        contentContainer: 'ProjectsTimelinePanel',
+                        initContent: function () {
+                            if (team === 'Sales') {
+                                $('#projectsTimelineDiv').html(teamSalesProjectsTimeline);
+                            } else {
+                                $('#projectsTimelineDiv').html(teamSupportProjectsTimeline);
+                            }
+                        }
+                    }]
+                }]
+            }, {
+                type: 'layoutGroup',
+                orientation: 'vertical',
+                allowPin: false,
+                width: 500,
+                pinnedWidth: 80,
+                items: [{
+                    type: 'tabbedGroup',
+                    height: 200,
+                    pinnedHeight: 30,
+                    items: [{
+                        type: 'layoutPanel',
+                        title: 'Contacts',
+                        contentContainer: 'ContactsPanel',
+                        initContent: function () {
+                            $('#contactsTable').html(teamSalesContacts);
+                        }
+                    }, {
+                        type: 'layoutPanel',
+                        title: 'Staff',
+                        contentContainer: 'StaffPanel',
+                        initContent: function () {
+                            if (team === 'Sales') {
+                                $('#staffDiv').html(teamSalesStaff);
+                            } else {
+                                $('#staffDiv').html(teamSupportStaff);
+                            }
+                        }
+                    }]
+                }, {
+                    type: 'tabbedGroup',
+                    allowPin: false,
+                    height: 400,
+                    pinnedHeight: 30,
+                    items: [{
+                        type: 'layoutPanel',
+                        title: 'Project History',
+                        contentContainer: 'ProjectHistoryPanel',
+                        initContent: function () {
+                            initProjectHistoryChart();
+                        }
+                    }]
+                }]
+            }]
+        }];
+        $('#jqxLayout').jqxLayout({ width: 800, height: 600, layout: layout, contextMenu: true })
+    });
+    
+</script>
+
+<div class="row">
+    <div class="col-md-6 pull-left"><h5>EMPLOYEE ROLE BASED</h5></div>
+    <div class="col-md-6 pull-right"><input type="button" id="retrieve" value="Retrive" class="pull-right" /></div>
+</div>
+<div class="row"><hr /></div>
+
+
+<div id="jqxLayout">
+    <div data-container="TeamsPanel">
+        <div id="teamsDataTable" class="no-border">
+        </div>
+    </div>
+    <div data-container="ProjectsPanel">
+        <div id="projectsListBox" class="no-border">
+        </div>
+    </div>
+    <div data-container="ProjectsTimelinePanel">
+        <div id="projectsTimelineDiv" style="margin: 5px 0 0 5px;">
+        </div>
+    </div>
+    <div data-container="ContactsPanel">
+        <table id="contactsTable" style="margin: 20px;"></table>
+    </div>
+    <div data-container="StaffPanel">
+        <div id="staffDiv" class="no-border" style="margin-left: 5px; margin: 20px;">
+        </div>
+    </div>
+    <div data-container="ProjectHistoryPanel">
+        <div id="projectHistoryChart" style="border: none; width: 99.9%; height: 100%;">
+        </div>
+    </div>
+</div>

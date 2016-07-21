@@ -25,7 +25,6 @@ namespace DataModel
         public string catCode { get; set; }
         public string catName { get; set; }
     
-        public virtual category category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<category> categories { get; set; }
     }

@@ -17,12 +17,12 @@ namespace DataModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public category()
         {
+            this.locations = new HashSet<location>();
             this.personDetails = new HashSet<personDetail>();
             this.personDetails1 = new HashSet<personDetail>();
             this.personDetails2 = new HashSet<personDetail>();
             this.personLanguages = new HashSet<personLanguage>();
             this.personLanguages1 = new HashSet<personLanguage>();
-            this.locations = new HashSet<location>();
         }
     
         public int catID { get; set; }
@@ -31,6 +31,8 @@ namespace DataModel
         public string catName { get; set; }
     
         public virtual categoryParent categoryParent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<location> locations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<personDetail> personDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -41,8 +43,5 @@ namespace DataModel
         public virtual ICollection<personLanguage> personLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<personLanguage> personLanguages1 { get; set; }
-        public virtual categoryParent categoryParent1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<location> locations { get; set; }
     }
 }

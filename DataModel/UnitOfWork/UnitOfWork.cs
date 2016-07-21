@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data.Entity.Validation;
 using DataModel.GenericRepository;
+using DataModel;
 
 #endregion
 
@@ -17,7 +18,7 @@ namespace DataModel.UnitOfWork
     {
         #region Private member variables...
 
-        private HRISDBConnection _context = null;
+        private HRISEntities _context = null;
         private GenericRepository<person> _personRepository;
         private GenericRepository<personAddress> _personAddressRepository;
         private GenericRepository<personBankAccount> _personBankAccountRepository;
@@ -49,7 +50,7 @@ namespace DataModel.UnitOfWork
 
         public UnitOfWork()
         {
-            _context = new HRISDBConnection();
+            _context = new HRISEntities();
         }
 
 
@@ -291,6 +292,8 @@ namespace DataModel.UnitOfWork
                 return _tokenRepository;
             }
         }
+        
+
         #endregion
 
         #region Public member methods...

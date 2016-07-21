@@ -4,17 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="HRISEntities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-        </EntityType>
+    <Schema Namespace="HRISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="_purpose">
           <Key>
             <PropertyRef Name="purposeID" />
@@ -127,13 +117,23 @@
         </EntityType>
         <EntityType Name="employeeRoleBased">
           <Key>
-            <PropertyRef Name="IDV" />
+            <PropertyRef Name="ID" />
           </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDV" Type="int" Nullable="false" />
-          <Property Name="catCode" Type="int" />
-          <Property Name="valueType" Type="int" />
-          <Property Name="value" Type="nchar" MaxLength="10" />
-          <Property Name="balance" Type="nchar" MaxLength="10" />
+          <Property Name="policyType" Type="int" Nullable="false" />
+          <Property Name="valueType" Type="int" Nullable="false" />
+          <Property Name="roleBasedValue" Type="int" />
+          <Property Name="currentValue" Type="int" />
+          <Property Name="balanceValue" Type="int" />
+          <Property Name="remainingValue" Type="int" />
+          <Property Name="validDateStart" Type="date" />
+          <Property Name="validDateStop" Type="date" />
+          <Property Name="decription" Type="varchar(max)" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="file">
           <Key>
@@ -334,7 +334,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IDV" Type="int" />
+          <Property Name="IDV" Type="int" Nullable="false" />
           <Property Name="parentIDV" Type="int" />
           <Property Name="jobName" Type="nchar" MaxLength="50" />
           <Property Name="JobDivision" Type="int" />
@@ -348,7 +348,7 @@
           <Property Name="Note" Type="varchar(max)" />
           <Property Name="vCreatedBy" Type="int" />
           <Property Name="vUpdatedBy" Type="int" />
-          <Property Name="isDeleted" Type="int" />
+          <Property Name="isDeleted" Type="int" Nullable="false" />
           <Property Name="createTime" Type="datetime" />
           <Property Name="updateTime" Type="datetime" />
         </EntityType>
@@ -439,7 +439,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDV" Type="int" Nullable="false" />
           <Property Name="IDVMAIL" Type="varchar" MaxLength="200" />
           <Property Name="IDVMAILPASSWORD" Type="varchar" MaxLength="50" />
@@ -510,6 +510,18 @@
             </Principal>
             <Dependent Role="AspNetUserRoles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employeeRoleBased_person">
+          <End Role="person" Type="Self.person" Multiplicity="1" />
+          <End Role="employeeRoleBased" Type="Self.employeeRoleBased" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="employeeRoleBased">
+              <PropertyRef Name="IDV" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -705,18 +717,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="IDV_personJob">
-          <End Role="person" Type="Self.person" Multiplicity="0..1" />
-          <End Role="personJob" Type="Self.personJob" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="person">
-              <PropertyRef Name="IDV" />
-            </Principal>
-            <Dependent Role="personJob">
-              <PropertyRef Name="IDV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="IDV_personLanguage">
           <End Role="person" Type="Self.person" Multiplicity="0..1" />
           <End Role="personLanguage" Type="Self.personLanguage" Multiplicity="*" />
@@ -825,8 +825,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="HRISEntitiesStoreContainer">
-          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="HRISModelStoreContainer">
           <EntitySet Name="_purpose" EntityType="Self._purpose" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="_transaction" EntityType="Self._transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -878,6 +877,10 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employeeRoleBased_person" Association="Self.FK_employeeRoleBased_person">
+            <End Role="person" EntitySet="person" />
+            <End Role="employeeRoleBased" EntitySet="employeeRoleBased" />
           </AssociationSet>
           <AssociationSet Name="FK_locationParent_categoryParent" Association="Self.FK_locationParent_categoryParent">
             <End Role="category" EntitySet="category" />
@@ -943,10 +946,6 @@
             <End Role="person" EntitySet="person" />
             <End Role="file" EntitySet="file" />
           </AssociationSet>
-          <AssociationSet Name="IDV_personJob" Association="Self.IDV_personJob">
-            <End Role="person" EntitySet="person" />
-            <End Role="personJob" EntitySet="personJob" />
-          </AssociationSet>
           <AssociationSet Name="IDV_personLanguage" Association="Self.IDV_personLanguage">
             <End Role="person" EntitySet="person" />
             <End Role="personLanguage" EntitySet="personLanguage" />
@@ -987,17 +986,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="HRISEntities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
+      <Schema Namespace="HRISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="C_purpose">
           <Key>
             <PropertyRef Name="purposeID" />
@@ -1076,13 +1065,12 @@
           <Property Name="catCode" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="catName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="categoryParent" Relationship="Self.catID_parentCategory" FromRole="category" ToRole="categoryParent" />
+          <NavigationProperty Name="locations" Relationship="Self.FK_locationParent_categoryParent" FromRole="category" ToRole="location" />
           <NavigationProperty Name="personDetails" Relationship="Self.FK_personDetail_Gender" FromRole="category" ToRole="personDetail" />
           <NavigationProperty Name="personDetails1" Relationship="Self.FK_personDetail_Marital" FromRole="category" ToRole="personDetail" />
           <NavigationProperty Name="personDetails2" Relationship="Self.FK_personDetail_Religion" FromRole="category" ToRole="personDetail" />
           <NavigationProperty Name="personLanguages" Relationship="Self.spoken_personLanguage" FromRole="category" ToRole="personLanguage" />
           <NavigationProperty Name="personLanguages1" Relationship="Self.written_personLanguage" FromRole="category" ToRole="personLanguage" />
-          <NavigationProperty Name="categoryParent1" Relationship="HRISEntities.catID_parentCategory1" FromRole="category" ToRole="categoryParent" />
-          <NavigationProperty Name="locations" Relationship="HRISEntities.FK_locationParent_categoryParent" FromRole="category" ToRole="location" />
         </EntityType>
         <EntityType Name="categoryParent">
           <Key>
@@ -1092,8 +1080,7 @@
           <Property Name="catParentID" Type="Int32" />
           <Property Name="catCode" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="catName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="category" Relationship="Self.catID_parentCategory" FromRole="categoryParent" ToRole="category" />
-          <NavigationProperty Name="categories" Relationship="HRISEntities.catID_parentCategory1" FromRole="categoryParent" ToRole="category" />
+          <NavigationProperty Name="categories" Relationship="Self.catID_parentCategory" FromRole="categoryParent" ToRole="category" />
         </EntityType>
         <EntityType Name="employee">
           <Key>
@@ -1104,6 +1091,7 @@
           <Property Name="UID_ABSENCE" Type="Int32" />
           <Property Name="joinDate" Type="DateTime" Precision="0" />
           <Property Name="resignDate" Type="DateTime" Precision="0" />
+          <Property Name="employmentStatus" Type="Int32" />
           <Property Name="contract1Start" Type="DateTime" Precision="0" />
           <Property Name="contract1End" Type="DateTime" Precision="0" />
           <Property Name="contract2Start" Type="DateTime" Precision="0" />
@@ -1117,7 +1105,6 @@
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="person" Relationship="Self.IDV_employee" FromRole="employee" ToRole="person" />
-          <Property Name="employmentStatus" Type="Int32" />
         </EntityType>
         <EntityType Name="file">
           <Key>
@@ -1135,6 +1122,20 @@
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="person" Relationship="Self.IDV_personImage" FromRole="file" ToRole="person" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="codeNum" />
+          </Key>
+          <Property Name="codeNum" Type="Int64" Nullable="false" />
+          <Property Name="codeNumParent" Type="Int64" />
+          <Property Name="codeISOParent" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="codeISO" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="codeUN" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="dialingCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="locationType" Type="Int32" />
+          <Property Name="locationName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="category" Relationship="Self.FK_locationParent_categoryParent" FromRole="location" ToRole="category" />
         </EntityType>
         <EntityType Name="organization">
           <Key>
@@ -1170,12 +1171,12 @@
           <NavigationProperty Name="personEdus" Relationship="Self.IDV_personEdu" FromRole="person" ToRole="personEdu" />
           <NavigationProperty Name="personEmergencies" Relationship="Self.IDV_personEmergency" FromRole="person" ToRole="personEmergency" />
           <NavigationProperty Name="personIdentities" Relationship="Self.IDV_personIdentity" FromRole="person" ToRole="personIdentity" />
-          <NavigationProperty Name="personJobs" Relationship="Self.IDV_personJob" FromRole="person" ToRole="personJob" />
           <NavigationProperty Name="personLanguages" Relationship="Self.IDV_personLanguage" FromRole="person" ToRole="personLanguage" />
           <NavigationProperty Name="personSkills" Relationship="Self.IDV_personSkill" FromRole="person" ToRole="personSkill" />
           <NavigationProperty Name="personTrainings" Relationship="Self.IDV_personTraining" FromRole="person" ToRole="personTraining" />
           <NavigationProperty Name="personWorkExperiences" Relationship="Self.IDV_personWorkExperience" FromRole="person" ToRole="personWorkExperience" />
           <NavigationProperty Name="users" Relationship="Self.IDV_user" FromRole="person" ToRole="user" />
+          <NavigationProperty Name="employeeRoleBaseds" Relationship="HRISModel.FK_employeeRoleBased_person" FromRole="person" ToRole="employeeRoleBased" />
         </EntityType>
         <EntityType Name="personAddress">
           <Key>
@@ -1225,9 +1226,9 @@
           <Property Name="vCreatedBy" Type="Int32" />
           <Property Name="vUpdatedBy" Type="Int32" />
           <Property Name="isDeleted" Type="Int32" />
-          <NavigationProperty Name="person" Relationship="Self.IDV_personCertification" FromRole="personCertification" ToRole="person" />
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personCertification" FromRole="personCertification" ToRole="person" />
         </EntityType>
         <EntityType Name="personContact">
           <Key>
@@ -1257,8 +1258,8 @@
           <Property Name="vCreatedBy" Type="Int32" />
           <Property Name="vUpdatedBy" Type="Int32" />
           <Property Name="isDeleted" Type="Int32" />
-          <NavigationProperty Name="person" Relationship="Self.IDV_perseonDependent" FromRole="personDependent" ToRole="person" />
           <Property Name="tempNIP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_perseonDependent" FromRole="personDependent" ToRole="person" />
         </EntityType>
         <EntityType Name="personDetail">
           <Key>
@@ -1300,9 +1301,9 @@
           <Property Name="vCreatedBy" Type="Int32" />
           <Property Name="vUpdatedBy" Type="Int32" />
           <Property Name="isDeleted" Type="Int32" />
-          <NavigationProperty Name="person" Relationship="Self.IDV_personEdu" FromRole="personEdu" ToRole="person" />
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personEdu" FromRole="personEdu" ToRole="person" />
         </EntityType>
         <EntityType Name="personEmergency">
           <Key>
@@ -1336,31 +1337,30 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="IDV" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" Nullable="false" />
           <Property Name="parentIDV" Type="Int32" />
           <Property Name="jobName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="JobDivision" Type="Int32" />
           <Property Name="JobDepartement" Type="Int32" />
           <Property Name="JobPosition" Type="Int32" />
-          <Property Name="JobLocation" Type="String" MaxLength="100" Unicode="true" FixedLength="true" />
+          <Property Name="JobLocation" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="JobLevel" Type="Int32" />
           <Property Name="startDate" Type="DateTime" Precision="0" />
           <Property Name="endDate" Type="DateTime" Precision="0" />
           <Property Name="employmentStatus" Type="Int32" />
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="person" Relationship="Self.IDV_personJob" FromRole="personJob" ToRole="person" />
           <Property Name="vCreatedBy" Type="Int32" />
           <Property Name="vUpdatedBy" Type="Int32" />
-          <Property Name="isDeleted" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" Nullable="false" />
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
-          <Property Name="JobLevel" Type="Int32" />
         </EntityType>
         <EntityType Name="personLanguage">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDV" Type="Int32" />
           <Property Name="languageName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="spoken" Type="Int32" />
@@ -1368,11 +1368,11 @@
           <Property Name="vCreatedBy" Type="Int32" />
           <Property Name="vUpdatedBy" Type="Int32" />
           <Property Name="isDeleted" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="category" Relationship="Self.spoken_personLanguage" FromRole="personLanguage" ToRole="category" />
           <NavigationProperty Name="category1" Relationship="Self.written_personLanguage" FromRole="personLanguage" ToRole="category" />
           <NavigationProperty Name="person" Relationship="Self.IDV_personLanguage" FromRole="personLanguage" ToRole="person" />
-          <Property Name="createTime" Type="DateTime" Precision="3" />
-          <Property Name="updateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="personSkill">
           <Key>
@@ -1385,9 +1385,9 @@
           <Property Name="vCreatedBy" Type="Int32" />
           <Property Name="vUpdatedBy" Type="Int32" />
           <Property Name="isDeleted" Type="Int32" />
-          <NavigationProperty Name="person" Relationship="Self.IDV_personSkill" FromRole="personSkill" ToRole="person" />
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personSkill" FromRole="personSkill" ToRole="person" />
         </EntityType>
         <EntityType Name="personTraining">
           <Key>
@@ -1396,22 +1396,22 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDV" Type="Int32" />
           <Property Name="TrainingName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TrainingSponsor" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="TrainingSponsor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Certificate" Type="Int32" />
           <Property Name="startDate" Type="DateTime" Precision="0" />
           <Property Name="endDate" Type="DateTime" Precision="0" />
           <Property Name="vCreatedBy" Type="Int32" />
           <Property Name="vUpdatedBy" Type="Int32" />
           <Property Name="isDeleted" Type="Int32" />
-          <NavigationProperty Name="person" Relationship="Self.IDV_personTraining" FromRole="personTraining" ToRole="person" />
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personTraining" FromRole="personTraining" ToRole="person" />
         </EntityType>
         <EntityType Name="personWorkExperience">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDV" Type="Int32" />
           <Property Name="companyName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="lastPosition" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
@@ -1421,9 +1421,19 @@
           <Property Name="vCreatedBy" Type="Int32" />
           <Property Name="vUpdatedBy" Type="Int32" />
           <Property Name="isDeleted" Type="Int32" />
-          <NavigationProperty Name="person" Relationship="Self.IDV_personWorkExperience" FromRole="personWorkExperience" ToRole="person" />
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="person" Relationship="Self.IDV_personWorkExperience" FromRole="personWorkExperience" ToRole="person" />
+        </EntityType>
+        <EntityType Name="roleBased">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="policyType" Type="Int32" />
+          <Property Name="empLevel" Type="Int32" />
+          <Property Name="valueType" Type="Int32" />
+          <Property Name="value" Type="Int32" />
         </EntityType>
         <EntityType Name="Token">
           <Key>
@@ -1489,14 +1499,26 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="catID_parentCategory">
-          <End Role="categoryParent" Type="Self.categoryParent" Multiplicity="1" />
-          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="categoryParent" Type="Self.categoryParent" Multiplicity="0..1" />
+          <End Role="category" Type="Self.category" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="categoryParent">
               <PropertyRef Name="catID" />
             </Principal>
             <Dependent Role="category">
+              <PropertyRef Name="catParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_locationParent_categoryParent">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="location" Type="Self.location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
               <PropertyRef Name="catID" />
+            </Principal>
+            <Dependent Role="location">
+              <PropertyRef Name="locationType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1704,18 +1726,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="IDV_personJob">
-          <End Role="person" Type="Self.person" Multiplicity="0..1" />
-          <End Role="personJob" Type="Self.personJob" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="person">
-              <PropertyRef Name="IDV" />
-            </Principal>
-            <Dependent Role="personJob">
-              <PropertyRef Name="IDV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="IDV_personLanguage">
           <End Role="person" Type="Self.person" Multiplicity="0..1" />
           <End Role="personLanguage" Type="Self.personLanguage" Multiplicity="*" />
@@ -1792,8 +1802,7 @@
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="HRISDBConnection" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+        <EntityContainer Name="HRISEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C_purpose" EntityType="Self.C_purpose" />
           <EntitySet Name="C_transaction" EntityType="Self.C_transaction" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
@@ -1804,6 +1813,7 @@
           <EntitySet Name="categoryParents" EntityType="Self.categoryParent" />
           <EntitySet Name="employees" EntityType="Self.employee" />
           <EntitySet Name="files" EntityType="Self.file" />
+          <EntitySet Name="locations" EntityType="Self.location" />
           <EntitySet Name="organizations" EntityType="Self.organization" />
           <EntitySet Name="people" EntityType="Self.person" />
           <EntitySet Name="personAddresses" EntityType="Self.personAddress" />
@@ -1820,6 +1830,7 @@
           <EntitySet Name="personSkills" EntityType="Self.personSkill" />
           <EntitySet Name="personTrainings" EntityType="Self.personTraining" />
           <EntitySet Name="personWorkExperiences" EntityType="Self.personWorkExperience" />
+          <EntitySet Name="roleBaseds" EntityType="Self.roleBased" />
           <EntitySet Name="Tokens" EntityType="Self.Token" />
           <EntitySet Name="users" EntityType="Self.user" />
           <AssociationSet Name="purposeType" Association="Self.purposeType">
@@ -1837,6 +1848,10 @@
           <AssociationSet Name="catID_parentCategory" Association="Self.catID_parentCategory">
             <End Role="categoryParent" EntitySet="categoryParents" />
             <End Role="category" EntitySet="categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_locationParent_categoryParent" Association="Self.FK_locationParent_categoryParent">
+            <End Role="category" EntitySet="categories" />
+            <End Role="location" EntitySet="locations" />
           </AssociationSet>
           <AssociationSet Name="FK_personDetail_Gender" Association="Self.FK_personDetail_Gender">
             <End Role="category" EntitySet="categories" />
@@ -1906,10 +1921,6 @@
             <End Role="person" EntitySet="people" />
             <End Role="personIdentity" EntitySet="personIdentities" />
           </AssociationSet>
-          <AssociationSet Name="IDV_personJob" Association="Self.IDV_personJob">
-            <End Role="person" EntitySet="people" />
-            <End Role="personJob" EntitySet="personJobs" />
-          </AssociationSet>
           <AssociationSet Name="IDV_personLanguage" Association="Self.IDV_personLanguage">
             <End Role="person" EntitySet="people" />
             <End Role="personLanguage" EntitySet="personLanguages" />
@@ -1938,94 +1949,53 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <AssociationSet Name="catID_parentCategory1" Association="HRISEntities.catID_parentCategory1">
-            <End Role="categoryParent" EntitySet="categoryParents" />
-            <End Role="category" EntitySet="categories" />
+          <EntitySet Name="employeeRoleBaseds" EntityType="HRISModel.employeeRoleBased" />
+          <AssociationSet Name="FK_employeeRoleBased_person" Association="HRISModel.FK_employeeRoleBased_person">
+            <End Role="person" EntitySet="people" />
+            <End Role="employeeRoleBased" EntitySet="employeeRoleBaseds" />
           </AssociationSet>
-          <EntitySet Name="locations" EntityType="HRISEntities.location" />
-          <AssociationSet Name="FK_locationParent_categoryParent" Association="HRISEntities.FK_locationParent_categoryParent">
-            <End Role="category" EntitySet="categories" />
-            <End Role="location" EntitySet="locations" />
-          </AssociationSet>
-          <EntitySet Name="employeeRoleBaseds" EntityType="HRISEntities.employeeRoleBased" />
-          <EntitySet Name="roleBaseds" EntityType="HRISEntities.roleBased" />
         </EntityContainer>
-        <Association Name="catID_parentCategory1">
-          <End Type="HRISEntities.categoryParent" Role="categoryParent" Multiplicity="0..1" />
-          <End Type="HRISEntities.category" Role="category" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="categoryParent">
-              <PropertyRef Name="catID" />
-            </Principal>
-            <Dependent Role="category">
-              <PropertyRef Name="catParentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="location">
-          <Key>
-            <PropertyRef Name="codeNum" />
-          </Key>
-          <Property Name="codeNum" Type="Int64" Nullable="false" />
-          <Property Name="codeNumParent" Type="Int64" />
-          <Property Name="codeISOParent" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="codeISO" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="codeUN" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="dialingCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="locationType" Type="Int32" />
-          <Property Name="locationName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="category" Relationship="HRISEntities.FK_locationParent_categoryParent" FromRole="location" ToRole="category" />
-        </EntityType>
-        <Association Name="FK_locationParent_categoryParent">
-          <End Type="HRISEntities.category" Role="category" Multiplicity="0..1" />
-          <End Type="HRISEntities.location" Role="location" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="category">
-              <PropertyRef Name="catID" />
-            </Principal>
-            <Dependent Role="location">
-              <PropertyRef Name="locationType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="employeeRoleBased">
-          <Key>
-            <PropertyRef Name="IDV" />
-          </Key>
-          <Property Name="IDV" Type="Int32" Nullable="false" />
-          <Property Name="catCode" Type="Int32" />
-          <Property Name="valueType" Type="Int32" />
-          <Property Name="value" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="balance" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-        </EntityType>
-        <EntityType Name="roleBased">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="policyType" Type="Int32" />
-          <Property Name="empLevel" Type="Int32" />
-          <Property Name="valueType" Type="Int32" />
-          <Property Name="value" Type="Int32" />
+          <Property Name="IDV" Type="Int32" Nullable="false" />
+          <Property Name="policyType" Type="Int32" Nullable="false" />
+          <Property Name="valueType" Type="Int32" Nullable="false" />
+          <Property Name="roleBasedValue" Type="Int32" />
+          <Property Name="currentValue" Type="Int32" />
+          <Property Name="balanceValue" Type="Int32" />
+          <Property Name="remainingValue" Type="Int32" />
+          <Property Name="validDateStart" Type="DateTime" Precision="0" />
+          <Property Name="validDateStop" Type="DateTime" Precision="0" />
+          <Property Name="decription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="person" Relationship="HRISModel.FK_employeeRoleBased_person" FromRole="employeeRoleBased" ToRole="person" />
         </EntityType>
+        <Association Name="FK_employeeRoleBased_person">
+          <End Type="HRISModel.person" Role="person" Multiplicity="1" />
+          <End Type="HRISModel.employeeRoleBased" Role="employeeRoleBased" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="employeeRoleBased">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HRISEntitiesStoreContainer" CdmEntityContainer="HRISDBConnection">
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="HRISEntities.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+        <EntityContainerMapping StorageEntityContainer="HRISModelStoreContainer" CdmEntityContainer="HRISEntities">
           <EntitySetMapping Name="C_purpose">
-            <EntityTypeMapping TypeName="HRISEntities.C_purpose">
+            <EntityTypeMapping TypeName="HRISModel.C_purpose">
               <MappingFragment StoreEntitySet="_purpose">
                 <ScalarProperty Name="purposeID" ColumnName="purposeID" />
                 <ScalarProperty Name="purposeName" ColumnName="purposeName" />
@@ -2034,7 +2004,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="C_transaction">
-            <EntityTypeMapping TypeName="HRISEntities.C_transaction">
+            <EntityTypeMapping TypeName="HRISModel.C_transaction">
               <MappingFragment StoreEntitySet="_transaction">
                 <ScalarProperty Name="txID" ColumnName="txID" />
                 <ScalarProperty Name="purposeID" ColumnName="purposeID" />
@@ -2045,7 +2015,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="HRISEntities.AspNetRole">
+            <EntityTypeMapping TypeName="HRISModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -2053,7 +2023,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="HRISEntities.AspNetUserClaim">
+            <EntityTypeMapping TypeName="HRISModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -2063,7 +2033,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="HRISEntities.AspNetUserLogin">
+            <EntityTypeMapping TypeName="HRISModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -2072,7 +2042,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="HRISEntities.AspNetUser">
+            <EntityTypeMapping TypeName="HRISModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -2090,7 +2060,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="categories">
-            <EntityTypeMapping TypeName="HRISEntities.category">
+            <EntityTypeMapping TypeName="HRISModel.category">
               <MappingFragment StoreEntitySet="category">
                 <ScalarProperty Name="catID" ColumnName="catID" />
                 <ScalarProperty Name="catParentID" ColumnName="catParentID" />
@@ -2100,7 +2070,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="categoryParents">
-            <EntityTypeMapping TypeName="HRISEntities.categoryParent">
+            <EntityTypeMapping TypeName="HRISModel.categoryParent">
               <MappingFragment StoreEntitySet="categoryParent">
                 <ScalarProperty Name="catID" ColumnName="catID" />
                 <ScalarProperty Name="catParentID" ColumnName="catParentID" />
@@ -2110,14 +2080,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="employees">
-            <EntityTypeMapping TypeName="HRISEntities.employee">
+            <EntityTypeMapping TypeName="HRISModel.employee">
               <MappingFragment StoreEntitySet="employee">
-                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="UID_ABSENCE" ColumnName="UID_ABSENCE" />
                 <ScalarProperty Name="joinDate" ColumnName="joinDate" />
                 <ScalarProperty Name="resignDate" ColumnName="resignDate" />
+                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
                 <ScalarProperty Name="contract1Start" ColumnName="contract1Start" />
                 <ScalarProperty Name="contract1End" ColumnName="contract1End" />
                 <ScalarProperty Name="contract2Start" ColumnName="contract2Start" />
@@ -2134,7 +2104,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="files">
-            <EntityTypeMapping TypeName="HRISEntities.file">
+            <EntityTypeMapping TypeName="HRISModel.file">
               <MappingFragment StoreEntitySet="file">
                 <ScalarProperty Name="fileID" ColumnName="fileID" />
                 <ScalarProperty Name="fileName" ColumnName="fileName" />
@@ -2150,8 +2120,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="locations">
+            <EntityTypeMapping TypeName="HRISModel.location">
+              <MappingFragment StoreEntitySet="location">
+                <ScalarProperty Name="codeNum" ColumnName="codeNum" />
+                <ScalarProperty Name="codeNumParent" ColumnName="codeNumParent" />
+                <ScalarProperty Name="codeISOParent" ColumnName="codeISOParent" />
+                <ScalarProperty Name="codeISO" ColumnName="codeISO" />
+                <ScalarProperty Name="codeUN" ColumnName="codeUN" />
+                <ScalarProperty Name="dialingCode" ColumnName="dialingCode" />
+                <ScalarProperty Name="locationType" ColumnName="locationType" />
+                <ScalarProperty Name="locationName" ColumnName="locationName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="organizations">
-            <EntityTypeMapping TypeName="HRISEntities.organization">
+            <EntityTypeMapping TypeName="HRISModel.organization">
               <MappingFragment StoreEntitySet="organization">
                 <ScalarProperty Name="orgID" ColumnName="orgID" />
                 <ScalarProperty Name="orgParentID" ColumnName="orgParentID" />
@@ -2162,7 +2146,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="people">
-            <EntityTypeMapping TypeName="HRISEntities.person">
+            <EntityTypeMapping TypeName="HRISModel.person">
               <MappingFragment StoreEntitySet="person">
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
@@ -2175,7 +2159,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personAddresses">
-            <EntityTypeMapping TypeName="HRISEntities.personAddress">
+            <EntityTypeMapping TypeName="HRISModel.personAddress">
               <MappingFragment StoreEntitySet="personAddress">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
@@ -2194,7 +2178,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personBankAccounts">
-            <EntityTypeMapping TypeName="HRISEntities.personBankAccount">
+            <EntityTypeMapping TypeName="HRISModel.personBankAccount">
               <MappingFragment StoreEntitySet="personBankAccount">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
@@ -2209,10 +2193,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personCertifications">
-            <EntityTypeMapping TypeName="HRISEntities.personCertification">
+            <EntityTypeMapping TypeName="HRISModel.personCertification">
               <MappingFragment StoreEntitySet="personCertification">
-                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
-                <ScalarProperty Name="createTime" ColumnName="createTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="certificationName" ColumnName="certificationName" />
@@ -2223,11 +2205,13 @@
                 <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
                 <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personContacts">
-            <EntityTypeMapping TypeName="HRISEntities.personContact">
+            <EntityTypeMapping TypeName="HRISModel.personContact">
               <MappingFragment StoreEntitySet="personContact">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
@@ -2242,9 +2226,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personDependents">
-            <EntityTypeMapping TypeName="HRISEntities.personDependent">
+            <EntityTypeMapping TypeName="HRISModel.personDependent">
               <MappingFragment StoreEntitySet="personDependent">
-                <ScalarProperty Name="tempNIP" ColumnName="tempNIP" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="IDVDependent" ColumnName="IDVDependent" />
@@ -2254,11 +2237,12 @@
                 <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
                 <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="tempNIP" ColumnName="tempNIP" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personDetails">
-            <EntityTypeMapping TypeName="HRISEntities.personDetail">
+            <EntityTypeMapping TypeName="HRISModel.personDetail">
               <MappingFragment StoreEntitySet="personDetail">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
@@ -2281,10 +2265,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personEdus">
-            <EntityTypeMapping TypeName="HRISEntities.personEdu">
+            <EntityTypeMapping TypeName="HRISModel.personEdu">
               <MappingFragment StoreEntitySet="personEdu">
-                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
-                <ScalarProperty Name="createTime" ColumnName="createTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="eduLevel" ColumnName="eduLevel" />
@@ -2295,11 +2277,13 @@
                 <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
                 <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personEmergencies">
-            <EntityTypeMapping TypeName="HRISEntities.personEmergency">
+            <EntityTypeMapping TypeName="HRISModel.personEmergency">
               <MappingFragment StoreEntitySet="personEmergency">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
@@ -2312,7 +2296,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personIdentities">
-            <EntityTypeMapping TypeName="HRISEntities.personIdentity">
+            <EntityTypeMapping TypeName="HRISModel.personIdentity">
               <MappingFragment StoreEntitySet="personIdentity">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
@@ -2327,14 +2311,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personJobs">
-            <EntityTypeMapping TypeName="HRISEntities.personJob">
+            <EntityTypeMapping TypeName="HRISModel.personJob">
               <MappingFragment StoreEntitySet="personJob">
-                <ScalarProperty Name="JobLevel" ColumnName="JobLevel" />
-                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
-                <ScalarProperty Name="createTime" ColumnName="createTime" />
-                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
-                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
-                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="parentIDV" ColumnName="parentIDV" />
@@ -2343,18 +2321,22 @@
                 <ScalarProperty Name="JobDepartement" ColumnName="JobDepartement" />
                 <ScalarProperty Name="JobPosition" ColumnName="JobPosition" />
                 <ScalarProperty Name="JobLocation" ColumnName="JobLocation" />
+                <ScalarProperty Name="JobLevel" ColumnName="JobLevel" />
                 <ScalarProperty Name="startDate" ColumnName="startDate" />
                 <ScalarProperty Name="endDate" ColumnName="endDate" />
                 <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personLanguages">
-            <EntityTypeMapping TypeName="HRISEntities.personLanguage">
+            <EntityTypeMapping TypeName="HRISModel.personLanguage">
               <MappingFragment StoreEntitySet="personLanguage">
-                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
-                <ScalarProperty Name="createTime" ColumnName="createTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="languageName" ColumnName="languageName" />
@@ -2363,14 +2345,14 @@
                 <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
                 <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personSkills">
-            <EntityTypeMapping TypeName="HRISEntities.personSkill">
+            <EntityTypeMapping TypeName="HRISModel.personSkill">
               <MappingFragment StoreEntitySet="personSkill">
-                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
-                <ScalarProperty Name="createTime" ColumnName="createTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="skillName" ColumnName="skillName" />
@@ -2378,14 +2360,14 @@
                 <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
                 <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personTrainings">
-            <EntityTypeMapping TypeName="HRISEntities.personTraining">
+            <EntityTypeMapping TypeName="HRISModel.personTraining">
               <MappingFragment StoreEntitySet="personTraining">
-                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
-                <ScalarProperty Name="createTime" ColumnName="createTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="TrainingName" ColumnName="TrainingName" />
@@ -2396,14 +2378,14 @@
                 <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
                 <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="personWorkExperiences">
-            <EntityTypeMapping TypeName="HRISEntities.personWorkExperience">
+            <EntityTypeMapping TypeName="HRISModel.personWorkExperience">
               <MappingFragment StoreEntitySet="personWorkExperience">
-                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
-                <ScalarProperty Name="createTime" ColumnName="createTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="companyName" ColumnName="companyName" />
@@ -2414,11 +2396,24 @@
                 <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
                 <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roleBaseds">
+            <EntityTypeMapping TypeName="HRISModel.roleBased">
+              <MappingFragment StoreEntitySet="roleBased">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="policyType" ColumnName="policyType" />
+                <ScalarProperty Name="empLevel" ColumnName="empLevel" />
+                <ScalarProperty Name="valueType" ColumnName="valueType" />
+                <ScalarProperty Name="value" ColumnName="value" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tokens">
-            <EntityTypeMapping TypeName="HRISEntities.Token">
+            <EntityTypeMapping TypeName="HRISModel.Token">
               <MappingFragment StoreEntitySet="Tokens">
                 <ScalarProperty Name="TokenId" ColumnName="TokenId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -2429,7 +2424,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="HRISEntities.user">
+            <EntityTypeMapping TypeName="HRISModel.user">
               <MappingFragment StoreEntitySet="user">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
@@ -2439,7 +2434,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="HRISEntities.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="HRISModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
@@ -2447,43 +2442,28 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="locations">
-            <EntityTypeMapping TypeName="HRISEntities.location">
-              <MappingFragment StoreEntitySet="location">
-                <ScalarProperty Name="locationName" ColumnName="locationName" />
-                <ScalarProperty Name="locationType" ColumnName="locationType" />
-                <ScalarProperty Name="dialingCode" ColumnName="dialingCode" />
-                <ScalarProperty Name="codeUN" ColumnName="codeUN" />
-                <ScalarProperty Name="codeISO" ColumnName="codeISO" />
-                <ScalarProperty Name="codeISOParent" ColumnName="codeISOParent" />
-                <ScalarProperty Name="codeNumParent" ColumnName="codeNumParent" />
-                <ScalarProperty Name="codeNum" ColumnName="codeNum" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="employeeRoleBaseds">
-            <EntityTypeMapping TypeName="HRISEntities.employeeRoleBased">
+            <EntityTypeMapping TypeName="HRISModel.employeeRoleBased">
               <MappingFragment StoreEntitySet="employeeRoleBased">
-                <ScalarProperty Name="balance" ColumnName="balance" />
-                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="decription" ColumnName="decription" />
+                <ScalarProperty Name="validDateStop" ColumnName="validDateStop" />
+                <ScalarProperty Name="validDateStart" ColumnName="validDateStart" />
+                <ScalarProperty Name="remainingValue" ColumnName="remainingValue" />
+                <ScalarProperty Name="balanceValue" ColumnName="balanceValue" />
+                <ScalarProperty Name="currentValue" ColumnName="currentValue" />
+                <ScalarProperty Name="roleBasedValue" ColumnName="roleBasedValue" />
                 <ScalarProperty Name="valueType" ColumnName="valueType" />
-                <ScalarProperty Name="catCode" ColumnName="catCode" />
-                <ScalarProperty Name="IDV" ColumnName="IDV" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="roleBaseds">
-            <EntityTypeMapping TypeName="HRISEntities.roleBased">
-              <MappingFragment StoreEntitySet="roleBased">
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="valueType" ColumnName="valueType" />
-                <ScalarProperty Name="empLevel" ColumnName="empLevel" />
                 <ScalarProperty Name="policyType" ColumnName="policyType" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -2498,7 +2478,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

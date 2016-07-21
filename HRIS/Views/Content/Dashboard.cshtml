@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutNavigation.cshtml";
+}
+
+@section scripts {
+<script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
+<script type="text/javascript">
+        $(document).ready(function () {
+            th = "metro";
+            $('#dataForm').jqxTabs({ theme: th, width: '100%', height: 550 });
+
+            hris.general.bindButton('submitButton');
+        })
+</script>
+
+    }
+
+<div class="row">
+<div class="col-md-5">
+    <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">Dashboard</h1>
+    <h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Employee Information and Detail</h2>
+</div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-md-9" id="dataForm">
+        <ul>
+            <li style="margin-left:20px">Status</li>
+            <li >Information</li>
+            <li >Detail</li>
+        </ul>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px; margin-left:30px"></div>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px; margin-left:30px">
+            @{ Html.RenderPartial("~/Views/SharedForm/_employeeRoleBased.cshtml"); }
+        </div>
+        <div style="overflow: hidden; margin-right:20px;margin-top:20px; margin-left:30px"></div>
+    </div>
+</div>
