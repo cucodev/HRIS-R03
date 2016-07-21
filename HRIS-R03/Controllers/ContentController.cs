@@ -21,10 +21,10 @@ namespace HRIS_R03.Controllers
 
         public ActionResult vProfile()
         {
-            
+
             //profileEntities dt = new ViewData["UserCred"] as profileEntities();
-            
-            var dt = (profileEntities)Session[GlobalVariable.UserCred];
+
+            var dt = (UserCredModel)Session[GlobalVariable.UserCred];
             // ViewBag.cUser = dt.cUser;
             ViewBag.cIDV = dt.IDV;
             ViewBag.cIDVParent = dt.parentIDV;

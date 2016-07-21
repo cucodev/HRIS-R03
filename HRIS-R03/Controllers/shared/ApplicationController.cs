@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Routing;
+using BusinessEntities;
 using BusinessEntities.CrudEntities;
 using BusinessServices.Interface;
 using BusinessServices.InterfaceMethod;
@@ -15,7 +16,7 @@ namespace HRIS_R03.Controllers.shared
         private const string ErrorController = "Error";
         private const string LogOnController = "Default";
         private const string LogOnAction = "Index";
-        private const string UserCred = "UserCred";
+        private const string UserCred = GlobalVariable.UserCred;
         private const string ParentList = "ParentList";
 
         private readonly Isecurity _pServices;
@@ -28,7 +29,7 @@ namespace HRIS_R03.Controllers.shared
 
         protected ApplicationController()
         {
-            _pServices = new SecurityClass();
+            _pServices = new SecurityServices();
         }
 
         protected override void Initialize(RequestContext requestContext)
@@ -55,7 +56,7 @@ namespace HRIS_R03.Controllers.shared
             requestContext.HttpContext.Response.Redirect(action);
             requestContext.HttpContext.Response.End();
         }
-        
+
         protected bool HasSession()
         {
             return Session[LogOnSession] != null;
@@ -66,11 +67,11 @@ namespace HRIS_R03.Controllers.shared
             return (TSource)this.Session[LogOnSession];
         }
 
-        public bool SetUserSession(LogOnModel model,int id)
+        public bool SetUserSession(LogOnModel model, int IDV)
         {
             try
             {
-                profileEntities data = new profileEntities();
+                UserCredModel data = new UserCredModel();
                 if (model.RememberMe)
                 {
                     var ASPCookie = Request.Cookies["LogOnSession"];
@@ -78,36 +79,38 @@ namespace HRIS_R03.Controllers.shared
                     ASPCookie.Expires = DateTime.Now.AddDays(1);
                     Response.SetCookie(ASPCookie);
                 }
-                System.Diagnostics.Debug.WriteLine("Set User Session :: LogOn Model Username: " + model.UserName);
+                System.Diagnostics.Debug.WriteLine("Set User Session :: LogOn Model Username: " + model.UserName + ", IDV=" + IDV);
 
                 //Get User Profile
-                data = _pServices.getProfile(id);
-                //Pass User as ViewData & Session
+                data = _pServices.getUserCred(IDV);
                 ViewData[UserCred] = data;
                 Session[UserCred] = data;
+                try
+                {
 
-                var dt = data;
-                    //ViewBag.cUser = x.IDV;
-                    ViewBag.cIDV = dt.IDV;
-                    ViewBag.cIDVParent = dt.parentIDV;
-                    ViewBag.cIDVParentLevel = 0;
-                    ViewBag.cName = dt.Name;
-                    ViewBag.cNickName = dt.NickName;
-                    ViewBag.cNIP = dt.NIP;
-                    ViewBag.cEmpPosition = dt.JobPosition;
-                    ViewBag.cEmpJobLevel = dt.JobLevel;
-                    ViewBag.cEmpDivision = dt.JobDivision;
-                    ViewBag.cEmpDepartement = dt.JobDepartement;
-                    ViewBag.cEmpOfficeLocation = dt.JobLocation;
-                
+
+                    ViewBag.cIDV = data.IDV;
+                    ViewBag.cIDVMail = data.IDVMail;
+                    ViewBag.cIDVParent = data.parentIDV;
+                    ViewBag.cIDVParentMail = data.parentIDVMail;
+                    ViewBag.cName = data.Name;
+                    ViewBag.cRole = data.role;
+                    ViewBag.cTimeLogin = data.timeLogin;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine("Set Viewbag Error : ", e.Message);
+                }
+
                 return true;
-            } catch (Exception x)
+            }
+            catch (Exception x)
             {
                 System.Diagnostics.Debug.WriteLine("Error: " + x.Message);
                 return false;
             }
-            
-            
+
+
         }
 
         protected void SetLogOnSessionModel(TSource model)

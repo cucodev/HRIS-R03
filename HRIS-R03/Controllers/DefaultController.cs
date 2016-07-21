@@ -15,7 +15,7 @@ namespace HRIS_R03.Controllers
 
         public DefaultController()
         {
-            _pSecurity = new SecurityClass();
+            _pSecurity = new SecurityServices();
         }
 
         // GET: Default

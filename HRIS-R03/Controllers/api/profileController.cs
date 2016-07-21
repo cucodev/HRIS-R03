@@ -21,7 +21,7 @@ namespace HRIS_R03.Controllers.api
         /// </summary>
         public profileController()
         {
-            _pServices = new profileServices();// ProductServices();
+            _pServices = new ProfileServices();// ProductServices();
         }
 
         #endregion
