@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRIS-R03", "HRIS-R03\HRIS-R03.csproj", "{6FCF82BF-1A62-440C-9C28-911EB2898F05}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModel", "DataModel\DataModel.csproj", "{DF9728C3-BB3E-4A95-AD30-3532F08B7049}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessEntities", "BusinessEntities\BusinessEntities.csproj", "{33D74034-0D67-44B9-B1AD-8C3A27CE0F7E}"
@@ -13,16 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessServices", "Busines
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRIS", "HRIS\HRIS.csproj", "{4B780507-2CDE-4CCF-8715-DD4C07104C1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRIS-R03", "HRIS-R03\HRIS-R03.csproj", "{6FCF82BF-1A62-440C-9C28-911EB2898F05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6FCF82BF-1A62-440C-9C28-911EB2898F05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FCF82BF-1A62-440C-9C28-911EB2898F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FCF82BF-1A62-440C-9C28-911EB2898F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FCF82BF-1A62-440C-9C28-911EB2898F05}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DF9728C3-BB3E-4A95-AD30-3532F08B7049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF9728C3-BB3E-4A95-AD30-3532F08B7049}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF9728C3-BB3E-4A95-AD30-3532F08B7049}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{4B780507-2CDE-4CCF-8715-DD4C07104C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B780507-2CDE-4CCF-8715-DD4C07104C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B780507-2CDE-4CCF-8715-DD4C07104C1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FCF82BF-1A62-440C-9C28-911EB2898F05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FCF82BF-1A62-440C-9C28-911EB2898F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FCF82BF-1A62-440C-9C28-911EB2898F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FCF82BF-1A62-440C-9C28-911EB2898F05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
