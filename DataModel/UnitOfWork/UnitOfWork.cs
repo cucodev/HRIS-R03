@@ -43,6 +43,7 @@ namespace DataModel.UnitOfWork
         private GenericRepository<location> _locationParentRepository;
         private GenericRepository<organization> _organizationRepository;
         private GenericRepository<roleBased> _roleBasedRepository;
+        private GenericRepository<roleBasedMatrix> _roleBasedMatrixRepository;
 
         private GenericRepository<user> _userRepository;
         private GenericRepository<Token> _tokenRepository;
@@ -53,7 +54,6 @@ namespace DataModel.UnitOfWork
             _context = new HRISEntities();
         }
 
-
         #region Public Repository Creation properties...
 
         public GenericRepository<roleBased> roleBasedRepository
@@ -63,6 +63,15 @@ namespace DataModel.UnitOfWork
                 if (this._roleBasedRepository == null)
                     this._roleBasedRepository = new GenericRepository<roleBased>(_context);
                 return _roleBasedRepository;
+            }
+        }
+        public GenericRepository<roleBasedMatrix> roleBasedMatrixRepository
+        {
+            get
+            {
+                if (this._roleBasedMatrixRepository == null)
+                    this._roleBasedMatrixRepository = new GenericRepository<roleBasedMatrix>(_context);
+                return _roleBasedMatrixRepository;
             }
         }
 

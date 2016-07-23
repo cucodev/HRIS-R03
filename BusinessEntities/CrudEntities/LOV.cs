@@ -31,6 +31,22 @@ namespace BusinessEntities.CrudEntities
     }
 
 
+    public class DynamicColumn
+    {
+        public string text { get; set; }
+        public int datafield { get; set; }
+        public int width { get; set; }
+    }
+
+    public class DynamicDatafield
+    {
+        public string name { get; set; }
+        public string type { get; set; }
+        public string value { get; set; }
+
+        public virtual IEnumerable<LOV> values { get; set; }
+    }
+
 
 
 }

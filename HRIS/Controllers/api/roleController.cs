@@ -38,7 +38,7 @@ namespace HRIS.Controllers.api
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getRoleBasedBypolicyType")]
-        [System.Web.Http.Route("api/role/getRoleBasedBypolicyType")]
+        [System.Web.Http.Route("api/role/getRoleBasedBypolicyType/{policyTypeID}")]
         public IEnumerable<roleBasedEntities> getRoleBasedBypolicyType(int policyTypeID)
         {
             var p = _pServices.getRoleBasedBypolicyType(policyTypeID);

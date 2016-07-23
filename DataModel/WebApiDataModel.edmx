@@ -425,6 +425,32 @@
           <Property Name="valueType" Type="int" />
           <Property Name="value" Type="int" />
         </EntityType>
+        <EntityType Name="roleBasedMatrix">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PolicyType" Type="int" Nullable="false" />
+          <Property Name="PolicyName" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="int" />
+          <Property Name="ValueType" Type="int" />
+          <Property Name="L1" Type="int" />
+          <Property Name="L2" Type="int" />
+          <Property Name="L3" Type="int" />
+          <Property Name="L4" Type="int" />
+          <Property Name="L5" Type="int" />
+          <Property Name="L6" Type="int" />
+          <Property Name="L7" Type="int" />
+          <Property Name="L8" Type="int" />
+          <Property Name="L9" Type="int" />
+          <Property Name="L10" Type="int" />
+          <Property Name="L11" Type="int" />
+          <Property Name="L12" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="Tokens">
           <Key>
             <PropertyRef Name="TokenId" />
@@ -856,6 +882,7 @@
           <EntitySet Name="personTraining" EntityType="Self.personTraining" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="personWorkExperience" EntityType="Self.personWorkExperience" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roleBased" EntityType="Self.roleBased" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="roleBasedMatrix" EntityType="Self.roleBasedMatrix" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="catID_parentCategory" Association="Self.catID_parentCategory">
@@ -1954,6 +1981,7 @@
             <End Role="person" EntitySet="people" />
             <End Role="employeeRoleBased" EntitySet="employeeRoleBaseds" />
           </AssociationSet>
+          <EntitySet Name="roleBasedMatrices" EntityType="HRISModel.roleBasedMatrix" />
         </EntityContainer>
         <EntityType Name="employeeRoleBased">
           <Key>
@@ -1988,6 +2016,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="roleBasedMatrix">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PolicyType" Type="Int32" Nullable="false" />
+          <Property Name="PolicyName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Value" Type="Int32" />
+          <Property Name="ValueType" Type="Int32" />
+          <Property Name="L1" Type="Int32" />
+          <Property Name="L2" Type="Int32" />
+          <Property Name="L3" Type="Int32" />
+          <Property Name="L4" Type="Int32" />
+          <Property Name="L5" Type="Int32" />
+          <Property Name="L6" Type="Int32" />
+          <Property Name="L7" Type="Int32" />
+          <Property Name="L8" Type="Int32" />
+          <Property Name="L9" Type="Int32" />
+          <Property Name="L10" Type="Int32" />
+          <Property Name="L11" Type="Int32" />
+          <Property Name="L12" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2459,6 +2513,33 @@
                 <ScalarProperty Name="valueType" ColumnName="valueType" />
                 <ScalarProperty Name="policyType" ColumnName="policyType" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roleBasedMatrices">
+            <EntityTypeMapping TypeName="HRISModel.roleBasedMatrix">
+              <MappingFragment StoreEntitySet="roleBasedMatrix">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="L12" ColumnName="L12" />
+                <ScalarProperty Name="L11" ColumnName="L11" />
+                <ScalarProperty Name="L10" ColumnName="L10" />
+                <ScalarProperty Name="L9" ColumnName="L9" />
+                <ScalarProperty Name="L8" ColumnName="L8" />
+                <ScalarProperty Name="L7" ColumnName="L7" />
+                <ScalarProperty Name="L6" ColumnName="L6" />
+                <ScalarProperty Name="L5" ColumnName="L5" />
+                <ScalarProperty Name="L4" ColumnName="L4" />
+                <ScalarProperty Name="L3" ColumnName="L3" />
+                <ScalarProperty Name="L2" ColumnName="L2" />
+                <ScalarProperty Name="L1" ColumnName="L1" />
+                <ScalarProperty Name="ValueType" ColumnName="ValueType" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="PolicyName" ColumnName="PolicyName" />
+                <ScalarProperty Name="PolicyType" ColumnName="PolicyType" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

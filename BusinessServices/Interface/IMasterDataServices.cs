@@ -14,7 +14,7 @@ namespace BusinessServices.Interface
        
     }
 
-    //Maintain RoleBased Data
+    //Maintain RoleBased Data, tree type, unused
     public interface IRoleBased
     {
         IEnumerable<roleBasedEntities> getRoleBased();
@@ -24,7 +24,26 @@ namespace BusinessServices.Interface
         bool DeleteRoleBased(int id);
     }
 
-    //Maintain Category Matrix Role
+    //For Manage Catagory only
+    public interface IManageRoleBasedMatrix
+    {
+        IEnumerable<roleBasedMatrixEntities> getMatrix();
+        roleBasedMatrixEntities getMatrixByID(int ID);
+        int CreateMatrix(roleBasedMatrixEntities roleBasedMatrixEntities);
+        bool UpdateMatrix(int ID, roleBasedMatrixEntities roleBasedMatrixEntities);
+        bool DeleteMatrix(int ID);
+    }
+
+    //For Manage Content Data
+    public interface IDataRoleBasedMatrix
+    {
+        IEnumerable<roleBasedMatrixEntities> getMatrix();
+        int CreateMatrix(roleBasedMatrixEntities roleBasedMatrixEntities);
+        bool UpdateMatrix(int ID, roleBasedMatrixEntities roleBasedMatrixEntities);
+        bool DeleteMatrix(int ID);
+    }
+
+    //Maintain Category Matrix Role, unused
     public interface IcategoryRoleBased
     {
         IEnumerable<BusinessEntities.CrudEntities.classificationEntities> getRoleBased(BusinessEntities.CrudEntities.classificationEntities roleBasedEntities);

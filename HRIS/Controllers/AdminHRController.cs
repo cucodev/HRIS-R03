@@ -18,5 +18,10 @@ namespace HRIS_R03.Controllers
         {
             return View();
         }
+
+        public ActionResult Test()
+        {
+            return View();
+        }
     }
 }

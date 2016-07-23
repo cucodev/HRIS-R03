@@ -178,6 +178,64 @@ namespace BusinessServices.InterfaceMethod
 
         }
 
+        public IEnumerable<LOV> getPolicyRootType()
+        {
+            List<LOV> ms = new List<LOV>();
+            var vRootID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.policyTypeRoot);
+            var vParentID = _unitOfWork.categoryParentRepository.GetMany(b => b.catParentID == vRootID.catID);
+
+            if (vRootID.catID != 0)
+            {
+                if (vParentID.Any())
+                {
+                    foreach (categoryParent n in vParentID)
+                    {
+                        LOV xx = new LOV();
+                        xx.value = n.catID;
+                        xx.label = (n.catName).TrimEnd();
+                        ms.Add(xx);
+                    }
+
+                }
+
+            }
+            return ms.AsEnumerable();
+        }
+
+        //Need to update, not refers to Category, only Medical and Leave (root only)
+        public IEnumerable<LOV> getPolicyType()
+        {
+            List<LOV> ms = new List<LOV>();
+            var vRootID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.policyTypeRoot);
+            var vParentID = _unitOfWork.categoryParentRepository.GetMany(b => b.catParentID == vRootID.catID);
+
+            if (vRootID.catID != 0)
+            {
+                if (vParentID.Any())
+                {
+                    foreach (categoryParent n in vParentID)
+                    {
+                        
+                        var vDataID = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == n.catID);
+                        if (vDataID.Any())
+                        {
+                            foreach (category nn in vDataID)
+                            {
+                                LOV xx = new LOV();
+                                xx.value = nn.catID;
+                                xx.label = (n.catName).TrimEnd() + " - " + (nn.catName).TrimEnd();
+                                ms.Add(xx);
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+            return ms.AsEnumerable();
+        }
+
         public IEnumerable<LOV> getSkillLevel()
         {
 
@@ -263,11 +321,15 @@ namespace BusinessServices.InterfaceMethod
                     {
                         getSubinParentCategory(n.catID);
                     }
-
+                   
                     LOV xx = new LOV();
-                    xx.value = n.catID;
-                    xx.label = (n.catName).TrimEnd();
-                    msLOV.Add(xx);
+                    System.Diagnostics.Debug.WriteLine("Code: " + n.catCode);
+                    if ( (n.catCode).TrimEnd() != "empLevel")
+                    {
+                        xx.value = n.catID;
+                        xx.label = (n.catName).TrimEnd();
+                        msLOV.Add(xx);
+                    }
                 }
 
             }
@@ -336,7 +398,6 @@ namespace BusinessServices.InterfaceMethod
             return msTree.AsEnumerable();
            
         }
-
 
         public IEnumerable<LOV> getEmpStatus()
         {
@@ -639,6 +700,127 @@ namespace BusinessServices.InterfaceMethod
 
             return null;
 
+        }
+
+
+        //Dynamic Column, used in JobLevel
+        List<DynamicColumn> dynamicCol = new List<DynamicColumn>();
+        public IEnumerable<DynamicColumn> columnJobLevel()
+        {
+            DynamicColumn xx = new DynamicColumn();
+
+            xx.text = "ID";
+            xx.datafield = 1;
+            xx.width = 10;
+            dynamicCol.Add(xx);
+
+            xx = new DynamicColumn();
+            xx.text = "Type";
+            xx.datafield = 2;
+            xx.width = 70;
+            dynamicCol.Add(xx);
+
+            xx = new DynamicColumn();
+            xx.text = "Description";
+            xx.datafield = 3;
+            xx.width = 200;
+            dynamicCol.Add(xx);
+
+
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_levelRoot);
+            //If id has tree
+            if (isHasSubTreeInparentCategory(vparentID.catID))
+            {
+                getSubColumninParentCategory(vparentID.catID);
+            }
+
+            return dynamicCol.AsEnumerable();
+        }
+
+        private void getSubColumninParentCategory(int parentID)
+        {
+            var rootID = _unitOfWork.categoryParentRepository.GetMany(b => b.catParentID == parentID);
+            if (rootID.Any())
+            {
+
+                foreach (categoryParent n in rootID)
+                {
+                    if (isHasSubTreeInparentCategory(n.catID))
+                    {
+                        getSubColumninParentCategory(n.catID);
+                    }
+
+                    DynamicColumn xx = new DynamicColumn();
+                    System.Diagnostics.Debug.WriteLine("Code: " + n.catCode);
+                    if ((n.catCode).TrimEnd() != "empLevel")
+                    {
+                        xx.text = n.catName;
+                        xx.datafield = n.catID;
+                        xx.width = 100;
+                        dynamicCol.Add(xx);
+                    }
+                }
+
+            }
+        }
+
+
+        //Dynamic Datafield, used in Joblevel
+        List<DynamicDatafield> dynamicRow = new List<DynamicDatafield>();
+        public IEnumerable<DynamicDatafield> datafieldJobLevel()
+        {
+            dynamicRow = new List<DynamicDatafield>();
+            DynamicDatafield xx = new DynamicDatafield();
+
+            xx.name = "ID";
+            xx.type = "number";
+            dynamicRow.Add(xx);
+
+            xx = new DynamicDatafield();
+            xx.name = "policyType";
+            xx.type = "number";
+            dynamicRow.Add(xx);
+
+            xx = new DynamicDatafield();
+            xx.name = "policyName";
+            xx.value = "policyType";
+            xx.values = getPolicyType();
+            dynamicRow.Add(xx);
+
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_levelRoot);
+            //If id has tree
+            if (isHasSubTreeInparentCategory(vparentID.catID))
+            {
+                getSubDatafieldinParentCategory(vparentID.catID);
+            }
+
+            return dynamicRow.AsEnumerable();
+        }
+
+        private void getSubDatafieldinParentCategory(int parentID)
+        {
+            var rootID = _unitOfWork.categoryParentRepository.GetMany(b => b.catParentID == parentID);
+            if (rootID.Any())
+            {
+
+                foreach (categoryParent n in rootID)
+                {
+                    if (isHasSubTreeInparentCategory(n.catID))
+                    {
+                        getSubDatafieldinParentCategory(n.catID);
+                    }
+
+                    DynamicDatafield xx = new DynamicDatafield();
+                    System.Diagnostics.Debug.WriteLine("Code: " + n.catCode);
+                    if ((n.catCode).TrimEnd() != "empLevel")
+                    {
+                        xx.name = (n.catID).ToString();
+                        xx.type = "number";
+                        dynamicRow.Add(xx);
+                    }
+                }
+
+            }
         }
 
         

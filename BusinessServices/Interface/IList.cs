@@ -25,6 +25,8 @@ namespace BusinessServices.Interface
         IEnumerable<LOV> getName();
         IEnumerable<LOV> getEdu();
         IEnumerable<LOV> getValueType();
+        IEnumerable<LOV> getPolicyType();
+        IEnumerable<LOV> getPolicyRootType();
 
         IEnumerable<LOVLocation> getCountry();
         IEnumerable<LOVLocation> getLocation(long id);
@@ -36,6 +38,9 @@ namespace BusinessServices.Interface
         IEnumerable<LOVTree> getRoleBasedTree();
         IEnumerable<LOV> getLevel();
         IEnumerable<LOVTree> getLevelTree();
+
+        IEnumerable<DynamicColumn> columnJobLevel();
+        IEnumerable<DynamicDatafield> datafieldJobLevel();
 
         //IEnumerable<listEntities> getListCategory(int parentID);
         //IEnumerable<listEntities> getListparentCategory(int parentID);

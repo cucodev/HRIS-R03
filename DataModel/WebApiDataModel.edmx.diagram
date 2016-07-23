@@ -66,6 +66,7 @@
         <AssociationConnector Association="HRISModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="HRISModel.employeeRoleBased" Width="1.5" PointX="5.25" PointY="68.375" />
         <AssociationConnector Association="HRISModel.FK_employeeRoleBased_person" />
+        <EntityTypeShape EntityType="HRISModel.roleBasedMatrix" Width="1.5" PointX="7.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

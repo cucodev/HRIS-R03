@@ -209,6 +209,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminHRController.cs" />
     <Compile Include="Controllers\api\listController.cs" />
+    <Compile Include="Controllers\api\roleBasedMatrixController.cs" />
     <Compile Include="Controllers\api\roleController.cs" />
     <Compile Include="Controllers\api\profileController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
@@ -399,6 +400,7 @@
     <Content Include="Scripts\fullcalendar\LICENSE.txt" />
     <Content Include="Scripts\fullcalendar\moment.js" />
     <Content Include="Scripts\hrisframework\hris.js" />
+    <Content Include="Scripts\hrisframework\jsList.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -533,6 +535,9 @@
     <Content Include="Views\SharedForm\_leaveForm.cshtml" />
     <Content Include="Views\Content\Dashboard.cshtml" />
     <Content Include="Views\SharedForm\_employeeRoleBased.cshtml" />
+    <Content Include="Views\Shared\_LayoutNone.cshtml" />
+    <Content Include="Views\AdminHR\Test.cshtml" />
+    <Content Include="Views\SharedMaintainData\_roleBasedMatrix.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

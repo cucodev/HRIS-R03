@@ -13,11 +13,44 @@ namespace HRIS
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include());
+            //bundles.Add(new ScriptBundle("~/bundles/modernizr").Include());
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include());
+            //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include());
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.css", "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/bootstrap.css", 
+                "~/Content/site.css"));
+
+            //==========================================================================================CUSTOM css
+            bundles.Add(new StyleBundle("~/Content/LoginStyle").Include("~/Content/LoginStyle.css"));
+            bundles.Add(new StyleBundle("~/Content/jsmenu").Include(
+                     "~/Content/jsmenu/reset.css",
+                     "~/Content/jsmenu/style.css"));
+            bundles.Add(new StyleBundle("~/Content/jqwidgets").Include(
+                   "~/Content/jqwidgets/jqx.base.css",
+                    "~/Content/jqwidgets/jqx.arctic.css",
+                    "~/Content/jqwidgets/jqx.black.css",
+                    "~/Content/jqwidgets/jqx.bootstrap.css",
+                    "~/Content/jqwidgets/jqx.classic.css",
+                    "~/Content/jqwidgets/jqx.darkblue.css",
+                    "~/Content/jqwidgets/jqx.energyblue.css",
+                    "~/Content/jqwidgets/jqx.fresh.css",
+                    "~/Content/jqwidgets/jqx.highcontrast.css",
+                    "~/Content/jqwidgets/jqx.metro.css",
+                    "~/Content/jqwidgets/jqx.metrodark.css",
+                    "~/Content/jqwidgets/jqx.office.css",
+                    "~/Content/jqwidgets/jqx.orange.css",
+                    "~/Content/jqwidgets/jqx.shinyblack.css",
+                    "~/Content/jqwidgets/jqx.summer.css",
+                    "~/Content/jqwidgets/jqx.web.css",
+                    "~/Content/jqwidgets/jqx.ui-darkness.css",
+                    "~/Content/jqwidgets/jqx.ui-lightness.css",
+                    "~/Content/jqwidgets/jqx.ui-le-frog.css",
+                    "~/Content/jqwidgets/jqx.ui-overcast.css",
+                    "~/Content/jqwidgets/jqx.ui-redmond.css",
+                    "~/Content/jqwidgets/jqx.ui-smoothness.css",
+                    "~/Content/jqwidgets/jqx.ui-start.css",
+                    "~/Content/jqwidgets/jqx.ui-sunny.css"));
 
             //==========================================================================================CUSTOM js
             bundles.Add(new ScriptBundle("~/bundles/jsmenu").Include(
@@ -37,6 +70,8 @@ namespace HRIS
                         "~/Scripts/jqwidgets/jqxgrid.edit.js",
                         "~/Scripts/jqwidgets/jqxgrid.selection.js",
                         "~/Scripts/jqwidgets/jqxgrid.pager.js",
+                        "~/Scripts/jqwidgets/jqxgrid.columnsreorder.js",
+                        "~/Scripts/jqwidgets/jqxgrid.columnsresize.js", 
                         "~/Scripts/jqwidgets/jqxlistbox.js",
                         "~/Scripts/jqwidgets/jqxbuttons.js",
                         "~/Scripts/jqwidgets/jqxbuttongroup.js",
@@ -73,24 +108,12 @@ namespace HRIS
                         "~/Scripts/jqwidgets/jqxribbon.js",
                         "~/Scripts/jqwidgets/jqxpasswordinput.js",
                         "~/Scripts/jqwidgets/jqxnumberinput.js",
+                        "~/Scripts/jqwidgets/jqxpopover.js",
                         "~/Scripts/jqwidgets/jqxtextarea.js",
                         "~/Scripts/jqwidgets/jqxcombobox.js"
                         ));
 
-            //==========================================================================================CUSTOM css
-            bundles.Add(new StyleBundle("~/Content/LoginStyle").Include("~/Content/LoginStyle.css"));
-            bundles.Add(new StyleBundle("~/Content/jsmenu").Include(
-                     "~/Content/jsmenu/reset.css",
-                     "~/Content/jsmenu/style.css"));
-            bundles.Add(new StyleBundle("~/Content/jqwidgets").Include(
-                    "~/Content/jqwidgets/jqx.base.css",
-                    //"~/Content/jqwidgets/jqx.bootstrap.css",
-                    "~/Content/jqwidgets/jqx.classic.css",
-                    "~/Content/jqwidgets/jqx.darkblue.css",
-                    "~/Content/jqwidgets/jqx.energyblue.css",
-                    "~/Content/jqwidgets/jqx.fresh.css",
-                    "~/Content/jqwidgets/jqx.orange.css",
-                    "~/Content/jqwidgets/jqx.ui-redmond.css"));
+            
         }
     }
 }

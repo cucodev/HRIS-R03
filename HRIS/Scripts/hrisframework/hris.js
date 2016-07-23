@@ -34,6 +34,8 @@
     hris.data = {
         _getRoleBased: function () {
             var dataLevel = hris.list._getLOV('getLevel');
+            var valueType = hris.list._getLOV('getValueType');
+            var policy = hris.list._getLOV('getPolicyType');
             var source =
             {
                 datatype: 'json',
@@ -43,8 +45,10 @@
                     { name: 'empLevel', type: 'number' },
                     { name: 'LevelName', value: 'empLevel', values: { source: dataLevel.records, value: 'value', name: 'label' } },
                     { name: 'policyType', type: 'number' },
+                    { name: 'policyName', value: 'policyType', values: { source: policy.records, value: 'value', name: 'label' } },
                     { name: 'value', type: 'number' },
-                    { name: 'valueType', type: 'number' }
+                    { name: 'valueType', type: 'number' },
+                    { name: 'valueName', value: 'valueType', values: { source: valueType.records, value: 'value', name: 'label' } }
                 ],
                 //async: false,
                 url: '/api/role/getRoleBased',
@@ -88,6 +92,66 @@
             });
 
         },
+        _getRoleBasedBypolicyType: function (policyType) {
+            var dataLevel = hris.list._getLOV('getLevel');
+            var valueType = hris.list._getLOV('getValueType');
+            var policy = hris.list._getLOV('getPolicyType');
+            return source =
+            {
+                datatype: 'json',
+                datafields: [
+                    { name: 'check', type: 'bool' },
+                    { name: 'ID', type: 'number' },
+                    { name: 'empLevel', type: 'number' },
+                    { name: 'LevelName', value: 'empLevel', values: { source: dataLevel.records, value: 'value', name: 'label' } },
+                    { name: 'policyType', type: 'number' },
+                    { name: 'policyName', value: 'policyType', values: { source: policy.records, value: 'value', name: 'label' } },
+                    { name: 'value', type: 'number' },
+                    { name: 'valueType', type: 'number' },
+                    { name: 'valueName', value: 'valueType', values: { source: valueType.records, value: 'value', name: 'label' } }
+                ],
+                //async: false,
+                url: '/api/role/getRoleBasedBypolicyType/' + policyType,
+                updateRow: function (rowID, rowData, commit) {
+                    console.log("Updaterow : " + rowid);
+                    console.log("Updaterow : ", rowdata);
+                    //rowdata.ID = rowid;
+                    var uri = '/api/role/updateRoleBased/' + rowid;
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: uri,
+                        contentType: 'application/json',
+                        data: JSON.stringify(rowdata),
+                        type: 'PUT',
+                        success: function (data, status, xhr) {
+                            // update command is executed.
+                            console.log("Row Updated on ID : " + rowdata.ID);
+                            commit(true);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(rowdata);
+                            console.log('Error Update on ID : ' + rowdata.ID + ' Messages: ' + jqXHR.responseText);
+                            var output = JSON.parse(jqXHR.responseText);
+                            window.open('about:blank').document.body.innerText += output.StackTrace;
+                            commit(false);
+                        }
+                    });
+                },
+                deleteRow: function (rowID, commit) {
+                    // synchronize with the server - send delete command
+                    // call commit with parameter true if the synchronization with the server is successful 
+                    // and with parameter false if the synchronization failed.
+                    commit(true);
+                }
+            };
+        },
+
+        _dataAdapter: function(source) {
+            return dataAdapter = new $.jqx.dataAdapter(source, {
+                autoBind: true
+            });
+        },
         _getRoleBasedTree: function () {
             var treesource =
                    {
@@ -126,13 +190,21 @@
             var i = $("#" + value);
             if (value !== null) { return i.jqxDropDownList('val'); }
         },
+        cleanDropDown: function (value) {
+            var i = $("#" + value);
+            if (value !== null) { return i.jqxDropDownList('val', -1); }
+        },
+        cleanInput: function (value) {
+            var i = $("#" + value);
+            if (value !== null) { return i.jqxInput('val', null); }
+        },
         bindInput: function (value) {
             var i = $("#" + value);
             i.jqxInput({ width: '100%', height: '35px' });
         },
         bindButton: function (div) {
             var i = $("#" + div);
-            i.jqxButton({ width: '120px', height: '45px', theme: themeButton });
+            i.jqxButton({ width: '120px', height: '35px', theme: themeButton });
         },
         bindDropDown: function (div, value) {
             var i = $("#" + div);

@@ -21,11 +21,81 @@ namespace HRIS_R03.Controllers.api
 
         // GET: api/list
         [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getDatafieldJobLevel")]
+        [System.Web.Http.Route("api/list/getDatafieldJobLevel")]
+        public IEnumerable<DynamicDatafield> getDatafieldJobLevel()
+        {
+            var p = _pServices.datafieldJobLevel();
+            if (p != null)
+            {
+                var pEntities = p as List<DynamicDatafield> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getColumnJobLevel")]
+        [System.Web.Http.Route("api/list/getColumnJobLevel")]
+        public IEnumerable<DynamicColumn> getColumnJobLevel()
+        {
+            var p = _pServices.columnJobLevel();
+            if (p != null)
+            {
+                var pEntities = p as List<DynamicColumn> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getValueType")]
         [System.Web.Http.Route("api/list/getValueType")]
         public IEnumerable<LOV> getValueType()
         {
             var p = _pServices.getValueType();
+            if (p != null)
+            {
+                var pEntities = p as List<LOV> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getPolicyType")]
+        [System.Web.Http.Route("api/list/getPolicyType")]
+        public IEnumerable<LOV> getPolicyType()
+        {
+            var p = _pServices.getPolicyType();
+            if (p != null)
+            {
+                var pEntities = p as List<LOV> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getPolicyRootType")]
+        [System.Web.Http.Route("api/list/getPolicyRootType")]
+        public IEnumerable<LOV> getPolicyRootType()
+        {
+            var p = _pServices.getPolicyRootType();
             if (p != null)
             {
                 var pEntities = p as List<LOV> ?? p.ToList();

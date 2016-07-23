@@ -1,0 +1,235 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+
+        hris.general.bindButton('dataMatrixUpdate');
+        hris.general.bindButton('dataMatrixCreate');
+        hris.general.bindButton('dataMatrixDelete');
+        hris.general.bindButton('categoryMatrixUpdate');
+        hris.general.bindButton('categoryMatrixCreate');
+        hris.general.bindButton('categoryMatrixDelete');
+
+        //POPUP 
+        //================================================================================================================
+        var main = $('body');
+        var offset = main.offset();
+        $('#customWindow2').jqxWindow({
+            width: 400,
+            isModal: true,
+            modalOpacity: 0.9,
+            height: 265, resizable: false,
+            cancelButton: $('#cancelButton'),
+            position: { x: offset.left + 50, y: offset.top + 50 },
+            initContent: function () {
+                hris.general.bindDropDown("getPolicyRootType", null);
+                hris.general.bindDropDown("getValueType", null);
+                hris.general.bindInput("CatPolicyName");
+                hris.general.bindButton('submitButton');
+                hris.general.bindButton('cancelButton');
+                //$('#cancelButton').jqxButton({ width: '120px', height: '45px' });
+            }
+        });
+        $('#customWindow2').jqxWindow('close');
+        $("#customWindow2").css('visibility', 'visible');
+
+        //Button & PopOver
+        //================================================================================================================
+        $("#categoryButton").jqxButton({ template: "inverse" });
+        $("#dataButton").jqxButton({ template: "Info" });
+
+        $("#manageData").jqxPopover({ theme: 'fresh', offset: { left: -50, top: 0 }, arrowOffsetValue: 50, title: "Manage Data", showCloseButton: true, selector: $("#dataButton") });
+        $("#manageCategory").jqxPopover({ theme: 'fresh', offset: { left: -50, top: 0 }, arrowOffsetValue: 50, title: "Manage Category", showCloseButton: true, selector: $("#categoryButton") });
+        
+      
+        //GRID
+        //================================================================================================================
+        var url = '';
+        var source =
+            {
+                datatype: "xml",
+                datafields: [
+                    {name: 'ID', type: 'number' },
+                    {name: 'PolicyType' , type: 'number'},
+                    {name: 'PolicyName', type: 'string'},
+                    {name: 'Value', type: 'number'},
+                    {name: 'ValueType', type: 'number'},
+                    {name: 'L1', type: 'number'},
+                    {name: 'L2', type: 'number'},
+                    {name: 'L3', type: 'number'},
+                    {name: 'L4', type: 'number'},
+                    {name: 'L5', type: 'number'},
+                    {name: 'L6', type: 'number'},
+                    {name: 'L7', type: 'number'},
+                    {name: 'L8', type: 'number'},
+                    {name: 'L9', type: 'number'}
+                ],
+                url: url,
+                root: 'DATA',
+                record: 'ROW'
+            };
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            loadComplete: function () {
+            }
+        });
+
+        $("#jqxgrid").jqxGrid(
+            {
+                width: '100%',
+                theme: 'ui-start',
+                source: dataAdapter,
+                pageable: true,
+                autorowheight: true,
+                altrows: true,
+                columnsresize: true,
+                columns: [
+                    { text: 'ID', datafield: 'ID', width: 20, hidden: true },
+                    { text: 'Type', datafield: 'PolicyType', columngroup: 'Policy', width: 55 },
+                    { text: 'Description', datafield: 'PolicyName', columngroup: 'Policy', width: 300 },
+                    { text: 'IN', datafield: 'ValueType', columngroup: 'Policy', width: 70, hidden: true },
+                    { text: 'Direksi', datafield: 'L1', columngroup: 'Position', width: 70 },
+                    { text: 'GM', datafield: 'L2', columngroup: 'Position', width: 50 },
+                    { text: 'Manager', datafield: 'L3', columngroup: 'Manager', width: 70 },
+                    { text: 'Assistant', datafield: 'L4', columngroup: 'Manager', width: 70 },
+                    { text: 'Team Leader', datafield: 'L5', columngroup: 'Position', width: 70 },
+                    { text: 'Senior', datafield: 'L6', columngroup: 'Staff', width: 70 },
+                    { text: 'Middle', datafield: 'L7', columngroup: 'Staff', width: 70 },
+                    { text: 'Junior', datafield: 'L8', columngroup: 'Staff', width: 70 },
+                    { text: 'Service', datafield: 'L9', columngroup: 'Staff', width: 70 }
+                ],
+                columngroups:
+                [
+                  { text: 'Policy', align: 'center', name: 'Policy' },
+                  { text: 'Level Position', align: 'center', name: 'Position' },
+                  { text: 'Staff', parentgroup: 'Position', align: 'center', name: 'Staff' },
+                  { text: 'Manager', parentgroup: 'Position', align: 'center', name: 'Manager' }
+    ]
+            });
+
+        //EVENT
+        //================================================================================================================
+        $('#categoryMatrixCreate').on('click', function (event) {
+            cleanform();
+            console.log("Button Clicked");
+            $('#customWindow2').jqxWindow('open');
+        });
+
+        //FUNCTION
+        //================================================================================================================
+        function cleanform() {
+            hris.general.cleanDropDown('getPolicyRootType');
+            hris.general.cleanDropDown('getValueType');
+            hris.general.cleanInput('CatPolicyName');
+        }
+
+        
+
+        /* DYNAMIC COLUMN
+        var colSource =
+                {
+                    datatype: 'json',
+                    url: '/api/list/getColumnJobLevel'
+                };
+
+
+        var dataAdapter = new $.jqx.dataAdapter(colSource, {
+            autoBind: true,
+            downloadComplete: function (data) {
+                
+                //Assign Dynamic Column
+                var columns = data;
+
+               
+                var datafieldSource =
+                               {
+                                   datatype: 'json',
+                                   url: '/api/list/getDatafieldJobLevel'
+                               };
+                var rows = {};
+                var datafieldAdapter = new $.jqx.dataAdapter(datafieldSource, {
+                    autoBind: true,
+                    downloadComplete: function (data) {
+                        console.log('datafields: ', data);
+                        var gridAdapter = new $.jqx.dataAdapter({
+                            datafields:
+                                data,
+                                id: 'ID',
+                                localdata: rows
+                        });
+                        $("#jqxgrid").jqxGrid('hideloadelement');
+                        $("#jqxgrid").jqxGrid('beginupdate', true);
+                        $("#jqxgrid").jqxGrid(
+                          {
+                              source: gridAdapter,
+                              width: '100%',
+                              columns: columns
+                          });
+                        $("#jqxgrid").jqxGrid('endupdate');
+                    }
+                });
+               
+               
+
+                
+            }
+        }); */
+    })
+</script>
+<div class="container" style="margin-left:20px">
+    <div class="col-md-12">
+        <div class="row pull-right">
+            <button style="float: right; margin-right: 10px; padding: 8px 12px; border-radius: 6px;" id="dataButton">Manage Data</button>
+            <button style="float: right; margin-right: 10px; padding: 8px 12px; border-radius: 6px;" id="categoryButton">Manage Category</button>
+           <hr />
+        </div>
+
+        <div class="row">
+            <div id="jqxgrid"></div>
+        </div>
+
+    </div>
+   
+</div>
+
+
+<div id="manageData">
+    <div class="row pull-right" style="margin-left: 5px; margin-right:5px; ">
+        <div id='button'>
+            <button style="padding:4px 16px;" id="dataMatrixCreate">
+                Create
+            </button>
+            <button style="padding:4px 16px;" id="dataMatrixUpdate">
+                Update
+            </button>
+            <button style="padding:4px 16px;" id="dataMatrixDelete">
+                Delete
+            </button>
+        </div>
+        <hr />
+    </div>
+</div>
+
+<div id="manageCategory">
+    <div class="row pull-right" style="margin-left: 5px; margin-right:5px; ">
+        <input type="button" value="Create" style="padding:4px 16px;" id="categoryMatrixCreate">
+        <input type="button" value="Update" style="padding:4px 16px;" id="categoryMatrixUpdate">
+        <input type="button" value="Delete" style="padding:4px 16px;" id="categoryMatrixDelete">
+        
+        <hr />
+    </div>
+</div>
+
+<div id="customWindow2" style="overflow: hidden; visibility: hidden;">
+    <div id="customWindowHeader">
+        <span id="captureContainer" style="float: left">HR Based Matrix Form </span>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-md-5"><div id="getPolicyRootType"></div></div>
+            <div class="col-md-5"><div id="getValueType"></div></div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-10"><input id="CatPolicyName" /></div>
+        </div>
+    </div>
+    
+</div>

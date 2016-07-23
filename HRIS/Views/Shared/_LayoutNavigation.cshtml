@@ -6,24 +6,19 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - HRIS</title>
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/jsmenu")
-    @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/jqwidgets")
-
-
-
-
+    @Styles.Render("~/Content/jsmenu")
+    
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jsmenu")
     @Scripts.Render("~/bundles/jstorage")
     @Scripts.Render("~/bundles/jqwidgets")
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('body').css('zoom', '90%');
-        });      
-    </script>
+    @RenderSection("scripts", required: false)
+
+    
+    
+
 </head>
 
 <body>
@@ -76,11 +71,9 @@
                     <ul>
                         <li class="cd-label">Organization </li>
                         <li class="has-children overview">
-                            @Html.ActionLink("Structure", "Index", "vOrganization")
+                            @Html.ActionLink("Structure & Schedule", "Index", "vOrganization")
                         </li>
-                        <li class="has-children overview">
-                            @Html.ActionLink("Schedule", "Index", "vSchedule")
-                        </li>
+                        
                     </ul>
                     <ul>
                         <li class="cd-label">Administration</li>
@@ -98,8 +91,6 @@
                         <li class="bookmarks">
                             @Html.ActionLink("Master Data", "MaintainData", "AdminHR")
                         </li>
-                        <li class="bookmarks">@Html.ActionLink("HELP", "", "HELP")</li>
-<li><input type="button" value="Logout" id="logout" style="margin-left:20px" /></li>
                     </ul>
 
                 </nav>
@@ -118,18 +109,19 @@
             </div>
         </div>
 
-        <!--
-        <div class="content-wrapper">
-                
-        </div>  .content-wrapper -->
+        
         
      
     </main>
     
+    <script type="text/javascript">
+        $(document).ready(function () {
+           // $('body').css('zoom', '90%');
+        });
+    </script>
 
 
-
-    @RenderSection("scripts", required: false)
+   
     @RenderSection("jsData", required: false)
 
 </body>

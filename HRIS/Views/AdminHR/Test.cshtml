@@ -1,0 +1,535 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MaintainData - HRIS</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+
+    <link href="/Content/jqwidgets/jqx.base.css" rel="stylesheet" />
+    <link href="/Content/jqwidgets/jqx.bootstrap.css" rel="stylesheet" />
+    <link href="/Content/jqwidgets/jqx.energyblue.css" rel="stylesheet" />
+    <link href="/Content/jqwidgets/jqx.fresh.css" rel="stylesheet" />
+    <link href="/Content/jqwidgets/jqx.orange.css" rel="stylesheet" />
+    <link href="/Content/jqwidgets/jqx.ui-redmond.css" rel="stylesheet" />
+
+    <link href="/Content/jsmenu/reset.css" rel="stylesheet" />
+    <link href="/Content/jsmenu/style.css" rel="stylesheet" />
+
+
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+
+    <script src="/Scripts/jsmenu/jquery.menu-aim.js"></script>
+    <script src="/Scripts/jsmenu/main.js"></script>
+
+    <script src="/Scripts/jstorage.js"></script>
+
+    <script src="/Scripts/jqwidgets/jqxcore.js"></script>
+    <script src="/Scripts/jqwidgets/jqxdata.js"></script>
+    <script src="/Scripts/jqwidgets/jqxdata.export.js"></script>
+    <script src="/Scripts/jqwidgets/jqxdate.js"></script>
+    <script src="/Scripts/jqwidgets/jqxscheduler.js"></script>
+    <script src="/Scripts/jqwidgets/jqxscheduler.api.js"></script>
+    <script src="/Scripts/jqwidgets/jqxwindow.js"></script>
+    <script src="/Scripts/jqwidgets/jqxgrid.js"></script>
+    <script src="/Scripts/jqwidgets/jqxgrid.edit.js"></script>
+    <script src="/Scripts/jqwidgets/jqxgrid.selection.js"></script>
+    <script src="/Scripts/jqwidgets/jqxgrid.pager.js"></script>
+    <script src="/Scripts/jqwidgets/jqxlistbox.js"></script>
+    <script src="/Scripts/jqwidgets/jqxbuttons.js"></script>
+    <script src="/Scripts/jqwidgets/jqxbuttongroup.js"></script>
+    <script src="/Scripts/jqwidgets/jqxscrollbar.js"></script>
+    <script src="/Scripts/jqwidgets/jqxdatatable.js"></script>
+    <script src="/Scripts/jqwidgets/jqxtreegrid.js"></script>
+    <script src="/Scripts/jqwidgets/jqxmenu.js"></script>
+    <script src="/Scripts/jqwidgets/jqxcalendar.js"></script>
+    <script src="/Scripts/jqwidgets/jqxgrid.sort.js"></script>
+    <script src="/Scripts/jqwidgets/jqxgrid.export.js"></script>
+    <script src="/Scripts/jqwidgets/jqxgrid.filter.js"></script>
+    <script src="/Scripts/jqwidgets/jqxgrid.grouping.js"></script>
+    <script src="/Scripts/jqwidgets/jqxdatetimeinput.js"></script>
+    <script src="/Scripts/jqwidgets/jqxdropdownlist.js"></script>
+    <script src="/Scripts/jqwidgets/jqxdropdownbutton.js"></script>
+    <script src="/Scripts/jqwidgets/jqxslider.js"></script>
+    <script src="/Scripts/jqwidgets/jqxfileupload.js"></script>
+    <script src="/Scripts/jqwidgets/jqxsplitter.js"></script>
+    <script src="/Scripts/jqwidgets/jqxeditor.js"></script>
+    <script src="/Scripts/jqwidgets/jqxinput.js"></script>
+    <script src="/Scripts/jqwidgets/jqxdraw.js"></script>
+    <script src="/Scripts/jqwidgets/jqxtabs.js"></script>
+    <script src="/Scripts/jqwidgets/jqxchart.core.js"></script>
+    <script src="/Scripts/jqwidgets/jqxchart.rangeselector.js"></script>
+    <script src="/Scripts/jqwidgets/jqxtree.js"></script>
+    <script src="/Scripts/jqwidgets/globalize.js"></script>
+    <script src="/Scripts/jqwidgets/jqxbulletchart.js"></script>
+    <script src="/Scripts/jqwidgets/jqxcheckbox.js"></script>
+    <script src="/Scripts/jqwidgets/jqxradiobutton.js"></script>
+    <script src="/Scripts/jqwidgets/jqxvalidator.js"></script>
+    <script src="/Scripts/jqwidgets/jqxpanel.js"></script>
+    <script src="/Scripts/jqwidgets/jqxtooltip.js"></script>
+    <script src="/Scripts/jqwidgets/jqxlayout.js"></script>
+    <script src="/Scripts/jqwidgets/jqxribbon.js"></script>
+    <script src="/Scripts/jqwidgets/jqxpasswordinput.js"></script>
+    <script src="/Scripts/jqwidgets/jqxnumberinput.js"></script>
+    <script src="/Scripts/jqwidgets/jqxtextarea.js"></script>
+    <script src="/Scripts/jqwidgets/jqxcombobox.js"></script>
+
+
+
+    <script src=/Scripts/hrisframework/hris.js></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            th = "ui-redmond";
+            $('#dataForm').jqxTabs({ theme: th, width: '100%', height: '100%' });
+        })
+    </script>
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+    <main class="cd-main-content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <header class="cd-main-header">
+                    <a href="#0" class="cd-logo"><img src="/Content/bg/hollit-logo-small.png" alt="Logo" height="23"></a>
+
+                    <label></label>
+                    <!-- <a href="#0" class="cd-nav-trigger">Menu<span></span></a>-->
+                    <nav class="cd-nav">
+                        <label style="font-size:12px; font-family:Calibri; color:indianred; margin-right:30px">
+                            Credential Info:  :  : Parent=  , ParentLevel=  , Name=
+                        </label>
+                    </nav>
+                </header> <!-- .cd-main-header -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <nav class="cd-side-nav">
+                    <ul>
+                        <li class="cd-label">Main</li>
+                        <li class="has-children overview">
+                            <a href="/Content/Dashboard">Dashboard</a>
+                        </li>
+
+                        <li class="has-children comments">
+                            <a href="/vTimesheets">Timesheet</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="cd-label">Submit & Approval</li>
+                        <li class="has-children overview">
+                            <a href="/Content/vLeave">Leave</a>
+                        </li>
+                        <li class="has-children overview">
+                            <a href="/vMedicalClaim">Medical</a>
+                        </li>
+                        <li class="has-children overview">
+                            <a href="/vApproval/Superior">Approval</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="cd-label">Organization </li>
+                        <li class="has-children overview">
+                            <a href="/vOrganization">Structure &amp; Schedule</a>
+                        </li>
+
+                    </ul>
+                    <ul>
+                        <li class="cd-label">Administration</li>
+                        <li class="bookmarks"><a href="/vApproval/HRApproval">Approval</a> </li>
+                        <li class="bookmarks"><a href="/vNotifNews">Notification / News</a></li>
+                        <li class="has-children comments">
+                            <a href="/vTimesheets/HRTimesheets">Timesheet Manager</a>
+                        </li>
+                        <li class="has-children users">
+                            <a href="/vEmployee/HREmployeeManagement">Employee Management</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="cd-label">System Admin</li>
+                        <li class="bookmarks">
+                            <a href="/AdminHR/MaintainData">Master Data</a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+            <div class="col-md-9" style="margin-top:75px">
+
+
+
+
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">Maintain Master Data</h1>
+                        <h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Master Data</h2>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-md-9" id="dataForm">
+                        <ul>
+                            <li style="margin-left:30px">Matrix Role</li>
+                            <li style="margin-left:30px">MATRIX - HRD STANDARD</li>
+                        </ul>
+                        <div style="overflow: hidden; margin-right:20px;margin-top:20px; margin-left:30px">
+                            <div>
+
+
+
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        // themes
+                                        //============================================================================================================
+                                        $.jqx.theme = "orange";
+
+
+                                        //WIndows popup
+                                        //============================================================================================================
+                                        var main = $('body');
+                                        var offset = main.offset();
+                                        $('#customWindow').jqxWindow({
+                                            width: 400,
+                                            isModal: true,
+                                            modalOpacity: 0.9,
+                                            height: 265, resizable: false,
+                                            cancelButton: $('#cancelButton'),
+                                            position: { x: offset.left + 50, y: offset.top + 50 },
+                                            initContent: function () {
+                                                hris.general.bindInput("valueData");
+                                                hris.general.bindDropDown("getLevel", null);
+                                                hris.general.bindDropDown("getValueType", null);
+                                                hris.general.bindButton('submitButton');
+                                                hris.general.bindButton('cancelButton');
+                                                //$('#cancelButton').jqxButton({ width: '120px', height: '45px' });
+                                            }
+                                        });
+                                        $('#customWindow').jqxWindow('close');
+                                        $("#customWindow").css('visibility', 'visible');
+
+
+                                        //Grid
+                                        //============================================================================================================
+
+                                        var dataAdapter = hris.data._getRoleBased();
+
+                                        $("#dataTable").jqxGrid(
+                                        {
+                                            width: '100%',
+                                            theme: 'fresh',
+                                            pageable: true,
+                                            pagerButtonsCount: 10,
+                                            source: dataAdapter,
+                                            //columnsResize: true,
+                                            editable: true,
+                                            selectionMode: 'singleRow',
+                                            autoheight: true,
+                                            columns: [
+                                                { text: 'ID', datafield: 'ID', hidden: true },
+                                                { text: 'Level', datafield: 'empLevel', displayfield: 'LevelName', width: '20%' },
+                                                {
+                                                    text: 'policyType', datafield: 'policytype', displayfield: 'policyName', width: '40%', columntype: 'dropdownlist',
+                                                    createeditor: function (row, value, editor) {
+                                                        editor.jqxDropDownList({ source: data, displayMember: 'text', valueMember: 'id' });
+                                                    }
+                                                },
+                                                { text: 'Value', datafield: 'value', width: '20%', editable: false },
+                                                { text: 'valueType', datafield: 'valueType', displayfield: 'valueName', width: '20%', editable: false }
+                                            ]
+                                        });
+
+
+                                        //Button
+                                        //============================================================================================================
+                                        var txType;
+                                        $('#button').jqxButtonGroup({
+                                            mode: 'default',
+                                            theme: 'fresh'
+                                        });
+                                        $('#button').on('buttonclick', function (event) {
+                                            txType = event.args.index;
+                                            $('#customWindow').jqxWindow('open');
+                                        });
+
+
+
+                                        //TREE
+                                        //============================================================================================================
+
+                                        var data = hris.data._getRoleBasedTree();
+                                        data.dataBind();
+                                        //dataAdapter.dataBind();
+                                        var records = data.getRecordsHierarchy('id', 'parentid', 'items', [{ name: 'text', map: 'label' }]);
+                                        $('#jqxWidget').jqxTree({ source: records, width: '450px', height: '400px' });
+
+
+                                        //Event
+                                        //============================================================================================================
+                                        var policy;
+
+                                        $('#jqxWidget').on('itemClick', function (event) {
+                                            var args = event.args;
+                                            var item = $('#jqxWidget').jqxTree('getItem', args.element);
+                                            var label = item.label;
+                                            console.log("ID " + item.id);
+                                            console.log("parentID " + item.parentid);
+                                            console.log("Name " + item.text);
+                                            console.log("Value " + item.value);
+                                            policy = item.value;
+
+                                            var dataAdapter = new $.jqx.dataAdapter(hris.data._getRoleBasedBypolicyType(policy));
+                                            $("#dataTable").jqxGrid({ source: dataAdapter });
+                                            //dataAdapter = hris.data._getRoleBasedBypolicyType(policy);
+                                            //$("#dataTable").jqxGrid('updatebounddata');
+                                        });
+
+                                        $("#submitButton").click(function () {
+                                            if (policy == null) {
+                                                alert("Select Medical or Annual Leave first");
+                                            } else {
+                                                var row = new Object();
+                                                row.ID = null;
+                                                row.empLevel = hris.general.getData("getLevel");
+                                                row.valueType = hris.general.getData("getValueType");
+                                                row.value = hris.general.getData("valueData");
+                                                row.policyType = policy;
+                                                console.log('txType:', txType);
+                                                process(txType, row);
+                                                $('#customWindow').jqxWindow('close');
+                                            }
+                                        });
+
+
+                                        //Data
+                                        //============================================================================================================
+                                        function process(txType, row) {
+                                            switch (txType) {
+                                                case 0:
+                                                    $.ajax({
+                                                        cache: false,
+                                                        dataType: 'json',
+                                                        url: '/api/role/createRoleBased',
+                                                        data: row,
+                                                        type: "POST",
+                                                        success: function (data, status, xhr) {
+                                                            $('#dataTable').jqxGrid('updatebounddata');
+                                                        },
+                                                        error: function (jqXHR, textStatus, errorThrown) {
+                                                            console.log("Error " + errorThrown);
+                                                        }
+                                                    }); break;
+                                                case 1:
+                                                    $.ajax({
+                                                        cache: false,
+                                                        dataType: 'json',
+                                                        url: '/api/role/updateRoleBased/' + row.ID,
+                                                        contentType: 'application/json',
+                                                        data: row,
+                                                        type: 'PUT',
+                                                        success: function (data, status, xhr) {
+                                                            $('#dataTable').jqxGrid('updatebounddata');
+                                                        },
+                                                        error: function (jqXHR, textStatus, errorThrown) {
+                                                            console.log("Error " + errorThrown);
+                                                        }
+                                                    });
+                                                    break;
+                                                case 2: break;
+                                            }
+                                        }
+
+
+
+
+                                    });
+                                </script>
+
+                                <div class='default'>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h1>Matrix Standard</h1>
+                                            <hr />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div id='jqxWidget'></div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id='dataTable'></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" style="align-content:stretch;">
+                                                        <div id='button'>
+                                                            <button style="padding:4px 16px;" id="buttonCreate">
+                                                                Create
+                                                            </button>
+                                                            <button style="padding:4px 16px;" id="buttonUpdate">
+                                                                Update
+                                                            </button>
+                                                            <button style="padding:4px 16px;" id="buttonDelete">
+                                                                Delete
+                                                            </button>
+                                                        </div><br />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="customWindow" style="overflow: hidden; visibility: hidden;">
+                                    <div id="customWindowHeader">
+                                        <span id="captureContainer" style="float: left">HR Based Matrix Form </span>
+                                    </div>
+                                    <div id="customWindowContent">
+                                        <div style="margin: 10px">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="valueData">Amount</label><br />
+                                                    <input type="text" style="width: 175px; border: 1px solid #aaa" id="valueData" />
+                                                </div>
+                                                <div class="col-md-6"><label for="getValueType">Value Type</label><div id="getValueType"></div></div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label for="getValueType">Level</label>
+                                                    <div id="getLevel"></div>
+                                                </div>
+                                            </div>
+
+                                            <hr />
+
+                                            <div class="row">
+                                                <div class="col-md-6"><input type="button" value="Submit" style="margin-bottom: 5px;" id="submitButton" /></div>
+                                                <div class="col-md-6"><input type="button" value="Cancel" id="cancelButton" /></div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div style="overflow: hidden; margin-top:20px;">
+                                <div>
+                                    <script type="text/javascript">
+                                        $(document).ready(function () {
+                                            var colSource =
+                                                    {
+                                                        datatype: 'json',
+                                                        url: '/api/list/getColumnJobLevel'
+                                                    };
+
+
+                                            var dataAdapter = new $.jqx.dataAdapter(colSource, {
+                                                autoBind: true,
+                                                downloadComplete: function (data) {
+
+                                                    //Assign Dynamic Column
+                                                    var columns = data;
+
+
+                                                    var datafieldSource =
+                                                                   {
+                                                                       datatype: 'json',
+                                                                       url: '/api/list/getDatafieldJobLevel'
+                                                                   };
+                                                    var rows = {};
+                                                    var datafieldAdapter = new $.jqx.dataAdapter(datafieldSource, {
+                                                        autoBind: true,
+                                                        downloadComplete: function (data) {
+                                                            console.log('datafields: ', data);
+                                                            var gridAdapter = new $.jqx.dataAdapter({
+                                                                datafields:
+                                                                    data,
+                                                                id: 'ID',
+                                                                localdata: rows
+                                                            });
+                                                            $("#jqxgrid").jqxGrid('hideloadelement');
+                                                            $("#jqxgrid").jqxGrid('beginupdate', true);
+                                                            $("#jqxgrid").jqxGrid(
+                                                              {
+                                                                  source: gridAdapter,
+                                                                  width: '100%',
+                                                                  columns: columns
+                                                              });
+                                                            $("#jqxgrid").jqxGrid('endupdate');
+                                                        }
+                                                    });
+
+
+
+
+                                                }
+                                            });
+                                        })
+                                    </script>
+
+                                    <div id="jqxgrid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="col">
+                <div class="col-sm-12">
+                    <div class="footer">
+                        <hr />
+                    </div>
+                </div>
+            </div>
+
+
+
+
+    </main>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // $('body').css('zoom', '90%');
+        });
+    </script>
+
+
+
+
+
+
+    <!-- Visual Studio Browser Link -->
+    <script type="application/json" id="__browserLink_initializationData">
+        {"appName":"Chrome","requestId":"4c804c4b8b7a4b659ad64a469bff8f7a"}
+    </script>
+    <script type="text/javascript" src="http://localhost:49810/1df05d8710d5415a8d799bb508b76695/browserLink" async="async"></script>
+    <!-- End Browser Link -->
+
+</body>
+</html>

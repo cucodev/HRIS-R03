@@ -4,11 +4,7 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
+
     <script type="text/javascript">
         $(document).ready(function () {
             // themes
@@ -47,28 +43,26 @@
 
             $("#dataTable").jqxGrid(
             {
-                pageable: true,
-                theme: 'energyblue',
-                autoheight: true,
-                editable: true,
-                //selectionmode: 'multiplecellsadvanced',
                 width: '100%',
+                theme: 'fresh',
+                pageable: true,
+                pagerButtonsCount: 10,
                 source: dataAdapter,
+                //columnsResize: true,
                 editable: true,
-                //columnsresize: true,
+                selectionMode: 'singleRow',
+                autoheight: true,
                 columns: [
-                    { text: ' ', columntype: 'checkbox', datafield: 'check' },
                     { text: 'ID', datafield: 'ID', hidden: true },
-                    { text: 'Level', datafield: 'empLevel',hidden: true, width: '20%' },
-                  {
-                      text: 'Level', datafield: 'LevelName', width: '80%', columntype: 'dropdownlist', editable: false,
-                      createeditor: function (row, value, editor) {
-                          editor.jqxDropDownList({ source: dataLevel, displayMember: 'label', valueMember: 'value' });
-                      }
-                  },
-                  { text: 'policyType', datafield: 'policytype', hidden: true, width: 250, editable: false },
-                  { text: 'Value', datafield: 'value', width: '20%', editable: false },
-                  { text: 'valueType', datafield: 'valueType', hidden: true, width: 120, editable: false }
+                    { text: 'Level', datafield: 'empLevel', displayfield: 'LevelName', width: '20%' },
+                    {
+                        text: 'policyType', datafield: 'policytype', displayfield: 'policyName', width: '40%', columntype: 'dropdownlist',
+                        createeditor: function (row, value, editor) {
+                            editor.jqxDropDownList({ source: data, displayMember: 'text', valueMember: 'id' });
+                        }
+                    },
+                    { text: 'Value', datafield: 'value', width: '20%', editable: false },
+                    { text: 'valueType', datafield: 'valueType', displayfield: 'valueName', width: '20%', editable: false }
                 ]
             });
 
@@ -110,6 +104,11 @@
                 console.log("Name " + item.text);
                 console.log("Value " + item.value);
                 policy = item.value;
+
+                var dataAdapter = new $.jqx.dataAdapter(hris.data._getRoleBasedBypolicyType(policy));
+                $("#dataTable").jqxGrid({ source: dataAdapter });
+                //dataAdapter = hris.data._getRoleBasedBypolicyType(policy);
+                //$("#dataTable").jqxGrid('updatebounddata');
             });
 
             $("#submitButton").click(function () {
@@ -172,40 +171,20 @@
 
         });
     </script>
-    <style type="text/css">
-        body, html {
-            height: 100%;
-            padding: 0px;
-            margin: 0px;
-            width: 100%;
-            border: none;
-            overflow: hidden;
-        }
 
-        .required {
-            vertical-align: baseline;
-            color: red;
-            font-size: 10px;
-        }
+<div>
+    <div class='default'>
 
-        .control-label {
-            white-space: nowrap;
-        }
-    </style>
-
-</head>
-<body>
-
-    <div class="container-fluid">
-        
         <div class="row">
             <div class="col-md-12">
                 <h1>Matrix Standard</h1>
                 <hr />
             </div>
         </div>
+
+
         <div class="row">
-            
+
             <div class="col-md-12">
                 <div class="col-md-6">
                     <div id='jqxWidget'></div>
@@ -236,39 +215,34 @@
         </div>
     </div>
 
-    <div id="customWindow"  style="overflow: hidden; visibility: hidden;" >
+    <div id="customWindow" style="overflow: hidden; visibility: hidden;">
         <div id="customWindowHeader">
             <span id="captureContainer" style="float: left">HR Based Matrix Form </span>
         </div>
         <div id="customWindowContent">
             <div style="margin: 10px">
                 <div class="row">
-                        <div class="col-md-6">
-                            <label for="valueData">Amount</label><br />
-                            <input type="text" style="width: 175px; border: 1px solid #aaa" id="valueData" />
-                        </div>
-                        <div class="col-md-6"><label for="getValueType">Value Type</label><div id="getValueType"></div></div>
-                    
+                    <div class="col-md-6">
+                        <label for="valueData">Amount</label><br />
+                        <input type="text" style="width: 175px; border: 1px solid #aaa" id="valueData" />
+                    </div>
+                    <div class="col-md-6"><label for="getValueType">Value Type</label><div id="getValueType"></div></div>
+
                 </div>
                 <div class="row">
-                        <div class="col-md-12">
-                            <label for="getValueType">Level</label>
-                            <div id="getLevel"></div>
-                        </div>             
+                    <div class="col-md-12">
+                        <label for="getValueType">Level</label>
+                        <div id="getLevel"></div>
+                    </div>
                 </div>
-                
+
                 <hr />
 
                 <div class="row">
                     <div class="col-md-6"><input type="button" value="Submit" style="margin-bottom: 5px;" id="submitButton" /></div>
-                   <div class="col-md-6"><input type="button" value="Cancel" id="cancelButton" /></div>
+                    <div class="col-md-6"><input type="button" value="Cancel" id="cancelButton" /></div>
                 </div>
-
-                
             </div>
         </div>
-
-
-</body>
-</html>
-
+    </div>
+</div>

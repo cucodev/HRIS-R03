@@ -33,6 +33,7 @@ namespace HRIS_R03
             bundles.Add(new ScriptBundle("~/bundles/jqwidgets").Include(
                         "~/Scripts/jqwidgets/jqxcore.js",
                         "~/Scripts/jqwidgets/jqxdata.js",
+                        "~/Scripts/jqwidgets/jqxpopover.js",
                         "~/Scripts/jqwidgets/jqxdata.export.js",
                         "~/Scripts/jqwidgets/jqxdate.js",
                         "~/Scripts/jqwidgets/jqxscheduler.js",

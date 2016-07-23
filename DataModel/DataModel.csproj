@@ -140,6 +140,9 @@
     <Compile Include="roleBased.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="roleBasedMatrix.cs">
+      <DependentUpon>WebApiDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Token.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
