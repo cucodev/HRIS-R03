@@ -97,10 +97,12 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IDV" Type="int" />
+          <Property Name="IDV" Type="int" Nullable="false" />
           <Property Name="UID_ABSENCE" Type="int" />
-          <Property Name="joinDate" Type="date" />
+          <Property Name="joinDate" Type="date" Nullable="false" />
           <Property Name="resignDate" Type="date" />
+          <Property Name="serviceYear" Type="float" />
+          <Property Name="serviceDay" Type="int" />
           <Property Name="employmentStatus" Type="int" />
           <Property Name="contract1Start" Type="date" />
           <Property Name="contract1End" Type="date" />
@@ -121,6 +123,8 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDV" Type="int" Nullable="false" />
+          <Property Name="serviceYears" Type="int" />
+          <Property Name="serviceDays" Type="int" />
           <Property Name="policyType" Type="int" Nullable="false" />
           <Property Name="valueType" Type="int" Nullable="false" />
           <Property Name="roleBasedValue" Type="int" />
@@ -648,7 +652,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="IDV_employee">
-          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="person" Type="Self.person" Multiplicity="1" />
           <End Role="employee" Type="Self.employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="person">
@@ -1114,9 +1118,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IDV" Type="Int32" />
+          <Property Name="IDV" Type="Int32" Nullable="false" />
           <Property Name="UID_ABSENCE" Type="Int32" />
-          <Property Name="joinDate" Type="DateTime" Precision="0" />
+          <Property Name="joinDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="resignDate" Type="DateTime" Precision="0" />
           <Property Name="employmentStatus" Type="Int32" />
           <Property Name="contract1Start" Type="DateTime" Precision="0" />
@@ -1132,6 +1136,31 @@
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="person" Relationship="Self.IDV_employee" FromRole="employee" ToRole="person" />
+          <Property Name="serviceYear" Type="Double" />
+          <Property Name="serviceDay" Type="Int32" />
+        </EntityType>
+        <EntityType Name="employeeRoleBased">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" Nullable="false" />
+          <Property Name="serviceYears" Type="Int32" />
+          <Property Name="serviceDays" Type="Int32" />
+          <Property Name="policyType" Type="Int32" Nullable="false" />
+          <Property Name="valueType" Type="Int32" Nullable="false" />
+          <Property Name="roleBasedValue" Type="Int32" />
+          <Property Name="currentValue" Type="Int32" />
+          <Property Name="balanceValue" Type="Int32" />
+          <Property Name="remainingValue" Type="Int32" />
+          <Property Name="validDateStart" Type="DateTime" Precision="0" />
+          <Property Name="validDateStop" Type="DateTime" Precision="0" />
+          <Property Name="decription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="person" Relationship="Self.FK_employeeRoleBased_person" FromRole="employeeRoleBased" ToRole="person" />
         </EntityType>
         <EntityType Name="file">
           <Key>
@@ -1187,6 +1216,7 @@
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="employees" Relationship="Self.IDV_employee" FromRole="person" ToRole="employee" />
+          <NavigationProperty Name="employeeRoleBaseds" Relationship="Self.FK_employeeRoleBased_person" FromRole="person" ToRole="employeeRoleBased" />
           <NavigationProperty Name="files" Relationship="Self.IDV_personImage" FromRole="person" ToRole="file" />
           <NavigationProperty Name="organization" Relationship="Self.OrgID" FromRole="person" ToRole="organization" />
           <NavigationProperty Name="personAddresses" Relationship="Self.IDV_Address" FromRole="person" ToRole="personAddress" />
@@ -1203,7 +1233,6 @@
           <NavigationProperty Name="personTrainings" Relationship="Self.IDV_personTraining" FromRole="person" ToRole="personTraining" />
           <NavigationProperty Name="personWorkExperiences" Relationship="Self.IDV_personWorkExperience" FromRole="person" ToRole="personWorkExperience" />
           <NavigationProperty Name="users" Relationship="Self.IDV_user" FromRole="person" ToRole="user" />
-          <NavigationProperty Name="employeeRoleBaseds" Relationship="HRISModel.FK_employeeRoleBased_person" FromRole="person" ToRole="employeeRoleBased" />
         </EntityType>
         <EntityType Name="personAddress">
           <Key>
@@ -1462,6 +1491,32 @@
           <Property Name="valueType" Type="Int32" />
           <Property Name="value" Type="Int32" />
         </EntityType>
+        <EntityType Name="roleBasedMatrix">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PolicyType" Type="Int32" Nullable="false" />
+          <Property Name="PolicyName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="Int32" />
+          <Property Name="ValueType" Type="Int32" />
+          <Property Name="L1" Type="Int32" />
+          <Property Name="L2" Type="Int32" />
+          <Property Name="L3" Type="Int32" />
+          <Property Name="L4" Type="Int32" />
+          <Property Name="L5" Type="Int32" />
+          <Property Name="L6" Type="Int32" />
+          <Property Name="L7" Type="Int32" />
+          <Property Name="L8" Type="Int32" />
+          <Property Name="L9" Type="Int32" />
+          <Property Name="L10" Type="Int32" />
+          <Property Name="L11" Type="Int32" />
+          <Property Name="L12" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="Token">
           <Key>
             <PropertyRef Name="TokenId" />
@@ -1477,7 +1532,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDV" Type="Int32" Nullable="false" />
           <Property Name="IDVMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IDVMAILPASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1610,13 +1665,25 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="IDV_employee">
-          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="person" Type="Self.person" Multiplicity="1" />
           <End Role="employee" Type="Self.employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="person">
               <PropertyRef Name="IDV" />
             </Principal>
             <Dependent Role="employee">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employeeRoleBased_person">
+          <End Role="person" Type="Self.person" Multiplicity="1" />
+          <End Role="employeeRoleBased" Type="Self.employeeRoleBased" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="employeeRoleBased">
               <PropertyRef Name="IDV" />
             </Dependent>
           </ReferentialConstraint>
@@ -1829,7 +1896,7 @@
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="HRISEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C_purpose" EntityType="Self.C_purpose" />
           <EntitySet Name="C_transaction" EntityType="Self.C_transaction" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
@@ -1839,6 +1906,7 @@
           <EntitySet Name="categories" EntityType="Self.category" />
           <EntitySet Name="categoryParents" EntityType="Self.categoryParent" />
           <EntitySet Name="employees" EntityType="Self.employee" />
+          <EntitySet Name="employeeRoleBaseds" EntityType="Self.employeeRoleBased" />
           <EntitySet Name="files" EntityType="Self.file" />
           <EntitySet Name="locations" EntityType="Self.location" />
           <EntitySet Name="organizations" EntityType="Self.organization" />
@@ -1858,6 +1926,7 @@
           <EntitySet Name="personTrainings" EntityType="Self.personTraining" />
           <EntitySet Name="personWorkExperiences" EntityType="Self.personWorkExperience" />
           <EntitySet Name="roleBaseds" EntityType="Self.roleBased" />
+          <EntitySet Name="roleBasedMatrices" EntityType="Self.roleBasedMatrix" />
           <EntitySet Name="Tokens" EntityType="Self.Token" />
           <EntitySet Name="users" EntityType="Self.user" />
           <AssociationSet Name="purposeType" Association="Self.purposeType">
@@ -1903,6 +1972,10 @@
           <AssociationSet Name="IDV_employee" Association="Self.IDV_employee">
             <End Role="person" EntitySet="people" />
             <End Role="employee" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employeeRoleBased_person" Association="Self.FK_employeeRoleBased_person">
+            <End Role="person" EntitySet="people" />
+            <End Role="employeeRoleBased" EntitySet="employeeRoleBaseds" />
           </AssociationSet>
           <AssociationSet Name="IDV_personImage" Association="Self.IDV_personImage">
             <End Role="person" EntitySet="people" />
@@ -1976,78 +2049,13 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="employeeRoleBaseds" EntityType="HRISModel.employeeRoleBased" />
-          <AssociationSet Name="FK_employeeRoleBased_person" Association="HRISModel.FK_employeeRoleBased_person">
-            <End Role="person" EntitySet="people" />
-            <End Role="employeeRoleBased" EntitySet="employeeRoleBaseds" />
-          </AssociationSet>
-          <EntitySet Name="roleBasedMatrices" EntityType="HRISModel.roleBasedMatrix" />
         </EntityContainer>
-        <EntityType Name="employeeRoleBased">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IDV" Type="Int32" Nullable="false" />
-          <Property Name="policyType" Type="Int32" Nullable="false" />
-          <Property Name="valueType" Type="Int32" Nullable="false" />
-          <Property Name="roleBasedValue" Type="Int32" />
-          <Property Name="currentValue" Type="Int32" />
-          <Property Name="balanceValue" Type="Int32" />
-          <Property Name="remainingValue" Type="Int32" />
-          <Property Name="validDateStart" Type="DateTime" Precision="0" />
-          <Property Name="validDateStop" Type="DateTime" Precision="0" />
-          <Property Name="decription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="vCreatedBy" Type="Int32" />
-          <Property Name="vUpdatedBy" Type="Int32" />
-          <Property Name="createTime" Type="DateTime" Precision="3" />
-          <Property Name="updateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="person" Relationship="HRISModel.FK_employeeRoleBased_person" FromRole="employeeRoleBased" ToRole="person" />
-        </EntityType>
-        <Association Name="FK_employeeRoleBased_person">
-          <End Type="HRISModel.person" Role="person" Multiplicity="1" />
-          <End Type="HRISModel.employeeRoleBased" Role="employeeRoleBased" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="person">
-              <PropertyRef Name="IDV" />
-            </Principal>
-            <Dependent Role="employeeRoleBased">
-              <PropertyRef Name="IDV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="roleBasedMatrix">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PolicyType" Type="Int32" Nullable="false" />
-          <Property Name="PolicyName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="Value" Type="Int32" />
-          <Property Name="ValueType" Type="Int32" />
-          <Property Name="L1" Type="Int32" />
-          <Property Name="L2" Type="Int32" />
-          <Property Name="L3" Type="Int32" />
-          <Property Name="L4" Type="Int32" />
-          <Property Name="L5" Type="Int32" />
-          <Property Name="L6" Type="Int32" />
-          <Property Name="L7" Type="Int32" />
-          <Property Name="L8" Type="Int32" />
-          <Property Name="L9" Type="Int32" />
-          <Property Name="L10" Type="Int32" />
-          <Property Name="L11" Type="Int32" />
-          <Property Name="L12" Type="Int32" />
-          <Property Name="vCreatedBy" Type="Int32" />
-          <Property Name="vUpdatedBy" Type="Int32" />
-          <Property Name="createTime" Type="DateTime" Precision="3" />
-          <Property Name="updateTime" Type="DateTime" Precision="3" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HRISModelStoreContainer" CdmEntityContainer="HRISEntities">
+        <EntityContainerMapping StorageEntityContainer="HRISModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="C_purpose">
             <EntityTypeMapping TypeName="HRISModel.C_purpose">
               <MappingFragment StoreEntitySet="_purpose">
@@ -2136,6 +2144,8 @@
           <EntitySetMapping Name="employees">
             <EntityTypeMapping TypeName="HRISModel.employee">
               <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="serviceDay" ColumnName="serviceDay" />
+                <ScalarProperty Name="serviceYear" ColumnName="serviceYear" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="UID_ABSENCE" ColumnName="UID_ABSENCE" />
@@ -2152,6 +2162,29 @@
                 <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
                 <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employeeRoleBaseds">
+            <EntityTypeMapping TypeName="HRISModel.employeeRoleBased">
+              <MappingFragment StoreEntitySet="employeeRoleBased">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="serviceYears" ColumnName="serviceYears" />
+                <ScalarProperty Name="serviceDays" ColumnName="serviceDays" />
+                <ScalarProperty Name="policyType" ColumnName="policyType" />
+                <ScalarProperty Name="valueType" ColumnName="valueType" />
+                <ScalarProperty Name="roleBasedValue" ColumnName="roleBasedValue" />
+                <ScalarProperty Name="currentValue" ColumnName="currentValue" />
+                <ScalarProperty Name="balanceValue" ColumnName="balanceValue" />
+                <ScalarProperty Name="remainingValue" ColumnName="remainingValue" />
+                <ScalarProperty Name="validDateStart" ColumnName="validDateStart" />
+                <ScalarProperty Name="validDateStop" ColumnName="validDateStop" />
+                <ScalarProperty Name="decription" ColumnName="decription" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
                 <ScalarProperty Name="createTime" ColumnName="createTime" />
                 <ScalarProperty Name="updateTime" ColumnName="updateTime" />
               </MappingFragment>
@@ -2466,6 +2499,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="roleBasedMatrices">
+            <EntityTypeMapping TypeName="HRISModel.roleBasedMatrix">
+              <MappingFragment StoreEntitySet="roleBasedMatrix">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PolicyType" ColumnName="PolicyType" />
+                <ScalarProperty Name="PolicyName" ColumnName="PolicyName" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="ValueType" ColumnName="ValueType" />
+                <ScalarProperty Name="L1" ColumnName="L1" />
+                <ScalarProperty Name="L2" ColumnName="L2" />
+                <ScalarProperty Name="L3" ColumnName="L3" />
+                <ScalarProperty Name="L4" ColumnName="L4" />
+                <ScalarProperty Name="L5" ColumnName="L5" />
+                <ScalarProperty Name="L6" ColumnName="L6" />
+                <ScalarProperty Name="L7" ColumnName="L7" />
+                <ScalarProperty Name="L8" ColumnName="L8" />
+                <ScalarProperty Name="L9" ColumnName="L9" />
+                <ScalarProperty Name="L10" ColumnName="L10" />
+                <ScalarProperty Name="L11" ColumnName="L11" />
+                <ScalarProperty Name="L12" ColumnName="L12" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tokens">
             <EntityTypeMapping TypeName="HRISModel.Token">
               <MappingFragment StoreEntitySet="Tokens">
@@ -2496,54 +2556,6 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="employeeRoleBaseds">
-            <EntityTypeMapping TypeName="HRISModel.employeeRoleBased">
-              <MappingFragment StoreEntitySet="employeeRoleBased">
-                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
-                <ScalarProperty Name="createTime" ColumnName="createTime" />
-                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
-                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
-                <ScalarProperty Name="decription" ColumnName="decription" />
-                <ScalarProperty Name="validDateStop" ColumnName="validDateStop" />
-                <ScalarProperty Name="validDateStart" ColumnName="validDateStart" />
-                <ScalarProperty Name="remainingValue" ColumnName="remainingValue" />
-                <ScalarProperty Name="balanceValue" ColumnName="balanceValue" />
-                <ScalarProperty Name="currentValue" ColumnName="currentValue" />
-                <ScalarProperty Name="roleBasedValue" ColumnName="roleBasedValue" />
-                <ScalarProperty Name="valueType" ColumnName="valueType" />
-                <ScalarProperty Name="policyType" ColumnName="policyType" />
-                <ScalarProperty Name="IDV" ColumnName="IDV" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="roleBasedMatrices">
-            <EntityTypeMapping TypeName="HRISModel.roleBasedMatrix">
-              <MappingFragment StoreEntitySet="roleBasedMatrix">
-                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
-                <ScalarProperty Name="createTime" ColumnName="createTime" />
-                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
-                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
-                <ScalarProperty Name="L12" ColumnName="L12" />
-                <ScalarProperty Name="L11" ColumnName="L11" />
-                <ScalarProperty Name="L10" ColumnName="L10" />
-                <ScalarProperty Name="L9" ColumnName="L9" />
-                <ScalarProperty Name="L8" ColumnName="L8" />
-                <ScalarProperty Name="L7" ColumnName="L7" />
-                <ScalarProperty Name="L6" ColumnName="L6" />
-                <ScalarProperty Name="L5" ColumnName="L5" />
-                <ScalarProperty Name="L4" ColumnName="L4" />
-                <ScalarProperty Name="L3" ColumnName="L3" />
-                <ScalarProperty Name="L2" ColumnName="L2" />
-                <ScalarProperty Name="L1" ColumnName="L1" />
-                <ScalarProperty Name="ValueType" ColumnName="ValueType" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="PolicyName" ColumnName="PolicyName" />
-                <ScalarProperty Name="PolicyType" ColumnName="PolicyType" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

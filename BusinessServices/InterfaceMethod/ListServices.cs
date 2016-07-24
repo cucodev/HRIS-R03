@@ -202,7 +202,7 @@ namespace BusinessServices.InterfaceMethod
             return ms.AsEnumerable();
         }
 
-        //Need to update, not refers to Category, only Medical and Leave (root only)
+        
         public IEnumerable<LOV> getPolicyType()
         {
             List<LOV> ms = new List<LOV>();
@@ -216,14 +216,14 @@ namespace BusinessServices.InterfaceMethod
                     foreach (categoryParent n in vParentID)
                     {
                         
-                        var vDataID = _unitOfWork.categoryRepository.GetMany(b => b.catParentID == n.catID);
+                        var vDataID = _unitOfWork.roleBasedMatrixRepository.GetMany(b => b.PolicyType == n.catID);
                         if (vDataID.Any())
                         {
-                            foreach (category nn in vDataID)
+                            foreach (roleBasedMatrix nn in vDataID)
                             {
                                 LOV xx = new LOV();
-                                xx.value = nn.catID;
-                                xx.label = (n.catName).TrimEnd() + " - " + (nn.catName).TrimEnd();
+                                xx.value = nn.ID;
+                                xx.label = (n.catName).TrimEnd() + " - " + (nn.PolicyName).TrimEnd();
                                 ms.Add(xx);
                             }
                         }

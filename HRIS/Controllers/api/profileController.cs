@@ -12,7 +12,7 @@ namespace HRIS_R03.Controllers.api
 {
     public class profileController : ApiController
     {
-        private readonly IprofileServices _pServices;
+        private readonly Iprofile _pServices;
 
         #region Public Constructor
 

@@ -61,7 +61,7 @@ namespace HRIS.Controllers.api
 
         [System.Web.Http.HttpPut]
         [System.Web.Http.ActionName("updateRoleBasedMatrix")]
-        [System.Web.Http.Route("api/role/updateRoleBasedMatrix")]
+        [System.Web.Http.Route("api/role/updateRoleBasedMatrix/{ID}")]
         public bool updateRoleBasedMatrix(int ID, roleBasedMatrixEntities px)
         {
             if (ID > 0)
@@ -69,9 +69,9 @@ namespace HRIS.Controllers.api
             return false;
         }
 
-        [System.Web.Http.HttpDelete]
-        [System.Web.Http.ActionName("deleteRoleBasedMatrix")]
-        [System.Web.Http.Route("api/role/deleteRoleBasedMatrix")]
+        [HttpDelete]
+        [ActionName("deleteRoleBasedMatrix")]
+        [Route("api/role/deleteRoleBasedMatrix/{ID}")]
         public bool deleteRoleBasedMatrix(int ID)
         {
             if (ID > 0)

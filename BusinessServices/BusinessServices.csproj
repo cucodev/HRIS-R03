@@ -45,15 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InterfaceMethod\DataServices.cs" />
     <Compile Include="InterfaceMethod\ListServices.cs" />
     <Compile Include="InterfaceMethod\MasterDataServices.cs" />
     <Compile Include="InterfaceMethod\ProfileServices.cs" />
     <Compile Include="InterfaceMethod\SecurityServices.cs" />
     <Compile Include="Interface\IData.cs" />
-    <Compile Include="Interface\IMasterDataServices.cs" />
+    <Compile Include="Interface\IMasterData.cs" />
     <Compile Include="Interface\Isecurity.cs" />
     <Compile Include="Interface\IList.cs" />
-    <Compile Include="Interface\IprofileServices.cs" />
+    <Compile Include="Interface\Iprofile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

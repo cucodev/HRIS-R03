@@ -1,30 +1,34 @@
 ﻿<script type="text/javascript">
     $(document).ready(function () {
 
-        hris.general.bindButton('dataMatrixUpdate');
-        hris.general.bindButton('dataMatrixCreate');
-        hris.general.bindButton('dataMatrixDelete');
+
         hris.general.bindButton('categoryMatrixUpdate');
         hris.general.bindButton('categoryMatrixCreate');
         hris.general.bindButton('categoryMatrixDelete');
+        hris.general.bindButton('calculate');
+
+        var PolicyRootName = hris.list._getLOV('getPolicyRootType');
 
         //POPUP 
         //================================================================================================================
         var main = $('body');
         var offset = main.offset();
+
+      
+
         $('#customWindow2').jqxWindow({
             width: 400,
             isModal: true,
             modalOpacity: 0.9,
             height: 265, resizable: false,
-            cancelButton: $('#cancelButton'),
+            cancelButton: $('#cancelCategory'),
             position: { x: offset.left + 50, y: offset.top + 50 },
             initContent: function () {
                 hris.general.bindDropDown("getPolicyRootType", null);
                 hris.general.bindDropDown("getValueType", null);
                 hris.general.bindInput("CatPolicyName");
-                hris.general.bindButton('submitButton');
-                hris.general.bindButton('cancelButton');
+                hris.general.bindButton('submitCategory');
+                hris.general.bindButton('cancelCategory');
                 //$('#cancelButton').jqxButton({ width: '120px', height: '45px' });
             }
         });
@@ -33,26 +37,25 @@
 
         //Button & PopOver
         //================================================================================================================
-        $("#categoryButton").jqxButton({ template: "inverse" });
-        $("#dataButton").jqxButton({ template: "Info" });
-
-        $("#manageData").jqxPopover({ theme: 'fresh', offset: { left: -50, top: 0 }, arrowOffsetValue: 50, title: "Manage Data", showCloseButton: true, selector: $("#dataButton") });
+        $("#categoryButton").jqxButton({ template: "inverse", height: '35px' });
+       
         $("#manageCategory").jqxPopover({ theme: 'fresh', offset: { left: -50, top: 0 }, arrowOffsetValue: 50, title: "Manage Category", showCloseButton: true, selector: $("#categoryButton") });
         
       
         //GRID
         //================================================================================================================
-        var url = '';
+        var url = '/api/role/getRoleBasedMatrix';
         var source =
             {
-                datatype: "xml",
+                datatype: "json",
                 datafields: [
                     {name: 'ID', type: 'number' },
                     {name: 'PolicyType' , type: 'number'},
-                    {name: 'PolicyName', type: 'string'},
+                    {name: 'PolicyTypeName', value: 'PolicyType', values: { source: PolicyRootName.records, value: 'value', name: 'label' } },
+                    {name: 'PolicyName', type: 'string' },
                     {name: 'Value', type: 'number'},
-                    {name: 'ValueType', type: 'number'},
-                    {name: 'L1', type: 'number'},
+                    {name: 'ValueType', type: 'number' },
+                    {name: 'L1', type: 'number' },
                     {name: 'L2', type: 'number'},
                     {name: 'L3', type: 'number'},
                     {name: 'L4', type: 'number'},
@@ -63,11 +66,25 @@
                     {name: 'L9', type: 'number'}
                 ],
                 url: url,
-                root: 'DATA',
-                record: 'ROW'
+                updateRow: function (rowID, rowData, commit) {
+                    txType = 1;
+                    ID = rowData.ID;
+                    console.log("updateRow: ID source : " + rowData.ID);
+                    process(txType, rowData);
+                    commit();
+                },
             };
         var dataAdapter = new $.jqx.dataAdapter(source, {
-            loadComplete: function () {
+            //autoBind: true,
+            contentType: 'application/json; charset=utf-8',
+            loadComplete: function (records) {
+                //console.log('Data Adapter OK : ', records);
+            },
+            loadError: function (jqXHR, status, error) {
+                console.log('Retrieve Error : ', jqXHR.responseText);
+            },
+            beforeLoadComplete: function (records) {
+                //console.log(records);
             }
         });
 
@@ -76,24 +93,26 @@
                 width: '100%',
                 theme: 'ui-start',
                 source: dataAdapter,
+                editable: true,
                 pageable: true,
                 autorowheight: true,
                 altrows: true,
                 columnsresize: true,
+                //selectionmode: 'multiplecellsadvanced',
                 columns: [
                     { text: 'ID', datafield: 'ID', width: 20, hidden: true },
-                    { text: 'Type', datafield: 'PolicyType', columngroup: 'Policy', width: 55 },
-                    { text: 'Description', datafield: 'PolicyName', columngroup: 'Policy', width: 300 },
-                    { text: 'IN', datafield: 'ValueType', columngroup: 'Policy', width: 70, hidden: true },
-                    { text: 'Direksi', datafield: 'L1', columngroup: 'Position', width: 70 },
-                    { text: 'GM', datafield: 'L2', columngroup: 'Position', width: 50 },
-                    { text: 'Manager', datafield: 'L3', columngroup: 'Manager', width: 70 },
-                    { text: 'Assistant', datafield: 'L4', columngroup: 'Manager', width: 70 },
-                    { text: 'Team Leader', datafield: 'L5', columngroup: 'Position', width: 70 },
-                    { text: 'Senior', datafield: 'L6', columngroup: 'Staff', width: 70 },
-                    { text: 'Middle', datafield: 'L7', columngroup: 'Staff', width: 70 },
-                    { text: 'Junior', datafield: 'L8', columngroup: 'Staff', width: 70 },
-                    { text: 'Service', datafield: 'L9', columngroup: 'Staff', width: 70 }
+                    { text: 'Type', datafield: 'PolicyType', displayfield: 'PolicyTypeName', columngroup: 'Policy', width: 65, editable: false, hidden: true },
+                    { text: 'Description', datafield: 'PolicyName', columngroup: 'Policy', width: 300, editable: false },
+                    { text: 'IN', datafield: 'ValueType', columngroup: 'Policy', width: 70, hidden: true, editable: false },
+                    { text: 'Direksi', datafield: 'L1', columngroup: 'Position', cellsformat: 'n', width: 50 },
+                    { text: 'GM', datafield: 'L2', columngroup: 'Position', cellsformat: 'n', width: 30 },
+                    { text: 'Manager', datafield: 'L3', columngroup: 'Manager', cellsformat: 'n', width: 80 },
+                    { text: 'Assistant', datafield: 'L4', columngroup: 'Manager', cellsformat: 'n', width: 80 },
+                    { text: 'Team Leader', datafield: 'L5', columngroup: 'Position', cellsformat: 'n', width: 80 },
+                    { text: 'Senior', datafield: 'L6', columngroup: 'Staff', cellsformat: 'n', width: 80 },
+                    { text: 'Middle', datafield: 'L7', columngroup: 'Staff', cellsformat: 'n', width: 80 },
+                    { text: 'Junior', datafield: 'L8', columngroup: 'Staff', cellsformat: 'n', width: 80 },
+                    { text: 'Service', datafield: 'L9', columngroup: 'Staff', cellsformat: 'n', width: 80 }
                 ],
                 columngroups:
                 [
@@ -106,11 +125,70 @@
 
         //EVENT
         //================================================================================================================
+        var txType = null;
+        var ID = null;
         $('#categoryMatrixCreate').on('click', function (event) {
             cleanform();
-            console.log("Button Clicked");
+            txType = 0;
             $('#customWindow2').jqxWindow('open');
         });
+        
+        $('#categoryMatrixUpdate').on('click', function (event) {
+            cleanform();
+            txType = 1;
+            var rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+            if (rowindex == -1) {
+                alert("Please Select Row first !");
+            } else {
+                var data = $('#jqxgrid').jqxGrid('getrowdata', rowindex);
+                ID = data.ID;
+                hris.general.bindDropDown("getPolicyRootType", data.PolicyType);
+                hris.general.bindDropDown("getValueType", data.ValueType);
+                hris.general.bindInput("CatPolicyName", data.PolicyName);
+                $('#customWindow2').jqxWindow('open');
+            }
+        });
+
+        $('#categoryMatrixDelete').on('click', function (event) {
+            try {
+                txType = 2;
+                var rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+                if (rowindex == -1) {
+                    alert("Please Select Row first !");
+                } else {
+                    var data = $('#jqxgrid').jqxGrid('getrowdata', rowindex);
+                    var r = confirm("Confirm to Delete " + data.PolicyName + " ? ");
+                    if (r == true) {
+                        ID = data.ID;
+                        process(txType, null);
+                        $('#jqxgrid').jqxGrid('updatebounddata');
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+            }
+            
+            
+        });
+
+        $("#submitCategory").click(function () {
+            var x1 = hris.general.getData("getPolicyRootType");
+            var x2 = hris.general.getData("getValueType");
+            var x3 = hris.general.getData("CatPolicyName");
+            if ( (x1 == null) && (x3 == null) ){
+                alert("Select Medical or Annual Leave first");
+            } else {
+                var row = new Object();
+                row.ID = ID;
+                row.PolicyType = x1;
+                row.ValueType = x2;
+                row.PolicyName = x3.trim();
+                process(txType, row);
+                $('#customWindow2').jqxWindow('close');
+            }
+        });
+
+       
 
         //FUNCTION
         //================================================================================================================
@@ -120,7 +198,58 @@
             hris.general.cleanInput('CatPolicyName');
         }
 
-        
+        //Data
+        //============================================================================================================
+        function process(txType, row) {
+            switch (txType) {
+                case 0:
+                    console.log("Create Ajax");
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: '/api/role/createRoleBasedMatrix',
+                        data: row,
+                        type: "POST",
+                        success: function (data, status, xhr) {
+                            $('#jqxgrid').jqxGrid('updatebounddata');
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Error " + errorThrown);
+                        }
+                    }); txType = null; break;
+                case 1:
+                    console.log("Update Ajax");
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: '/api/role/updateRoleBasedMatrix/' + ID,
+                        data: row,
+                        type: 'PUT',
+                        success: function (data, status, xhr) {
+                            $('#jqxgrid').jqxGrid('updatebounddata');
+                            console.log("Update Ajax Success : ", row, " on ID: ",ID);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Error " + errorThrown);
+                        }
+                    }); txType = null; break;
+                case 2:
+                    console.log("Delete Ajax");
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: '/api/role/deleteRoleBasedMatrix/' + ID,
+                        type: 'DELETE',
+                        success: function (data, status, xhr) {
+                            $('#jqxgrid').jqxGrid('updatebounddata');
+                            console.log("Delete Ajax Success : ", row, " ID: ", ID);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Error " + errorThrown);
+                        }
+                    }); txType = null; break;
+            }
+        }
 
         /* DYNAMIC COLUMN
         var colSource =
@@ -173,40 +302,32 @@
         }); */
     })
 </script>
+
+
+
+
+<!--Grid & Main Content-->
 <div class="container" style="margin-left:20px">
     <div class="col-md-12">
         <div class="row pull-right">
-            <button style="float: right; margin-right: 10px; padding: 8px 12px; border-radius: 6px;" id="dataButton">Manage Data</button>
-            <button style="float: right; margin-right: 10px; padding: 8px 12px; border-radius: 6px;" id="categoryButton">Manage Category</button>
+            <div class="col-md-6">
+@using (Html.BeginForm("Calculate", "AdminHR", FormMethod.Post))
+{
+    <input type="submit" id="calculate" value="Calculate" style="margin-right:10px"/>
+}</div>
+            <div class="col-md-6">
+                <button style="float: right; margin-right: 10px; padding: 8px 12px; border-radius: 6px;" id="categoryButton">Category</button>
+            </div>
            <hr />
         </div>
-
         <div class="row">
             <div id="jqxgrid"></div>
         </div>
-
-    </div>
-   
+    </div> 
 </div>
 
 
-<div id="manageData">
-    <div class="row pull-right" style="margin-left: 5px; margin-right:5px; ">
-        <div id='button'>
-            <button style="padding:4px 16px;" id="dataMatrixCreate">
-                Create
-            </button>
-            <button style="padding:4px 16px;" id="dataMatrixUpdate">
-                Update
-            </button>
-            <button style="padding:4px 16px;" id="dataMatrixDelete">
-                Delete
-            </button>
-        </div>
-        <hr />
-    </div>
-</div>
-
+<!--Button Category-->
 <div id="manageCategory">
     <div class="row pull-right" style="margin-left: 5px; margin-right:5px; ">
         <input type="button" value="Create" style="padding:4px 16px;" id="categoryMatrixCreate">
@@ -217,19 +338,32 @@
     </div>
 </div>
 
+<!--popup Manage Category-->
 <div id="customWindow2" style="overflow: hidden; visibility: hidden;">
     <div id="customWindowHeader">
         <span id="captureContainer" style="float: left">HR Based Matrix Form </span>
     </div>
-    <div>
-        <div class="row">
-            <div class="col-md-5"><div id="getPolicyRootType"></div></div>
-            <div class="col-md-5"><div id="getValueType"></div></div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-md-10"><input id="CatPolicyName" /></div>
+    <div id="customWindowContent">
+        <div style="margin: 10px">
+            <div class="row">
+                <div class="col-md-6"><label for="getPolicyRootType">Type</label><div id="getPolicyRootType"></div></div>
+                <div class="col-md-6"><label for="getValueType">Value Type</label><div id="getValueType"></div></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="catPolicyName">CategoryName</label><br />
+                    <input type="text" style="width: 175px; border: 1px solid #aaa" id="CatPolicyName" />
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6"><input type="button" value="Submit" style="margin-bottom: 5px;" id="submitCategory" /></div>
+                <div class="col-md-6"><input type="button" value="Cancel" id="cancelCategory" /></div>
+            </div>
         </div>
     </div>
-    
 </div>
+
+

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessServices.Interface;
+using BusinessServices.InterfaceMethod;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +10,12 @@ namespace HRIS_R03.Controllers
 {
     public class AdminHRController : Controller
     {
+        private readonly IManageRoleBasedMatrix _pServices;
+
+        public AdminHRController()
+        {
+            _pServices = new RoleBasedMatrixServices();
+        }
         // GET: AdminHR
         public ActionResult Index()
         {
@@ -22,6 +30,13 @@ namespace HRIS_R03.Controllers
         public ActionResult Test()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Calculate()
+        {
+            var p = _pServices.CalculateMatrix();
+            return RedirectToAction("MaintainData");
         }
     }
 }

@@ -39,6 +39,8 @@ namespace BusinessEntities.CrudEntities
         public Nullable<int> vUpdatedBy { get; set; }
         public Nullable<System.DateTime> createTime { get; set; }
         public Nullable<System.DateTime> updateTime { get; set; }
+
+
     }
 
     public class tempEntities

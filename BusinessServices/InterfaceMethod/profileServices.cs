@@ -13,7 +13,7 @@ using System.Transactions;
 
 namespace BusinessServices.InterfaceMethod
 {
-    public class ProfileServices : IprofileServices
+    public class ProfileServices : Iprofile
     {
         private readonly UnitOfWork _unitOfWork;
         private int isDelete = 0; // 0 means row is active, not in deleted status

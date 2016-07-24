@@ -8,19 +8,14 @@ using BusinessEntities.CrudEntities;
 
 namespace BusinessServices.Interface
 {
-    public interface IData
+    public interface IMasterData
     {
-        int updateServiceYear(int IDV);
-    }
-    
-    public interface ILeave
-    {
-        //IEnumerable<employeeLeaveEntities>
     }
 
-    public interface calculateServiceYear
+    public interface IroleBased
     {
-        //int getServiceYear(int IDV);
+        IEnumerable<listEntities> getAll();
+        int Create(listEntities listEntities);
+        bool Update(int ID, listEntities listEntities);
     }
-
 }

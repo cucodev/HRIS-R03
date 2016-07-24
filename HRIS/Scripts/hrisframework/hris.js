@@ -192,15 +192,16 @@
         },
         cleanDropDown: function (value) {
             var i = $("#" + value);
-            if (value !== null) { return i.jqxDropDownList('val', -1); }
+            if (value !== null) { return i.jqxDropDownList({ selectedIndex: -1 }); }
         },
         cleanInput: function (value) {
             var i = $("#" + value);
             if (value !== null) { return i.jqxInput('val', null); }
         },
-        bindInput: function (value) {
-            var i = $("#" + value);
+        bindInput: function (div, value) {
+            var i = $("#" + div);
             i.jqxInput({ width: '100%', height: '35px' });
+            if (value !== null) { i.jqxInput('val', value); }
         },
         bindButton: function (div) {
             var i = $("#" + div);

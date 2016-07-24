@@ -16,6 +16,8 @@ namespace DataModel
     {
         public int ID { get; set; }
         public int IDV { get; set; }
+        public Nullable<int> serviceYears { get; set; }
+        public Nullable<int> serviceDays { get; set; }
         public int policyType { get; set; }
         public int valueType { get; set; }
         public Nullable<int> roleBasedValue { get; set; }

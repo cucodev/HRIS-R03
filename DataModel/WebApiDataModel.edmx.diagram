@@ -4,37 +4,39 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b1bb5ea8bc78400c88666343f862c698" Name="Diagram1">
-        <EntityTypeShape EntityType="HRISModel.C_purpose" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.C_transaction" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.AspNetRole" Width="1.5" PointX="8.75" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.AspNetUserClaim" Width="1.5" PointX="13.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.AspNetUserLogin" Width="1.5" PointX="13.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.AspNetUser" Width="1.5" PointX="11" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.category" Width="1.5" PointX="6" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.categoryParent" Width="1.5" PointX="3.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.employee" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.file" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.location" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.organization" Width="1.5" PointX="0.75" PointY="32.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.person" Width="1.5" PointX="3" PointY="30.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personAddress" Width="1.5" PointX="5.25" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personBankAccount" Width="1.5" PointX="5.25" PointY="20.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personCertification" Width="1.5" PointX="5.25" PointY="24" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personContact" Width="1.5" PointX="5.25" PointY="27.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personDependent" Width="1.5" PointX="5.25" PointY="31.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personDetail" Width="1.5" PointX="8.25" PointY="30.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personEdu" Width="1.5" PointX="5.25" PointY="39.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personEmergency" Width="1.5" PointX="5.25" PointY="43.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personIdentity" Width="1.5" PointX="5.25" PointY="46.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personJob" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personLanguage" Width="1.5" PointX="5.25" PointY="35.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personSkill" Width="1.5" PointX="5.25" PointY="53.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personTraining" Width="1.5" PointX="5.25" PointY="57.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.personWorkExperience" Width="1.5" PointX="5.25" PointY="60.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.roleBased" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.Token" Width="1.5" PointX="7.5" PointY="64.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRISModel.user" Width="1.5" PointX="5.25" PointY="64.75" IsExpanded="true" />
+      <Diagram DiagramId="50a16d3c94b243018463bd0a5cef0adf" Name="Diagram1">
+        <EntityTypeShape EntityType="HRISModel.C_purpose" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.C_transaction" Width="1.5" PointX="10" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.AspNetUser" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.category" Width="1.5" PointX="6" PointY="40.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.categoryParent" Width="1.5" PointX="3.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.employee" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.employeeRoleBased" Width="1.5" PointX="5.25" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.file" Width="1.5" PointX="5.25" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.location" Width="1.5" PointX="8.25" PointY="40.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.organization" Width="1.5" PointX="0.75" PointY="34.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.person" Width="1.5" PointX="3" PointY="33.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personAddress" Width="1.5" PointX="5.25" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personBankAccount" Width="1.5" PointX="5.25" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personCertification" Width="1.5" PointX="5.25" PointY="28.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personContact" Width="1.5" PointX="5.25" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personDependent" Width="1.5" PointX="5.25" PointY="36" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personDetail" Width="1.5" PointX="8.25" PointY="33.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personEdu" Width="1.5" PointX="5.25" PointY="44.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personEmergency" Width="1.5" PointX="5.25" PointY="48.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personIdentity" Width="1.5" PointX="5.25" PointY="51.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personJob" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personLanguage" Width="1.5" PointX="8.25" PointY="29.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personSkill" Width="1.5" PointX="5.25" PointY="58.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personTraining" Width="1.5" PointX="5.25" PointY="62" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.personWorkExperience" Width="1.5" PointX="5.25" PointY="65.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.roleBased" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.roleBasedMatrix" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.Token" Width="1.5" PointX="7.5" PointY="69.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISModel.user" Width="1.5" PointX="5.25" PointY="69.625" IsExpanded="true" />
         <AssociationConnector Association="HRISModel.purposeType" ManuallyRouted="false" />
         <AssociationConnector Association="HRISModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="HRISModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
@@ -46,6 +48,7 @@
         <AssociationConnector Association="HRISModel.spoken_personLanguage" ManuallyRouted="false" />
         <AssociationConnector Association="HRISModel.written_personLanguage" ManuallyRouted="false" />
         <AssociationConnector Association="HRISModel.IDV_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISModel.FK_employeeRoleBased_person" ManuallyRouted="false" />
         <AssociationConnector Association="HRISModel.IDV_personImage" ManuallyRouted="false" />
         <AssociationConnector Association="HRISModel.OrgID" ManuallyRouted="false" />
         <AssociationConnector Association="HRISModel.IDV_Address" ManuallyRouted="false" />
@@ -64,9 +67,6 @@
         <AssociationConnector Association="HRISModel.IDV_user" ManuallyRouted="false" />
         <AssociationConnector Association="HRISModel.FK_Tokens_User" ManuallyRouted="false" />
         <AssociationConnector Association="HRISModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="HRISModel.employeeRoleBased" Width="1.5" PointX="5.25" PointY="68.375" />
-        <AssociationConnector Association="HRISModel.FK_employeeRoleBased_person" />
-        <EntityTypeShape EntityType="HRISModel.roleBasedMatrix" Width="1.5" PointX="7.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

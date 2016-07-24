@@ -35,6 +35,7 @@ namespace DataModel.UnitOfWork
         private GenericRepository<personTraining> _personTrainingRepository;
         private GenericRepository<personWorkExperience> _personWorkExperienceRepository;
         private GenericRepository<employee> _employeeRepository;
+        private GenericRepository<employeeRoleBased> _employeeRoleBasedRepository;
         private GenericRepository<C_purpose> _C_purposeRepository;
         private GenericRepository<C_transaction> _C_transactionRepository;
         private GenericRepository<category> _categoryRepository;
@@ -119,6 +120,15 @@ namespace DataModel.UnitOfWork
                 if (this._employeeRepository == null)
                     this._employeeRepository = new GenericRepository<employee>(_context);
                 return _employeeRepository;
+            }
+        }
+        public GenericRepository<employeeRoleBased> employeeRoleBasedRepository
+        {
+            get
+            {
+                if (this._employeeRoleBasedRepository == null)
+                    this._employeeRoleBasedRepository = new GenericRepository<employeeRoleBased>(_context);
+                return _employeeRoleBasedRepository;
             }
         }
         public GenericRepository<file> fileRepository

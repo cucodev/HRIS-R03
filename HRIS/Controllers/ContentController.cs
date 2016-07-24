@@ -1,5 +1,7 @@
 ﻿using BusinessEntities;
 using BusinessEntities.CrudEntities;
+using BusinessServices.Interface;
+using BusinessServices.InterfaceMethod;
 using HRIS_R03.Controllers.shared;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace HRIS_R03.Controllers
     public class ContentController : Controller //ApplicationController<LogOnModel>
     {
         
+       
         private void current()
         {
             if (Session[GlobalVariable.UserCred] != null)

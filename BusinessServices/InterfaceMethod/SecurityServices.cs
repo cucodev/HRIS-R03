@@ -13,7 +13,7 @@ namespace BusinessServices.InterfaceMethod
 {
     public class SecurityServices : Isecurity 
     {
-        private readonly IprofileServices _pProfile;
+        private readonly Iprofile _pProfile;
         private readonly UnitOfWork _unitOfWork;
         private int isDelete = 0;
 

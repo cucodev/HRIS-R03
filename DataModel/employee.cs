@@ -15,9 +15,9 @@ namespace DataModel
     public partial class employee
     {
         public int ID { get; set; }
-        public Nullable<int> IDV { get; set; }
+        public int IDV { get; set; }
         public Nullable<int> UID_ABSENCE { get; set; }
-        public Nullable<System.DateTime> joinDate { get; set; }
+        public System.DateTime joinDate { get; set; }
         public Nullable<System.DateTime> resignDate { get; set; }
         public Nullable<int> employmentStatus { get; set; }
         public Nullable<System.DateTime> contract1Start { get; set; }
@@ -32,6 +32,8 @@ namespace DataModel
         public Nullable<int> isDeleted { get; set; }
         public Nullable<System.DateTime> createTime { get; set; }
         public Nullable<System.DateTime> updateTime { get; set; }
+        public Nullable<double> serviceYear { get; set; }
+        public Nullable<int> serviceDay { get; set; }
     
         public virtual person person { get; set; }
     }

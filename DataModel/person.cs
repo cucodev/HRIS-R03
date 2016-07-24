@@ -18,6 +18,7 @@ namespace DataModel
         public person()
         {
             this.employees = new HashSet<employee>();
+            this.employeeRoleBaseds = new HashSet<employeeRoleBased>();
             this.files = new HashSet<file>();
             this.personAddresses = new HashSet<personAddress>();
             this.personBankAccounts = new HashSet<personBankAccount>();
@@ -33,7 +34,6 @@ namespace DataModel
             this.personTrainings = new HashSet<personTraining>();
             this.personWorkExperiences = new HashSet<personWorkExperience>();
             this.users = new HashSet<user>();
-            this.employeeRoleBaseds = new HashSet<employeeRoleBased>();
         }
     
         public int IDV { get; set; }
@@ -46,6 +46,8 @@ namespace DataModel
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<employee> employees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<employeeRoleBased> employeeRoleBaseds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<file> files { get; set; }
         public virtual organization organization { get; set; }
@@ -77,7 +79,5 @@ namespace DataModel
         public virtual ICollection<personWorkExperience> personWorkExperiences { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user> users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<employeeRoleBased> employeeRoleBaseds { get; set; }
     }
 }

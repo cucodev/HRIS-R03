@@ -12,6 +12,8 @@ namespace BusinessEntities.CrudEntities
     {
         public int ID { get; set; }
         public int IDV { get; set; }
+        public int serviceYears { get; set; }
+        public int serviceDays { get; set; }
         public int policyType { get; set; }
         public int valueType { get; set; }
         public Nullable<int> roleBasedValue { get; set; }

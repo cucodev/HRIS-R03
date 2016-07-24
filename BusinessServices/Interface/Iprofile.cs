@@ -16,7 +16,7 @@ namespace BusinessServices.Interface
         bool UpdateRoleBased(roleBasedEntities EroleBased);
     }
 
-    public interface IprofileServices
+    public interface Iprofile
     {
         profileEntities GetProfileById(int personIDV);
         IEnumerable<profileEntities> GetAllProfiles();
