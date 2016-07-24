@@ -132,10 +132,10 @@
                     bindInput("personJobID");
                     bindInput("parentIDV");
                     bindInput("jobName");
-                    bindInput("JobDivision");
-                    bindInput("JobDepartement");
-                    bindInput("JobPosition");
-                    bindInput("JobLevel");
+                    bindCategory("JobDepartement","getDepartment");
+                    bindCategory("JobDivision","getDivision");
+                    bindCategory("JobPosition","getPosition");
+                    bindCategory("JobLevel","getLevel");
                     bindInput("JobLocation");
                     bindDateTime("startDate");
                     bindDateTime("endDate");
@@ -166,10 +166,10 @@
                     //Skill & Certification
                     bindInput("personSkillID");
                     bindInput("skillName");
-                    bindInput("skillLevel");
+                    bindCategory("skillLevel","getSkillLevel");
                     bindInput("personCertificationID");
                     bindInput("certificationName");
-                    bindInput("issuedCountry");
+                    bindCategory("issuedCountry","getCountry");
                     bindInput("issuedCity");
                     bindDateTime("issuedDate");
                     bindDateTime("issuedExpiredDate");
@@ -181,16 +181,6 @@
                     bindInput("TrainingCertificate");
                     bindDateTime("TrainingStartDate");
                     bindDateTime("TrainingEndDate");
-
-                    bindCategory("empDepartement", "getDepartment");
-                    bindCategory("empDivision", "getDivision");
-                    bindCategory("empJobLevel", "getDivision");
-                    bindInput("empOfficeLocation");
-                    
-                    bindCategory("empPosition", "getPosition");
-
-                    bindInput("Phone1");
-                    bindInput("Phone2");
 
                     bindTextArea("Address");
                     bindInput("AddressKel");
@@ -462,7 +452,6 @@
             <li>Employee</li>
             <li>Address</li>
             <li>Education</li>
-            <li>Work</li>
             <li>Image</li>
             <li>Dependent</li>
             <li>Identity</li>
@@ -545,22 +534,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="Phone1">Phone #1</label>
-                                <input type="text" class="form-control" id="Phone1" placeholder="Phone #1">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="Phone2">Phone #2</label>
-                                <input type="text" class="form-control" id="Phone2" placeholder="Phone #2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
@@ -801,72 +775,6 @@
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
-            <div class="container-fluid">
-                <!--Work-->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="empDepartement">Department</label>
-                                <div id="empDepartement"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="empDivision">Division</label>
-                                <div id="empDivision"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="empPosition">Position</label>
-                                <div id="empPosition"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="empJobLevel">Job Level</label>
-                                <div id="empJobLevel"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="empOfficeLocation">Office Location</label>
-                                <input type="text" class="form-control" id="empOfficeLocation" placeholder="Office Location">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="employmentStatus">Employee Status</label>
-                                <div id="employmentStatus"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             Image
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
@@ -905,7 +813,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="JobDepartement">Department</label>
-                                <input type="text" class="form-control" placeholder="Department" id="JobDepartement" />
+                                <div id="JobDepartement"></div>
                             </div>
                         </div>
                     </div>
@@ -915,7 +823,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="JobDivision">Division</label>
-                                <input type="text" class="form-control" placeholder="Division" id="JobDivision" />
+                                <!--<input type="text" class="form-control" placeholder="Division" id="JobDivision" />-->
+                                <div id="JobDivision"></div>
                             </div>
                         </div>
                     </div>
@@ -925,7 +834,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="JobPosition">Position</label>
-                                <input type="text" class="form-control" placeholder="Position" id="JobPosition" />
+                                <div id="JobPosition"></div>
                             </div>
                         </div>
                     </div>
@@ -1111,7 +1020,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="skillLevel">Skill Level</label>
-                                <input type="text" class="form-control" id="skillLevel" placeholder="Skill Level" />
+                                <div id="skillLevel"></div>
                             </div>
                         </div>
                     </div>
@@ -1141,7 +1050,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="issuedCountry">Issued Country</label>
-                                <input type="text" class="form-control" id="issuedCountry" placeholder="Issued Country" />
+                                <div id="issuedCountry"></div>
                             </div>
                         </div>
                     </div>
