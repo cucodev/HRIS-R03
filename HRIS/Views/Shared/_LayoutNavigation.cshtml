@@ -27,6 +27,7 @@
 
     <main class="cd-main-content">
 
+        <!--Header-->
         <div class="row">
             <div class="col-md-12">
                 <header class="cd-main-header" >
@@ -43,6 +44,7 @@
             </div>
         </div>
 
+        <!--Menu-->
         <div class="row">
             <div class="col-md-2">
                 <nav class="cd-side-nav">
@@ -83,13 +85,16 @@
                             @Html.ActionLink("Timesheet Manager", "HRTimesheets", "vTimesheets")
                         </li>
                         <li class="has-children users">
-                            @Html.ActionLink("Employee Management", "HREmployeeManagement", "vEmployee")
+                            @Html.ActionLink("Employee Management", "EmployeeManagement", "AdminHR")
                         </li>
                     </ul>
                     <ul>
                         <li class="cd-label">System Admin</li>
                         <li class="bookmarks">
                             @Html.ActionLink("Master Data", "MaintainData", "AdminHR")
+                        </li>
+                        <li class="bookmarks">
+                            @Html.ActionLink("User Management", "MaintainData", "AdminHR")
                         </li>
                     </ul>
 
@@ -100,7 +105,7 @@
             </div>
         </div>
        
-
+        <!--Footer-->
         <div class="col">
             <div class="col-sm-12">
                 <div class="footer">

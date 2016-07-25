@@ -540,6 +540,8 @@
     <Content Include="Views\Shared\_LayoutNone.cshtml" />
     <Content Include="Views\AdminHR\Test.cshtml" />
     <Content Include="Views\SharedMaintainData\_roleBasedMatrix.cshtml" />
+    <Content Include="Views\AdminHR\EmployeeManagement.cshtml" />
+    <Content Include="Views\SharedMaintainData\_employeeHRProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

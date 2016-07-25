@@ -1,0 +1,159 @@
+﻿
+@{
+    ViewBag.Title = "EmployeeManagement";
+    Layout = "~/Views/Shared/_LayoutNavigation.cshtml";
+}
+
+@section scripts
+{
+    <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            th = "ui-redmond";
+            
+            var initBalance = function () {
+                var sourcebalance = {
+                    dataType: "json",
+                    dataFields: [
+                        { name: 'ID', type: 'number' },
+                        { name: 'IDVNAME', value: 'IDV', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                        { name: 'IDV', type: 'number' },
+                        { name: 'LEAVE_TYPENAME', value: 'LEAVE_TYPE', values: { source: listCategory.records, value: 'id', name: 'uidname' } },
+                        { name: 'LEAVE_TYPE', type: 'number' },
+                        { name: 'BALANCE1', type: 'number' }
+                    ],
+                    id: 'ID',
+                    url: '/api/balances'
+                };
+
+                var dataAdapter = new $.jqx.dataAdapter(sourcebalance, {
+                    downloadComplete: function (data) {
+                        sourcebalance.totalrecords = data.TotalRows;
+                    }
+                });
+
+                $("#dataBalance").jqxGrid({
+                    width: 850,
+                    height: 400,
+                    source: dataAdapter,
+                    theme: theme,
+                    pagesize: 15,
+                    sortable: true,
+                    groupable: true,
+                    showfilterrow: true,
+                    filterable: true,
+                    pageable: true,
+                    editable: true,
+                    //serverProcessing: true,
+                    columns: [
+                      { text: 'ID', dataField: 'ID', width: 200, hidden: true },
+                      { text: 'EMPLOYEE', dataField: 'IDV', displayfield: 'IDVNAME', filtertype: 'input', width: 350, editable: false },
+                      { text: 'TYPE', dataField: 'LEAVE_TYPE', displayfield: 'LEAVE_TYPENAME', filtertype: 'checkedlist', width: 400, editable: false },
+                      { text: 'BALANCE', dataField: 'BALANCE1', filtertype: 'input', width: 200 }
+                    ]
+                });
+            }
+
+            var initWidgets = function (tab) {
+                switch (tab) {
+                    case 0:
+                        initEmployee();
+                        break;
+                    case 1:
+                        initBalance();
+                        break;
+
+                    case 2:
+                        initBalance();
+                        break;
+                }
+            }
+
+            $('#dataForm').jqxTabs({ theme: th, width: '100%', height: 530, initTabContent: initWidgets });
+
+            hris.general.bindButton("addEmployee");
+            hris.general.bindButton("promoteEmployee");
+            hris.general.bindButton("mutateEmployee");
+            hris.general.bindButton("demoteEmployee");
+
+            //=====================================================LETTER==================================
+            $("#dropDownButton").jqxDropDownButton({ width: 270, height: 40, theme: 'orange' });
+            $('#jqxTree').on('select', function (event) {
+                var args = event.args;
+                var item = $('#jqxTree').jqxTree('getItem', args.element);
+                var dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + item.label + '</div>';
+                $("#dropDownButton").jqxDropDownButton('setContent', dropDownContent);
+            });
+            $("#jqxTree").jqxTree({ theme: 'ui-redmond', width: 400, height: 220 });
+        });
+    </script>
+}
+
+
+<h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">EMPLOYEE PROFILE</h1>
+<h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Employee Management</h2>
+<hr />
+
+<!--Tabs-->
+<div id='dataForm'>
+    <ul>
+        <li style="margin-left: 30px;">Employee</li>
+        <li>Balance</li>
+    </ul>
+    <div style="overflow: hidden; margin-left: 20px; margin-top:10px;">
+        <!--Header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    <div id="dropDownButton" style="vertical-align:bottom">
+                        <div style="border: none;" id='jqxTree'>
+                            <ul>
+                                <li item-selected='true'>Letter</li>
+                                <li item-expanded='true'>
+                                    Surat Pengantar
+                                    <ul>
+                                        <li>MCU</li>
+                                        <li>Keterangan Kerja</li>
+                                        <li>Pengantar VIsa / Password</li>
+                                        <li>Permohonan KTA</li>
+                                        <li>Pembuatan Buku Tabungan / KPR</li>
+                                        <li>Pencairan Jamsostek</li>
+                                    </ul>
+                                </li>
+                                <li>Surat Peringatan</li>
+                                <li>SK Pengangkatan</li>
+                                <li>Surat Panggilan</li>
+                                <li>Surat Resign</li>
+                            </ul>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-md-2 pull-right">
+                        <input style='margin-bottom: 5px;' value="Add Employee" type="button" id='addEmployee' />
+                    </div>
+                    <div class="col-md-2 pull-right">
+                        <input style='margin-left:10px;  margin-bottom: 5px;' value="Promotion" type="button" id='promoteEmployee' />
+                    </div>
+                    <div class="col-md-2 pull-right">
+                        <input style='margin-left:10px;margin-bottom: 5px;' value="Mutation" type="button" id='mutateEmployee' />
+                    </div>
+                    <div class="col-md-2 pull-right">
+                        <input style='margin-left:10px;margin-bottom: 5px;' value="Demotion" type="button" id='demoteEmployee' />
+                    </div>
+
+                </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    @{ Html.RenderPartial("~/Views/SharedMaintainData/_employeeHRProfile.cshtml"); }
+                </div>
+            </div>
+        </div>             
+    </div>
+    <div style="overflow: hidden; margin-left: 30px; margin-top:30px;">
+        <h2 style="font-size:16px; text-align:left; font-family:Calibri; font-weight: bold;"> <strong>BALANCE MASTER</strong></h2>
+        <div id="dataBalance"></div>
+    </div>
+</div>
+

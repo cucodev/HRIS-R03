@@ -32,6 +32,13 @@ namespace HRIS_R03.Controllers
             return View();
         }
 
+        public ActionResult EmployeeManagement()
+        {
+            return View();
+        }
+
+
+        //Calculate Role to Employee, JobLevel != null
         [HttpPost]
         public ActionResult Calculate()
         {

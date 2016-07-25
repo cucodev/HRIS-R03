@@ -44,10 +44,10 @@ namespace HRIS_R03.Controllers
 
         public ActionResult vProfile()
         {
-
             current();
-           
             return View();
         }
+
+        
     }
 }

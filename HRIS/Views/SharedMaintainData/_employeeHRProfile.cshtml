@@ -1,0 +1,190 @@
+﻿<script type="text/javascript">
+    var initEmployee = function () {
+        var listEmployee = hris.list._getLOV("getName");
+        var theme = th;
+
+        var source = {
+            dataType: "json",
+            dataFields: [
+                { name: 'Address', type: 'string' },
+                { name: 'AddressKab', type: 'number' },
+                { name: 'AddressKec', type: 'number' },
+                { name: 'AddressKel', type: 'number' },
+                { name: 'AddressProv', type: 'number' },
+                { name: 'Birthdate', type: 'string' },
+                { name: 'Birthplace', type: 'string' },
+                { name: 'Marital', type: 'string' },
+                { name: 'NIP', type: 'string' },
+                { name: 'Nationality', type: 'string' },
+                { name: 'Phone1', type: 'string' },
+                { name: 'Phone2', type: 'string' },
+                { name: 'empDepartement', type: 'string' },
+                { name: 'empDivision', type: 'string' },
+                { name: 'empJobLevel', type: 'string' },
+                { name: 'empEdu', type: 'string' },
+                { name: 'empEduMajor', type: 'string' },
+                { name: 'empOfficeLocation', type: 'string' },
+                { name: 'empPosition', type: 'string' },
+                { name: 'rowStatus', type: 'string' },
+                { name: 'ID', type: 'number' },
+                { name: 'IDParentName', value: 'IDParent', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                { name: 'IDParent', type: 'number' },
+                { name: 'UID', type: 'string' },
+                { name: 'Name', type: 'string' },
+                { name: 'NickName', type: 'string' },
+                { name: 'Religion', type: 'string' },
+                { name: 'UID_ABSENCE', type: 'number' },
+                { name: 'empStatus', type: 'string' },
+                { name: 'Gender', type: 'string' }
+            ],
+            addrow: function (rowid, newdata, commit) {
+                console.log("Addrow");
+                console.log("rowdata", rowdata);
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    url: '/api/emp_master',
+                    data: rowdata,
+                    type: "POST",
+                    success: function (data, status, xhr) {
+                        // insert command is executed.
+                        console.log("Add Success");
+                        commit(true);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //alert(errorThrown);
+                        console.log("Error " + errorThrown);
+                        commit(false);
+                    }
+                });
+
+            },
+            deleterow: function (rowid, commit) {
+                commit(true);
+            },
+            updaterow: function (rowid, rowdata, commit) {
+                console.log("Updaterow : " + rowid);
+                console.log("Updaterow : ", rowdata);
+                //rowdata.ID = rowid;
+                var uri = '/api/emp_master/' + rowid;
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    url: uri,
+                    contentType: 'application/json',
+                    data: JSON.stringify(rowdata),
+                    type: 'PUT',
+                    success: function (data, status, xhr) {
+                        // update command is executed.
+                        console.log("Row Updated on ID : " + rowdata.ID);
+                        commit(true);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(rowdata);
+                        console.log('Error Update on ID : ' + rowdata.ID + ' Messages: ' + jqXHR.responseText);
+                        var output = JSON.parse(jqXHR.responseText);
+                        window.open('about:blank').document.body.innerText += output.StackTrace;
+                        //window.open('data:application/json;' + (window.btoa ? 'base64,' + btoa(JSON.stringify(output)) : JSON.stringify(output)));
+                        commit(false);
+                    }
+                });
+                commit(true);
+            },
+            id: 'ID',
+            url: '/api/profile'
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data) {
+                source.totalrecords = data.TotalRows;
+            }
+        });
+
+        $("#dataTable").jqxGrid({
+            width: 950,
+            height: 400,
+            source: dataAdapter,
+            theme: 'ui-start',
+            pagesize: 15,
+            sortable: true,
+            groupable: true,
+            showfilterrow: true,
+            filterable: true,
+            pageable: true,
+            //selectionmode: 'singlerow',
+            //serverProcessing: true,
+            //editable: true,
+            columns: [
+              { text: 'ID', dataField: 'ID', width: 200, hidden: true },
+              {
+                  text: '', dataField: 'select', columntype: 'checkbox', filterable: false, editable: true
+              },
+
+              { text: 'NIP', dataField: 'NIP', filtertype: 'input', width: '7%' },
+              { text: 'Name', dataField: 'Name', filtertype: 'input', width: '30%' },
+              {
+                  text: 'ReportTo', columntype: 'combobox', displayField: 'IDParentName', dataField: 'IDParent', filtertype: 'input', width: '30%',
+                  createeditor: function (row, value, editor) {
+                      editor.jqxComboBox({ source: listEmployee, displayMember: 'Name', valueMember: 'ID' });
+                  }
+              },
+              { text: 'NickName', dataField: 'NickName', filtertype: 'input', width: '15%' },
+              { text: 'Gender', dataField: 'Gender', filtertype: 'checkedlist', width: '7%' },
+              { text: 'Religion', dataField: 'Religion', columntype: 'checkedlist', filtertype: 'checkedlist', width: '12%', hidden: true },
+              { text: 'Status', dataField: 'empStatus', filtertype: 'checkedlist', width: '10%', hidden: true },
+              {
+                  text: 'Edit', datafield: 'Edit', columntype: 'button', filtertype: '', width: '8%', cellsrenderer: function () {
+                      return "Edit";
+                  }, buttonclick: function (row) {
+                      editrow = row;
+                      cleanForm();
+                      // get the clicked row's data and initialize the input fields.
+                      var dataRecord = $("#dataTable").jqxGrid('getrowdata', editrow);
+                      vvid = dataRecord.ID;
+                      console.log('Edit Mode on : ' + dataRecord.ID);
+                      console.log('Edit Mode on : ', dataRecord)
+                      //console.log("dataRecord", dataRecord);
+                      $("#nip").val(dataRecord.NIP);
+                      $("#fullname").val(dataRecord.Name);
+                      $("#nickname").val(dataRecord.NickName);
+                      $("#birthDate").val(dataRecord.Birthdate);
+                      $("#religion").val(dataRecord.Religion);
+                      $("#address").val(dataRecord.Address);
+                      $("#province").jqxDropDownList('val', parseInt(dataRecord.AddressProv));
+                      $("#district").jqxDropDownList('val', parseInt(dataRecord.AddressKab));
+                      $("#districts").jqxDropDownList('val', parseInt(dataRecord.AddressKec));
+                      $("#subDistricts").jqxDropDownList('val', parseInt(dataRecord.AddressKel));
+                      console.log(parseInt(dataRecord.AddressProv) + ':' + parseInt(dataRecord.AddressKab) + ':' + parseInt(dataRecord.AddressKec) + ':' + parseInt(dataRecord.AddressKel));
+                      $("#birthPlace").val(dataRecord.Birthplace);
+                      $("#birthDate").val(dataRecord.Birthdate);
+                      //ID: '',
+                      //Marital:'',
+                      $("#nationality").val(dataRecord.Nationality);
+                      $("#phone1").val(dataRecord.Phone1);
+                      $("#phone2").val(dataRecord.Phone2);
+                      $("#religion").val(dataRecord.Religion);
+                      //UID_ABSENCE: '',
+                      $("#department").val(dataRecord.empDepartement);
+                      $("#division").val(dataRecord.empDivision);
+                      $("#education").val(dataRecord.empEdu);
+                      $("#eduMajor").val(dataRecord.empEduMajor);
+                      //empJobLevel: '',
+                      $("#officeLocation").val(dataRecord.empOfficeLocation);
+                      $("#position").val(dataRecord.empPosition);
+                      $("#joblevel").val(dataRecord.empJobLevel);
+                      $("#status").val(dataRecord.empStatus);
+                      if (dataRecord.Gender == "M") {
+                          $("#maleGender").val(true);
+                      } else if (dataRecord.Gender == "F") {
+                          $("#femaleGender").val(true);
+                      }
+                      // show the popup window.
+                      $("#formWindow").jqxWindow('open');
+                  }
+              }
+            ]
+        });
+        //$("#chartGender").jqxChart(settings);
+    }
+</script>
+<div id="dataTable"></div>
