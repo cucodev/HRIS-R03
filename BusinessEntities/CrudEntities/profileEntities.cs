@@ -110,14 +110,107 @@ namespace BusinessEntities.CrudEntities
         
     }
 
+    public class profileEduEntities
+    {
+        public int ID { get; set; }
+        public Nullable<int> IDV { get; set; }
+        public Nullable<int> eduLevel { get; set; }
+        public string eduMajor { get; set; }
+        public Nullable<System.DateTime> eduGraduate { get; set; }
+        public Nullable<double> eduValue { get; set; }
+        public Nullable<int> eduCountry { get; set; }
+        public Nullable<int> vCreatedBy { get; set; }
+        public Nullable<int> vUpdatedBy { get; set; }
+        public Nullable<int> isDeleted { get; set; }
+        public Nullable<System.DateTime> createTime { get; set; }
+        public Nullable<System.DateTime> updateTime { get; set; }
+    }
+
+    public class profileSkillEntities
+    {
+        public int ID { get; set; }
+        public Nullable<int> IDV { get; set; }
+        public string skillName { get; set; }
+        public Nullable<int> skillLevel { get; set; }
+        public Nullable<int> vCreatedBy { get; set; }
+        public Nullable<int> vUpdatedBy { get; set; }
+        public Nullable<int> isDeleted { get; set; }
+        public Nullable<System.DateTime> createTime { get; set; }
+        public Nullable<System.DateTime> updateTime { get; set; }
+    }
+
+    public class profileLanguageEntities
+    {
+        public int ID { get; set; }
+        public Nullable<int> IDV { get; set; }
+        public string languageName { get; set; }
+        public Nullable<int> spoken { get; set; }
+        public Nullable<int> written { get; set; }
+        public Nullable<int> vCreatedBy { get; set; }
+        public Nullable<int> vUpdatedBy { get; set; }
+        public Nullable<int> isDeleted { get; set; }
+        public Nullable<System.DateTime> createTime { get; set; }
+        public Nullable<System.DateTime> updateTime { get; set; }
+    }
+
+    public class profileTrainingEntities
+    {
+        public int ID { get; set; }
+        public Nullable<int> IDV { get; set; }
+        public string TrainingName { get; set; }
+        public string TrainingSponsor { get; set; }
+        public Nullable<int> Certificate { get; set; }
+        public Nullable<System.DateTime> startDate { get; set; }
+        public Nullable<System.DateTime> endDate { get; set; }
+        public Nullable<int> vCreatedBy { get; set; }
+        public Nullable<int> vUpdatedBy { get; set; }
+        public Nullable<int> isDeleted { get; set; }
+        public Nullable<System.DateTime> createTime { get; set; }
+        public Nullable<System.DateTime> updateTime { get; set; }
+    }
+
+    public class profileCertificationEntities
+    {
+        public int ID { get; set; }
+        public Nullable<int> IDV { get; set; }
+        public string certificationName { get; set; }
+        public Nullable<int> issuedCountry { get; set; }
+        public Nullable<int> issuedCity { get; set; }
+        public Nullable<System.DateTime> issuedDate { get; set; }
+        public Nullable<System.DateTime> issuedExpiredDate { get; set; }
+        public Nullable<int> vCreatedBy { get; set; }
+        public Nullable<int> vUpdatedBy { get; set; }
+        public Nullable<int> isDeleted { get; set; }
+        public Nullable<System.DateTime> createTime { get; set; }
+        public Nullable<System.DateTime> updateTime { get; set; }
+    }
+
     public class profileDependentEntities
     {
+        public int ID { get; set; }
+        public Nullable<int> IDV { get; set; }
+        public Nullable<int> IDVDependent { get; set; }
+        public Nullable<int> relationType { get; set; }
+        public Nullable<int> insuranceCovered { get; set; }
+        public Nullable<int> taxDependent { get; set; }
+        public Nullable<int> vCreatedBy { get; set; }
+        public Nullable<int> vUpdatedBy { get; set; }
+        public Nullable<int> isDeleted { get; set; }
+        public string tempNIP { get; set; }
 
     }
 
     public class profileIdentityEntities
     {
-
+        public int ID { get; set; }
+        public Nullable<int> IDV { get; set; }
+        public Nullable<int> idType { get; set; }
+        public string idNumber { get; set; }
+        public Nullable<int> issuedCountry { get; set; }
+        public Nullable<System.DateTime> expiredDate { get; set; }
+        public Nullable<int> vCreatedBy { get; set; }
+        public Nullable<int> vUpdatedBy { get; set; }
+        public Nullable<int> isDeleted { get; set; }
     }
 
     public class profileJobEntities

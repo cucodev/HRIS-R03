@@ -11,6 +11,10 @@ namespace BusinessServices.Interface
     public interface IList
     {
         //listEntities getListByParentID(int parentID);
+
+
+        IEnumerable<LOV> getEdu();
+
         IEnumerable<LOV> getDivision();
         IEnumerable<LOV> getDepartment();
         IEnumerable<LOV> getPosition();
@@ -23,7 +27,6 @@ namespace BusinessServices.Interface
         IEnumerable<LOV> getReligion();
         IEnumerable<LOV> getID();
         IEnumerable<LOV> getName();
-        IEnumerable<LOV> getEdu();
         IEnumerable<LOV> getValueType();
         IEnumerable<LOV> getPolicyType();
         IEnumerable<LOV> getPolicyRootType();

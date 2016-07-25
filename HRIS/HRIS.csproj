@@ -210,6 +210,14 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminHRController.cs" />
     <Compile Include="Controllers\api\listController.cs" />
+    <Compile Include="Controllers\api\profile\profileCertificationController.cs" />
+    <Compile Include="Controllers\api\profile\profileDependentController.cs" />
+    <Compile Include="Controllers\api\profile\profileEduController.cs" />
+    <Compile Include="Controllers\api\profile\profileIdentityController.cs" />
+    <Compile Include="Controllers\api\profile\profileJobController.cs" />
+    <Compile Include="Controllers\api\profile\profileLanguageController.cs" />
+    <Compile Include="Controllers\api\profile\profileSkillController.cs" />
+    <Compile Include="Controllers\api\profile\profileTrainingController.cs" />
     <Compile Include="Controllers\api\roleBasedMatrixController.cs" />
     <Compile Include="Controllers\api\roleController.cs" />
     <Compile Include="Controllers\api\profileController.cs" />
@@ -542,6 +550,7 @@
     <Content Include="Views\SharedMaintainData\_roleBasedMatrix.cshtml" />
     <Content Include="Views\AdminHR\EmployeeManagement.cshtml" />
     <Content Include="Views\SharedMaintainData\_employeeHRProfile.cshtml" />
+    <Content Include="Views\SharedMaintainData\_employeeRoleMatrix.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

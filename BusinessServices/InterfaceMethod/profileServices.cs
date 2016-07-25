@@ -569,39 +569,720 @@ namespace BusinessServices.InterfaceMethod
         }
     }
 
-    public class profileJobServices : IprofileJobServices
+    public class profileEduServices : IprofileEdu
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly UnitOfWork _u;
+        private int isDelete = 0; // 0 means row is active, not in deleted status
+
+
+        public profileEduServices()
+        {
+            _u = new UnitOfWork();
+        }
+
+        public IEnumerable<profileEduEntities> getEduByIDV(int profileIDV)
+        {
+            List<profileEduEntities> ms = new List<profileEduEntities>();
+            var empEdu = _u.personEduRepository.GetMany(b => b.IDV == profileIDV &&  b.isDeleted == isDelete);
+            if (empEdu.Any())
+            {
+                foreach ( personEdu px in empEdu)
+                {
+                    profileEduEntities t = new profileEduEntities();
+                    t.ID = px.ID;
+                    t.IDV = px.IDV;
+                    t.eduLevel = px.eduLevel;
+                    t.eduMajor = px.eduMajor;
+                    t.eduValue = px.eduValue;
+                    t.eduGraduate = px.eduGraduate;
+                    t.eduCountry = px.eduCountry;
+                    t.createTime = px.createTime;
+                    t.updateTime = px.updateTime;
+                    t.vCreatedBy = px.vCreatedBy;
+                    t.vUpdatedBy = px.vUpdatedBy;
+                    ms.Add(t); 
+
+                }
+            }
+
+            return ms.AsEnumerable();
+        }
+
+        public int addEdu(profileEduEntities  px)
+        {
+            using (var scope = new TransactionScope())
+            {
+                var t = new personEdu
+                {
+                    //ID = px.ID,
+                    IDV = px.IDV,
+                    eduLevel = px.eduLevel,
+                    eduMajor = px.eduMajor,
+                    eduValue = px.eduValue,
+                    eduGraduate = px.eduGraduate,
+                    eduCountry = px.eduCountry,
+                    vCreatedBy = px.vCreatedBy,
+                    createTime = DateTime.Now,
+                    isDeleted = 0
+                };
+                _u.personEduRepository.Insert(t);
+                _u.Save();
+                scope.Complete();
+                return px.ID;
+            }
+
+        }
+
+        public bool UpdateEdu(int profileIDV, profileEduEntities p)
+        {
+            var success = false;
+            if (p != null)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var px = _u.personEduRepository.GetByID(profileIDV);
+                    if (px != null)
+                    {
+                        addEdu(p);
+                        px.isDeleted = 1;
+                        px.vUpdatedBy = p.vUpdatedBy;
+                        px.updateTime = DateTime.Now;
+
+                        _u.personEduRepository.Update(px);
+                        _u.Save();
+                        scope.Complete();
+                        success = true;
+                    }
+                }
+            }
+            return success;
+            //throw new NotImplementedException();
+        }
+
+        public bool DeleteEdu(int profileIDV, profileEduEntities p)
+        {
+            return UpdateEdu(profileIDV, p);
+        }
+    }
+    public class profileSkillServices : IprofileSkill
+    {
+        private readonly UnitOfWork _u;
+        private int isDelete = 0; // 0 means row is active, not in deleted status
+
+        public profileSkillServices()
+        {
+            _u = new UnitOfWork();
+        }
+
+        public IEnumerable<profileSkillEntities> getSkillByIDV(int profileIDV)
+        {
+            List<profileSkillEntities> ms = new List<profileSkillEntities>();
+            var emp = _u.personSkillRepository.GetMany(b => b.IDV == profileIDV && b.isDeleted == isDelete);
+            if (emp.Any())
+            {
+                foreach (personSkill px in emp)
+                {
+                    profileSkillEntities t = new profileSkillEntities();
+                    t.ID = px.ID;
+                    t.IDV = px.IDV;
+                    t.skillLevel = px.skillLevel;
+                    t.skillName = px.skillName;
+                    t.vCreatedBy = px.vCreatedBy;
+                    t.createTime = px.createTime;
+                    t.updateTime = px.updateTime;
+                    t.vUpdatedBy = px.vUpdatedBy;
+                    ms.Add(t);
+                }
+            }
+
+            return ms.AsEnumerable();
+        }
+
+        public int addSkill(profileSkillEntities p)
+        {
+            using (var scope = new TransactionScope())
+            {
+                var t = new personSkill
+                {
+                    //ID = px.ID,
+                    IDV = p.IDV,
+                    skillLevel = p.skillLevel,
+                    skillName = p.skillName,
+                    vCreatedBy = p.vCreatedBy,
+                    createTime = DateTime.Now,
+                    isDeleted = 0
+                };
+                _u.personSkillRepository.Insert(t);
+                _u.Save();
+                scope.Complete();
+                return p.ID;
+            }
+        }
+
+        public bool UpdateSkill(int ID, profileSkillEntities p)
+        {
+            var success = false;
+            if (p != null)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var px = _u.personSkillRepository.GetByID(ID);
+                    if (px != null)
+                    {
+                        addSkill(p);
+                        px.isDeleted = 1;
+                        px.updateTime = DateTime.Now;
+                        px.vUpdatedBy = p.vUpdatedBy;
+                        _u.personSkillRepository.Update(px);
+                        _u.Save();
+                        scope.Complete();
+                        success = true;
+                        
+                    }
+                }
+            }
+            return success;
+        }
+
+        public bool DeleteSkill(int ID, profileSkillEntities p)
+        {
+            return UpdateSkill(ID, p);
+        }
+    }
+    public class profileLanguageServices : IprofileLanguage
+    {
+        private readonly UnitOfWork _u;
+        private int isDelete = 0; // 0 means row is active, not in deleted status
+
+        public profileLanguageServices()
+        {
+            _u = new UnitOfWork();
+        }
+
+        public IEnumerable<profileLanguageEntities> getLanguageByIDV(int profileIDV)
+        {
+            List<profileLanguageEntities> ms = new List<profileLanguageEntities>();
+            var emp = _u.personLanguageRepository.GetMany(b => b.IDV == profileIDV && b.isDeleted == isDelete);
+            if (emp.Any())
+            {
+                foreach (personLanguage px in emp)
+                {
+                    profileLanguageEntities t = new profileLanguageEntities();
+                    t.ID = px.ID;
+                    t.IDV = px.IDV;
+                    t.languageName = px.languageName;
+                    t.spoken = px.spoken;
+                    t.written = px.written;
+                    t.vCreatedBy = px.vCreatedBy;
+                    t.createTime = px.createTime;
+                    t.updateTime = px.updateTime;
+                    t.vUpdatedBy = px.vUpdatedBy;
+                    ms.Add(t);
+                }
+            }
+
+            return ms.AsEnumerable();
+        }
+
+        public int addLanguage(profileLanguageEntities p)
+        {
+            using (var scope = new TransactionScope())
+            {
+                var t = new personLanguage
+                {
+                    //ID = px.ID,
+                    IDV = p.IDV,
+                    languageName = p.languageName,
+                    spoken = p.spoken,
+                    written = p.written,
+                    vCreatedBy = p.vCreatedBy,
+                    createTime = DateTime.Now,
+                    isDeleted = 0
+                };
+                _u.personLanguageRepository.Insert(t);
+                _u.Save();
+                scope.Complete();
+                return p.ID;
+            }
+        }
+
+        public bool UpdateLanguage(int ID, profileLanguageEntities p)
+        {
+            var success = false;
+            if (p != null)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var px = _u.personLanguageRepository.GetByID(ID);
+                    if (px != null)
+                    {
+                        addLanguage(p);
+                        px.isDeleted = 1;
+                        px.updateTime = DateTime.Now;
+                        px.vUpdatedBy = p.vUpdatedBy;
+                        _u.personLanguageRepository.Update(px);
+                        _u.Save();
+                        scope.Complete();
+                        success = true;
+
+                    }
+                }
+            }
+            return success;
+        }
+
+        public bool DeleteLanguage(int ID, profileLanguageEntities p)
+        {
+            return UpdateLanguage(ID, p);
+        }
+    }
+    public class profileTrainingServices : IprofileTraining
+    {
+        private readonly UnitOfWork _u;
+        private int isDelete = 0; // 0 means row is active, not in deleted status
+
+        public profileTrainingServices()
+        {
+            _u = new UnitOfWork();
+        }
+
+        public IEnumerable<profileTrainingEntities> getTrainingByIDV(int profileIDV)
+        {
+            List<profileTrainingEntities> ms = new List<profileTrainingEntities>();
+            var emp = _u.personTrainingRepository.GetMany(b => b.IDV == profileIDV && b.isDeleted == isDelete);
+            if (emp.Any())
+            {
+                foreach (personTraining px in emp)
+                {
+                    profileTrainingEntities t = new profileTrainingEntities();
+                    t.ID = px.ID;
+                    t.IDV = px.IDV;
+                    t.TrainingName = px.TrainingName;
+                    t.TrainingSponsor = px.TrainingSponsor;
+                    t.startDate = px.startDate;
+                    t.endDate = px.endDate;
+                    t.vCreatedBy = px.vCreatedBy;
+                    t.createTime = px.createTime;
+                    t.updateTime = px.updateTime;
+                    t.vUpdatedBy = px.vUpdatedBy;
+                    ms.Add(t);
+                }
+            }
+
+            return ms.AsEnumerable();
+        }
+
+        public int addTraining(profileTrainingEntities p)
+        {
+            using (var scope = new TransactionScope())
+            {
+                var t = new personTraining
+                {
+                    //ID = px.ID,
+                    IDV = p.IDV,
+                    TrainingName = p.TrainingName,
+                    TrainingSponsor = p.TrainingSponsor,
+                    startDate = p.startDate,
+                    endDate = p.endDate,
+                    vCreatedBy = p.vCreatedBy,
+                    createTime = DateTime.Now,
+                    isDeleted = 0
+                };
+                _u.personTrainingRepository.Insert(t);
+                _u.Save();
+                scope.Complete();
+                return p.ID;
+            }
+        }
+
+        public bool UpdateTraining(int ID, profileTrainingEntities p)
+        {
+            var success = false;
+            if (p != null)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var px = _u.personTrainingRepository.GetByID(ID);
+                    if (px != null)
+                    {
+                        addTraining(p);
+                        px.isDeleted = 1;
+                        px.updateTime = DateTime.Now;
+                        px.vUpdatedBy = p.vUpdatedBy;
+                        _u.personTrainingRepository.Update(px);
+                        _u.Save();
+                        scope.Complete();
+                        success = true;
+
+                    }
+                }
+            }
+            return success;
+        }
+
+        public bool DeleteTraining(int ID, profileTrainingEntities p)
+        {
+            return UpdateTraining(ID, p);
+        }
+    }
+    public class profileCertificationServices : IprofileCertification
+    {
+        private readonly UnitOfWork _u;
+        private int isDelete = 0; // 0 means row is active, not in deleted status
+
+        public profileCertificationServices()
+        {
+            _u = new UnitOfWork();
+        }
+
+        public IEnumerable<profileCertificationEntities> getCertificationByIDV(int profileIDV)
+        {
+            List<profileCertificationEntities> ms = new List<profileCertificationEntities>();
+            var emp = _u.personCertificationRepository.GetMany(b => b.IDV == profileIDV && b.isDeleted == isDelete);
+            if (emp.Any())
+            {
+                foreach (personCertification px in emp)
+                {
+                    profileCertificationEntities t = new profileCertificationEntities();
+                    t.ID = px.ID;
+                    t.IDV = px.IDV;
+                    t.certificationName = px.certificationName;
+                    t.issuedCity = px.issuedCity;
+                    t.issuedCountry = px.issuedCountry;
+                    t.issuedDate = px.issuedDate;
+                    t.issuedExpiredDate = px.issuedExpiredDate;
+                    t.vCreatedBy = px.vCreatedBy;
+                    t.createTime = px.createTime;
+                    t.updateTime = px.updateTime;
+                    t.vUpdatedBy = px.vUpdatedBy;
+                    ms.Add(t);
+                }
+            }
+
+            return ms.AsEnumerable();
+        }
+
+        public int addCertification(profileCertificationEntities p)
+        {
+            using (var scope = new TransactionScope())
+            {
+                var t = new personCertification
+                {
+                    //ID = px.ID,
+                    IDV = p.IDV,
+                    certificationName = p.certificationName,
+                    issuedCity = p.issuedCity,
+                    issuedCountry = p.issuedCountry,
+                    issuedDate = p.issuedDate,
+                    issuedExpiredDate = p.issuedExpiredDate,
+                    vCreatedBy = p.vCreatedBy,
+                    createTime = DateTime.Now,
+                    isDeleted = 0
+                };
+                _u.personCertificationRepository.Insert(t);
+                _u.Save();
+                scope.Complete();
+                return p.ID;
+            }
+        }
+
+        public bool UpdateCertification(int ID, profileCertificationEntities p)
+        {
+            var success = false;
+            if (p != null)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var px = _u.personCertificationRepository.GetByID(ID);
+                    if (px != null)
+                    {
+                        addCertification(p);
+                        px.isDeleted = 1;
+                        px.updateTime = DateTime.Now;
+                        px.vUpdatedBy = p.vUpdatedBy;
+                        _u.personCertificationRepository.Update(px);
+                        _u.Save();
+                        scope.Complete();
+                        success = true;
+                    }
+                }
+            }
+            return success;
+        }
+
+        public bool DeleteCertification(int ID, profileCertificationEntities p)
+        {
+            return UpdateCertification(ID, p);
+        }
+    }
+    public class profileIdentityServices : IprofileIdentity
+    {
+        private readonly UnitOfWork _u;
+        private int isDelete = 0; // 0 means row is active, not in deleted status
+
+        public profileIdentityServices()
+        {
+            _u = new UnitOfWork();
+        }
+
+        public IEnumerable<profileIdentityEntities> getIdentityByIDV(int profileIDV)
+        {
+            List<profileIdentityEntities> ms = new List<profileIdentityEntities>();
+            var emp = _u.personIdentityRepository.GetMany(b => b.IDV == profileIDV && b.isDeleted == isDelete);
+            if (emp.Any())
+            {
+                foreach (personIdentity px in emp)
+                {
+                    profileIdentityEntities t = new profileIdentityEntities();
+                    t.ID = px.ID;
+                    t.IDV = px.IDV;
+                    t.idNumber = px.idNumber;
+                    t.idType = px.idType;
+                    t.issuedCountry = px.issuedCountry;
+                    t.vCreatedBy = px.vCreatedBy;
+                    t.vUpdatedBy = px.vUpdatedBy;
+                    ms.Add(t);
+                }
+            }
+
+            return ms.AsEnumerable();
+        }
+
+        public int addIdentity(profileIdentityEntities p)
+        {
+            using (var scope = new TransactionScope())
+            {
+                var t = new personIdentity
+                {
+                    //ID = px.ID,
+                    IDV = p.IDV,
+                    idNumber = p.idNumber,
+                    idType = p.idType,
+                    issuedCountry = p.issuedCountry,
+                    vCreatedBy = p.vCreatedBy,
+                    isDeleted = 0
+                };
+                _u.personIdentityRepository.Insert(t);
+                _u.Save();
+                scope.Complete();
+                return p.ID;
+            }
+        }
+
+        public bool UpdateIdentity(int ID, profileIdentityEntities p)
+        {
+            var success = false;
+            if (p != null)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var px = _u.personIdentityRepository.GetByID(ID);
+                    if (px != null)
+                    {
+                        addIdentity(p);
+                        px.isDeleted = 1;
+                        px.vUpdatedBy = p.vUpdatedBy;
+                        _u.personIdentityRepository.Update(px);
+                        _u.Save();
+                        scope.Complete();
+                        success = true;
+                    }
+                }
+            }
+            return success;
+        }
+
+        public bool DeleteIdentity(int ID, profileIdentityEntities p)
+        {
+            return UpdateIdentity(ID, p);
+        }
+    }
+    public class profileDependentServices : IprofileDependent
+    {
+        private readonly UnitOfWork _u;
+        private int isDelete = 0; // 0 means row is active, not in deleted status
+       
+        public profileDependentServices()
+        {
+            _u = new UnitOfWork();
+        }
+
+        public IEnumerable<profileDependentEntities> getDependentByIDV(int parentIDV)
+        {
+            List<profileDependentEntities> ms = new List<profileDependentEntities>();
+            var emp = _u.personDependentRepository.GetMany(b => b.IDVDependent == parentIDV && b.isDeleted == isDelete);
+            if (emp.Any())
+            {
+                foreach (personDependent px in emp)
+                {
+                    profileDependentEntities t = new profileDependentEntities();
+                    t.ID = px.ID;
+                    t.IDV = px.IDV;
+                    t.IDVDependent = px.IDVDependent;
+                    t.relationType = px.relationType;
+                    t.insuranceCovered = px.insuranceCovered;
+                    t.taxDependent = px.taxDependent;
+                    t.vCreatedBy = px.vCreatedBy;
+                    t.vUpdatedBy = px.vUpdatedBy;
+                    ms.Add(t);
+                }
+            }
+
+            return ms.AsEnumerable();
+        }
+
+        public int addDependent(profileDependentEntities p)
+        {
+            using (var scope = new TransactionScope())
+            {
+                var t = new personDependent
+                {
+                    //ID = px.ID,
+                    IDV = p.IDV,
+                    IDVDependent = p.IDVDependent,
+                    relationType = p.relationType,
+                    insuranceCovered = p.insuranceCovered,
+                    taxDependent = p.taxDependent,
+                    vCreatedBy = p.vCreatedBy,
+                    isDeleted = 0
+                };
+                _u.personDependentRepository.Insert(t);
+                _u.Save();
+                scope.Complete();
+                return p.ID;
+            }
+        }
+
+        public bool UpdateDependent(int ID, profileDependentEntities p)
+        {
+            var success = false;
+            if (p != null)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var px = _u.personDependentRepository.GetByID(ID);
+                    if (px != null)
+                    {
+                        addDependent(p);
+                        px.isDeleted = 1;
+                        px.vUpdatedBy = p.vUpdatedBy;
+                        _u.personDependentRepository.Update(px);
+                        _u.Save();
+                        scope.Complete();
+                        success = true;
+                    }
+                }
+            }
+            return success;
+        }
+
+        public bool DeleteDependent(int ID, profileDependentEntities p)
+        {
+            return UpdateDependent(ID, p);
+        }
+    }
+    public class profileJobServices : IprofileJob
+    {
+        private readonly UnitOfWork _u;
         private int isDelete = 0;
 
         public profileJobServices()
         {
-            _unitOfWork = new UnitOfWork();
+            _u = new UnitOfWork();
         }
 
-        public int addJob(int parentIDV, profileJobEntities personJobEntity)
+        public int addJob(profileJobEntities p)
         {
-            throw new NotImplementedException();
+            using (var scope = new TransactionScope())
+            {
+                var t = new personJob
+                {
+                    //ID = px.ID,
+                    IDV = p.IDV.HasValue ? p.IDV.Value : 0,
+                    JobDepartement = p.JobDepartement,
+                    JobDivision = p.JobDivision,
+                    JobLevel = p.JobLevel,
+                    JobLocation = p.JobLocation,
+                    jobName = p.jobName,
+                    JobPosition = p.JobPosition,
+                    startDate = p.startDate,
+                    endDate = p.endDate,
+                    Note = p.Note,
+                    parentIDV = p.parentIDV,
+                    updateTime = p.updateTime,
+                    createTime = p.createTime,
+                    vCreatedBy = p.vCreatedBy,
+                    vUpdatedBy = p.vUpdatedBy,
+                    isDeleted = 0
+                };
+                _u.personJobRepository.Insert(t);
+                _u.Save();
+                scope.Complete();
+                return p.ID;
+            }
+        }
+        
+        public bool UpdateJob(int ID, profileJobEntities p)
+        {
+            var success = false;
+            if (p != null)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var px = _u.personJobRepository.GetByID(ID);
+                    if (px != null)
+                    {
+                        addJob(p);
+                        px.isDeleted = 1;
+                        px.vUpdatedBy = p.vUpdatedBy;
+                        _u.personJobRepository.Update(px);
+                        _u.Save();
+                        scope.Complete();
+                        success = true;
+                    }
+                }
+            }
+            return success;
         }
 
-        public profileJobEntities getJobByIDV(int IDV)
+        public IEnumerable<profileJobEntities> getJobByIDV(int IDV)
         {
-            profileJobEntities ms = new profileJobEntities();
-            var x = _unitOfWork.personJobRepository.GetSingle(b => b.IDV == IDV && b.isDeleted == isDelete);
-            ms.ID = x.ID;
-            ms.IDV = x.IDV;
-            ms.parentIDV = x.parentIDV;
-            ms.JobLevel = x.JobLevel;
-            ms.jobName = x.jobName;
-            ms.JobPosition = x.JobPosition;
-            ms.JobDepartement = x.JobDepartement;
-            ms.JobDivision = x.JobDivision;    
-            return ms;
-        }
+            List<profileJobEntities> ms = new List<profileJobEntities>();
+            var emp = _u.personJobRepository.GetMany(b => b.IDV == IDV && b.isDeleted == isDelete);
+            if (emp.Any())
+            {
+                foreach (personJob px in emp)
+                {
+                    profileJobEntities t = new profileJobEntities();
+                    t.ID = px.ID;
+                    t.IDV = px.IDV;
+                    t.JobDepartement = px.JobDepartement;
+                    t.JobDivision = px.JobDivision;
+                    t.JobLevel = px.JobLevel;
+                    t.JobLocation = px.JobLocation;
+                    t.jobName = px.jobName;
+                    t.JobPosition = px.JobPosition;
+                    t.startDate = px.startDate;
+                    t.endDate = px.endDate;
+                    t.Note = px.Note;
+                    t.parentIDV = px.parentIDV;
+                    t.updateTime = px.updateTime;
+                    t.createTime = px.createTime;
+                    t.vCreatedBy = px.vCreatedBy;
+                    t.vUpdatedBy = px.vUpdatedBy;
+                    ms.Add(t);
+                }
+            }
 
-        public bool UpdateJob(int parentIDV, profileJobEntities personJobEntity)
+            return ms.AsEnumerable();
+        }
+        
+        public bool DeleteJob(int ID, profileJobEntities p)
         {
-            throw new NotImplementedException();
+            return UpdateJob(ID, p);
         }
     }
+
+
+
 }

@@ -33,7 +33,10 @@ namespace BusinessServices.InterfaceMethod
 
             foreach (employee e in EmpID)
             {
+                //Service Year Calculator
                 DT.updateServiceYear(e.IDV);
+
+                //RoleMatrix by JobLevel 
                 DT.updateServiceType(e.IDV);
             }
 
