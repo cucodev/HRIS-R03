@@ -27,6 +27,8 @@ namespace BusinessServices.Interface
         IEnumerable<LOV> getReligion();
         IEnumerable<LOV> getID();
         IEnumerable<LOV> getName();
+        IEnumerable<LOV> getNameSuperior();
+        IEnumerable<LOV> getNameEmployee();
         IEnumerable<LOV> getValueType();
         IEnumerable<LOV> getPolicyType();
         IEnumerable<LOV> getPolicyRootType();

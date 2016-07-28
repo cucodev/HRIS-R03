@@ -48,6 +48,11 @@ namespace HRIS_R03.Controllers
             return View();
         }
 
+        public ActionResult vMap()
+        {
+            current();
+            return View();
+        }
         
     }
 }

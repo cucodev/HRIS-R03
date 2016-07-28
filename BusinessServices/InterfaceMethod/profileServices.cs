@@ -163,10 +163,10 @@ namespace BusinessServices.InterfaceMethod
 
                     //personDependant
                     var vpersonDependent = _unitOfWork.personDependentRepository.GetMany(b => b.IDVDependent == n.IDV && b.isDeleted == isDelete);
-                    List<personDependentEntities> PI = new List<personDependentEntities>();
+                    List<profileDependentEntities> PI = new List<profileDependentEntities>();
                     foreach (personDependent nnn in vpersonDependent)
                     {
-                        personDependentEntities pIX = new personDependentEntities();
+                        profileDependentEntities pIX = new profileDependentEntities();
                         pIX.IDV = nnn.IDV;
                         pIX.relationType = nnn.relationType;
                         pIX.insuranceCovered = nnn.insuranceCovered;
@@ -177,10 +177,10 @@ namespace BusinessServices.InterfaceMethod
 
                     //personIdentity
                     var vpersonIdentity = _unitOfWork.personIdentityRepository.GetMany(b => b.IDV == n.IDV && b.isDeleted == isDelete);
-                    List<personIdentityEntities> pI = new List<personIdentityEntities>();
+                    List<profileIdentityEntities> pI = new List<profileIdentityEntities>();
                     foreach (personIdentity nnn in vpersonIdentity)
                     {
-                        personIdentityEntities pIX = new personIdentityEntities();
+                        profileIdentityEntities pIX = new profileIdentityEntities();
                         pIX.ID = nnn.ID;
                         pIX.IDV = nnn.IDV;
                         pIX.idType = nnn.idType;
@@ -235,10 +235,10 @@ namespace BusinessServices.InterfaceMethod
 
                     }
 
-                    List<personIdentityEntities> pI = new List<personIdentityEntities>();              
+                    List<profileIdentityEntities> pI = new List<profileIdentityEntities>();              
                     foreach (personIdentity nnn in vpersonIdentity)
                     {
-                        personIdentityEntities pIX = new personIdentityEntities();
+                        profileIdentityEntities pIX = new profileIdentityEntities();
                         pIX.ID = nnn.ID;
                         pIX.IDV = nnn.IDV;
                         pIX.idType = nnn.idType;
@@ -414,10 +414,10 @@ namespace BusinessServices.InterfaceMethod
 
                     //personDependant
                     var vpersonDependent = _unitOfWork.personDependentRepository.GetMany(b => b.IDVDependent == n.IDV && b.isDeleted == isDelete);
-                    List<personDependentEntities> PI = new List<personDependentEntities>();
+                    List<profileDependentEntities> PI = new List<profileDependentEntities>();
                     foreach (personDependent nnn in vpersonDependent)
                     {
-                        personDependentEntities pIX = new personDependentEntities();
+                        profileDependentEntities pIX = new profileDependentEntities();
                         pIX.IDV = nnn.IDV;
                         pIX.relationType = nnn.relationType;
                         pIX.insuranceCovered = nnn.insuranceCovered;
@@ -428,10 +428,10 @@ namespace BusinessServices.InterfaceMethod
 
                     //personIdentity
                     var vpersonIdentity = _unitOfWork.personIdentityRepository.GetMany(b => b.IDV == n.IDV && b.isDeleted == isDelete);
-                    List<personIdentityEntities> pI = new List<personIdentityEntities>();
+                    List<profileIdentityEntities> pI = new List<profileIdentityEntities>();
                     foreach (personIdentity nnn in vpersonIdentity)
                     {
-                        personIdentityEntities pIX = new personIdentityEntities();
+                        profileIdentityEntities pIX = new profileIdentityEntities();
                         pIX.ID = nnn.ID;
                         pIX.IDV = nnn.IDV;
                         pIX.idType = nnn.idType;

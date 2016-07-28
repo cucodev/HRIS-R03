@@ -57,5 +57,7 @@ namespace DataModel
         public virtual DbSet<roleBasedMatrix> roleBasedMatrices { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<dataLeave> dataLeaves { get; set; }
+        public virtual DbSet<dataMail> dataMails { get; set; }
     }
 }

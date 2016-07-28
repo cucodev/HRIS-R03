@@ -69,6 +69,16 @@ namespace HRIS.Controllers.api
             return false;
         }
 
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.ActionName("updateRoleBasedMatrixCategory")]
+        [System.Web.Http.Route("api/role/updateRoleBasedMatrixCategory/{ID}")]
+        public bool updateRoleBasedMatrixCategory(int ID, roleBasedMatrixEntities px)
+        {
+            if (ID > 0)
+                return _pServices.UpdateMatrixCategory(ID, px);
+            return false;
+        }
+
         [HttpDelete]
         [ActionName("deleteRoleBasedMatrix")]
         [Route("api/role/deleteRoleBasedMatrix/{ID}")]

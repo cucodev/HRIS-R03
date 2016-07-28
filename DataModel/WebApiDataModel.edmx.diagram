@@ -67,6 +67,8 @@
         <AssociationConnector Association="HRISModel.IDV_user" ManuallyRouted="false" />
         <AssociationConnector Association="HRISModel.FK_Tokens_User" ManuallyRouted="false" />
         <AssociationConnector Association="HRISModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="HRISModel.dataLeave" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="HRISModel.dataMail" Width="1.5" PointX="2.75" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

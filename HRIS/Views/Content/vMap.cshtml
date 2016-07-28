@@ -1,0 +1,203 @@
+﻿
+@{
+    ViewBag.Title = "vMap";
+    Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
+}
+<link rel="stylesheet" href="@Url.Content("~/Content/jquery-ui/jquery.ui.all.css")">
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyDQqfgB9g_lkTs_FgAaEWerJbETzjHslCM""></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ui.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ui.addresspicker.js")"></script>
+
+<style>
+code {
+  background-color: ghostWhite;
+  border: 1px solid #DEDEDE;
+  color: #444;
+  padding: 0 3px;
+}
+
+label {
+  width: 100px;
+  float:left;
+  text-align:right;
+  margin:4px 10px 0 0;
+}
+
+label#geo_label
+{
+  width: auto;
+  float: none;
+}
+
+p {
+  float:left;
+  width: 100%;
+}
+.gist {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.ui-autocomplete-input, .input input {
+  border: none; 
+  font-size: 14px;
+  width: 300px;
+  height: 24px;
+  margin-bottom: 5px;
+  padding-top: 2px;
+}
+
+textarea
+{
+  border-color: lightgray; 
+  font-size: 14px;
+  width: 600px;
+  margin-bottom: 5px;
+  padding-top: 2px;
+}
+
+.ui-autocomplete-input {
+  border: 1px solid #DDD !important;
+  padding-top: 0px !important;
+}
+
+.map-wrapper
+{
+  float:left;  
+  margin: 0 10px 0 10px;
+}
+
+#map {
+  border: 1px solid #DDD; 
+  width:600px;
+  height: 500px;
+  margin: 10px 0 10px 0;
+  -webkit-box-shadow: #AAA 0px 0px 15px;
+}
+
+#legend {
+  font-size: 12px;
+  font-style: italic;
+}
+
+.ui-menu .ui-menu-item a {
+  font-size: 12px;
+}
+
+.input {
+  float:left;  
+}
+
+.input-positioned
+{
+  padding: 35px 0 0 0;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}</style>
+
+@section scripts
+{
+    <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            hris.general.bindButton('Update');
+        })
+    
+
+      $(function() {
+        var addresspicker = $( "#addresspicker" ).addresspicker({
+          componentsFilter: 'country:ID'
+        });
+        var addresspickerMap = $( "#addresspicker_map" ).addresspicker({
+          regionBias: "id",
+          language: "id",
+          updateCallback: showCallback,
+          mapOptions: {
+            zoom: 4,
+            center: new google.maps.LatLng(46, 2),
+            scrollwheel: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          },
+          elements: {
+            map:      "#map",
+            lat:      "#lat",
+            lng:      "#lng",
+            street_number: '#street_number',
+            route: '#route',
+            locality: '#locality',
+            sublocality: '#sublocality',
+            administrative_area_level_3: '#administrative_area_level_3',
+            administrative_area_level_2: '#administrative_area_level_2',
+            administrative_area_level_1: '#administrative_area_level_1',
+            country:  '#country',
+            postal_code: '#postal_code',
+            type:    '#type'
+          }
+        });
+
+        var gmarker = addresspickerMap.addresspicker( "marker");
+        gmarker.setVisible(true);
+        addresspickerMap.addresspicker( "updatePosition");
+
+        $('#reverseGeocode').change(function(){
+          $("#addresspicker_map").addresspicker("option", "reverseGeocode", ($(this).val() === 'true'));
+        });
+
+        function showCallback(geocodeResult, parsedGeocodeResult) {
+            console.log(parsedGeocodeResult);
+          //$('#callback_result').text(JSON.stringify(parsedGeocodeResult, null, 4));
+        }
+        // Update zoom field
+        var map = $("#addresspicker_map").addresspicker("map");
+        google.maps.event.addListener(map, 'idle', function(){
+          $('#zoom').val(map.getZoom());
+        });
+
+      });
+    </script>
+}
+
+
+<div class="row">
+    <h1 style="margin-bottom:1px; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:0;">Maintain Your Location</h1>
+    <h2 style="margin-bottom:15px; border-bottom: solid 1px #d7e9f3; padding-left:30px; padding-top:0;  margin-top:0; font-size:14px; font-family:Calibri;">Home Preference</h2>
+</div>
+
+<div class='clearfix'>
+    <div class='input input-positioned'>
+        <label>Address : </label> <input id="addresspicker_map" />   <br />
+        <label>Locality: </label> <input id="locality" disabled= disabled> <br />
+        <label>SubLocality: </label> <input id="sublocality" disabled= disabled> <br />
+        <label>Borough: </label> <input id="administrative_area_level_3" disabled= disabled> <br />
+        <label>District: </label> <input id="administrative_area_level_2" disabled= disabled> <br />
+        <label>State/Province: </label> <input id="administrative_area_level_1" disabled= disabled> <br />
+        <label>Country:  </label> <input id="country" disabled= disabled> <br />
+        <label>Postal Code: </label> <input id="postal_code" disabled= disabled> <br />
+        <label>Lat:      </label> <input id="lat" disabled= disabled> <br />
+        <label>Lng:      </label> <input id="lng" disabled= disabled> <br />
+        <label>Zoom:     </label> <input id="zoom" disabled= disabled> <br />
+        <label>Type:     </label> <input id="type" disabled= disabled /> <br />
+        <label></label><input type="button" id="Update" value="Save Address" />
+    </div>
+
+    <div class='map-wrapper'>
+        <label id="geo_label" for="reverseGeocode">Reverse Geocode after Marker Drag</label>
+        <select id="reverseGeocode">
+            <option value="false" selected>No</option>
+            <option value="true">Yes</option>
+        </select><br />
+        <div id="map"></div>
+        <div id="legend">You can drag and drop the marker to the correct location</div>
+    </div>
+</div>

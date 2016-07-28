@@ -92,6 +92,40 @@
           <Property Name="catCode" Type="nchar" MaxLength="20" Nullable="false" />
           <Property Name="catName" Type="nchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="dataLeave">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="txID" Type="int" />
+          <Property Name="policyID" Type="int" />
+          <Property Name="startDate" Type="date" />
+          <Property Name="endDate" Type="date" />
+          <Property Name="dayDuration" Type="int" />
+          <Property Name="noteHeader" Type="varchar" MaxLength="200" />
+          <Property Name="noteContent" Type="varchar(max)" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdateBy" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="dataMail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="txID" Type="int" />
+          <Property Name="emailStatus" Type="int" />
+          <Property Name="emailRequest" Type="int" />
+          <Property Name="emailApproval" Type="int" />
+          <Property Name="emailSendingCount" Type="int" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdatedBy" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="employee">
           <Key>
             <PropertyRef Name="ID" />
@@ -543,18 +577,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_employeeRoleBased_person">
-          <End Role="person" Type="Self.person" Multiplicity="1" />
-          <End Role="employeeRoleBased" Type="Self.employeeRoleBased" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="person">
-              <PropertyRef Name="IDV" />
-            </Principal>
-            <Dependent Role="employeeRoleBased">
-              <PropertyRef Name="IDV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_locationParent_categoryParent">
           <End Role="category" Type="Self.category" Multiplicity="0..1" />
           <End Role="location" Type="Self.location" Multiplicity="*" />
@@ -865,6 +887,8 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="categoryParent" EntityType="Self.categoryParent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dataLeave" EntityType="Self.dataLeave" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dataMail" EntityType="Self.dataMail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="employeeRoleBased" EntityType="Self.employeeRoleBased" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="file" EntityType="Self.file" Schema="dbo" store:Type="Tables" />
@@ -908,10 +932,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_employeeRoleBased_person" Association="Self.FK_employeeRoleBased_person">
-            <End Role="person" EntitySet="person" />
-            <End Role="employeeRoleBased" EntitySet="employeeRoleBased" />
           </AssociationSet>
           <AssociationSet Name="FK_locationParent_categoryParent" Association="Self.FK_locationParent_categoryParent">
             <End Role="category" EntitySet="category" />
@@ -2049,7 +2069,43 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="dataLeaves" EntityType="HRISModel.dataLeave" />
+          <EntitySet Name="dataMails" EntityType="HRISModel.dataMail" />
         </EntityContainer>
+        <EntityType Name="dataLeave">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="txID" Type="Int32" />
+          <Property Name="policyID" Type="Int32" />
+          <Property Name="startDate" Type="DateTime" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Precision="0" />
+          <Property Name="dayDuration" Type="Int32" />
+          <Property Name="noteHeader" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="noteContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isDeleted" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdateBy" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="dataMail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="txID" Type="Int32" />
+          <Property Name="emailStatus" Type="Int32" />
+          <Property Name="emailRequest" Type="Int32" />
+          <Property Name="emailApproval" Type="Int32" />
+          <Property Name="emailSendingCount" Type="Int32" />
+          <Property Name="isDeleted" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdatedBy" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2556,6 +2612,42 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="dataLeaves">
+            <EntityTypeMapping TypeName="HRISModel.dataLeave">
+              <MappingFragment StoreEntitySet="dataLeave">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="vUpdateBy" ColumnName="vUpdateBy" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="noteContent" ColumnName="noteContent" />
+                <ScalarProperty Name="noteHeader" ColumnName="noteHeader" />
+                <ScalarProperty Name="dayDuration" ColumnName="dayDuration" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="policyID" ColumnName="policyID" />
+                <ScalarProperty Name="txID" ColumnName="txID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dataMails">
+            <EntityTypeMapping TypeName="HRISModel.dataMail">
+              <MappingFragment StoreEntitySet="dataMail">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="emailSendingCount" ColumnName="emailSendingCount" />
+                <ScalarProperty Name="emailApproval" ColumnName="emailApproval" />
+                <ScalarProperty Name="emailRequest" ColumnName="emailRequest" />
+                <ScalarProperty Name="emailStatus" ColumnName="emailStatus" />
+                <ScalarProperty Name="txID" ColumnName="txID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

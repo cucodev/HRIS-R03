@@ -103,10 +103,10 @@ namespace BusinessEntities.CrudEntities
         public Nullable<System.DateTime> TrainingEndDate { get; set; }
 
         //personIdentity
-        public virtual ICollection<personIdentityEntities> personIdentities { get; set; }
+        public virtual ICollection<profileIdentityEntities> personIdentities { get; set; }
 
         //personDependant
-        public virtual ICollection<personDependentEntities> personDependent { get; set; }
+        public virtual ICollection<profileDependentEntities> personDependent { get; set; }
         
     }
 
@@ -235,7 +235,7 @@ namespace BusinessEntities.CrudEntities
         public Nullable<System.DateTime> updateTime { get; set; }
         public Nullable<int> JobLevel { get; set; }
 
-        public virtual personEntities person { get; set; }
+        public virtual profileEntities person { get; set; }
 
 
     }

@@ -414,6 +414,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.ui.addresspicker.js" />
+    <Content Include="Scripts\jquery.ui.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -519,6 +521,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Sidebar\sidebar-menu.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -551,6 +554,10 @@
     <Content Include="Views\AdminHR\EmployeeManagement.cshtml" />
     <Content Include="Views\SharedMaintainData\_employeeHRProfile.cshtml" />
     <Content Include="Views\SharedMaintainData\_employeeRoleMatrix.cshtml" />
+    <Content Include="Views\SharedMaintainData\_leaveForm.cshtml" />
+    <Content Include="Views\SharedMaintainData\_leaveGrid.cshtml" />
+    <Content Include="Views\Shared\_LayoutLeftNav.cshtml" />
+    <Content Include="Views\Content\vMap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

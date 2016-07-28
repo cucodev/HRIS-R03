@@ -135,7 +135,7 @@
         
         $('#categoryMatrixUpdate').on('click', function (event) {
             cleanform();
-            txType = 1;
+            txType = 3;
             var rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
             if (rowindex == -1) {
                 alert("Please Select Row first !");
@@ -175,6 +175,7 @@
             var x1 = hris.general.getData("getPolicyRootType");
             var x2 = hris.general.getData("getValueType");
             var x3 = hris.general.getData("CatPolicyName");
+            //var L1 = hris.general.getDat
             if ( (x1 == null) && (x3 == null) ){
                 alert("Select Medical or Annual Leave first");
             } else {
@@ -243,6 +244,22 @@
                         success: function (data, status, xhr) {
                             $('#jqxgrid').jqxGrid('updatebounddata');
                             console.log("Delete Ajax Success : ", row, " ID: ", ID);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Error " + errorThrown);
+                        }
+                    }); txType = null; break;
+                case 3:
+                    console.log("Update Ajax");
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: '/api/role/updateRoleBasedMatrixCategory/' + ID,
+                        data: row,
+                        type: 'PUT',
+                        success: function (data, status, xhr) {
+                            $('#jqxgrid').jqxGrid('updatebounddata');
+                            console.log("Update Ajax Success : ", row, " on ID: ", ID);
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             console.log("Error " + errorThrown);

@@ -18,6 +18,7 @@ namespace BusinessEntities
         //Category Medical & Leave
         public const string policyType = "policyType";
         public const string policyTypeRoot = "policyTypeRoot";
+        public const string policyTypeAnnual = "policyTypeAnnual";
 
         //Employee Level
         public const string lov_level = "empLevel";
@@ -38,5 +39,10 @@ namespace BusinessEntities
         public const string lov_orgDepartemen = "empDep";
         public const string lov_orgPosition = "empPos";
         public const string lov_edu = "pEdu";
+    }
+
+    public static class TransactionVariable
+    {
+
     }
 }

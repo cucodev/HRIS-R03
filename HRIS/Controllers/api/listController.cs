@@ -125,6 +125,40 @@ namespace HRIS_R03.Controllers.api
 
         // GET: api/list
         [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getNameEmployee")]
+        [System.Web.Http.Route("api/list/getNameEmployee")]
+        public IEnumerable<LOV> getNameEmployee()
+        {
+            var p = _pServices.getNameEmployee();
+            if (p != null)
+            {
+                var pEntities = p as List<LOV> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getNameSuperior")]
+        [System.Web.Http.Route("api/list/getNameSuperior")]
+        public IEnumerable<LOV> getNameSuperior()
+        {
+            var p = _pServices.getNameSuperior();
+            if (p != null)
+            {
+                var pEntities = p as List<LOV> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getParentCategory")]
         [System.Web.Http.Route("api/list/getParentCategory")]
         public IEnumerable<classificationEntities> getParentCategory()

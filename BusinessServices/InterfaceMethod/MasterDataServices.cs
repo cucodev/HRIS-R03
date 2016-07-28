@@ -143,6 +143,33 @@ namespace BusinessServices.InterfaceMethod
             return null;
         }
 
+        public bool UpdateMatrixCategory(int ID, roleBasedMatrixEntities p)
+        {
+            var success = false;
+            if (p != null)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var px = _u.roleBasedMatrixRepository.GetByID(ID);
+                    if (px != null)
+                    {
+                        px.PolicyType = p.PolicyType;
+                        px.PolicyName = p.PolicyName;
+                        px.ValueType = p.ValueType;
+
+                        px.vUpdatedBy = p.vUpdatedBy;
+                        px.updateTime = DateTime.Now;
+
+                        _u.roleBasedMatrixRepository.Update(px);
+                        _u.Save();
+                        scope.Complete();
+                        success = true;
+                    }
+                }
+            }
+            return success;
+        }
+
         public bool UpdateMatrix(int ID, roleBasedMatrixEntities p)
         {
             var success = false;

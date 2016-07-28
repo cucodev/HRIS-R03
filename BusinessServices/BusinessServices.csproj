@@ -51,6 +51,7 @@
     <Compile Include="InterfaceMethod\ProfileServices.cs" />
     <Compile Include="InterfaceMethod\SecurityServices.cs" />
     <Compile Include="Interface\IData.cs" />
+    <Compile Include="Interface\IEmail.cs" />
     <Compile Include="Interface\IMasterData.cs" />
     <Compile Include="Interface\Isecurity.cs" />
     <Compile Include="Interface\IList.cs" />

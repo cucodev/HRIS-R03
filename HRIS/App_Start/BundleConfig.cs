@@ -22,6 +22,9 @@ namespace HRIS
                 "~/Content/site.css"));
 
             //==========================================================================================CUSTOM css
+            bundles.Add(new StyleBundle("~/Content/Sidebar").Include(
+                "~/Content/Sidebar/sidebar-menu.css",
+                "~/Content/Sidebar/font-awesome.min.css"));
             bundles.Add(new StyleBundle("~/Content/LoginStyle").Include("~/Content/LoginStyle.css"));
             bundles.Add(new StyleBundle("~/Content/jsmenu").Include(
                      "~/Content/jsmenu/reset.css",
@@ -53,9 +56,11 @@ namespace HRIS
                     "~/Content/jqwidgets/jqx.ui-sunny.css"));
 
             //==========================================================================================CUSTOM js
+            bundles.Add(new ScriptBundle("~/bundles/Sidebar").Include(
+                                  "~/Scripts/Sidebar/sidebar-menu.js"));
             bundles.Add(new ScriptBundle("~/bundles/jsmenu").Include(
-                                  "~/Scripts/jsmenu/jquery.menu-aim.js",
-                                  "~/Scripts/jsmenu/main.js"));
+                                              "~/Scripts/jsmenu/jquery.menu-aim.js",
+                                              "~/Scripts/jsmenu/main.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jstorage").Include("~/Scripts/jstorage.js"));
             bundles.Add(new ScriptBundle("~/bundles/jqwidgets").Include(

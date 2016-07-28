@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - HRIS</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/jqwidgets")
+    @Styles.Render("~/Content/Sidebar")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/Sidebar")
+    @Scripts.Render("~/bundles/jstorage")
+    @Scripts.Render("~/bundles/jqwidgets")
+
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.sidebarMenu($('.sidebar-menu'));
+            $('#navmenu').click(function() {
+                    $('.sidebar-menu').slideToggle("fast");
+            });
+        });
+    </script>
+    <style>
+        body {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="row" style="height: 50px; box-shadow: 0px 1px #d7e9f3;">
+    </div>
+    <div class="row" style="margin-top: 0;">
+        <div class="col-md-2">
+            <section style="width: 180px">
+                <ul class="sidebar-menu">
+                    <li class="header" id="navmenu">HOLLIT INTERNATIONAL</li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Content")</li>
+                            
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-files-o"></i>
+                            <span>Timesheets</span>
+                            <span class="label label-primary pull-right">4</span>
+                        </a>
+                        <ul class="treeview-menu" style="display: none;">
+                            <li>@Html.ActionLink("Timesheet", "Index", "vTimesheets")</li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-edit"></i> <span>Forms</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Leave", "vLeave", "Content")</li>
+                            <li>@Html.ActionLink("Medical", "vMedical", "Content")</li>
+                            <li>@Html.ActionLink("Approval", "vApproval", "Content")</li>
+                        </ul>
+                    </li>
+                    <li class="header">ORGANIZATION</li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-th"></i> <span>Structure</span>
+                            <small class="label pull-right label-info">new</small>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Structure", "vStructure", "Content")</li>
+                        </ul>
+                    </li>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-calendar"></i> <span>Calendar</span>
+                            <small class="label pull-right label-danger">3</small>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Calendar", "vCalendar", "Content")</li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>News & Notification</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#">@Html.ActionLink("News", "vNews", "Content")</li>
+                            <li><a href="#">@Html.ActionLink("Notifications", "vNotifications", "Content")</li>
+                            <li><a href="#">@Html.ActionLink("File Management", "vFile", "Content")</li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-laptop"></i>
+                            <span>Employee</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("My Profile", "vProfile", "Content")</li>
+                            <li>@Html.ActionLink("My Dependent", "vDependent", "Content")</li>
+                            <li>@Html.ActionLink("My Statistic", "vStatistic", "Content")</li>
+                            <li>@Html.ActionLink("My Maps", "vMap", "Content")</li>
+                            <li>@Html.ActionLink("Employee Profile", "vEmployeeGrid", "Content")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-envelope"></i> <span>Mailbox</span>
+                            <small class="label pull-right label-warning">12</small>
+                        </a>
+                    </li>
+                    <li class="header">Administration</li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-folder"></i> <span>HRD</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Approval</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Employee</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Employee Role</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Employee Timesheet</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> News & Notification</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Letter Template</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> File Management</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Master Data</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-table"></i> <span>System Admin</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> User Management</a></li>
+                        </ul>
+                    </li>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-share"></i> <span>Logout</span>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </section>
+        </div>
+        <div class="col-md-9" style="height:500px; margin-top: 0">
+            <section>
+                @RenderBody()
+            </section>
+        </div>
+
+    </div>
+    <div style="border-top: solid 1px #d7e9f3;">
+    </div> 
+</body>
+</html>

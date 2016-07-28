@@ -75,6 +75,12 @@
     <Compile Include="C_transaction.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="dataLeave.cs">
+      <DependentUpon>WebApiDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dataMail.cs">
+      <DependentUpon>WebApiDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="employee.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>

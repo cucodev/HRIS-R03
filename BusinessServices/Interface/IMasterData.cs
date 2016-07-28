@@ -31,6 +31,7 @@ namespace BusinessServices.Interface
         roleBasedMatrixEntities getMatrixByID(int ID);
         int CreateMatrix(roleBasedMatrixEntities roleBasedMatrixEntities);
         bool UpdateMatrix(int ID, roleBasedMatrixEntities roleBasedMatrixEntities);
+        bool UpdateMatrixCategory(int ID, roleBasedMatrixEntities roleBasedMatrixEntities);
         bool DeleteMatrix(int ID);
         bool CalculateMatrix();
     }

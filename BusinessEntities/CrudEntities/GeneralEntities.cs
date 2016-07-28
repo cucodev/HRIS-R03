@@ -18,7 +18,14 @@ namespace BusinessEntities.CrudEntities
         public string catName { get; set; }
 
         public virtual classificationEntities category { get; set; }
-        public virtual ICollection<BusinessEntities.categoryEntities> categories { get; set; }
+        public virtual ICollection<categoryEntities> categories { get; set; }
     }
 
+    public class categoryEntities
+    {
+        public int catID { get; set; }
+        public Nullable<int> catParentID { get; set; }
+        public string catCode { get; set; }
+        public string catName { get; set; }
+    }
 }
