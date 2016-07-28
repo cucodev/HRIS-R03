@@ -339,7 +339,7 @@
                         //console.log(i + ': bindOnChanged :' + $("#" + divChanged).val() + ':' + divChanged + ':' + divInit + ':' + strInit);
 
                     }
-
+        /*
                     // Initialize grid dt.personIdentities ====================================
                     var observableArray = new $.jqx.observableArray(dt.personIdentities, function (changed) {
                         //updateLog(this);
@@ -395,6 +395,7 @@
                         { text: 'Tax', datafield: 'taxDependent', width: 100 }
                         ]
                     });
+        */
                 },
                 loadError: function (jqXHR, status, error) {
                     console.log('Retrieve Error : ', jqXHR.responseText);
@@ -655,7 +656,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="active">Active</label>
-                            <input type="text" class="form-control" placeholder="Active" id="active"></input>
+                            <input type="text" class="form-control" placeholder="Active" id="active">
                         </div>
                     </div>
                 </div>
@@ -779,14 +780,18 @@
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             <div class="container-fluid">
-                <!--DEPENDENT-->
-                <div id="dataDependent"></div>
+                <!--DEPENDENT
+                    <div id="dataDependent"></div>
+                    -->
+                
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             <div class="container-fluid">
-                <!--IDENTITY-->
-                <div id="dataIdentitiy"></div>
+                <!--IDENTITY
+                    <div id="dataIdentitiy"></div>
+                    -->
+                
             </div>
         </div>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
@@ -910,7 +915,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="lastPosition">Last Position</label>
-                                <input type="text" class="form-control" id="lastPosition" placeholder="Last Position"></input>
+                                <input type="text" class="form-control" id="lastPosition" placeholder="Last Position">
                             </div>
                         </div>
                     </div>
