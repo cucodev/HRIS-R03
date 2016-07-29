@@ -182,6 +182,16 @@
         }
     };
     hris.general = {
+        disable: function (value) {
+            var i = $("#" + value);
+            i.jqxDropDownList({ disabled: true });
+            //document.getElementById(value).disabled = true;
+        },
+        enable: function (value) {
+            var i = $("#" + value);
+            i.jqxDropDownList({ disabled: true });
+            //document.getElementById(value).disabled = false;
+        },
         getData: function (value) {
             var i = $("#" + value);
             if (value !== null) { return i.val(); }
@@ -212,6 +222,6 @@
             i.jqxDropDownList({ source: hris.list._getLOV(div), theme: th, disabled: false, height: '35px', displayMember: "label", valueMember: "value", width: '100%' });
             if (value !== null) { i.jqxDropDownList('val', value); }
         }
-    }
+    };
 
 })(jQuery);

@@ -31,6 +31,7 @@ namespace BusinessServices.Interface
         IEnumerable<LOV> getNameEmployee();
         IEnumerable<LOV> getValueType();
         IEnumerable<LOV> getPolicyType();
+        IEnumerable<LOV> getPolicyTypeByParentID(int parentID);
         IEnumerable<LOV> getPolicyRootType();
 
         IEnumerable<LOVLocation> getCountry();

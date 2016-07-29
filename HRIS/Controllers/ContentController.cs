@@ -20,8 +20,8 @@ namespace HRIS_R03.Controllers
             if (Session[GlobalVariable.UserCred] != null)
             {
                 var dt = (UserCredModel)Session[GlobalVariable.UserCred];
-                ViewBag.cIDV = dt.IDV;
-                ViewBag.cIDVParent = dt.parentIDV;
+                ViewBag.cIDV = 3;//dt.IDV;
+                ViewBag.cIDVParent = 40;// dt.parentIDV;
             }
         }
         
@@ -33,7 +33,9 @@ namespace HRIS_R03.Controllers
 
         public ActionResult vLeave()
         {
-            current();
+            //current();
+            ViewBag.cIDV = 3;//dt.IDV;
+            ViewBag.cIDVParent = 40;
             return View();
         }
 

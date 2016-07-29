@@ -252,7 +252,6 @@ namespace BusinessServices.InterfaceMethod
             return ms.AsEnumerable();
         }
 
-        
         public IEnumerable<LOV> getPolicyType()
         {
             List<LOV> ms = new List<LOV>();
@@ -283,6 +282,25 @@ namespace BusinessServices.InterfaceMethod
                 }
 
             }
+            return ms.AsEnumerable();
+        }
+
+        public IEnumerable<LOV> getPolicyTypeByParentID(int parentID)
+        {
+            List<LOV> ms = new List<LOV>();
+            
+                        var vDataID = _unitOfWork.roleBasedMatrixRepository.GetMany(b => b.PolicyType == parentID);
+                        if (vDataID.Any())
+                        {
+                            foreach (roleBasedMatrix nn in vDataID)
+                            {
+                                LOV xx = new LOV();
+                                xx.value = nn.ID;
+                                xx.label = (nn.PolicyName).TrimEnd();
+                                ms.Add(xx);
+                            }
+                        }
+
             return ms.AsEnumerable();
         }
 

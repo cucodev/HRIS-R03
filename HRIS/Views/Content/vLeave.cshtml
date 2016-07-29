@@ -10,12 +10,16 @@
     <script type="text/javascript">
         $(document).ready(function () {
             th = "ui-redmond";
-            $('#dataForm').jqxTabs({ theme: th, width: '100%', height: 500 });
+            //$('#dataForm').jqxTabs({ theme: th, width: '100%', height: 500 });
         })
     </script>
 }
 <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">LEAVE FORM</h1>
 <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Apply Leave and See Your Form Status</h2>
+<div class="container">
+    @{ Html.RenderPartial("~/Views/SharedMaintainData/_leaveForm.cshtml"); }
+</div>
+
 <div class="container">
     <div class="col-md-9" id="dataForm">
         <ul>
@@ -23,7 +27,7 @@
             <li>Status</li>
         </ul>
         <div style="margin-right:20px;margin-top:20px; margin-left:30px">
-            @{ Html.RenderPartial("~/Views/SharedMaintainData/_leaveForm.cshtml"); }
+           
         </div>
         <div style="margin-right:20px;margin-top:20px; ">
             @{ Html.RenderPartial("~/Views/SharedMaintainData/_leaveGrid.cshtml"); }

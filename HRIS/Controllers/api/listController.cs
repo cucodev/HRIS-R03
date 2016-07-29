@@ -74,6 +74,23 @@ namespace HRIS_R03.Controllers.api
 
         // GET: api/list
         [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("cascadePolicyType")]
+        [System.Web.Http.Route("api/cascade/cascadePolicyType/{parentID}")]
+        public IEnumerable<LOV> cascadePolicyType(int parentID)
+        {
+            var p = _pServices.getPolicyTypeByParentID(parentID);
+            if (p != null)
+            {
+                var pEntities = p as List<LOV> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getPolicyType")]
         [System.Web.Http.Route("api/list/getPolicyType")]
         public IEnumerable<LOV> getPolicyType()
@@ -88,6 +105,7 @@ namespace HRIS_R03.Controllers.api
             // return null;
             return null;
         }
+
 
         // GET: api/list
         [System.Web.Http.HttpGet]

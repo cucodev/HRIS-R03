@@ -80,6 +80,7 @@ namespace HRIS
                         "~/Scripts/jqwidgets/jqxlistbox.js",
                         "~/Scripts/jqwidgets/jqxbuttons.js",
                         "~/Scripts/jqwidgets/jqxbuttongroup.js",
+                        "~/Scripts/jqwidgets/jqxSwitchButton.js",
                         "~/Scripts/jqwidgets/jqxscrollbar.js",
                         "~/Scripts/jqwidgets/jqxdatatable.js",
                         "~/Scripts/jqwidgets/jqxtreegrid.js",

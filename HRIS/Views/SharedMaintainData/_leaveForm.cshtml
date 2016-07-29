@@ -1,31 +1,202 @@
-﻿<h2>please apply Leave</h2>
+﻿
+<script type="text/javascript" src="@Url.Content("~/Scripts/datepicker/datepicker.js")"></script>
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/datepicker/base.css")" />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/datepicker/clean.css")" />
 
 <script type="text/javascript">
     $(document).ready(function () {
         hris.general.bindDropDown("getPolicyType", null);
+      //  hris.general.bindDropDown("getPolicyRootType", null);
         hris.general.bindDropDown("getNameEmployee", null);
         hris.general.bindDropDown("getNameSuperior", null);
+        hris.general.disable("getNameEmployee");
+        hris.general.disable("getNameSuperior");
 
-        hris.general.bindDropDown("getValueType", null);
-        hris.general.bindInput("CatPolicyName");
-        hris.general.bindButton('submitCategory');
-        hris.general.bindButton('cancelCategory');
+        //$('#isAnnual').jqxToggleButton({ width: '200', 'height': '25px', toggled: true, theme: 'orange' });
+        $('#isAnnual').jqxSwitchButton({ height: 35, width: '100%', checked: true, onLabel: 'COMMON', offLabel: 'ANNUAL', theme: 'orange' });
+    //    $('#getPolicyRootType').jqxDropDownList({ width: '120px' });
 
+        hris.general.bindButton('submit');
+
+        var data = new Array();
+        var row = {};
+        var subrow = {};
+        var durations = new Array();
+        durations.records = [ { label: 'FullDay', value: '1' }, { label: 'Half Day', value: '0.5' } ];
+        
+        //console.log(lov[0]);
+        //var durationsAdapter = 
+        var source = {
+            localdata: data,
+            dataType: "array",
+            dataFields:
+            [
+                { name: 'id', type: 'number' },
+                { name: 'date', type: 'string' },
+                { name: 'duration', type: 'number' },
+                { name: 'durationLabel', value: 'duration' , values: { source: durations.records, value: 'value', name: 'label' } }
+            ]
+        };
+        console.log("source: ", source.dataFields)
+        var dataAdapter = new $.jqx.dataAdapter(source, { autoBind: true });
+        var columns = [
+                          { text: 'Index', dataField: 'id', width: 10, hidden: true },
+                          { text: 'Date', dataField: 'date', width: 70 },
+                          {
+                              text: 'Duration', datafield: 'duration', displayfield: 'durationLabel', columntype: 'dropdownlist',
+                              createeditor: function (row, value, editor) {
+                                  editor.jqxDropDownList({ source: durations.records, displayMember: 'label', valueMember: 'value' });
+                              }
+                          }
+        ];
+
+        $("#table").jqxGrid({
+            width: 200,
+            theme: 'fresh',
+            //height: 300,
+            editable:true,
+            source: dataAdapter,
+            columns: columns
+        });
+
+        var dt = new Date();
+        var dtCal = 1000 * 60 * 60 * 24;
+        var dtNext = dt + dtCal;
+        var i = 0;
+        
+        $('#multi-calendar').DatePicker({
+            mode: 'multiple',
+            inline: true,
+            calendars: 4,
+            date: [dt, dtNext * 2, dtNext * 3, dtNext * 4],
+            onChange: function (dates, el) {
+                i = 0;
+                data = [];
+              //console.log("Data Changed: ");
+                dates.forEach(dateSelected);
+              //console.log("data: ", data);
+                source.localdata = data;
+                //dataAdapter.dataBind();
+                $("#table").jqxGrid('updatebounddata');
+
+            }
+        });
+        
+        function dateSelected(item, index) {
+            row = {};
+            var datestr = item.getMonth() + '/' + item.getDate() + '/' + item.getFullYear();
+            //console.log("Index[" + index + "] : " + datestr);
+            //row["durationLabel"] = 0.5;
+            row["duration"] = 1;
+            row["date"] = datestr;
+            row["id"] = index;
+            data[i] = row;
+            i++;
+            //console.log(varDate);
+        }
+
+        $('#multi-calendar').DatePickerGetDate();
+        $('#multi-calendar').DatePickerClear();
+
+
+        //EVENT
+        $('.jqx-switchbutton').on('checked', function (event) {
+            //$('#events').text(label[event.target.id] + ': Checked');
+           // $("#IsAnnual").value = 'COMMON LEAVE';
+            $('#isAnnual').jqxSwitchButton({ offLabel: 'ANNUAL' });
+           // $('#getPolicyRootType').show();
+            $('#getPolicyType').hide();
+
+        });
+        $('.jqx-switchbutton').on('unchecked', function (event) {
+            //$('#events').text(label[event.target.id] + ': Unchecked');
+            $('#isAnnual').jqxSwitchButton({ onLabel: 'COMMON LEAVE' });
+           // $('#getPolicyRootType').hide();
+            $('#getPolicyType').show();
+            //$("#isAnnual").value = 'ANNUAL LEAVE';
+        });
+
+        
+        
     });
 </script>
-<div class="con"
+<style>
+    body {
+        font-size: 12px;
+    }
+
+    div.row {
+        margin-bottom: 5px;
+    }
+
+    div.datepickerContainer {
+        width: 610px;
+    }
+
+    div.span8 {
+        width: 620px;
+    }
+
+    div.datepicker {
+        padding: 0;
+    }
+</style>
 <div class="row">
-    <div class="col-sm-5">
+    <div class="col-sm-3 pull-left">
+        <input type="button" value="As Annual" id='isAnnual' />
+    </div>
+    
+    <div class="col-sm-4">
+        <div id="getPolicyType"></div>
+    </div>
+    <div class="col-sm-5 pull-right">
+        
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-8">
+        <div id="multi-calendar"></div>
+        <hr />
+        <div id="dataDate"></div>
+    </div>
+    <div class="col-sm-4"></div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <div id="table"></div>
+    </div>
+    <div class="col-sm-3">
+        <div class="row">
+            <label for="getPolicyRootType">Type</label>
+            
+        </div>
         <div class="row">
             <label for="getPolicyType">Leave Type</label>
-            <div id="getPolicyType"></div>
+            
         </div>
-        <div class="row"><div id="getNameEmployee"></div></div>
-        <div class="row"><div id="getNameSuperior"></div></div>
+        <div class="row">
+            <label for="getNameEmployee">Employee</label>
+            <div id="getNameEmployee"></div>
+        </div>
+        <div class="row">
+            <label for="getNameSuperior">Superior</label>
+            <div id="getNameSuperior"></div>
+        </div>
+        <div class="row pull-right" style="margin-bottom: 20px"><input type="button" id="submit" value="Apply" /></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row">
+
+        </div>
+        
+        <div class="row"><div id="getValueType"></div></div>
         <div class="row"><div id=""></div></div>
         <div class="row"><div id=""></div></div>
         <div class="row"><div id=""></div></div>
-        <div class="row"><div id=""></div></div>
+        
     </div>
 
     <div class="col-sm-9">
