@@ -55,6 +55,18 @@ namespace HRIS_R03.Controllers
             current();
             return View();
         }
+
+        public ActionResult Calendar()
+        {
+            current();
+            return View();
+        }
+
+        public ActionResult Timesheet()
+        {
+            current();
+            return View();
+        }
         
     }
 }

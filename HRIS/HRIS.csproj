@@ -603,6 +603,8 @@
     <Content Include="Views\SharedMaintainData\_leaveGrid.cshtml" />
     <Content Include="Views\Shared\_LayoutLeftNav.cshtml" />
     <Content Include="Views\Content\vMap.cshtml" />
+    <Content Include="Views\Content\Calendar.cshtml" />
+    <Content Include="Views\Content\Timesheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

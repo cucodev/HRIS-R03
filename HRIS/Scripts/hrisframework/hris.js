@@ -6,7 +6,7 @@
 
     hris.list = {
         _getLOV: function (name) {
-            if (obj[name] == null) {
+            if (obj[name] === null) {
                 obj[name] = this._dbLOV(name);
                 console.log('Existing  ', name, ' is Null, fillin with Data:', obj[name]);
             }

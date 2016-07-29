@@ -14,7 +14,8 @@
     @Scripts.Render("~/bundles/jqwidgets")
 
     @RenderSection("scripts", required: false)
-
+    @RenderSection("jsData", required: false)
+    
     <script type="text/javascript">
         $(document).ready(function () {
             $.sidebarMenu($('.sidebar-menu'));
@@ -55,7 +56,7 @@
                             <span class="label label-primary pull-right">4</span>
                         </a>
                         <ul class="treeview-menu" style="display: none;">
-                            <li>@Html.ActionLink("Timesheet", "Index", "vTimesheets")</li>
+                            <li>@Html.ActionLink("Timesheet", "Timesheet", "Content")</li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -86,7 +87,7 @@
                             <small class="label pull-right label-danger">3</small>
                         </a>
                         <ul class="treeview-menu">
-                            <li>@Html.ActionLink("Calendar", "vCalendar", "Content")</li>
+                            <li>@Html.ActionLink("Calendar", "Calendar", "Content")</li>
                         </ul>
                     </li>
 
