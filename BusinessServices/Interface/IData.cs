@@ -37,15 +37,15 @@ namespace BusinessServices.Interface
         
     }
 
-    public interface IApproval
+    public interface IMaster
     {
-        IEnumerable<transactionApproval> getAllApproval();
-        transactionApproval getApprovalByID(int ID);
-        IEnumerable<transactionApproval> getALLApprovalByRequestor(int IDV);
-        IEnumerable<transactionApproval> getALLApprovalBySuperior(int IDV);
-        int Create(transactionApproval tx);
-        bool Update(int ID, transactionApproval tx);
-        bool Delete(int ID, transactionApproval tx);
+        IEnumerable<transactionMaster> getAllMaster();
+        transactionMaster getMasterByID(int ID);
+        IEnumerable<transactionMaster> getALLMasterByRequestor(int IDV);
+        IEnumerable<transactionMaster> getALLMasterBySuperior(int IDV);
+        int Create(transactionMaster tx);
+        bool Update(int ID, transactionMaster tx);
+        bool Delete(int ID, transactionMaster tx);
     }
 
 

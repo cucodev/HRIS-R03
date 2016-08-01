@@ -67,6 +67,20 @@ namespace HRIS_R03.Controllers
             current();
             return View();
         }
+
+        public ActionResult Mailbox()
+        {
+            current();
+            return View();
+        }
+
+        public ActionResult MyDependent()
+        {
+            current();
+            return View();
+        }
+
+        
         
     }
 }

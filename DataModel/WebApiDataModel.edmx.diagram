@@ -69,6 +69,7 @@
         <AssociationConnector Association="HRISModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="HRISModel.dataLeave" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="HRISModel.dataMail" Width="1.5" PointX="2.75" PointY="10.75" />
+        <EntityTypeShape EntityType="HRISModel.dataFile" Width="1.5" PointX="10.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

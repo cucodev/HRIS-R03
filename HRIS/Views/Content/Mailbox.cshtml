@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Mailbox";
+    Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Create jqxExpander
+        $('#jqxExpander').jqxExpander({ theme: 'ui-redmond', showArrow: false, toggleMode: 'none', width: '100%', height: '370px'});
+        // Create jqxTree
+        var source = [
+        {
+            icon: "@Url.Content("~/Content/jqwidgets/images/mailIcon.png")", label: "Mail", expanded: true, items: [
+              { icon: "@Url.Content("~/Content/jqwidgets/images/calendarIcon.png")", label: "Calendar" },
+                  { icon: "@Url.Content("~/Content/jqwidgets/images/contactsIcon.png")", label: "Timesheets", selected: true }
+                ]
+            },
+            {
+                icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Status", expanded: true, items: [
+                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Profile Update" },
+                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Notifications" },
+                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "News" },
+                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Leaves" },
+                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Medical" },
+                ]
+            },
+            { icon: "@Url.Content("~/Content/jqwidgets/images/recycle.png")", label: "Declined Items" },
+            { icon: "@Url.Content("~/Content/jqwidgets/images/notesIcon.png")", label: "Approved Items" },
+            { icon: "@Url.Content("~/Content/jqwidgets/images/favorites.png")", label: "Applied Items" }
+        ];
+
+        $('#jqxTree').jqxTree({ theme: 'orange',source: source, width: 200, height: '100%'});
+        $('#jqxTree').jqxTree('selectItem', null);
+
+        $('#Events').jqxPanel({ height: '250px', width: '200px' });
+        $('#Events').css('border', 'none');
+        // on to 'expand', 'collapse' and 'select' events.
+        $('#jqxTree').on('expand', function (event) {
+            var args = event.args;
+            var item = $('#jqxTree').jqxTree('getItem', args.element);
+            $('#Events').jqxPanel('prepend', '<div style="margin-top: 5px;">Expanded: ' + item.label + '</div>');
+        });
+        $('#jqxTree').on('collapse', function (event) {
+            var args = event.args;
+            var item = $('#jqxTree').jqxTree('getItem', args.element);
+            $('#Events').jqxPanel('prepend', '<div style="margin-top: 5px;">Collapsed: ' + item.label + '</div>');
+        });
+        $('#jqxTree').on('select', function (event) {
+            var args = event.args;
+            var item = $('#jqxTree').jqxTree('getItem', args.element);
+            $('#Events').jqxPanel('prepend', '<div style="margin-top: 5px;">Selected: ' + item.label + '</div>');
+        });
+
+    });
+
+</script>
+
+<h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">MAILBOX</h1>
+<h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Mnage Your Approval Status and Notfications</h2>
+<br />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+                <div id='jqxExpander'>
+                    <div>
+                        Folders
+                    </div>
+                    <div style="overflow: hidden;">
+                        <div style="border: none;" id='jqxTree'>
+                        </div>
+                    </div>
+                </div>
+            <div id='Events'></div>
+        </div>
+        <div class="col-md-9">
+            @{ Html.RenderPartial("~/Views/SharedMaintainData/_mailboxGrid.cshtml"); }
+        </div>
+    </div>
+</div>

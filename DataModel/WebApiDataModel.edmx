@@ -22,6 +22,10 @@
           <Property Name="purposeStatus" Type="int" />
           <Property Name="idvRequest" Type="int" />
           <Property Name="idvApproval" Type="int" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdateBy" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -91,6 +95,33 @@
           <Property Name="catParentID" Type="int" />
           <Property Name="catCode" Type="nchar" MaxLength="20" Nullable="false" />
           <Property Name="catName" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="dataFile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="stream_id" Type="varchar" MaxLength="100" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="path_locator" Type="varchar(max)" />
+          <Property Name="parent_path_locator" Type="varchar(max)" />
+          <Property Name="file_type" Type="nchar" MaxLength="20" />
+          <Property Name="cached_file_size" Type="int" />
+          <Property Name="creation_time" Type="datetimeoffset" Precision="7" />
+          <Property Name="last_write_time" Type="datetimeoffset" Precision="7" />
+          <Property Name="last_access_time" Type="datetimeoffset" Precision="7" />
+          <Property Name="is_directory" Type="bit" />
+          <Property Name="is_offline" Type="bit" />
+          <Property Name="is_hidden" Type="bit" />
+          <Property Name="is_readonly" Type="bit" />
+          <Property Name="is_archieve" Type="bit" />
+          <Property Name="is_system" Type="bit" />
+          <Property Name="is_temporary" Type="bit" />
+          <Property Name="vCreatedBy" Type="int" />
+          <Property Name="vUpdateBy" Type="int" />
+          <Property Name="createTime" Type="datetime" />
+          <Property Name="updateTime" Type="datetime" />
+          <Property Name="isDeleted" Type="int" />
         </EntityType>
         <EntityType Name="dataLeave">
           <Key>
@@ -887,6 +918,7 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="categoryParent" EntityType="Self.categoryParent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dataFile" EntityType="Self.dataFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="dataLeave" EntityType="Self.dataLeave" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="dataMail" EntityType="Self.dataMail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
@@ -1057,6 +1089,10 @@
           <Property Name="idvRequest" Type="Int32" />
           <Property Name="idvApproval" Type="Int32" />
           <NavigationProperty Name="C_purpose" Relationship="Self.purposeType" FromRole="C_transaction" ToRole="C_purpose" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdateBy" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -2071,6 +2107,7 @@
           </AssociationSet>
           <EntitySet Name="dataLeaves" EntityType="HRISModel.dataLeave" />
           <EntitySet Name="dataMails" EntityType="HRISModel.dataMail" />
+          <EntitySet Name="dataFiles" EntityType="HRISModel.dataFile" />
         </EntityContainer>
         <EntityType Name="dataLeave">
           <Key>
@@ -2106,6 +2143,33 @@
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="dataFile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="stream_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="path_locator" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="parent_path_locator" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="file_type" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="cached_file_size" Type="Int32" />
+          <Property Name="creation_time" Type="DateTimeOffset" Precision="7" />
+          <Property Name="last_write_time" Type="DateTimeOffset" Precision="7" />
+          <Property Name="last_access_time" Type="DateTimeOffset" Precision="7" />
+          <Property Name="is_directory" Type="Boolean" />
+          <Property Name="is_offline" Type="Boolean" />
+          <Property Name="is_hidden" Type="Boolean" />
+          <Property Name="is_readonly" Type="Boolean" />
+          <Property Name="is_archieve" Type="Boolean" />
+          <Property Name="is_system" Type="Boolean" />
+          <Property Name="is_temporary" Type="Boolean" />
+          <Property Name="vCreatedBy" Type="Int32" />
+          <Property Name="vUpdateBy" Type="Int32" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Precision="3" />
+          <Property Name="isDeleted" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2124,6 +2188,10 @@
           <EntitySetMapping Name="C_transaction">
             <EntityTypeMapping TypeName="HRISModel.C_transaction">
               <MappingFragment StoreEntitySet="_transaction">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="vUpdateBy" ColumnName="vUpdateBy" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
                 <ScalarProperty Name="txID" ColumnName="txID" />
                 <ScalarProperty Name="purposeID" ColumnName="purposeID" />
                 <ScalarProperty Name="purposeStatus" ColumnName="purposeStatus" />
@@ -2644,6 +2712,34 @@
                 <ScalarProperty Name="emailRequest" ColumnName="emailRequest" />
                 <ScalarProperty Name="emailStatus" ColumnName="emailStatus" />
                 <ScalarProperty Name="txID" ColumnName="txID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dataFiles">
+            <EntityTypeMapping TypeName="HRISModel.dataFile">
+              <MappingFragment StoreEntitySet="dataFile">
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="vUpdateBy" ColumnName="vUpdateBy" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="is_temporary" ColumnName="is_temporary" />
+                <ScalarProperty Name="is_system" ColumnName="is_system" />
+                <ScalarProperty Name="is_archieve" ColumnName="is_archieve" />
+                <ScalarProperty Name="is_readonly" ColumnName="is_readonly" />
+                <ScalarProperty Name="is_hidden" ColumnName="is_hidden" />
+                <ScalarProperty Name="is_offline" ColumnName="is_offline" />
+                <ScalarProperty Name="is_directory" ColumnName="is_directory" />
+                <ScalarProperty Name="last_access_time" ColumnName="last_access_time" />
+                <ScalarProperty Name="last_write_time" ColumnName="last_write_time" />
+                <ScalarProperty Name="creation_time" ColumnName="creation_time" />
+                <ScalarProperty Name="cached_file_size" ColumnName="cached_file_size" />
+                <ScalarProperty Name="file_type" ColumnName="file_type" />
+                <ScalarProperty Name="parent_path_locator" ColumnName="parent_path_locator" />
+                <ScalarProperty Name="path_locator" ColumnName="path_locator" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="stream_id" ColumnName="stream_id" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

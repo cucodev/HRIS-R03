@@ -14,6 +14,22 @@ namespace BusinessEntities.CrudEntities
         public virtual IEnumerable<LOV> child { get; set; }
     }
 
+    public class LOVFile
+    {
+        public string value { get; set; }
+        public string label { get; set; }
+        public string url { get; set; }
+    }
+
+    public class LOVFileTree
+    {
+        public string path_locator { get; set; }
+        public string parent_path_locator { get; set; }
+        public string name { get; set; }
+        public string stream_id { get; set; }
+        public string url { get; set; }
+    }
+
     public class LOVLocation
     {
         public long value { get; set; }

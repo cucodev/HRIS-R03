@@ -15,7 +15,7 @@ namespace BusinessEntities.DataEntities
         public string purposeDescription { get; set; }
     }
 
-    public class transactionApproval
+    public class transactionMaster
     {
         //transaction
         public int txID { get; set; }
@@ -30,7 +30,7 @@ namespace BusinessEntities.DataEntities
 
     public class transactionLeave
     {
-        public virtual transactionApproval txApproval { get; set; }
+        public virtual transactionMaster txDetail { get; set; }
 
         public int ID { get; set; }
         public Nullable<int> txID { get; set; }

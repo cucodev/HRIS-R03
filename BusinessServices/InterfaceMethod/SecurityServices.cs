@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataModel;
 using DataModel.UnitOfWork;
 using BusinessEntities;
 using BusinessEntities.CrudEntities;
@@ -56,9 +51,8 @@ namespace BusinessServices.InterfaceMethod
 
         public void UserSession()
         {
-
         }
-
+        
         public UserCredModel getUserCred(int IDV)
         {
             System.Diagnostics.Debug.WriteLine("Variable: IDV=" + IDV + ", isDelete=" + isDelete);

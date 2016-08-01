@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrudEntities\fileEntities.cs" />
     <Compile Include="CrudEntities\generalEntities.cs" />
     <Compile Include="CrudEntities\setupEntities.cs" />
     <Compile Include="CrudEntities\employeeEntities.cs" />

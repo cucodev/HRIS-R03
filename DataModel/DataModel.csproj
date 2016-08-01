@@ -75,6 +75,9 @@
     <Compile Include="C_transaction.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="dataFile.cs">
+      <DependentUpon>WebApiDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="dataLeave.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
@@ -90,6 +93,7 @@
     <Compile Include="file.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GenericRepository\FileRepository.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
     <Compile Include="location.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
@@ -171,6 +175,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WebApiDataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="WebApiFileModel.cs" />
+    <Compile Include="WebApiFileModelClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

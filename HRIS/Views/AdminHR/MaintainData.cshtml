@@ -15,25 +15,25 @@
     </script>
 }
 
-<div class="row">
+<div class="row" style="margin-left: 3px">
 
         <h1 style="margin-bottom:1px; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:0;">Maintain Master Data</h1>
         <h2 style="margin-bottom:15px; border-bottom: solid 1px #d7e9f3; padding-left:30px; padding-top:0;  margin-top:0; font-size:14px; font-family:Calibri;">Master Data</h2>
 </div>
-
-         <div class="col-md-9" id="dataForm">
+    <div class="row" style="margin-left: 3px">
+        <div id="dataForm">
             <ul>
                 <li style="margin-left:30px">Matrix Role</li>
-                <li >MATRIX - HRD STANDARD</li>
+                <li>MATRIX - HRD STANDARD</li>
             </ul>
-            <div style="overflow: hidden; margin-right:20px;margin-top:20px; margin-left:30px">
-                
-                  
-            </div>
-            <div style="overflow: hidden; margin-top:20px;">
-                
-                    @{ Html.RenderPartial("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml"); }
-                
+            <div style=" margin-right:20px;margin-top:20px; margin-left:30px"></div>
+            <div style=" margin-top:20px;">
+
+                @{ Html.RenderPartial("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml"); }
+
             </div>
         </div>
+    </div>
+
+         
    

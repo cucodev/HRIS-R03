@@ -13,10 +13,10 @@ namespace DataModel
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class HRISEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public HRISEntities()
-            : base("name=HRISEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -59,5 +59,6 @@ namespace DataModel
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<dataLeave> dataLeaves { get; set; }
         public virtual DbSet<dataMail> dataMails { get; set; }
+        public virtual DbSet<dataFile> dataFiles { get; set; }
     }
 }

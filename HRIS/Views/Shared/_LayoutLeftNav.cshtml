@@ -28,16 +28,25 @@
         body {
             padding-top: 0;
             padding-bottom: 0;
+            font-size: 12px;
         }
+        
+        .jqx-tabs {
+            border: 0;
+        }
+
     </style>
 
 </head>
 <body>
     <div class="row" style="height: 50px; box-shadow: 0px 1px #d7e9f3;">
+        <div class="col-md-2"></div>
+        <div class="col-md-6" style="margin-top:10px; margin-left: -20px"><img src="~/Content/bg/hollit-logo-small.png" alt="Logo" height="23"></div>
+        <div class="col-md-4"></div>
     </div>
-    <div class="row" style="margin-top: 0;">
+    <div class="row" style="margin-top: 0; margin-left:-15px;">
         <div class="col-md-2">
-            <section style="width: 180px">
+            <section style="width: '100%';">
                 <ul class="sidebar-menu">
                     <li class="header" id="navmenu">HOLLIT INTERNATIONAL</li>
                     <li class="treeview">
@@ -46,7 +55,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li>@Html.ActionLink("Dashboard", "Dashboard", "Content")</li>
-                            
+
                         </ul>
                     </li>
                     <li class="treeview">
@@ -122,6 +131,9 @@
                             <i class="fa fa-envelope"></i> <span>Mailbox</span>
                             <small class="label pull-right label-warning">12</small>
                         </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Mailbox", "Mailbox", "Content")</li>
+                        </ul>
                     </li>
                     <li class="header">Administration</li>
                     <li class="treeview">
@@ -136,8 +148,8 @@
                             <li><a href="#"><i class="fa fa-circle-o"></i> Employee Timesheet</a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> News & Notification</a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Letter Template</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> File Management</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Master Data</a></li>
+                            <li>@Html.ActionLink("File Management", "FileManagement", "AdminHR")</li>
+                            <li>@Html.ActionLink("Master Data", "MaintainData", "AdminHR")</li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -149,8 +161,6 @@
                             <li><a href="#"><i class="fa fa-circle-o"></i> User Management</a></li>
                         </ul>
                     </li>
-                    <br>
-                    <br>
                     <br>
                     <br>
                     <br>
@@ -171,9 +181,10 @@
                 @RenderBody()
             </section>
         </div>
-
+        <div class="col-md- pull-right" style="width:20px; background-color:cadetblue; display:block;">
+            <div style="height:100%; width:100%; background-color:cadetblue; display:block;">
+            </div>
+        </div>
     </div>
-    <div style="border-top: solid 1px #d7e9f3;">
-    </div> 
 </body>
 </html>

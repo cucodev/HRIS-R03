@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Data.Entity.Validation;
 using DataModel.GenericRepository;
 using DataModel;
+using DataModel.FileRepository;
 
 #endregion
 
@@ -18,7 +19,15 @@ namespace DataModel.UnitOfWork
     {
         #region Private member variables...
 
-        private HRISEntities _context = null;
+        private Entities _context = null;
+        private FileEntities _filecontext = null;
+
+        //Test with directly using custom DataModel (codefisrt)
+        private FileRepository<filePersonImage> _filePersonImageRepository;
+        private FileRepository<fileUpload> _fileUploadRepository;
+        //private FileRepository<fileUpload> _fileUpload;
+
+
         private GenericRepository<person> _personRepository;
         private GenericRepository<personAddress> _personAddressRepository;
         private GenericRepository<personBankAccount> _personBankAccountRepository;
@@ -41,6 +50,7 @@ namespace DataModel.UnitOfWork
         private GenericRepository<category> _categoryRepository;
         private GenericRepository<categoryParent> _categoryParentRepository;
         private GenericRepository<file> _fileRepository;
+        private GenericRepository<dataFile> _dataFileRepository;
         private GenericRepository<location> _locationParentRepository;
         private GenericRepository<organization> _organizationRepository;
         private GenericRepository<roleBased> _roleBasedRepository;
@@ -52,10 +62,35 @@ namespace DataModel.UnitOfWork
 
         public UnitOfWork()
         {
-            _context = new HRISEntities();
+            _context = new Entities();
+            _filecontext = new FileEntities();
         }
 
+
+        #region FileRepository Creation properties...
+        public FileRepository<filePersonImage>  filePersonImageRepository
+        {
+            get
+            {
+                if (this._filePersonImageRepository == null)
+                    this._filePersonImageRepository = new FileRepository<filePersonImage>(_filecontext);
+                return _filePersonImageRepository;
+            }
+        }
+        public FileRepository<fileUpload> fileUploadRepository
+        {
+            get
+            {
+                if (this._fileUploadRepository == null)
+                    this._fileUploadRepository = new FileRepository<fileUpload>(_filecontext);
+                return _fileUploadRepository;
+            }
+        }
+        #endregion
+
         #region Public Repository Creation properties...
+
+
 
         public GenericRepository<roleBased> roleBasedRepository
         {
@@ -138,6 +173,15 @@ namespace DataModel.UnitOfWork
                 if (this._fileRepository == null)
                     this._fileRepository = new GenericRepository<file>(_context);
                 return _fileRepository;
+            }
+        }
+        public GenericRepository<dataFile> dataFileRepository
+        {
+            get
+            {
+                if (this._dataFileRepository == null)
+                    this._dataFileRepository = new GenericRepository<dataFile>(_context);
+                return _dataFileRepository;
             }
         }
         public GenericRepository<location> locationParentRepository

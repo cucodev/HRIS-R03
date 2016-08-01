@@ -120,14 +120,15 @@ textarea
           componentsFilter: 'country:ID'
         });
         var addresspickerMap = $( "#addresspicker_map" ).addresspicker({
-          regionBias: "id",
-          language: "id",
+          regionBias: "ID",
+          language: "ID",
           updateCallback: showCallback,
+          reverseGeocode: true,
           mapOptions: {
-            zoom: 4,
-            center: new google.maps.LatLng(46, 2),
+            zoom: 19,
+            center: new google.maps.LatLng(-6.225572696822501, 106.87426922442864),
             scrollwheel: false,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.ROUTE
           },
           elements: {
             map:      "#map",
@@ -169,7 +170,7 @@ textarea
 }
 
 
-<div class="row">
+<div class="row" style="margin-left: 5px">
     <h1 style="margin-bottom:1px; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:0;">Maintain Your Location</h1>
     <h2 style="margin-bottom:15px; border-bottom: solid 1px #d7e9f3; padding-left:30px; padding-top:0;  margin-top:0; font-size:14px; font-family:Calibri;">Home Preference</h2>
 </div>

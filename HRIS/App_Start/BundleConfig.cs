@@ -116,6 +116,7 @@ namespace HRIS
                         "~/Scripts/jqwidgets/jqxnumberinput.js",
                         "~/Scripts/jqwidgets/jqxpopover.js",
                         "~/Scripts/jqwidgets/jqxtextarea.js",
+                        "~/Scripts/jqwidgets/jqxexpander.js",
                         "~/Scripts/jqwidgets/jqxcombobox.js"
                         ));
 

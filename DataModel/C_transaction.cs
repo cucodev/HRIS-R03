@@ -19,6 +19,10 @@ namespace DataModel
         public Nullable<int> purposeStatus { get; set; }
         public Nullable<int> idvRequest { get; set; }
         public Nullable<int> idvApproval { get; set; }
+        public Nullable<int> vCreatedBy { get; set; }
+        public Nullable<int> vUpdateBy { get; set; }
+        public Nullable<System.DateTime> createTime { get; set; }
+        public Nullable<System.DateTime> updateTime { get; set; }
     
         public virtual C_purpose C_purpose { get; set; }
     }

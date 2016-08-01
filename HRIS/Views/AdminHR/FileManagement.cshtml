@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "FileManagement";
+    Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
+}
+
+<h2>FileManagement</h2>
+
+<form enctype="multipart/form-data" method="post" action="http://localhost:54636/api/file/UploadFiles" id="ajaxUploadForm" novalidate="novalidate">
+
+    <fieldset>
+        <legend>Upload Form</legend>
+        <ol>
+            <li>
+                <label>Description </label>
+                <input type="text" style="width:317px" name="description" id="description">
+            </li>
+            <li>
+                <label>upload </label>
+                <input type="file" id="fileInput" name="fileInput" multiple>
+            </li>
+            <li>
+                <input type="submit" value="Upload" id="ajaxUploadButton" class="btn">
+            </li>
+        </ol>
+    </fieldset>
+</form>
