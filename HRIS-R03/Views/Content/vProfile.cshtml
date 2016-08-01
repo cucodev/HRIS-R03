@@ -9,6 +9,8 @@
     <link href="@Url.Content("~/Content/csProfile.css")" rel="stylesheet" />
     <script type="text/javascript">
         $(document).ready(function () {
+            $('#UpdateButton').show();
+            $('#SaveButton').hide();
 
             //var idv = "@ViewBag.cIDV";
             console.log("jsProfile Loaded");
@@ -190,7 +192,8 @@
 
                     bindOnChange("AddressProv", "AddressKab", "AddressKec");
 
-                    bindButton("SubmitButton");
+                    bindButton("UpdateButton");
+                    bindButton("SaveButton");
                     //==========================================================================================================
 
                     function jsLOV(name) {
@@ -231,6 +234,7 @@
                         try {
                             $("#" + div).jqxButton({ disabled: vStatus, theme: 'orange', width: 120, height: 40 });
                             var str = eval('dt.' + div);
+                            str = $.trim(str);
                             $('#' + div).val(str);
                         } catch (err) {
                             console.log('Error: ', err)
@@ -242,6 +246,7 @@
                         try {
                             $("#" + div).jqxTextArea({ disabled: vStatus, placeHolder: "Text", width: '100%', height: 80 });
                             var str = eval('dt.' + div);
+                            str = $.trim(str);
                             $('#' + div).val(str);
                         } catch (err) {
                             console.log('Error: ', err)
@@ -250,8 +255,9 @@
 
                     function bindDateTime(div) {
                         try {
-                            $("#" + div).jqxDateTimeInput({ disabled: vStatus, theme: th, height: '35px', width: '100%' });
+                            $("#" + div).jqxDateTimeInput({ disabled: true, theme: th, height: '35px', width: '100%' });
                             var str = eval('dt.' + div);
+                            str = $.trim(str);
                             $('#' + div).jqxDateTimeInput({ value: new Date(str) });
                         } catch (err) {
                             console.log('Error: ', err)
@@ -263,6 +269,7 @@
                             var th = $.jStorage.get("th");
                             $("#" + div).jqxInput({ disabled: true, theme: th, width: '100%', height: '35px' });
                             var str = eval('dt.' + div);
+                            str = $.trim(str);
                             $('#' + div).val(str);
                         } catch (err) {
                             console.log('Error: ', err)
@@ -272,9 +279,10 @@
                     function bindCategory(div, value) {
                         try {
                             var th = $.jStorage.get("th");
-                            $("#" + div).jqxDropDownList({ source: jsLOV(value), theme: th, disabled: false, displayMember: "label", valueMember: "value", width: '100%' });
+                            $("#" + div).jqxDropDownList({ source: jsLOV(value), theme: th, disabled: true, displayMember: "label", valueMember: "value", width: '100%' });
                             var str = eval('dt.' + div);
                             console.log(div,str);
+                            str = $.trim(str);
                             $("#" + div).jqxDropDownList('val', str);
                         } catch (err) {
                             console.log('Error: ', err)
@@ -284,8 +292,9 @@
                     function bindLocation(div, value) {
                         try {
                             var th = $.jStorage.get("th");
-                            $("#" + div).jqxDropDownList({ source: jsRegion(value), theme: th, disabled: false, displayMember: "label", valueMember: "value", width: '100%' });
+                            $("#" + div).jqxDropDownList({ source: jsRegion(value), theme: th, disabled: true, displayMember: "label", valueMember: "value", width: '100%' });
                             var str = eval('dt.' + div);
+                            str = $.trim(str);
                             $("#" + div).jqxDropDownList('val', str);
                             console.log(div + ' current value ' + $("#" + div).val() + ': With Value : ' + str) ;
                         } catch (err) {
@@ -412,6 +421,210 @@
 
 
         });
+        $('#UpdateButton').click(function(){
+            prepareEdit();
+            $('#UpdateButton').hide();
+            $('#SaveButton').show();
+        });
+
+        $('#SaveButton').click(function(){
+            prepareSave();
+        });
+        function inputEnable(div){
+            $('#'+div).jqxInput({disabled: false });
+        }
+
+        function dropDownEnable(div){
+            $('#'+div).jqxDropDownList({disabled: false });
+        }
+
+        function dateTimeEnable(div){
+            $('#'+div).jqxDateTimeInput({disabled: false });
+        }
+
+        function textAreaEnable(div){
+            $('#'+div).jqxTextArea({disabled: false });
+        }
+
+        function getValue(div){
+            value = $('#'+div).val();
+            return $.trim(value);
+        }
+
+        function prepareSave(){
+            row = {
+                Nationality : getValue("Nationality"),
+                Birthplace : getValue("Birthplace"),
+                Birthdate : getValue("Birthdate"),
+                NIP : getValue("NIP"),
+                Marital : getValue("Marital"),
+                Gender : getValue("Gender"),
+                Religion : getValue("Religion"),
+                NickName : getValue("NickName"),
+                Name : getValue("Name"),
+                
+                // Employee
+                active : getValue("active"),
+                contract3End : getValue("contract3End"),
+                contract3Start : getValue("contract3Start"),
+                contract2End : getValue("contract2End"),
+                contract2Start : getValue("contract2Start"),
+                contract1End : getValue("contract1End"),
+                contract1Start : getValue("contract1Start"),
+                resignDate : getValue("resignDate"),
+                joinDate : getValue("joinDate"),
+                employmentStatus : getValue("employmentStatus"),
+                UID_ABSENCE : getValue("UID_ABSENCE"),
+                employeeID : getValue("employeeID"),
+
+                // Job
+                Note : getValue("Note"),
+                endDate : getValue("endDate"),
+                startDate : getValue("startDate"),
+                JobLocation : getValue("JobLocation"),
+                JobLevel : getValue("JobLevel"),
+                JobPosition : getValue("JobPosition"),
+                JobDivision : getValue("JobDivision"),
+                JobDepartement : getValue("JobDepartement"),
+                jobName : getValue("jobName"),
+                parentIDV : getValue("parentIDV"),
+                personJobID : getValue("personJobID"),
+
+                //Education
+                eduValue : getValue("eduValue"),
+                eduMajor : getValue("eduMajor"),
+                eduLevel : getValue("eduLevel"),
+                eduGraduate : getValue("eduGraduate"),
+                eduCountry : getValue("eduCountry"),
+                personEduID : getValue("personEduID"),
+
+                //Work Experience
+                reason : getValue("reason"),
+                Stop : getValue("Stop"),
+                Start : getValue("Start"),
+                lastPosition : getValue("lastPosition"),
+                companyName : getValue("companyName"),
+                personWorkExperienceID : getValue("personWorkExperienceID"),
+
+                //Language
+                written : getValue("written"),
+                spoken : getValue("spoken"),
+                languageName : getValue("languageName"),
+                personLanguageID : getValue("personLanguageID"),
+
+                //Skill & Certification
+                issuedExpiredDate : getValue("issuedExpiredDate"),
+                issuedDate : getValue("issuedDate"),
+                issuedCity : getValue("issuedCity"),
+                issuedCountry : getValue("issuedCountry"),
+                certificationName : getValue("certificationName"),
+                personCertificationID : getValue("personCertificationID"),
+                skillLevel : getValue("skillLevel"),
+                skillName : getValue("skillName"),
+                personSkillID : getValue("personSkillID"),
+
+                //Training
+                TrainingEndDate : getValue("TrainingEndDate"),
+                TrainingStartDate : getValue("TrainingStartDate"),
+                TrainingCertificate : getValue("TrainingCertificate"),
+                TrainingSponsor : getValue("TrainingSponsor"),
+                TrainingName : getValue("TrainingName"),
+                personTrainingID : getValue("personTrainingID"),
+
+                AddressKec : getValue("AddressKec"),
+                AddressKab : getValue("AddressKab"),
+                AddressProv : getValue("AddressProv"),
+                AddressKel : getValue("AddressKel"),
+                Address : getValue("Address")
+            }
+            console.log("prepareSave",row);
+        }
+        function prepareEdit(){
+
+            inputEnable("Name");
+            inputEnable("NickName");
+            dropDownEnable("Religion", "getReligion");
+            dropDownEnable("Gender", "getGender");
+            dropDownEnable("Marital", "getMarital");
+            inputEnable("NIP");
+            dateTimeEnable("Birthdate");
+            inputEnable("Birthplace");
+            dropDownEnable("Nationality", "getCountry");
+                    
+            // Employee
+            inputEnable("employeeID");
+            inputEnable("UID_ABSENCE");
+            dropDownEnable("employmentStatus", "getEmpStatus");
+            dateTimeEnable("joinDate");
+            dateTimeEnable("resignDate");
+            dateTimeEnable("contract1Start");
+            dateTimeEnable("contract1End");
+            dateTimeEnable("contract2Start");
+            dateTimeEnable("contract2End");
+            dateTimeEnable("contract3Start");
+            dateTimeEnable("contract3End");
+            inputEnable("active");
+
+            // Job
+            inputEnable("personJobID");
+            inputEnable("parentIDV");
+            inputEnable("jobName");
+            dropDownEnable("JobDepartement","getDepartment");
+            dropDownEnable("JobDivision","getDivision");
+            dropDownEnable("JobPosition","getPosition");
+            dropDownEnable("JobLevel","getLevel");
+            inputEnable("JobLocation");
+            dateTimeEnable("startDate");
+            dateTimeEnable("endDate");
+            inputEnable("Note");
+
+            //Education
+            inputEnable("personEduID")
+            dropDownEnable("eduCountry", "getCountry");
+            dropDownEnable("eduGraduate", "getCountry");
+            dropDownEnable("eduLevel", "getEdu");
+            inputEnable("eduMajor");
+            inputEnable("eduValue");
+
+            //Work Experience
+            inputEnable("personWorkExperienceID");
+            inputEnable("companyName");
+            inputEnable("lastPosition");
+            dateTimeEnable("Start");
+            dateTimeEnable("Stop");
+            inputEnable("reason");
+
+            //Language
+            inputEnable("personLanguageID");
+            inputEnable("languageName");
+            inputEnable("spoken");
+            inputEnable("written");
+
+            //Skill & Certification
+            inputEnable("personSkillID");
+            inputEnable("skillName");
+            dropDownEnable("skillLevel","getSkillLevel");
+            inputEnable("personCertificationID");
+            inputEnable("certificationName");
+            dropDownEnable("issuedCountry","getCountry");
+            inputEnable("issuedCity");
+            dateTimeEnable("issuedDate");
+            dateTimeEnable("issuedExpiredDate");
+
+            //Training
+            inputEnable("personTrainingID");
+            inputEnable("TrainingName");
+            inputEnable("TrainingSponsor");
+            inputEnable("TrainingCertificate");
+            dateTimeEnable("TrainingStartDate");
+            dateTimeEnable("TrainingEndDate");
+
+            textAreaEnable("Address");
+            inputEnable("AddressKel");
+            dropDownEnable("AddressProv",0);
+            dropDownEnable("AddressKab");
+            dropDownEnable("AddressKec");
+        }
     </script>
 
 }
@@ -433,7 +646,8 @@
     </div>
     <div class="col-md-1" style="vertical-align:bottom;">
         <br />
-        <input type="submit" class="btn btn-default" value="Update" id='SubmitButton' />
+        <input type="submit" class="btn btn-default" value="Update" id='UpdateButton' />
+        <input type="submit" class="btn btn-default" value="Save" id='SaveButton' />
     </div>
 
 </div>
@@ -817,6 +1031,16 @@
                     <div class="col-md-12">
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label for="jobName">Name</label>
+                                <input type="text" class="form-control" placeholder="Job Name" id="jobName" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <label for="JobDepartement">Department</label>
                                 <div id="JobDepartement"></div>
                             </div>
@@ -840,6 +1064,16 @@
                             <div class="form-group">
                                 <label for="JobPosition">Position</label>
                                 <div id="JobPosition"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="JobLevel">Level</label>
+                                <div id="JobLevel"></div>
                             </div>
                         </div>
                     </div>
