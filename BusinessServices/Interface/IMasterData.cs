@@ -33,7 +33,7 @@ namespace BusinessServices.Interface
         bool UpdateMatrix(int ID, roleBasedMatrixEntities roleBasedMatrixEntities);
         bool UpdateMatrixCategory(int ID, roleBasedMatrixEntities roleBasedMatrixEntities);
         bool DeleteMatrix(int ID);
-        bool CalculateMatrix();
+        bool CalculateMatrix(int IDVUpdate);
     }
 
     //For Manage Content Data

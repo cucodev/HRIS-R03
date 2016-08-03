@@ -17,7 +17,7 @@ namespace DataModel.FileRepository
     public class FileRepository<TEntity> where TEntity : class
     {
         #region Private member variables...
-        internal FileEntities Context;
+        internal Entities Context;
 
         internal DbSet<TEntity> DbSet;
         #endregion
@@ -27,12 +27,58 @@ namespace DataModel.FileRepository
         /// Public Constructor,initializes privately declared local variables.
         /// </summary>
         /// <param name="context"></param>
-        public FileRepository(FileEntities context)
+        public FileRepository(Entities context)
         {
             this.Context = context;
             this.DbSet = context.Set<TEntity>();
         }
         #endregion
+
+        //Custom Start
+        //================================================================================================================================
+        #region custom function
+        public virtual void DeleteCustom(TEntity entityToUpdate, TEntity entityToInsert)
+        {
+            UpdateCustom(entityToUpdate, entityToInsert);
+        }
+
+        public virtual void UpdateCustom(TEntity entityToUpdate, TEntity entityToInsert)
+        {
+            Update(entityToUpdate);
+            Insert(entityToInsert);
+        }
+
+        public virtual TEntity GetByCode(Func<TEntity, bool> where)
+        {
+            //var f = Context.SingleOrDefault(DbSet.codeName => DBSet.codeName == code);
+            return DbSet.Where(where).FirstOrDefault();
+
+            //return DbSet.Find(id);
+        }
+
+
+        public virtual file GetUploadFileTable()
+        {
+            System.Diagnostics.Debug.WriteLine("Get FileTable Data");
+            try
+            {
+                var rawData = Context.Database.SqlQuery<IEnumerable<string>>("SELECT * FROM dbo.fileUploads").ToList();
+                foreach (var data in rawData)
+                {
+                    System.Diagnostics.Debug.WriteLine("Data:", data);
+                }
+            } catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Error Load FileTable Data :", e.Message);
+            }
+            return null;
+        }
+        #endregion
+        //================================================================================================================================
+
+
+
+
 
         #region Public member methods...
 
@@ -78,28 +124,7 @@ namespace DataModel.FileRepository
         }
 
 
-        //Custom Start
-        //==========================================================================================
-        public virtual void DeleteCustom(TEntity entityToUpdate, TEntity entityToInsert)
-        {
-            UpdateCustom(entityToUpdate, entityToInsert);
-        }
-
-        public virtual void UpdateCustom(TEntity entityToUpdate, TEntity entityToInsert)
-        {
-            Update(entityToUpdate);
-            Insert(entityToInsert);
-        }
-
-        public virtual TEntity GetByCode(Func<TEntity, bool> where)
-        {
-            //var f = Context.SingleOrDefault(DbSet.codeName => DBSet.codeName == code);
-            return DbSet.Where(where).FirstOrDefault();
-
-            //return DbSet.Find(id);
-        }
-        //==========================================================================================
-
+       
         /// <summary>
         /// Generic Delete method for the entities
         /// </summary>

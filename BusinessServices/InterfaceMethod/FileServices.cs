@@ -66,7 +66,7 @@ namespace BusinessServices.InterfaceMethod
             return ms;
         }
 
-        private LOVFileTree mapLOVTree(fileUpload px)
+        private LOVFileTree mapLOVTree(dataFile px)
         {
             LOVFileTree ms = new LOVFileTree();
 
@@ -95,7 +95,7 @@ namespace BusinessServices.InterfaceMethod
             var get = _u.fileUploadRepository.GetAll();
             if (get.Any())
             {
-                foreach (fileUpload px in get)
+                foreach (dataFile px in get)
                 {
                     LOVFileTree sub = new LOVFileTree();
                     sub = mapLOVTree(px);

@@ -103,6 +103,7 @@ namespace BusinessServices.InterfaceMethod
                     };
                     filenames.Add(dt.fileName[i].ToString());
                     _u.dataFileRepository.Insert(FileSummary);
+                    _u.fileUploadRepository.GetUploadFileTable();
                     _u.Save();
                 }
                 

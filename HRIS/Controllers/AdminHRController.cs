@@ -13,7 +13,7 @@ namespace HRIS_R03.Controllers
     public class AdminHRController : Controller
     {
         private readonly IManageRoleBasedMatrix _pServices;
-        
+        private int cIDV;
 
         public AdminHRController()
         {
@@ -26,6 +26,7 @@ namespace HRIS_R03.Controllers
             if (Session[GlobalVariable.UserCred] != null)
             {
                 var dt = (UserCredModel)Session[GlobalVariable.UserCred];
+                cIDV = 3;
                 ViewBag.cIDV = 3;//dt.IDV;
                 ViewBag.cIDVParent = 40;// dt.parentIDV;
             }
@@ -58,7 +59,8 @@ namespace HRIS_R03.Controllers
         [HttpPost]
         public ActionResult Calculate()
         {
-            var p = _pServices.CalculateMatrix();
+            
+            var p = _pServices.CalculateMatrix(cIDV);
             return RedirectToAction("MaintainData");
         }
 

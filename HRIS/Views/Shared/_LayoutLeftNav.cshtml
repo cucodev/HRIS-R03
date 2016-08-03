@@ -15,7 +15,7 @@
 
     @RenderSection("scripts", required: false)
     @RenderSection("jsData", required: false)
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
             $.sidebarMenu($('.sidebar-menu'));
@@ -25,14 +25,145 @@
         });
     </script>
     <style>
-        body {
-            padding-top: 0;
-            padding-bottom: 0;
-            font-size: 12px;
+                body {
+                    padding-top: 0;
+                    padding-bottom: 0;
+                    font-size: 12px;
+                }
+
+                .jqx-tabs {
+                    border: 0;
+                }
+
+
+                .Line {
+                    margin-top: 0;
+                }
+
+                /** The Magic **/
+        .btn-breadcrumb .btn:not(:last-child):after {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 17px solid transparent;
+          border-bottom: 17px solid transparent;
+          border-left: 10px solid white;
+          position: absolute;
+          top: 50%;
+          margin-top: -17px;
+          left: 100%;
+          z-index: 3;
         }
-        
-        .jqx-tabs {
-            border: 0;
+        .btn-breadcrumb .btn:not(:last-child):before {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 17px solid transparent;
+          border-bottom: 17px solid transparent;
+          border-left: 10px solid rgb(173, 173, 173);
+          position: absolute;
+          top: 50%;
+          margin-top: -17px;
+          margin-left: 1px;
+          left: 100%;
+          z-index: 3;
+        }
+
+        /** The Spacing **/
+        .btn-breadcrumb .btn {
+          padding:6px 12px 6px 24px;
+        }
+        .btn-breadcrumb .btn:first-child {
+          padding:6px 6px 6px 10px;
+        }
+        .btn-breadcrumb .btn:last-child {
+          padding:6px 18px 6px 24px;
+        }
+
+        /** Default button **/
+        .btn-breadcrumb .btn.btn-default:not(:last-child):after {
+          border-left: 10px solid #fff;
+        }
+        .btn-breadcrumb .btn.btn-default:not(:last-child):before {
+          border-left: 10px solid #ccc;
+        }
+        .btn-breadcrumb .btn.btn-default:hover:not(:last-child):after {
+          border-left: 10px solid #ebebeb;
+        }
+        .btn-breadcrumb .btn.btn-default:hover:not(:last-child):before {
+          border-left: 10px solid #adadad;
+        }
+
+        /** Primary button **/
+        .btn-breadcrumb .btn.btn-primary:not(:last-child):after {
+          border-left: 10px solid #428bca;
+        }
+        .btn-breadcrumb .btn.btn-primary:not(:last-child):before {
+          border-left: 10px solid #357ebd;
+        }
+        .btn-breadcrumb .btn.btn-primary:hover:not(:last-child):after {
+          border-left: 10px solid #3276b1;
+        }
+        .btn-breadcrumb .btn.btn-primary:hover:not(:last-child):before {
+          border-left: 10px solid #285e8e;
+        }
+
+        /** Success button **/
+        .btn-breadcrumb .btn.btn-success:not(:last-child):after {
+          border-left: 10px solid #5cb85c;
+        }
+        .btn-breadcrumb .btn.btn-success:not(:last-child):before {
+          border-left: 10px solid #4cae4c;
+        }
+        .btn-breadcrumb .btn.btn-success:hover:not(:last-child):after {
+          border-left: 10px solid #47a447;
+        }
+        .btn-breadcrumb .btn.btn-success:hover:not(:last-child):before {
+          border-left: 10px solid #398439;
+        }
+
+        /** Danger button **/
+        .btn-breadcrumb .btn.btn-danger:not(:last-child):after {
+          border-left: 10px solid #d9534f;
+        }
+        .btn-breadcrumb .btn.btn-danger:not(:last-child):before {
+          border-left: 10px solid #d43f3a;
+        }
+        .btn-breadcrumb .btn.btn-danger:hover:not(:last-child):after {
+          border-left: 10px solid #d2322d;
+        }
+        .btn-breadcrumb .btn.btn-danger:hover:not(:last-child):before {
+          border-left: 10px solid #ac2925;
+        }
+
+        /** Warning button **/
+        .btn-breadcrumb .btn.btn-warning:not(:last-child):after {
+          border-left: 10px solid #f0ad4e;
+        }
+        .btn-breadcrumb .btn.btn-warning:not(:last-child):before {
+          border-left: 10px solid #eea236;
+        }
+        .btn-breadcrumb .btn.btn-warning:hover:not(:last-child):after {
+          border-left: 10px solid #ed9c28;
+        }
+        .btn-breadcrumb .btn.btn-warning:hover:not(:last-child):before {
+          border-left: 10px solid #d58512;
+        }
+
+        /** Info button **/
+        .btn-breadcrumb .btn.btn-info:not(:last-child):after {
+          border-left: 10px solid #5bc0de;
+        }
+        .btn-breadcrumb .btn.btn-info:not(:last-child):before {
+          border-left: 10px solid #46b8da;
+        }
+        .btn-breadcrumb .btn.btn-info:hover:not(:last-child):after {
+          border-left: 10px solid #39b3d7;
+        }
+        .btn-breadcrumb .btn.btn-info:hover:not(:last-child):before {
+          border-left: 10px solid #269abc;
         }
 
     </style>
@@ -41,7 +172,7 @@
 <body>
     <div class="row" style="height: 50px; box-shadow: 0px 1px #d7e9f3;">
         <div class="col-md-2"></div>
-        <div class="col-md-6" style="margin-top:10px; margin-left: -20px"><img src="~/Content/bg/hollit-logo-small.png" alt="Logo" height="23"></div>
+        <div class="col-md-6" style="margin-top:10px; margin-left: -38px"><img src="~/Content/bg/hollit-logo-small.png" alt="Logo" height="23"></div>
         <div class="col-md-4"></div>
     </div>
     <div class="row" style="margin-top: 0; margin-left:-15px;">
@@ -74,7 +205,7 @@
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li>@Html.ActionLink("Leave", "vLeave", "Content")</li>
+                            <li>@Html.ActionLink("Leave", "Leave", "Content")</li>
                             <li>@Html.ActionLink("Medical", "vMedical", "Content")</li>
                             <li>@Html.ActionLink("Approval", "vApproval", "Content")</li>
                         </ul>
@@ -121,7 +252,7 @@
                         <ul class="treeview-menu">
                             <li>@Html.ActionLink("My Profile", "vProfile", "Content")</li>
                             <li>@Html.ActionLink("My Dependent", "vDependent", "Content")</li>
-                            <li>@Html.ActionLink("My Statistic", "vStatistic", "Content")</li>
+                            <li>@Html.ActionLink("My Matrix", "MyMatrix", "Content")</li>
                             <li>@Html.ActionLink("My Maps", "vMap", "Content")</li>
                             <li>@Html.ActionLink("Employee Profile", "vEmployeeGrid", "Content")</li>
                         </ul>
@@ -176,15 +307,11 @@
                 </ul>
             </section>
         </div>
-        <div class="col-md-9" style="height:500px; margin-top: 0">
-            <section>
+        <div class="col-md-10" style=" margin-top: 0">
+            
                 @RenderBody()
-            </section>
         </div>
-        <div class="col-md- pull-right" style="width:20px; background-color:cadetblue; display:block;">
-            <div style="height:100%; width:100%; background-color:cadetblue; display:block;">
-            </div>
-        </div>
+       
     </div>
 </body>
 </html>

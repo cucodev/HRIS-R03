@@ -20,11 +20,11 @@ namespace DataModel.UnitOfWork
         #region Private member variables...
 
         private Entities _context = null;
-        private FileEntities _filecontext = null;
+        private Entities _filecontext = null;
 
         //Test with directly using custom DataModel (codefisrt)
         private FileRepository<filePersonImage> _filePersonImageRepository;
-        private FileRepository<fileUpload> _fileUploadRepository;
+        private FileRepository<dataFile> _fileUploadRepository;
         //private FileRepository<fileUpload> _fileUpload;
 
 
@@ -63,7 +63,7 @@ namespace DataModel.UnitOfWork
         public UnitOfWork()
         {
             _context = new Entities();
-            _filecontext = new FileEntities();
+            _filecontext = new Entities();
         }
 
 
@@ -77,12 +77,12 @@ namespace DataModel.UnitOfWork
                 return _filePersonImageRepository;
             }
         }
-        public FileRepository<fileUpload> fileUploadRepository
+        public FileRepository<dataFile> fileUploadRepository
         {
             get
             {
                 if (this._fileUploadRepository == null)
-                    this._fileUploadRepository = new FileRepository<fileUpload>(_filecontext);
+                    this._fileUploadRepository = new FileRepository<dataFile>(_filecontext);
                 return _fileUploadRepository;
             }
         }

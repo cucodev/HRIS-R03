@@ -22,12 +22,20 @@ namespace HRIS_R03.Controllers
                 var dt = (UserCredModel)Session[GlobalVariable.UserCred];
                 ViewBag.cIDV = 3;//dt.IDV;
                 ViewBag.cIDVParent = 40;// dt.parentIDV;
+                ViewBag.cIDVLevel = 71;
             }
         }
         
         // GET: Content
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult Leave()
+        {
+            ViewBag.cIDV = 3;//dt.IDV;
+            ViewBag.cIDVParent = 40;
             return View();
         }
 
@@ -80,7 +88,14 @@ namespace HRIS_R03.Controllers
             return View();
         }
 
-        
+        public ActionResult MyMatrix()
+        {
+            ViewBag.cIDV = 3;//dt.IDV;
+            ViewBag.cIDVParent = 40;// dt.parentIDV;
+            ViewBag.cIDVLevel = 71;
+            current();
+            return View();
+        }
         
     }
 }

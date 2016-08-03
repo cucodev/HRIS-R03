@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InterfaceMethod\DataServices.cs" />
+    <Compile Include="InterfaceMethod\EmployeeServices.cs" />
     <Compile Include="InterfaceMethod\FileDataServices.cs" />
     <Compile Include="InterfaceMethod\FileServices.cs" />
     <Compile Include="InterfaceMethod\ListServices.cs" />
@@ -54,12 +55,14 @@
     <Compile Include="InterfaceMethod\SecurityServices.cs" />
     <Compile Include="Interface\IData.cs" />
     <Compile Include="Interface\IEmail.cs" />
+    <Compile Include="Interface\IEmployee.cs" />
     <Compile Include="Interface\IFile.cs" />
     <Compile Include="Interface\IFileData.cs" />
     <Compile Include="Interface\IMasterData.cs" />
     <Compile Include="Interface\Isecurity.cs" />
     <Compile Include="Interface\IList.cs" />
     <Compile Include="Interface\Iprofile.cs" />
+    <Compile Include="Mapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

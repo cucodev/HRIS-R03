@@ -11,7 +11,7 @@ namespace BusinessServices.Interface
 {
     public interface IData
     {
-        int updateServiceYear(int IDV);
+        int updateEmployeeServiceYear(int IDV);
 
         //get returned Employee duraton of Service 
         //tbl: employee

@@ -209,6 +209,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminHRController.cs" />
+    <Compile Include="Controllers\api\employee\employeeController.cs" />
     <Compile Include="Controllers\api\FileController.cs" />
     <Compile Include="Controllers\api\listController.cs" />
     <Compile Include="Controllers\api\profile\profileCertificationController.cs" />
@@ -895,7 +896,6 @@
     <Content Include="Views\SharedMaintainData\_roleBasedMatrix.cshtml" />
     <Content Include="Views\AdminHR\EmployeeManagement.cshtml" />
     <Content Include="Views\SharedMaintainData\_employeeHRProfile.cshtml" />
-    <Content Include="Views\SharedMaintainData\_employeeRoleMatrix.cshtml" />
     <Content Include="Views\SharedMaintainData\_leaveForm.cshtml" />
     <Content Include="Views\SharedMaintainData\_leaveGrid.cshtml" />
     <Content Include="Views\Shared\_LayoutLeftNav.cshtml" />
@@ -906,6 +906,8 @@
     <Content Include="Views\SharedMaintainData\_mailboxGrid.cshtml" />
     <Content Include="Views\Content\MyDependent.cshtml" />
     <Content Include="Views\AdminHR\FileManagement.cshtml" />
+    <Content Include="Views\Content\MyMatrix.cshtml" />
+    <Content Include="Views\Content\Leave.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

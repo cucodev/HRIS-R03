@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "MyMatrix";
+    Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
+}
+
+            <div class="row">
+                <div class="btn-group btn-breadcrumb">
+                    <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
+                    <a href="#" class="btn btn-info">Employee</a>
+                    <a href="#" class="btn btn-success">My Matrix</a>
+                </div>
+                <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
+
+            </div>
+
+
+<script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var PolicyName = hris.list._getLOV('getPolicyType');
+        var ValueName = hris.list._getLOV('getValueType');
+
+        //GRID
+        //================================================================================================================
+        var url = '/api/employee/getRoleBased/41';
+        var source =
+            {
+                datatype: "json",
+                datafields: [
+                    { name: 'ID', type: 'number' },
+                    { name: 'IDV', type: 'number' },
+                    { name: 'policyType', type: 'number' },
+                    { name: 'policyTypeName', value: 'policyType', values: { source: PolicyName.records, value: 'value', name: 'label' } },
+                    { name: 'valueType', type: 'number' },
+                    { name: 'valueTypeName', value: 'valueType', values: { source: ValueName.records, value: 'value', name: 'label' } },
+                    { name: 'roleBasedValue', type: 'number' },
+                    { name: 'currentValue', type: 'number' },
+                    { name: 'balanceValue', type: 'number' },
+                    { name: 'remainingValue', type: 'number' },
+                    { name: 'validDateStart', type: 'date' },
+                    { name: 'validDateStop', type: 'date' },
+                    { name: 'description', type: 'number' },
+                    { name: 'vCreatedBy', type: 'number' },
+                    { name: 'vUpdatedBy', type: 'number' },
+                    { name: 'createTime', type: 'date' },
+                    { name: 'updateTime', type: 'date' }
+                ],
+                url: url
+            };
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            //autoBind: true,
+            contentType: 'application/json; charset=utf-8',
+            loadComplete: function (records) {
+                //console.log('Data Adapter OK : ', records);
+            },
+            loadError: function (jqXHR, status, error) {
+                console.log('Retrieve Error : ', jqXHR.responseText);
+            },
+            beforeLoadComplete: function (records) {
+                //console.log(records);
+            }
+        });
+
+        $("#jqxgrid").jqxGrid(
+            {
+                width: '100%',
+                height: 550,
+                theme: 'metro',
+                source: dataAdapter,
+                pageable: true,
+                pagesize: 20,
+                autorowheight: true,
+                altrows: true,
+                columnsresize: true,
+                filterable: true,
+                groupable: true,
+                //selectionmode: 'multiplecellsadvanced',
+                columns: [
+                    { text: 'ID', datafield: 'ID', width: 20, hidden: true },
+                    { text: 'policyType', datafield: 'policyType', width: 100, hidden: true },
+                    { text: 'Description', datafield: 'policyTypeName', width: 383 },
+                    { text: 'Type', datafield: 'valueTypeName', columngroup: 'Value', width: 80 },
+                    { text: 'Plafond', datafield: 'roleBasedValue', cellsformat: 'n', columngroup: 'Value', cellsalign: 'right', width: 60 },
+                    { text: 'Current', datafield: 'currentValue', cellsformat: 'n', columngroup: 'Value', cellsalign: 'right', width: 60 },
+                    { text: 'Balance', datafield: 'balanceValue', cellsformat: 'n', columngroup: 'Value', cellsalign: 'right', width: 60 },
+                    { text: 'Remaining', datafield: 'remainingValue', cellsformat: 'n', columngroup: 'Value', cellsalign: 'right', width: 60 },
+                    { text: 'From', datafield: 'validDateStart', filtertype: 'date', columngroup: 'Valid', cellsformat: 'd', width: 80 },
+                    { text: 'To', datafield: 'validDateStop', filtertype: 'date', columngroup: 'Valid', cellsformat: 'd', width: 80 },
+                    { text: 'create', datafield: 'createTime', columngroup: 'time', cellsformat: 'd', width: 80, hidden: true },
+                    { text: 'update', datafield: 'updateTime', columngroup: 'time', cellsformat: 'd', width: 80 }
+
+                ],
+                columngroups:
+                [
+                  { text: 'Timestamps', align: 'center', name: 'time' },
+                  { text: 'Valid Date', align: 'center', name: 'Valid' },
+                  { text: 'Value',  align: 'center', name: 'Value' }
+                ]
+            });
+    })
+</script>
+<div class="row">
+    <div class="col-md-1">
+        <h4 style="border-bottom: 1px solid #052135">&nbsp;</h4>
+    </div>
+    <div class="col-md-11">
+        <h4 style="border-bottom: 1px solid #2a5370">My Matrix</h4>
+        
+    </div>
+</div>
+<div class="row">
+        <div id="jqxgrid"></div>
+    
+</div>
+<div>IDV: '@ViewBag.cIDV', IDVParent: '@ViewBag.cIDVParent', Level: '@ViewBag.cIDVLevel' </div>

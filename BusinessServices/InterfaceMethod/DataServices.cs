@@ -56,7 +56,7 @@ namespace BusinessServices.InterfaceMethod
 
         //Update employee service duration data
         //tbl: employee
-        public int updateServiceYear(int IDV)
+        public int updateEmployeeServiceYear(int IDV)
         {
             var EmpID = _u.employeeRepository.GetMany(b => b.IDV == IDV);
             using (var scope = new TransactionScope())
@@ -78,7 +78,8 @@ namespace BusinessServices.InterfaceMethod
         }
 
 
-        private bool isAnnualExist(int IDV)
+        //NEED TO ADD FILTER VALID YEARS
+        private bool isAnnualExist(int IDV, int Years)
         {
             var policyID = _u.roleBasedMatrixRepository.GetAll().ToList();
             if (policyID.Any())
@@ -88,7 +89,7 @@ namespace BusinessServices.InterfaceMethod
                     string annualCatCode = getCatCode(role.PolicyType);
                     if ((GlobalVariable.policyTypeAnnual).Trim() == annualCatCode.Trim())
                     {
-                        var isOK = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == IDV && b.policyType == role.ID);
+                        var isOK = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == IDV && b.policyType == role.ID && (b.validDateStart.Value.Year) == Years);
                         if (isOK.Any())
                         {
                             return true;
@@ -99,13 +100,44 @@ namespace BusinessServices.InterfaceMethod
 
             return false;
         }
-        
-        
+
+        private bool isRegularRoleExist(int IDV, int policyID)
+        {
+            var isOK = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == IDV && b.ID == policyID);
+            if (isOK.Any())
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        private employeeRoleBased mapUpdateField(employeeRoleBased ph, roleBasedMatrix role, string Level)
+        {
+            //employeeRoleBased ph = new employeeRoleBased();
+
+            ph.policyType = role.ID;
+            ph.roleBasedValue = roleBasedValueByLevel(Level, role.ID);
+            ph.valueType = role.ValueType.HasValue ? role.ValueType.Value : 0;
+            ph.updateTime = DateTime.Now;
+
+            return ph;
+        }
+
+        private employeeRoleBased mapInsertField(roleBasedMatrix role, string Level)
+        {
+            return null;
+        }
+
         //Update empployeeRoleMatrix data
         //tbl: employeeRoleBased
-        public bool updateServiceType(int IDV)
+        public bool updateEmployeeRoleBased(int IDV, int IDVUpdate)
         {
             employeeRoleBased mp = new employeeRoleBased();
+
+            //GET ALL EMPLOYEE
+            //TBL: EMPLOYEE
+            #region LOOPING EMPLOYEE
             var EmpID = _u.employeeRepository.GetMany(b => b.IDV == IDV);
             if (EmpID.Any())
             {
@@ -113,119 +145,175 @@ namespace BusinessServices.InterfaceMethod
                 {
                     foreach (employee p in EmpID)
                     {
-                        
-                        var Current = (p.joinDate).Month + "/" + (p.joinDate).Day + "-" + (p.joinDate).Year;
-                        var Next = (p.joinDate).Month + "/" + (p.joinDate).Day + "/" + ( (p.joinDate).Year + 1);
-                        //System.Diagnostics.Debug.WriteLine("Next: {0}", Next);
-                        DateTime validStart = Convert.ToDateTime(Current);
-                        DateTime validEnd = Convert.ToDateTime(Next);
+                        #region LOOPING YEARS TO NOW // STRICT TO LAST 5 YEARS BACKWARDS ONLY 
+                        int CurrentYears = DateTime.Now.Year;
+                        int EmpYears = p.joinDate.Year;
+                        int YearLoop = CurrentYears - EmpYears;
+                        if (YearLoop >= 5) YearLoop = 5;
 
-                        int matchFound = 0;
-
-                        //Get All Category
-                        var policyRole = _u.roleBasedMatrixRepository.GetAll().ToList();
-                        foreach (roleBasedMatrix role in policyRole)
+                        while (YearLoop >= 1)
                         {
-                            
+                            System.Diagnostics.Debug.WriteLine(" -------------------- Years Loop: " + YearLoop + " : " + (CurrentYears - 1));
 
-                            //Get Job Level of each IDV
-                            var empJob = _u.personJobRepository.GetByCode(b => b.IDV == p.IDV);
-                            if (empJob.JobLevel != null)
+                            var Current = (p.joinDate).Month + "/" + (p.joinDate).Day + "-" + CurrentYears;
+                            var Next = (p.joinDate).Month + "/" + (p.joinDate).Day + "/" + (CurrentYears + 1);
+                            //System.Diagnostics.Debug.WriteLine("Next: {0}", Next);
+                            DateTime validStart = Convert.ToDateTime(Current);
+                            DateTime validEnd = Convert.ToDateTime(Next);
+
+                            int matchFound = 0;
+
+                            #region LOOPING ROLEBASED CATEGORY 
+                            var policyRole = _u.roleBasedMatrixRepository.GetAll().ToList();
+                            foreach (roleBasedMatrix role in policyRole)
                             {
-                                //get Level of IDV
-                                string Level = getCatCode(empJob.JobLevel.HasValue ? empJob.JobLevel.Value : 0);
+                                //LOOPING CATEGORY ROLEBASED
 
-                                //Get Current policyType Code (not policyID in employeeRoleBased) from categoryParent
-                                string annualCatCode = getCatCode(role.PolicyType);
-
-                                //Get Current policyType ID from categoryParent
-                                int annualCatID = getCatID(annualCatCode);
-
-
-                                //Find PolicyID with each IDV, empRole below policyType = policyID
-                                var empRole = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == p.IDV && b.policyType == role.ID);
-                                if (empRole.Any())
+                                //Get Job Level of each IDV
+                                #region GET EMPLOYEE JOBLEVEL
+                                var empJob = _u.personJobRepository.GetByCode(b => b.IDV == p.IDV);
+                                if (empJob.JobLevel != null)
                                 {
-                                    System.Diagnostics.Debug.WriteLine("================================================================");
-                                    System.Diagnostics.Debug.WriteLine("UPDATE");
-                                    System.Diagnostics.Debug.WriteLine("================================================================");
-                                    //IF policyType == Annual Leave
-                                    foreach (employeeRoleBased ph in empRole)
+                                    //get Level of IDV
+                                    string Level = getCatCode(empJob.JobLevel.HasValue ? empJob.JobLevel.Value : 0);
+
+                                    //Get Current policyType Code (not policyID in employeeRoleBased) from categoryParent
+                                    string annualCatCode = getCatCode(role.PolicyType);
+
+                                    //Get Current policyType ID from categoryParent
+                                    int annualCatID = getCatID(annualCatCode);
+
+                                    #region LOOPING employeeRoleBased
+                                    //Find PolicyID with each IDV, empRole below policyType = policyID
+                                    var empRole = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == p.IDV && b.policyType == role.ID && (b.validDateStart.Value.Year) == CurrentYears);
+                                    #region DATA EXIST, DO UPDATE THIS
+                                    if (empRole.Any())
                                     {
 
-                                        if (isAnnualExist(p.IDV))
+                                        foreach (employeeRoleBased ph in empRole)
                                         {
-                                            double value = (Math.Round(calculateYears(p.joinDate)));
-                                            int empServiceYears = Convert.ToInt32(value);
-                                            int roleLimit = role.Value.HasValue ? role.Value.Value : 0;
-                                            int x = empServiceYears + roleLimit;
-                                            if ((x <= 0))
+                                            #region UPDATE EmployeeRoleBased
+                                            #region IF ANNUAL EXIST, THEN UPDATE THIS
+                                            if (isAnnualExist(p.IDV, CurrentYears))
                                             {
-                                                System.Diagnostics.Debug.WriteLine("UPDATE ANNUAL LEAVE " + IDV);
+                                                double value = (Math.Round(calculateYears(p.joinDate)));
+                                                int empServiceYears = Convert.ToInt32(value);
+                                                int roleLimit = role.Value.HasValue ? role.Value.Value : 0;
+                                                int x = empServiceYears + roleLimit;
+                                                if ((x <= 0))
+                                                {
+                                                    System.Diagnostics.Debug.WriteLine("UPDATE ANNUAL LEAVE " + p.IDV);
 
-                                                ph.policyType = role.ID;
-                                                ph.roleBasedValue = roleBasedValueByLevel(Level, role.ID);
-                                                ph.valueType = role.ValueType.HasValue ? role.ValueType.Value : 0;
-                                                ph.updateTime = DateTime.Now;
-                                                matchFound = 1;
-                                                _u.employeeRoleBasedRepository.Update(ph);
+                                                    matchFound = 1;
+
+                                                    _u.employeeRoleBasedRepository.Update(mapUpdateField(ph, role, Level));
+                                                    _u.Save();
+                                                }
+                                            }
+                                            #endregion
+                                            #region IF ANNUAL NOT EXIST, THEN UPDATE GENERAL EXCEPTS ANNUAL
+                                            else
+                                            {
+                                                System.Diagnostics.Debug.WriteLine("UPDATE GENERAL: " + p.IDV);
+                                                _u.employeeRoleBasedRepository.Update(mapUpdateField(ph, role, Level));
                                                 _u.Save();
                                             }
+                                            #endregion
+                                            #endregion
                                         }
+                                    }
+                                    #endregion
+                                    #region DATA NOT EXIST, DO INSERT BELOW
+                                    else
+                                    {
+                                        //DO INSERT REGULAR ROLE
+                                        //IF ROLE IS NOT ANNUAL ROLE, DO INSERT REGULAR ROLE
+                                        #region INSERT REGULAR ROLE
+                                        #region IF ROLE NOT ANNUAL
+                                        if (role.PolicyType != getCatID(GlobalVariable.policyTypeAnnual))
+                                        {
+                                            if (!isRegularRoleExist(p.IDV, role.ID)) { 
+                                                var px = new employeeRoleBased
+                                                {
+                                                    IDV = IDV,
+                                                    policyType = role.ID,
+                                                    roleBasedValue = roleBasedValueByLevel(Level, role.ID),
+                                                    valueType = role.ValueType.HasValue ? role.ValueType.Value : 0,
+                                                    validDateStart = validStart,
+                                                    validDateStop = validEnd,
+                                                    createTime = DateTime.Now
+                                                };
+                                                _u.employeeRoleBasedRepository.Insert(px);
+                                                _u.Save();
+                                                System.Diagnostics.Debug.WriteLine("INSERT GENERAL: ", p.IDV);
+                                            }
+                                        }
+                                        #endregion
+                                        #endregion
+                                        #region INSERT ANNUAL ROLE
+                                        #region IF ROLE ANNUAL
                                         else
                                         {
-                                            ph.policyType = role.ID;
-                                            ph.roleBasedValue = roleBasedValueByLevel(Level, role.ID);
-                                            ph.valueType = role.ValueType.HasValue ? role.ValueType.Value : 0;
-                                            ph.updateTime = DateTime.Now;
-                                            _u.employeeRoleBasedRepository.Update(ph);
-                                            _u.Save();
-                                        }
-                                        
-                                        
-                                    }
-                                    
-                                } else
-                                {
-                                    System.Diagnostics.Debug.WriteLine("================================================================");
-                                    System.Diagnostics.Debug.WriteLine("INSERT");
-                                    System.Diagnostics.Debug.WriteLine("================================================================");
+                                            #region IF ANNUAL EXIST
+                                            //DO INSERT ANNUAL ROLE
+                                            //IF ANNUAL LEAVE NOT EXIST YET THEN DO INSERT ANNUAL ROLE
 
-
-                                    if (!isAnnualExist(p.IDV))
-                                    {
-                                        double value = (Math.Round(calculateYears(p.joinDate)));
-                                        int empServiceYears = Convert.ToInt32(value);
-                                        int roleLimit = role.Value.HasValue ? role.Value.Value : 0;
-                                        int x = empServiceYears + roleLimit;
-                                        System.Diagnostics.Debug.WriteLine(GlobalVariable.policyTypeAnnual + " : " + annualCatCode);
-                                        if ((x <= 0) && matchFound == 0)
-                                        {
-                                            System.Diagnostics.Debug.WriteLine("INSERT ANNUAL LEAVE ");
-                                            matchFound = 1;
-                                            var px = new employeeRoleBased
+                                            if (!isAnnualExist(p.IDV, CurrentYears))
                                             {
-                                                IDV = IDV,
-                                                policyType = role.ID,
-                                                roleBasedValue = roleBasedValueByLevel(Level, role.ID),
-                                                valueType = role.ValueType.HasValue ? role.ValueType.Value : 0,
-                                                validDateStart = validStart,
-                                                validDateStop = validEnd,
-                                                updateTime = DateTime.Now
-                                            };
-                                            _u.employeeRoleBasedRepository.Insert(px);
-                                            _u.Save();
+                                                double value = (Math.Round(calculateYears(p.joinDate)));
+                                                int empServiceYears = Convert.ToInt32(value);
+
+                                                //Define Annual Year based on employee services year
+                                                //get Annual Years basis limit
+                                                int roleLimit = role.Value.HasValue ? role.Value.Value : 0;
+                                                // Employee Service Years + (negatif roleLimit)
+                                                int x = empServiceYears + roleLimit;
+
+                                                //IF X is Negatif Value = in Role Limit Range 
+                                                if ((x <= 0) && matchFound == 0)
+                                                {
+                                                    System.Diagnostics.Debug.WriteLine("INSERT ANNUAL LEAVE ", p.IDV);
+                                                    matchFound = 1;
+                                                    var px = new employeeRoleBased
+                                                    {
+                                                        IDV = IDV,
+                                                        policyType = role.ID,
+                                                        roleBasedValue = roleBasedValueByLevel(Level, role.ID),
+                                                        valueType = role.ValueType.HasValue ? role.ValueType.Value : 0,
+                                                        validDateStart = validStart,
+                                                        validDateStop = validEnd,
+                                                        createTime = DateTime.Now
+                                                    };
+                                                    _u.employeeRoleBasedRepository.Insert(px);
+                                                    _u.Save();
+                                                }
+                                            }
+                                            #endregion
                                         }
+                                        #endregion
+                                        #endregion
                                     }
-                                    
+                                    #endregion
+
+                                    #endregion
                                 }
-                                
+                                #endregion
                             }
+                            #endregion
+
+                            CurrentYears--;
+                            YearLoop--;
                         }
+
+                        #endregion
+
+
+
                     }
                     scope.Complete();
                 }
             }
+            #endregion
             return false;
         }
 

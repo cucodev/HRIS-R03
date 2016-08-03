@@ -25,7 +25,7 @@ namespace BusinessServices.InterfaceMethod
             _u = new UnitOfWork();
         }
 
-        public bool CalculateMatrix()
+        public bool CalculateMatrix(int IDVUpdate)
         {
             DataServices DT = new DataServices();
 
@@ -34,10 +34,10 @@ namespace BusinessServices.InterfaceMethod
             foreach (employee e in EmpID)
             {
                 //Service Year Calculator
-                DT.updateServiceYear(e.IDV);
+                DT.updateEmployeeServiceYear(e.IDV);
 
                 //RoleMatrix by JobLevel 
-                DT.updateServiceType(e.IDV);
+                DT.updateEmployeeRoleBased(e.IDV, IDVUpdate);
             }
 
             return true;

@@ -12,8 +12,8 @@ namespace BusinessEntities.CrudEntities
     {
         public int ID { get; set; }
         public int IDV { get; set; }
-        public int serviceYears { get; set; }
-        public int serviceDays { get; set; }
+        public Nullable<int> serviceYears { get; set; }
+        public Nullable<int> serviceDays { get; set; }
         public int policyType { get; set; }
         public int valueType { get; set; }
         public Nullable<int> roleBasedValue { get; set; }
@@ -27,6 +27,8 @@ namespace BusinessEntities.CrudEntities
         public Nullable<int> vUpdatedBy { get; set; }
         public Nullable<System.DateTime> createTime { get; set; }
         public Nullable<System.DateTime> updateTime { get; set; }
+
+        
     }
 
     public class employeeLeaveEntities

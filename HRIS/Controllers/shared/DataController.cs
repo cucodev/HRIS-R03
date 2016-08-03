@@ -23,7 +23,7 @@ namespace HRIS.Controllers.shared
         [WebMethod]
         public void CalculateYears()
         {
-            var p = _pServices.CalculateMatrix();
+            var p = _pServices.CalculateMatrix(3);
             //return View();
         }
     }

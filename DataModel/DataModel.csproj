@@ -181,6 +181,7 @@
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="HRISDB" />
     <None Include="packages.config" />
     <EntityDeploy Include="WebApiDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
