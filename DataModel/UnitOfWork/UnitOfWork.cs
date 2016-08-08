@@ -51,6 +51,7 @@ namespace DataModel.UnitOfWork
         private GenericRepository<categoryParent> _categoryParentRepository;
         private GenericRepository<file> _fileRepository;
         private GenericRepository<dataFile> _dataFileRepository;
+        private GenericRepository<dataLeave> _dataLeaveRepository;
         private GenericRepository<location> _locationParentRepository;
         private GenericRepository<organization> _organizationRepository;
         private GenericRepository<roleBased> _roleBasedRepository;
@@ -182,6 +183,15 @@ namespace DataModel.UnitOfWork
                 if (this._dataFileRepository == null)
                     this._dataFileRepository = new GenericRepository<dataFile>(_context);
                 return _dataFileRepository;
+            }
+        }
+        public GenericRepository<dataLeave> dataLeaveRepository
+        {
+            get
+            {
+                if (this._dataLeaveRepository == null)
+                    this._dataLeaveRepository = new GenericRepository<dataLeave>(_context);
+                return _dataLeaveRepository;
             }
         }
         public GenericRepository<location> locationParentRepository

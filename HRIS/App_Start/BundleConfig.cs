@@ -94,6 +94,7 @@ namespace HRIS
                         "~/Scripts/jqwidgets/jqxdropdownlist.js",
                         "~/Scripts/jqwidgets/jqxdropdownbutton.js",
                         "~/Scripts/jqwidgets/jqxslider.js",
+                        "~/Scripts/jqwidgets/jqxprogressbar.js",
                         "~/Scripts/jqwidgets/jqxfileupload.js",
                         "~/Scripts/jqwidgets/jqxsplitter.js",
                         "~/Scripts/jqwidgets/jqxeditor.js",

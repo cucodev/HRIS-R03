@@ -113,59 +113,63 @@ textarea
         $(document).ready(function () {
             hris.general.bindButton('Update');
         })
-    
+        try {
+            $(function () {
+                var addresspicker = $("#addresspicker").addresspicker({
+                    componentsFilter: 'country:ID'
+                });
+                var addresspickerMap = $("#addresspicker_map").addresspicker({
+                    regionBias: "ID",
+                    language: "ID",
+                    updateCallback: showCallback,
+                    reverseGeocode: true,
+                    mapOptions: {
+                        zoom: 19,
+                        center: new google.maps.LatLng(-6.225572696822501, 106.87426922442864),
+                        scrollwheel: false,
+                        mapTypeId: google.maps.MapTypeId.ROUTE
+                    },
+                    elements: {
+                        map: "#map",
+                        lat: "#lat",
+                        lng: "#lng",
+                        street_number: '#street_number',
+                        route: '#route',
+                        locality: '#locality',
+                        sublocality: '#sublocality',
+                        administrative_area_level_3: '#administrative_area_level_3',
+                        administrative_area_level_2: '#administrative_area_level_2',
+                        administrative_area_level_1: '#administrative_area_level_1',
+                        country: '#country',
+                        postal_code: '#postal_code',
+                        type: '#type'
+                    }
+                });
 
-      $(function() {
-        var addresspicker = $( "#addresspicker" ).addresspicker({
-          componentsFilter: 'country:ID'
-        });
-        var addresspickerMap = $( "#addresspicker_map" ).addresspicker({
-          regionBias: "ID",
-          language: "ID",
-          updateCallback: showCallback,
-          reverseGeocode: true,
-          mapOptions: {
-            zoom: 19,
-            center: new google.maps.LatLng(-6.225572696822501, 106.87426922442864),
-            scrollwheel: false,
-            mapTypeId: google.maps.MapTypeId.ROUTE
-          },
-          elements: {
-            map:      "#map",
-            lat:      "#lat",
-            lng:      "#lng",
-            street_number: '#street_number',
-            route: '#route',
-            locality: '#locality',
-            sublocality: '#sublocality',
-            administrative_area_level_3: '#administrative_area_level_3',
-            administrative_area_level_2: '#administrative_area_level_2',
-            administrative_area_level_1: '#administrative_area_level_1',
-            country:  '#country',
-            postal_code: '#postal_code',
-            type:    '#type'
-          }
-        });
+                var gmarker = addresspickerMap.addresspicker("marker");
+                gmarker.setVisible(true);
+                addresspickerMap.addresspicker("updatePosition");
 
-        var gmarker = addresspickerMap.addresspicker( "marker");
-        gmarker.setVisible(true);
-        addresspickerMap.addresspicker( "updatePosition");
+                $('#reverseGeocode').change(function () {
+                    $("#addresspicker_map").addresspicker("option", "reverseGeocode", ($(this).val() === 'true'));
+                });
 
-        $('#reverseGeocode').change(function(){
-          $("#addresspicker_map").addresspicker("option", "reverseGeocode", ($(this).val() === 'true'));
-        });
+                function showCallback(geocodeResult, parsedGeocodeResult) {
+                    console.log(parsedGeocodeResult);
+                    //$('#callback_result').text(JSON.stringify(parsedGeocodeResult, null, 4));
+                }
+                // Update zoom field
+                var map = $("#addresspicker_map").addresspicker("map");
+                google.maps.event.addListener(map, 'idle', function () {
+                    $('#zoom').val(map.getZoom());
+                });
 
-        function showCallback(geocodeResult, parsedGeocodeResult) {
-            console.log(parsedGeocodeResult);
-          //$('#callback_result').text(JSON.stringify(parsedGeocodeResult, null, 4));
+            });
+        } catch (err) {
+            console.log("Google Maps Error");
         }
-        // Update zoom field
-        var map = $("#addresspicker_map").addresspicker("map");
-        google.maps.event.addListener(map, 'idle', function(){
-          $('#zoom').val(map.getZoom());
-        });
 
-      });
+      
     </script>
 }
 

@@ -25,6 +25,12 @@ namespace BusinessServices.InterfaceMethod
             _map = new Mapping();
         }
 
+        public int getApprovalIDV(int IDV)
+        {
+            var approvalIDV = _u.personJobRepository.GetByCode(b => b.IDV == IDV && b.isDeleted == 0);
+            return approvalIDV.parentIDV.HasValue ? approvalIDV.parentIDV.Value : 0;
+        }
+
         public IEnumerable<employeeRoleBasedEntities> GetRoleBased(int IDV)
         {
             List<employeeRoleBasedEntities> ms = new List<employeeRoleBasedEntities>();
@@ -99,6 +105,22 @@ namespace BusinessServices.InterfaceMethod
                 return x;
             }
             return null;
+        }
+
+        public employeeRoleBasedEntities getRoleBasedValue(int IDV, int policyType)
+        {
+            var Data = _u.employeeRoleBasedRepository.GetByCode(b => b.IDV == IDV && b.policyType == policyType);
+            if (Data.ID != 0)
+            {
+                
+                return _map.EmployeeRoleBasedFromModel(Data);
+            }
+            return null;
+        }
+
+        public employeeRoleBasedEntities getRoleBasedAnnualValue(int IDV)
+        {
+            throw new NotImplementedException();
         }
     }
 }

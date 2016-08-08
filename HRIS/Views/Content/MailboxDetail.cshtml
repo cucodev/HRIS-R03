@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "MailboxDetail";
+    Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
+}
+
+
+<div class="row">
+    <div class="btn-group btn-breadcrumb">
+        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
+        <a href="#" class="btn btn-info">Mailbox</a>
+        <a href="#" class="btn btn-success">Summary</a>
+        <a href="#" class="btn btn-warning">Detail</a>
+    </div>
+    <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
+    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">MAILBOX</h1>
+    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Manage Your Approval Status and Notfications</h2>
+</div>
+<br />
+
+
+@{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
+
+
+<script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
+
+@{ Html.RenderPartial("~/Views/Content/Temp.cshtml"); }
+
+
+

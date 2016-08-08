@@ -28,4 +28,6 @@ namespace BusinessEntities.CrudEntities
         public string catCode { get; set; }
         public string catName { get; set; }
     }
+
+
 }

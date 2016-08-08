@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BusinessEntities.DataEntities
 {
     
-    public class transaction
+    public class purpose
     {
         //Purpose
         public int purposeID { get; set; }
@@ -23,15 +23,17 @@ namespace BusinessEntities.DataEntities
         public Nullable<int> purposeStatus { get; set; }
         public Nullable<int> idvRequest { get; set; }
         public Nullable<int> idvApproval { get; set; }
+        public Nullable<int> vCreatedBy { get; set; }
+        public Nullable<int> vUpdateBy { get; set; }
+        public Nullable<System.DateTime> createTime { get; set; }
+        public Nullable<System.DateTime> updateTime { get; set; }
 
-        public virtual transaction tx { get; set; }
+        public virtual purpose C_purpose { get; set; }
     }
 
 
     public class transactionLeave
     {
-        public virtual transactionMaster txDetail { get; set; }
-
         public int ID { get; set; }
         public Nullable<int> txID { get; set; }
         public Nullable<int> policyID { get; set; }

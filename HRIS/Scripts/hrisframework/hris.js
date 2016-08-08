@@ -31,6 +31,38 @@
             });
         }
     };
+    hris.source = {
+        _employeeRoleBased: function (IDV) {
+            var PolicyName = hris.list._getLOV('getPolicyType');
+            var ValueName = hris.list._getLOV('getValueType');
+            var url = '/api/employee/getRoleBased/'+IDV;
+            var source =
+                {
+                    datatype: "json",
+                    datafields: [
+                        { name: 'ID', type: 'number' },
+                        { name: 'IDV', type: 'number' },
+                        { name: 'policyType', type: 'number' },
+                        { name: 'policyTypeName', value: 'policyType', values: { source: PolicyName.records, value: 'value', name: 'label' } },
+                        { name: 'valueType', type: 'number' },
+                        { name: 'valueTypeName', value: 'valueType', values: { source: ValueName.records, value: 'value', name: 'label' } },
+                        { name: 'roleBasedValue', type: 'number' },
+                        { name: 'currentValue', type: 'number' },
+                        { name: 'balanceValue', type: 'number' },
+                        { name: 'remainingValue', type: 'number' },
+                        { name: 'validDateStart', type: 'date' },
+                        { name: 'validDateStop', type: 'date' },
+                        { name: 'description', type: 'number' },
+                        { name: 'vCreatedBy', type: 'number' },
+                        { name: 'vUpdatedBy', type: 'number' },
+                        { name: 'createTime', type: 'date' },
+                        { name: 'updateTime', type: 'date' }
+                    ],
+                    url: url
+                };
+            return source;
+        }
+    };
     hris.data = {
         _getRoleBased: function () {
             var dataLevel = hris.list._getLOV('getLevel');
@@ -150,6 +182,22 @@
         _dataAdapter: function(source) {
             return dataAdapter = new $.jqx.dataAdapter(source, {
                 autoBind: true
+            });
+        },
+        _dataAdapterManual: function (source) {
+            //console.log('_dataAdapterManual: source: ',source);
+            return dataAdapter = new $.jqx.dataAdapter(source, {
+                //autoBind: true,
+                contentType: 'application/json; charset=utf-8',
+                loadComplete: function (records) {
+                    //console.log('Data Adapter OK : ', records);
+                },
+                loadError: function (jqXHR, status, error) {
+                    console.log('loadError : Error : ', jqXHR.responseText);
+                },
+                beforeLoadComplete: function (records) {
+                    //console.log('beforeLoadComplete : Error : ',records);
+                }
             });
         },
         _getRoleBasedTree: function () {

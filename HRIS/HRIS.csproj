@@ -210,6 +210,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminHRController.cs" />
     <Compile Include="Controllers\api\employee\employeeController.cs" />
+    <Compile Include="Controllers\api\employee\employeeTransactionController.cs" />
+    <Compile Include="Controllers\api\employee\employeeFormController.cs" />
     <Compile Include="Controllers\api\FileController.cs" />
     <Compile Include="Controllers\api\listController.cs" />
     <Compile Include="Controllers\api\profile\profileCertificationController.cs" />
@@ -862,6 +864,7 @@
     <Content Include="Scripts\List\jsMasterList.js" />
     <Content Include="Scripts\List\jsVar.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\multidatepicker\jquery-ui.multidatespicker.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Sidebar\sidebar-menu.js" />
@@ -903,11 +906,15 @@
     <Content Include="Views\Content\Calendar.cshtml" />
     <Content Include="Views\Content\Timesheet.cshtml" />
     <Content Include="Views\Content\Mailbox.cshtml" />
-    <Content Include="Views\SharedMaintainData\_mailboxGrid.cshtml" />
     <Content Include="Views\Content\MyDependent.cshtml" />
     <Content Include="Views\AdminHR\FileManagement.cshtml" />
     <Content Include="Views\Content\MyMatrix.cshtml" />
     <Content Include="Views\Content\Leave.cshtml" />
+    <Content Include="Views\Content\MyIdentity.cshtml" />
+    <Content Include="Views\Shared\_SessionUser.cshtml" />
+    <Content Include="Views\SharedForm\_MailRequestLeave.cshtml" />
+    <Content Include="Views\Content\Temp.cshtml" />
+    <Content Include="Views\Content\MailboxDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

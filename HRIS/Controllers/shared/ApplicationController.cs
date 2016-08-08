@@ -36,6 +36,9 @@ namespace HRIS_R03.Controllers.shared
         {
             base.Initialize(requestContext);
 
+            ViewData[UserCred] = null;
+            Session[UserCred] = null;
+
             /*important to check both, because logOnController should be access able with out any session*/
             if (!IsNonSessionController(requestContext) && !HasSession())
             {
@@ -79,16 +82,16 @@ namespace HRIS_R03.Controllers.shared
                     ASPCookie.Expires = DateTime.Now.AddDays(1);
                     Response.SetCookie(ASPCookie);
                 }
-                System.Diagnostics.Debug.WriteLine("Set User Session :: LogOn Model Username: " + model.UserName + ", IDV=" + IDV);
+                System.Diagnostics.Debug.Write("Application COntroller: ");
+                System.Diagnostics.Debug.WriteLine("Username: " + model.UserName + ", Password: " + model.Password + "IDV: " + model.IDV);
 
                 //Get User Profile
                 data = _pServices.getUserCred(IDV);
                 ViewData[UserCred] = data;
                 Session[UserCred] = data;
+                UserVariable.User = data;
                 try
                 {
-                   
-
                     ViewBag.cIDV = data.IDV;
                     ViewBag.cIDVMail = data.IDVMail;
                     ViewBag.cIDVParent = data.parentIDV;
@@ -113,9 +116,11 @@ namespace HRIS_R03.Controllers.shared
 
         protected void SetLogOnSessionModel(TSource model)
         {
-
             Session[LogOnSession] = model;
         }
+
+       
+        
 
         protected void AbandonSession()
         {

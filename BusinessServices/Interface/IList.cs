@@ -14,6 +14,7 @@ namespace BusinessServices.Interface
 
 
         IEnumerable<LOV> getEdu();
+        IEnumerable<LOV> getPurpose();
 
         IEnumerable<LOV> getDivision();
         IEnumerable<LOV> getDepartment();

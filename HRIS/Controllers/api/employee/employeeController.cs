@@ -45,6 +45,38 @@ namespace HRIS.Controllers.api.employee
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "HRD Matrix for this employee are not found");
         }
 
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getRoleBasedValue")]
+        [System.Web.Http.Route("api/employee/getRoleBasedValue/{IDV}/{policyType}")]
+        public HttpResponseMessage getRoleBasedValue(int IDV, int policyType)
+        {
+            var p = _pServices.getRoleBasedValue(IDV, policyType);
+            if (p != null)
+            {
+                var pEntities = p as employeeRoleBasedEntities ?? p;
+                if (pEntities.ID != 0)
+                    return Request.CreateResponse(HttpStatusCode.OK, pEntities);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "HRD Matrix for this employee are not found");
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getRoleBasedAnnualValue")]
+        [System.Web.Http.Route("api/employee/getRoleBasedAnnualValue/{IDV}")]
+        public HttpResponseMessage getRoleBasedAnnualValue(int IDV)
+        {
+            var p = _pServices.GetRoleBased(IDV);
+            if (p != null)
+            {
+                var pEntities = p as List<employeeRoleBasedEntities> ?? p.ToList();
+                if (pEntities.Any())
+                    return Request.CreateResponse(HttpStatusCode.OK, pEntities);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "HRD Matrix for this employee are not found");
+        }
+
+        
+
 
     }
 }

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using BusinessEntities.CrudEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BusinessEntities
 {
@@ -11,6 +13,9 @@ namespace BusinessEntities
     public static class  GlobalVariable
     {
         public const string UserCred = "UserCred";
+
+        //Purpose
+        public const string purposeLeave = "txLeave";
 
         //General
         public const string lov_valueType = "valueType";
@@ -41,8 +46,21 @@ namespace BusinessEntities
         public const string lov_edu = "pEdu";
     }
 
-    public static class TransactionVariable
+    public static class UserVariable
     {
+        static UserCredModel _User;
 
+        public static UserCredModel User
+        {
+            get
+            {
+                return _User;
+            }
+            set
+            {
+                _User = value;
+            }
+        }
     }
+   
 }

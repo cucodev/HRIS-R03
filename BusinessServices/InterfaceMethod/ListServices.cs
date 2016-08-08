@@ -72,6 +72,31 @@ namespace BusinessServices.InterfaceMethod
 
         }
 
+        public IEnumerable<LOV> getPurpose()
+        {
+
+            List<LOV> ms = new List<LOV>();
+            var vDataDiv = _unitOfWork.purposeRepository.GetAll();
+
+            if (vDataDiv.Any())
+            {
+                foreach (C_purpose n in vDataDiv)
+                {
+                    LOV xx = new LOV();
+
+                    xx.label = (n.purposeName).TrimEnd();
+                    xx.value = n.purposeID;
+
+                    ms.Add(xx);
+                }
+
+                return ms.AsEnumerable();
+            }
+            else { return null; };
+
+        }
+
+
         public IEnumerable<LOV> getNameSuperior()
         {
 

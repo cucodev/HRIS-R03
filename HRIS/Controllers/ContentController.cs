@@ -11,19 +11,13 @@ using System.Web.Mvc;
 
 namespace HRIS_R03.Controllers
 {
-    public class ContentController : Controller //ApplicationController<LogOnModel>
+    public class ContentController : ApplicationController<LogOnModel>
     {
-        
-       
-        private void current()
+        public new UserCredModel User;
+
+        public ContentController()
         {
-            if (Session[GlobalVariable.UserCred] != null)
-            {
-                var dt = (UserCredModel)Session[GlobalVariable.UserCred];
-                ViewBag.cIDV = 3;//dt.IDV;
-                ViewBag.cIDVParent = 40;// dt.parentIDV;
-                ViewBag.cIDVLevel = 71;
-            }
+            User = UserVariable.User;
         }
         
         // GET: Content
@@ -34,17 +28,13 @@ namespace HRIS_R03.Controllers
 
         public ActionResult Leave()
         {
-            ViewBag.cIDV = 3;//dt.IDV;
-            ViewBag.cIDVParent = 40;
-            return View();
+            return View(User);
         }
 
         public ActionResult vLeave()
         {
             //current();
-            ViewBag.cIDV = 3;//dt.IDV;
-            ViewBag.cIDVParent = 40;
-            return View();
+            return View(User);
         }
 
         public ActionResult Dashboard()
@@ -54,37 +44,44 @@ namespace HRIS_R03.Controllers
 
         public ActionResult vProfile()
         {
-            current();
-            return View();
+            System.Diagnostics.Debug.WriteLine("IDV:" + User.IDV);
+            return View(User);
         }
 
         public ActionResult vMap()
         {
-            current();
+            return View();
+        }
+
+        public ActionResult MyIdentity()
+        {
+            ViewBag.cIDV = 3;//dt.IDV;
+            ViewBag.cIDVParent = 40;
             return View();
         }
 
         public ActionResult Calendar()
         {
-            current();
             return View();
         }
 
         public ActionResult Timesheet()
         {
-            current();
             return View();
         }
 
         public ActionResult Mailbox()
         {
-            current();
-            return View();
+            return View(User);
+        }
+
+        public ActionResult MailboxDetail()
+        {
+            return View(User);
         }
 
         public ActionResult MyDependent()
         {
-            current();
             return View();
         }
 
@@ -93,7 +90,11 @@ namespace HRIS_R03.Controllers
             ViewBag.cIDV = 3;//dt.IDV;
             ViewBag.cIDVParent = 40;// dt.parentIDV;
             ViewBag.cIDVLevel = 71;
-            current();
+            return View();
+        }
+
+        public ActionResult Temp()
+        {
             return View();
         }
         

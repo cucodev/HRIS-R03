@@ -1,34 +1,79 @@
-﻿
+﻿@model BusinessEntities.CrudEntities.UserCredModel
 @{
     ViewBag.Title = "Mailbox";
     Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
 }
 
+
+<div class="row">
+    <div class="btn-group btn-breadcrumb">
+        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
+        <a href="#" class="btn btn-info">Mailbox</a>
+        <a href="#" class="btn btn-success">Summary</a>
+    </div>
+    <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
+    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">MAILBOX</h1>
+    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Manage Your Approval Status and Notfications</h2>
+</div>
+<br />
+
+@{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
+
+
+<script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
 <script type="text/javascript">
+    function gridButton(event) {
+        alert("clicked:" + event.args);
+        window.open("Temp", "_blank");
+    }
+
     $(document).ready(function () {
+        var dataAdapter;
+        var sourceGrid;
+        var url;
+
+        var listName = hris.list._getLOV("getName");
+
+        var renderButton = function (row, datafield, value) {
+            //return '<span class="fa-search"></span>';
+            return '<input type="button" onClick="gridButton(event)"  style="height:100%;" id="btn' + value + '" value="View"/>'
+        }
+
+        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
+            if (value < 20) {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #ff0000;">' + value + '</span>';
+            }
+            else {
+                return '<span style="margin: 4px; float: ' + columnproperties.cellsalign + '; color: #008000;">' + value + '</span>';
+            }
+        }
+
+
+
         // Create jqxExpander
         $('#jqxExpander').jqxExpander({ theme: 'ui-redmond', showArrow: false, toggleMode: 'none', width: '100%', height: '370px'});
-        // Create jqxTree
+        
         var source = [
-        {
-            icon: "@Url.Content("~/Content/jqwidgets/images/mailIcon.png")", label: "Mail", expanded: true, items: [
-              { icon: "@Url.Content("~/Content/jqwidgets/images/calendarIcon.png")", label: "Calendar" },
-                  { icon: "@Url.Content("~/Content/jqwidgets/images/contactsIcon.png")", label: "Timesheets", selected: true }
+            {
+                icon: "@Url.Content("~/Content/jqwidgets/images/mailIcon.png")", label: "Mail", expanded: true, items: [
+                    { icon: "@Url.Content("~/Content/jqwidgets/images/calendarIcon.png")", label: "Calendar" },
+                    { icon: "@Url.Content("~/Content/jqwidgets/images/contactsIcon.png")", label: "Timesheets", selected: true }
                 ]
             },
             {
                 icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Status", expanded: true, items: [
-                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Profile Update" },
-                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Notifications" },
-                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "News" },
-                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Leaves" },
-                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Medical" },
+                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Profile Update", value: "txProfile" },
+                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Notifications", value: "txNotifications" },
+                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "News", value: "txNews" },
+                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Leaves", value: "txLeave" },
+                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Medical", value: "txMedical" },
                 ]
             },
-            { icon: "@Url.Content("~/Content/jqwidgets/images/recycle.png")", label: "Declined Items" },
-            { icon: "@Url.Content("~/Content/jqwidgets/images/notesIcon.png")", label: "Approved Items" },
-            { icon: "@Url.Content("~/Content/jqwidgets/images/favorites.png")", label: "Applied Items" }
+                { icon: "@Url.Content("~/Content/jqwidgets/images/recycle.png")", label: "Declined Items" },
+                { icon: "@Url.Content("~/Content/jqwidgets/images/notesIcon.png")", label: "Approved Items" },
+                { icon: "@Url.Content("~/Content/jqwidgets/images/favorites.png")", label: "Applied Items" }
         ];
+
 
         $('#jqxTree').jqxTree({ theme: 'orange',source: source, width: 200, height: '100%'});
         $('#jqxTree').jqxTree('selectItem', null);
@@ -49,16 +94,97 @@
         $('#jqxTree').on('select', function (event) {
             var args = event.args;
             var item = $('#jqxTree').jqxTree('getItem', args.element);
-            $('#Events').jqxPanel('prepend', '<div style="margin-top: 5px;">Selected: ' + item.label + '</div>');
+
+            switch (item.value) {
+                case 'txLeave': setSource(cIDV, 1); break;
+                case 'txMedical': setSource(cIDV, 2); break;
+                case 'txProfile': setSource(cIDV, 3); break;
+                case 'txNews': setSource(cIDV, 4); break;
+                case 'txNotifications': setSource(cIDV, 5); break;
+                case 'txCalendar': setSource(cIDV, 6); break;
+                case 'txTimesheet': setSource(cIDV, 7); break;
+            };
+
+            $('#Events').jqxPanel('prepend', '<div style="margin-top: 5px;">Selected: ' + item.label + ' : ' + item.value + '</div>');
         });
 
+        
+
+        function setSource(IDV,purposeID) {
+            url = "/api/employeeTransaction/getTransaction/" + IDV + "/"+purposeID;
+            // prepare the data
+            sourceGrid.url = url;
+            //dataAdapter = new $.jqx.dataAdapter(sourceGrid);
+            //$("#jqxgrid").jqxGrid({ source: dataAdapter });
+            $("#jqxgrid").jqxGrid('updatebounddata');
+        }
+
+
+        // initialize jqxGrid
+        sourceGrid =
+            {
+                datatype: "json",
+                datafields: [
+                    { name: 'purposeID', type: 'int' },
+                    { name: 'purposeName', type: 'int' },
+                    { name: 'purposeStatus', type: 'int' },
+                    { name: 'purposeStatusName', type: 'string' },
+                    { name: 'idvRequest', type: 'int' },
+                    { name: 'IDVRequestName', value: 'idvRequest', values: { source: listName.records, value: 'value', name: 'label' } },
+                    { name: 'idvApproval', type: 'int' },
+                    { name: 'IDVApprovalName', value: 'idvApproval', values: { source: listName.records, value: 'value', name: 'label' } },
+                    { name: 'vCreatedBy', type: 'int' },
+                    { name: 'vCreatedByName', type: 'string' },
+                    { name: 'vUpdatedBy', type: 'int' },
+                    { name: 'vUpdatedByName', type: 'int' },
+                    { name: 'createTime', type: 'datetime' },
+                    { name: 'updateTime', type: 'datetime' }
+                ],
+                id: 'purposeID',
+                url: url
+            };
+
+        dataAdapter = new $.jqx.dataAdapter(sourceGrid, {
+            downloadComplete: function (data, status, xhr) { },
+            loadComplete: function (data) { console.log(data); },
+            loadError: function (xhr, status, error) { }
+        });
+
+        
+       
+        $("#jqxgrid").jqxGrid(
+        {
+            width: 641,
+            theme: 'metro',
+            source: dataAdapter,
+            pageable: true,
+            autoheight: true,
+            sortable: true,
+            altrows: true,
+            enabletooltips: true,
+            //editable: true,
+            selectionmode: 'multiplecellsadvanced',
+            columns: [
+                { text: '', datafield: 'purposeID',  width: 41, cellsrenderer: renderButton },
+                { text: 'Status', datafield: 'purposeStatusName', width: 100 },
+                { text: 'Employee', datafield: 'IDVRequestName', width: 170 },
+                { text: 'Superior', datafield: 'IDVApprovalName', width: 170 },
+                { text: 'Created By', columngroup: 'User', datafield: 'vCreatedByName', width: 150, hidden: true },
+                { text: 'Updated By', columngroup: 'User', datafield: 'vUpdatedByName', width: 150, hidden: true },
+                { text: 'create', columngroup: 'Date', datafield: 'createTime', cellformat: "D", width: 80 },
+                { text: 'update', columngroup: 'Date', datafield: 'updateTime', width: 80 }
+            ],
+            columngroups: [
+                { text: 'Timestamps', parentGroup: 'stamps', align: 'center', name: 'Date' },
+                { text: 'User', parentGroup: 'stamps', align: 'center', name: 'User' },
+                { text: 'Stamps', align: 'center', name: 'Stamps' }
+            ]
+        });
+
+        
     });
 
 </script>
-
-<h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">MAILBOX</h1>
-<h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Mnage Your Approval Status and Notfications</h2>
-<br />
 
 <div class="container-fluid">
     <div class="row">
@@ -75,7 +201,7 @@
             <div id='Events'></div>
         </div>
         <div class="col-md-9">
-            @{ Html.RenderPartial("~/Views/SharedMaintainData/_mailboxGrid.cshtml"); }
+            <div id="jqxgrid" style="margin-left:0;"></div>
         </div>
     </div>
 </div>

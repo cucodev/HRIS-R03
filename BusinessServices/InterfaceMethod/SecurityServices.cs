@@ -52,29 +52,62 @@ namespace BusinessServices.InterfaceMethod
         public void UserSession()
         {
         }
+
+
         
         public UserCredModel getUserCred(int IDV)
         {
-            System.Diagnostics.Debug.WriteLine("Variable: IDV=" + IDV + ", isDelete=" + isDelete);
             UserCredModel ms = new UserCredModel();
-            var y = _unitOfWork.userRepository.GetSingle(b => b.IDV == IDV);
-            System.Diagnostics.Debug.WriteLine("y:" + y.IDV);
-            var x = _unitOfWork.personJobRepository.GetByCode(c => c.IDV == IDV && c.isDeleted == isDelete);
-            System.Diagnostics.Debug.WriteLine("X:" + x.IDV + ", parentID:" + x.parentIDV);
-            var z = _unitOfWork.userRepository.GetByCode(b => b.IDV == x.parentIDV);
-            System.Diagnostics.Debug.WriteLine("z:parentID:", z.IDV);
-            var cc = _unitOfWork.personDetailRepository.GetSingle(e => e.IDV == IDV && e.isDeleted == isDelete);
-            ms.IDV = x.IDV;
-            ms.IDVMail = y.IDVMAIL;
-            ms.Name = cc.Name;
-            ms.parentIDV = x.parentIDV.HasValue ? x.parentIDV.Value : -1;
-            ms.parentIDVMail = z.IDVMAIL;
-            ms.role = y.IDVROLE.HasValue ? y.IDVROLE.Value : -1;
-            ms.timeLogin = DateTime.Now;
+            System.Diagnostics.Debug.WriteLine("Security Services: getUserCred: Variable: IDV=" + IDV + ", isDelete=" + isDelete);
+            try
+            {
+                if (IDV > 0)
+                {
+                    ms.IDV = IDV;
+                    ms.timeLogin = DateTime.Now;
 
-            System.Diagnostics.Debug.WriteLine(ms.IDV + ":" + ms.IDVMail + ":" + ms.Name + ":" + ms.parentIDV + ":" + ms.parentIDVMail + ":" + ms.role + ":" + ms.timeLogin);
+                    #region getPersonDetail
+                    var cc = _unitOfWork.personDetailRepository.GetSingle(e => e.IDV == IDV && e.isDeleted == isDelete);
+                    if (cc != null)
+                    {
+                        ms.Name = cc.Name;
+                    }
+                    #endregion
 
+                    #region getUser
+                    var y = _unitOfWork.userRepository.GetSingle(b => b.IDV == IDV);
+                    if (y != null)
+                    {
+                        ms.IDVMail = y.IDVMAIL;
+                        ms.role = y.IDVROLE.HasValue ? y.IDVROLE.Value : -1;
+                    }
+                    #endregion
+
+                    #region getpersonJob
+                    var x = _unitOfWork.personJobRepository.GetByCode(c => c.IDV == IDV && c.isDeleted == isDelete);
+                    
+                    if (x != null)
+                    {
+                        ms.parentIDV = x.parentIDV.HasValue ? x.parentIDV.Value : -1;
+                        #region getParent
+                        var z = _unitOfWork.userRepository.GetByCode(b => b.IDV == x.parentIDV);
+                        if (z != null)
+                        {
+                            ms.parentIDVMail = z.IDVMAIL;
+                        }
+                        #endregion
+
+                    }
+                    #endregion
+                }
+
+            } catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Security Sercive: getUserCred: Error: " + e.Message);
+            }
             return ms;
         }
+
+
     }
 }
