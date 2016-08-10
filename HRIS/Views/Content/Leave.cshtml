@@ -5,7 +5,10 @@
 }
 <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
 <script src=@Url.Content("~/Scripts/jquery.ui.min.js")></script>
+<
+
 <script src=@Url.Content("~/Scripts/multidatepicker/jquery-ui.multidatespicker.js")></script>
+
 <link rel="stylesheet" type="text/css" href=@Url.Content("~/Content/multidatepicker/mdp.css")>
 
 <div class="row">
@@ -27,8 +30,9 @@
 
         //API 
         var MasterSource = hris.source._employeeRoleBased(cIDV);
-        var MasterDataAdapter = hris.data._dataAdapterManual(MasterSource);
+        var MasterDataAdapter = hris.data._dataAdapter(MasterSource);
 
+        console.log("MasterDataAdapter: " ,  MasterDataAdapter );
 
         var Balance = 0;
 
@@ -67,29 +71,35 @@
                 { name: 'ID', type: 'number' },
                 { name: 'Date', type: 'date' },
                 { name: 'Duration', type: 'int' },
-                { name: 'DurationLabel', type: 'bool' },
+                { name: 'DurationLabel', type: 'bool' }
                 //{ name: 'durationLabel', value: 'duration', values: { source: durations.records, value: 'value', name: 'label' } }
             ],
             updaterow: function (rowid, rowdata, commit) {
-                // that function is called after each edit.
                 
-                if (rowdata.durationLabel) {
-                    //totalDays = totalDays - 0.5;
-                    data[rowdata.id]["Duration"] = 1;
+                /*console.log('rowid: ', rowid);
+                console.log('rowid: Date: ', rowdata.Date);
+                console.log('rowid: Duration: ', rowdata.Duration);
+                console.log('rowid: DurationLabel: ', rowdata.DurationLabel);
+                console.log('---------------------------------------------');
+                console.log('data: ', data[rowid].ID);
+                console.log('data: Date: ', data[rowid].Date);
+                console.log('data: Duration: ', data[rowid].Duration);
+                console.log('data: DurationLabel: ', data[rowid].DurationLabel);*/
+
+                
+                if (rowdata.DurationLabel) {
+                    data[rowdata.ID].Duration = 1;
+                    data[rowdata.ID].DurationLabel = true;
                 } else {
-                    data[rowdata.id]["Duration"] = 0.5;
+                    data[rowdata.ID].Duration = 0.5;
+                    data[rowdata.ID].DurationLabel = false;
                 }
-                //console.log("durationLabel: ", rowdata.durationLabel);
                 totalDays = 0;
                 for (i = 0; i < data.length; i++) {
-                    b = data[i]["Duration"];
+                    b = data[i].Duration;
                     totalDays = totalDays + b;
-                    //console.log(i + ' -- ' + b + ' - data.lengh=' + data.length + ' - totalDays:' + totalDays);
                 };
-                //console.log('Update: Total Days: ' + totalDays);
-                //$("#totalFullDays").html("<strong>" + totalDays + "</strong> Days");
                 updateBalance(Balance, totalDays);
-                
                 commit(true); 
             }
 
@@ -98,14 +108,7 @@
         var columns = [
                           { text: 'Index', dataField: 'ID', width: 10, hidden: true },
                           { text: 'Date', dataField: 'Date', cellsformat: 'D', width: '65%', editable: false },
-                          {
-                              text: 'Full Days', dataField: 'DurationLabel', columntype: 'checkbox', width: '35%'
-                              //text: 'Full Day', cellalign: 'center', datafield: 'duration', width: '35%', displayfield: 'durationLabel', columntype: 'checkbox',
-                              //createeditor: function (row, value, editor) {
-                                //  editor.jqxCheckBox({ source: durations.records, displayMember: 'label', valueMember: 'value' });
-                             // }
-                          }
-        ];
+                          { text: 'Full Days', dataField: 'DurationLabel', columntype: 'checkbox', width: '35%' } ];
 
         $("#table").jqxGrid({
             width: '100%',
@@ -150,7 +153,7 @@
 
         //Iniitalization
         $("#getPolicyType").hide();
-        durations.records = [{ label: 'FullDay', value: 1 }, { label: 'Half Day', value: 0 }];
+        //durations.records = [{ label: 'FullDay', value: 1 }, { label: 'Half Day', value: 0 }];
 
 
 
@@ -278,6 +281,10 @@
             $.post('/api/employeeForm/postLeave/'+cIDV, { '': data })
                 .done(function(data){
                     console.log("ajax, Data Posted: ", data);
+                    BootstrapDialog.show({
+                        message: 'Leave Has Been Submitted !!'
+                    });
+                    clear();
                 });
             /*
             $.ajax({

@@ -23,8 +23,16 @@
 <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
 <script type="text/javascript">
     function gridButton(event) {
-        alert("clicked:" + event.args);
-        window.open("Temp", "_blank");
+        //alert("clicked:" + event.args);
+        //window.open("Temp", "_blank", 'toolbar=no,location=no,menubar=no');
+        PopupCenter('Temp', 'Detail', 800, 600);
+    }
+
+    function PopupCenter(pageURL, title, w, h) {
+        var left = (screen.width / 2) - (w / 2);
+        var top = (screen.height / 2) - (h / 2);
+        var targetWin = window.open(pageURL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        return targetWin;
     }
 
     $(document).ready(function () {
@@ -111,11 +119,13 @@
         
 
         function setSource(IDV,purposeID) {
-            url = "/api/employeeTransaction/getTransaction/" + IDV + "/"+purposeID;
+            url = "/api/employeeTransaction/getTransaction/" + IDV + "/" + purposeID;
             // prepare the data
+            console.log(url);
             sourceGrid.url = url;
             //dataAdapter = new $.jqx.dataAdapter(sourceGrid);
             //$("#jqxgrid").jqxGrid({ source: dataAdapter });
+            //dataAdapter.dataBind();
             $("#jqxgrid").jqxGrid('updatebounddata');
         }
 
@@ -140,15 +150,16 @@
                     { name: 'createTime', type: 'datetime' },
                     { name: 'updateTime', type: 'datetime' }
                 ],
-                id: 'purposeID',
-                url: url
+                //id: 'purposeID',
+                //async: false
             };
 
         dataAdapter = new $.jqx.dataAdapter(sourceGrid, {
-            downloadComplete: function (data, status, xhr) { },
-            loadComplete: function (data) { console.log(data); },
-            loadError: function (xhr, status, error) { }
+            downloadComplete: function (data, status, xhr) { console.log('downloadComplete: ', data); },
+            loadComplete: function (data) { console.log('loadComplete: ', data); },
+            loadError: function (xhr, status, error) { console.log('loadError: ', error) }
         });
+
 
         
        
@@ -157,13 +168,13 @@
             width: 641,
             theme: 'metro',
             source: dataAdapter,
-            pageable: true,
+            //pageable: true,
             autoheight: true,
-            sortable: true,
-            altrows: true,
-            enabletooltips: true,
+            //sortable: true,
+            //altrows: true,
+            //enabletooltips: true,
             //editable: true,
-            selectionmode: 'multiplecellsadvanced',
+            //selectionmode: 'multiplecellsadvanced',
             columns: [
                 { text: '', datafield: 'purposeID',  width: 41, cellsrenderer: renderButton },
                 { text: 'Status', datafield: 'purposeStatusName', width: 100 },

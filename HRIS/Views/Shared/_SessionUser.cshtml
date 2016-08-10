@@ -2,7 +2,8 @@
 
 <script type="text/javascript">
     //$(document).ready(function () {
-        //Model Controller
+    //Model Controller
+    try {
         var cIDV = '@Model.IDV';
         var cIDVParent = '@Model.parentIDV';
         var cIDVMail = '@Model.IDVMail';
@@ -10,8 +11,18 @@
         var cRole = '@Model.role';
         var ctimeLogin = '@Model.timeLogin';
 
-        console.log("IDV: " + cIDV); console.log("cIDVParent: " + cIDVParent);
-        console.log("cIDVMail: " + cIDVMail); console.log("cIDVParentMail: " + cIDVParentMail);
-        console.log("cRole: " + cRole); console.log("cTimeLogin: " + ctimeLogin);
+        console.log("======================================================================")
+        console.log("_SessionUser.cshtml");
+        console.log("======================================================================")
+        console.log("IDV: " + cIDV);
+        console.log("cIDVParent: " + cIDVParent);
+        console.log("cIDVMail: " + cIDVMail);
+        console.log("cIDVParentMail: " + cIDVParentMail);
+        console.log("cRole: " + cRole);
+        console.log("cTimeLogin: " + ctimeLogin);
+        console.log("======================================================================")
+    } catch (err) {
+        window.open("/");
+    }
    // });
 </script>
