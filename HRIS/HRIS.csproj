@@ -915,6 +915,7 @@
     <Content Include="Views\SharedForm\_MailRequestLeave.cshtml" />
     <Content Include="Views\Content\Temp.cshtml" />
     <Content Include="Views\Content\MailboxDetail.cshtml" />
+    <Content Include="Views\Content\MyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

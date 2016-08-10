@@ -44,7 +44,6 @@ namespace HRIS_R03.Controllers
 
         public ActionResult vProfile()
         {
-            System.Diagnostics.Debug.WriteLine("IDV:" + User.IDV);
             return View(User);
         }
 
@@ -96,6 +95,11 @@ namespace HRIS_R03.Controllers
         public ActionResult Temp()
         {
             return View();
+        }
+
+        public ActionResult MyProfile()
+        {
+            return View(User);
         }
         
     }
