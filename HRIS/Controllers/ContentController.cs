@@ -54,9 +54,7 @@ namespace HRIS_R03.Controllers
 
         public ActionResult MyIdentity()
         {
-            ViewBag.cIDV = 3;//dt.IDV;
-            ViewBag.cIDVParent = 40;
-            return View();
+            return View(User);
         }
 
         public ActionResult Calendar()
@@ -101,6 +99,36 @@ namespace HRIS_R03.Controllers
         {
             return View(User);
         }
-        
+
+        public ActionResult MyDependentBeta()
+        {
+            return View(User);
+        }
+
+        public ActionResult MyEducation()
+        {
+            return View(User);
+        }
+
+        public ActionResult MyTraining()
+        {
+            return View(User);
+        }
+
+        public ActionResult MyLanguage()
+        {
+            return View(User);
+        }
+
+        public ActionResult MySkill()
+        {
+            return View(User);
+        }
+
+        public ActionResult MyCertification()
+        {
+            return View(User);
+        }
+
     }
 }

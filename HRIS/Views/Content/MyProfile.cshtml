@@ -47,20 +47,19 @@
         hris.general.bindDateTime("contract2End", obj.contract2End);
         hris.general.bindDateTime("contract3Start", obj.contract3start);
         hris.general.bindDateTime("contract3End", obj.contract3End);
-        
+
     }
     $(document).ready(function () {
         $.ajax({
-            url: "http://localhost:54636/api/profile/40",
+            url: "http://localhost:54636/api/profile/"+ cIDV,
             success: function (result) {
                 bindElement(result);
             },
             error: function (e) {
-                console.log("Err",e);
+                console.log("Err", e);
             }
         });
     });
-   
 </script>
 
 <div class="row">

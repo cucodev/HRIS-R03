@@ -916,6 +916,12 @@
     <Content Include="Views\Content\Temp.cshtml" />
     <Content Include="Views\Content\MailboxDetail.cshtml" />
     <Content Include="Views\Content\MyProfile.cshtml" />
+    <Content Include="Views\Content\MyDependentBeta.cshtml" />
+    <Content Include="Views\Content\MyEducation.cshtml" />
+    <Content Include="Views\Content\MyTraining.cshtml" />
+    <Content Include="Views\Content\MyLanguage.cshtml" />
+    <Content Include="Views\Content\MySkill.cshtml" />
+    <Content Include="Views\Content\MyCertification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

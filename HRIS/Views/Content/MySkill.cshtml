@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "MyIdentity";
+    ViewBag.Title = "MySkill";
     Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
 }
 
@@ -11,10 +11,10 @@
     <div class="btn-group btn-breadcrumb">
         <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
         <a href="#" class="btn btn-info">Employee</a>
-        <a href="#" class="btn btn-success">My Identity</a>
+        <a href="#" class="btn btn-success">(Beta) My Skill</a>
     </div>
 
-    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">My Identity</h1>
+    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">(Beta) My Skill</h1>
     <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri"></h2>
 </div>
 <br />
@@ -23,7 +23,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var url = "http://localhost:54636/api/profileIdentity/"+ cIDV;
+        var url = "http://localhost:54636/api/profileSkill/" + cIDV;
         // prepare the data
         var source =
         {
@@ -31,30 +31,27 @@
             datafields: [
                 { name: 'ID', type: 'string' },
                 { name: 'IDV', type: 'string' },
-                { name: 'expiredDate', type: 'date' },
-                { name: 'idNumber', type: 'int' },
-                { name: 'idType', type: 'int' },
-                { name: 'issuedCountry', type: 'int' }
+                { name: 'skillName', type: 'string' },
+                { name: 'skillLevel', type: 'int' }
             ],
             id: 'ID',
             url: url
         };
         var dataAdapter = new $.jqx.dataAdapter(source);
-        $("#identityTable").jqxGrid(
+        $("#skillTable").jqxGrid(
         {
-            width: '100%',
+            width: '90%',
             source: dataAdapter,
             columnsresize: true,
             columns: [
               { text: 'ID', datafield: 'ID', width: 125 },
-              { text: 'Expired Date', datafield: 'expiredDate', width: 250 },
-              { text: 'ID Number', datafield: 'idNumber', width: 180 },
-              { text: 'ID Type', datafield: 'idType', width: 120 },
-              { text: 'Issued Country', datafield: 'issuedCountry', minwidth: 120 }
+              { text: 'IDV', datafield: 'IDV', width: 125 },
+              { text: 'Name', datafield: 'skillName', width: 350 },
+              { text: 'Level', datafield: 'skillLevel', width: 120 }
             ]
         });
     });
 </script>
 
-<div id="identityTable"></div>
+<div id="skillTable"></div>
 
