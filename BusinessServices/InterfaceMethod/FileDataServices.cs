@@ -9,6 +9,7 @@ using BusinessEntities;
 using BusinessServices.Interface;
 using BusinessEntities.CrudEntities;
 using System.Transactions;
+using System.IO;
 
 namespace BusinessServices.InterfaceMethod
 {
@@ -84,6 +85,18 @@ namespace BusinessServices.InterfaceMethod
 
         #endregion ========================================================================================================
 
+        public Guid saveImageFile(MemoryStream fileModel, FileViewModel fileView)
+        {
+            var file = new fileEntities {
+                name = fileView.Title,
+                file_stream = fileModel.ToArray(),
+                path_locator = "0xFD2E7419E6C99BEFC7D2372EA5F9BCF9B74F116220" // = at personImage
+            };
+            //_u.
+            db.FileModels.Add(file);
+            db.SaveChanges();
+        }
+
 
         #region Upload File
         public IEnumerable<string> addFileDescription(FileSummaryEntities dt)
@@ -101,7 +114,7 @@ namespace BusinessServices.InterfaceMethod
                         vCreatedBy = dt.vCreatedBy,
                         createTime = DateTime.Now
                     };
-                    filenames.Add(dt.fileName[i].ToString());
+                    filenames.Add(dt.name[i].ToString());
                     _u.dataFileRepository.Insert(FileSummary);
                     _u.fileUploadRepository.GetUploadFileTable();
                     _u.Save();

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BusinessEntities.CrudEntities
 {
@@ -37,6 +38,12 @@ namespace BusinessEntities.CrudEntities
         public string Description { get; set; }
         public DateTime createTime { get; set; }
         public int vCreatedBy { get; set; }
+    }
+
+    public class FileViewModel
+    {
+        public string Title { get; set; }
+        public HttpPostedFileBase File { get; set; }
     }
 
     public class FileResultEntities
