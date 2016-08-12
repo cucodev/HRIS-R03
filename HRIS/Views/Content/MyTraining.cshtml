@@ -23,7 +23,7 @@
 @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    function loadTraining(callback) {
         var url = "http://localhost:54636/api/profileTraining/" + cIDV;
         // prepare the data
         var source =
@@ -43,20 +43,89 @@
         var dataAdapter = new $.jqx.dataAdapter(source);
         $("#trainingTable").jqxGrid(
         {
-            width: '90%',
+            width: '100%',
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: 125 },
-              { text: 'IDV', datafield: 'IDV', width: 125 },
-              { text: 'Name', datafield: 'TrainingName', width: 250 },
-              { text: 'Sponsor', datafield: 'TrainingSponsor', width: 150 },
-              { text: 'Start', datafield: 'startDate', minwidth: 120 },
-              { text: 'End', datafield: 'endDate', minwidth: 120 }
+              { text: 'ID', datafield: 'ID', width: "10%" },
+              { text: 'IDV', datafield: 'IDV', width: "10%" },
+              { text: 'Name', datafield: 'TrainingName', width: "25%" },
+              { text: 'Sponsor', datafield: 'TrainingSponsor', width: "20%" },
+              { text: 'Start', datafield: 'startDate', minwidth: "10%" },
+              { text: 'End', datafield: 'endDate', minwidth: "10%" }
             ]
         });
+
+        if (callback != undefined) {
+            callback();
+        }
+    }
+
+    function createForm() {
+        console.log("Create Form");
+        hris.general.bindInput("TrainingName", null);
+        hris.general.bindInput("TrainingSponsor", null);
+        hris.general.bindDropDown("Certificate", null);
+        hris.general.bindDateTime("startDate", null);
+        hris.general.bindDateTime("endDate", null);
+    }
+
+    $(document).ready(function () {
+        hris.general.bindButton("addButton");
+        loadTraining(createForm);
     });
 </script>
 
-<div id="trainingTable"></div>
+<div class="row">
+    <div class="col-lg-10">
+        <div class="pull-right btn-sm" id="addButton" data-toggle="modal" data-target="#myTrainingModal">Add</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10">
+        <div id="trainingTable"></div>
+    </div>
+</div>
+
+<div id="myTrainingModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Training Info</h4>
+            </div>
+           
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="TrainingName">Training Name</label>
+                    <input type="text" class="form-control" id="TrainingName" />
+                </div>
+                <div class="form-group">
+                    <label for="TrainingSponsor">Sponsor</label>
+                    <input type="text" class="form-control" id="TrainingSponsor" />
+                </div>
+                <div class="form-group">
+                    <label for="Certificate">Certificate</label>
+                    <div class="form-control" id="Certificate"></div>
+                </div>
+                <div class="form-group">
+                    <label for="startDate">Start Date</label>
+                    <div class="form-control" id="startDate"></div>
+                </div>
+                <div class="form-group">
+                    <label for="endDate">End Date</label>
+                    <div class="form-control" id="endDate"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 
