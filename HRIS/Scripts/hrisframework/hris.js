@@ -264,17 +264,17 @@
         },
         bindButton: function (div) {
             var i = $("#" + div);
-            i.jqxButton({ width: '120px', height: '35px', theme: themeButton });
+            i.jqxButton({ width: '100px', height: '20px', theme: themeButton });
         },
         bindDropDown: function (div, value) {
             var i = $("#" + div);
-            i.jqxDropDownList({ source: hris.list._getLOV(div), theme: th, disabled: false, height: '35px', displayMember: "label", valueMember: "value", width: '100%' });
+            i.jqxDropDownList({ source: hris.list._getLOV(div), theme: th, disabled: false, height: '25px', displayMember: "label", valueMember: "value", width: '90%' });
             if (value !== null) { i.jqxDropDownList('val', value); }
         },
         bindDateTime: function (div, value) {
             var i = $("#" + div);
             value = $.trim(value);
-            i.jqxDateTimeInput({ width: '100%', height: '35px' });
+            i.jqxDateTimeInput({ width: '70%', height: '35px' });
             if (value !== null) { i.jqxDateTimeInput({ value: new Date(value) }); }
         }
     };

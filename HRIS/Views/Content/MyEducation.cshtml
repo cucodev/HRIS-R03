@@ -23,7 +23,7 @@
 @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    function loadEducation(callback) {
         var url = "http://localhost:54636/api/profileEdu/" + cIDV;
         // prepare the data
         var source =
@@ -57,8 +57,74 @@
               { text: 'Value', datafield: 'eduValue', minwidth: 120 }
             ]
         });
+
+        if (callback != undefined) {
+            callback();
+        }
+    }
+
+    function createForm() {
+        console.log("Create Form");
+        hris.general.bindInput("eduMajor", null);
+        hris.general.bindInput("eduValue", null);
+        hris.general.bindDropDown("eduLevel", null);
+        hris.general.bindDropDown("eduCountry", null);
+        hris.general.bindDateTime("eduGraduate", null);
+    }
+    $(document).ready(function () {
+        hris.general.bindButton("addButton");
+        loadEducation(createForm);
     });
 </script>
 
-<div id="educationTable"></div>
+<div class="row">
+    <div class="col-lg-10">
+        <div class="pull-right btn-sm" id="addButton" data-toggle="modal" data-target="#myEducationModal">Add</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10">
+        <div id="educationTable"></div>
+    </div>
+</div>
+
+<div id="myEducationModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Education Info</h4>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="eduLevel">Level</label>
+                    <div class="form-control" id="eduLevel"></div>
+                </div>
+                <div class="form-group">
+                    <label for="eduCountry">Country</label>
+                    <div class="form-control" id="eduCountry"></div>
+                </div>
+                <div class="form-group">
+                    <label for="eduMajor">Major</label>
+                    <input type="text" class="form-control" id="eduMajor" />
+                </div>
+                <div class="form-group">
+                    <label for="eduValue">Value</label>
+                    <input type="text" class="form-control" id="eduValue" />
+                </div>
+                <div class="form-group">
+                    <label for="eduGraduate">Graduate Date</label>
+                    <div class="form-control" id="eduGraduate"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 

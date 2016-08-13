@@ -23,7 +23,7 @@
 @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    function loadDependent(callback) {
         var url = "http://localhost:54636/api/profileDependent/" + cIDV;
         // prepare the data
         var source =
@@ -46,14 +46,70 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'IDV Dependent', datafield: 'IDVDependent', width: 125 },
-              { text: 'IDV', datafield: 'IDV', width: 125 },
-              { text: 'Relation Type', datafield: 'relationType', width: 125 },
-              { text: 'Insurance Covered', datafield: 'insuranceCovered', width: 120 },
-              { text: 'Tax Dependent', datafield: 'taxDependent', minwidth: 120 }
+              { text: 'IDV Dependent', datafield: 'IDVDependent', width: '10%' },
+              { text: 'IDV', datafield: 'IDV', width: '10%' },
+              { text: 'Relation Type', datafield: 'relationType', width: '20%' },
+              { text: 'Insurance Covered', datafield: 'insuranceCovered', width: '20%' },
+              { text: 'Tax Dependent', datafield: 'taxDependent', minwidth: '20%' }
             ]
         });
+
+        if (callback != undefined) {
+            callback();
+        }
+    }
+
+    function createForm() {
+        console.log("Create Form");
+        hris.general.bindInput("insuranceCovered",null);
+        hris.general.bindInput("taxDependent",null);
+        hris.general.bindDropDown("relationType",null);
+    }
+
+    $(document).ready(function () {
+        hris.general.bindButton("addButton");
+        loadDependent(createForm);  
     });
 </script>
 
-<div id="dependentTable"></div>
+<div class="row">
+    <div class="col-lg-10">
+        <div class="pull-right btn-sm" id="addButton" data-toggle="modal" data-target="#myDependentModal">Add</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10">
+        <div id="dependentTable"></div>
+    </div>
+</div>
+
+<div id="myDependentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Dependent Info</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="relationType">Relation</label>
+                    <div class="form-control" id="relationType"></div>
+                </div>
+                <div class="form-group">
+                    <label for="insuranceCovered">Insurance Covered</label>
+                    <input type="text" class="form-control" id="insuranceCovered" />
+                </div>
+                <div class="form-group">
+                    <label for="taxDependent">Tax Dependent</label>
+                    <input type="text" class="form-control" id="taxDependent" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -22,7 +22,7 @@
 @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    function loadLanguage(callback) {
         var url = "http://localhost:54636/api/profileLanguage/" + cIDV;
         // prepare the data
         var source =
@@ -41,19 +41,80 @@
         var dataAdapter = new $.jqx.dataAdapter(source);
         $("#languageTable").jqxGrid(
         {
-            width: '90%',
+            width: '100%',
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: 125 },
-              { text: 'IDV', datafield: 'IDV', width: 125 },
-              { text: 'Name', datafield: 'languageName', width: 250 },
-              { text: 'Spoken', datafield: 'spoken', width: 120 },
-              { text: 'Written', datafield: 'written', minwidth: 120 }
+              { text: 'ID', datafield: 'ID', width: "10%" },
+              { text: 'IDV', datafield: 'IDV', width: "10%" },
+              { text: 'Name', datafield: 'languageName', width: "20%" },
+              { text: 'Spoken', datafield: 'spoken', width: "10%" },
+              { text: 'Written', datafield: 'written', minwidth: "10%" }
             ]
         });
+
+        if (callback != undefined) {
+            callback();
+        }
+    }
+
+    function createForm() {
+        console.log("Create Form");
+        hris.general.bindInput("languageName", null);
+        hris.general.bindInput("spoken", null);
+        hris.general.bindInput("written", null);
+    }
+
+    $(document).ready(function () {
+        hris.general.bindButton("addButton");
+        loadLanguage(createForm);
     });
 </script>
 
-<div id="languageTable"></div>
+
+<div class="row">
+    <div class="col-lg-10">
+        <div class="pull-right btn-sm" id="addButton" data-toggle="modal" data-target="#myLanguageModal">Add</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10">
+        <div id="languageTable"></div>
+    </div>
+</div>
+
+<div id="myLanguageModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Language Form</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="languageName">Language Name</label>
+                    <input type="text" class="form-control" id="languageName" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="spoken">Spoken</label>
+                    <input type="text" class="form-control" id="spoken" />
+                </div>
+                <div class="form-group">
+                    <label for="written">Written</label>
+                    <input type="text" class="form-control" id="written" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
 
