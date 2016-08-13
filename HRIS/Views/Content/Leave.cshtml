@@ -32,6 +32,9 @@
         var MasterSource = hris.source._employeeRoleBased(cIDV);
         var MasterDataAdapter = hris.data._dataAdapter(MasterSource);
 
+        var getLovType = hris.list._getLOV("PolicyType");
+
+        console.log("getPolicyType:", getLovType);
         console.log("MasterDataAdapter: " ,  MasterDataAdapter );
 
         var Balance = 0;
@@ -123,7 +126,7 @@
 
         //COMPONENT
         hris.general.bindButton('Apply');     
-        $('#getPolicyType').jqxDropDownList({ source: MasterDataAdapter, theme: 'metro', disabled: false, height: '35px', displayMember: "policyTypeName", valueMember: "ID", width: '100%' });
+        $('#PolicyType').jqxDropDownList({ source: MasterDataAdapter, theme: 'fresh', disabled: false, height: '35px', displayMember: "policyTypeName", valueMember: "ID", width: '100%' });
         $('#isAnnual').jqxSwitchButton({ height: 35, width: '100%', checked: true, onLabel: 'ANNUAL', offLabel: 'COMMON', theme: 'orange' });
         $('#full-year').multiDatesPicker({
             numberOfMonths: [2, 3],
@@ -152,7 +155,7 @@
 
 
         //Iniitalization
-        $("#getPolicyType").hide();
+        $("#PolicyType").hide();
         //durations.records = [{ label: 'FullDay', value: 1 }, { label: 'Half Day', value: 0 }];
 
 
@@ -211,7 +214,7 @@
 
         function clear() {
             $('#full-year').multiDatesPicker('resetDates', 'picked');
-            $('#getPolicyType').jqxDropDownList('clearSelection');
+            $('#PolicyType').jqxDropDownList('clearSelection');
             td = 0;
             totalDays = 0;
             data = [];
@@ -222,7 +225,7 @@
         }
 
         function getRoleBasedValue(policyType) {
-            var uri = '/api/employee/getRoleBasedValue/@ViewBag.cIDV/' + policyType;
+            var uri = '/api/employee/getRoleBasedValue/'+ cIDV + '/' + policyType;
             
         }
 
@@ -233,13 +236,13 @@
             $("#totalAnnualCurrent").show();
             $("#totalAnnualCarryLabel").show();
             $("#totalAnnualCurrentLabel").show();
-            $('#getPolicyType').hide();
+            $('#PolicyType').hide();
             $('labelCommon').hide();
             clear();
         });
         $('.jqx-switchbutton').on('checked', function (event) {
             $('#isAnnual').jqxSwitchButton({ onLabel: 'ANNUAL' });
-            $('#getPolicyType').show();
+            $('#PolicyType').show();
             $('labelCommon').show();
             $("#totalAnnualCarry").hide();
             $("#totalAnnualCurrent").hide();
@@ -247,8 +250,8 @@
             $("#totalAnnualCurrentLabel").hide();
             clear();
         });
-        $('#getPolicyType').on('select', function (event) {
-            var i = $('#getPolicyType');
+        $('#PolicyType').on('select', function (event) {
+            var i = $('#PolicyType');
             var index = event.args.index;
             var MasterData = MasterDataAdapter.records[index];
             
@@ -331,7 +334,7 @@
     </div>
 
     <div class="col-md-5">
-        <div id="getPolicyType"></div>
+        <div id="PolicyType"></div>
     </div>
     <div class="col-md-5 ">
         <input type="button" value="APPLY" id='Apply' />

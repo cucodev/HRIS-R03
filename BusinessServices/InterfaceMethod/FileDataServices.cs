@@ -93,8 +93,9 @@ namespace BusinessServices.InterfaceMethod
                 path_locator = "0xFD2E7419E6C99BEFC7D2372EA5F9BCF9B74F116220" // = at personImage
             };
             //_u.
-            db.FileModels.Add(file);
-            db.SaveChanges();
+            //db.FileModels.Add(file);
+            //db.SaveChanges();
+            return new Guid();
         }
 
 

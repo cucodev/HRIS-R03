@@ -33,7 +33,7 @@
     };
     hris.source = {
         _employeeRoleBased: function (IDV) {
-            var PolicyName = hris.list._getLOV('getPolicyType');
+            var PolicyName = hris.list._getLOV('PolicyType');
             var ValueName = hris.list._getLOV('getValueType');
             var url = '/api/employee/getRoleBased/'+IDV;
             var source =
