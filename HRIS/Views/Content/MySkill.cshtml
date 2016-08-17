@@ -22,6 +22,7 @@
 @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
 
 <script type="text/javascript">
+    var listSkillLevel = hris.list._dbLOV("SkillLevel");
     function loadSkill(callback) {
         var url = "http://localhost:54636/api/profileSkill/" + cIDV;
         // prepare the data
@@ -32,7 +33,8 @@
                 { name: 'ID', type: 'string' },
                 { name: 'IDV', type: 'string' },
                 { name: 'skillName', type: 'string' },
-                { name: 'skillLevel', type: 'int' }
+                { name: 'skillLevel', type: 'int' },
+                { name: 'skillLevelName', value: 'skillLevel', values: { source: listSkillLevel.records, value: 'value', name: 'label' } }
             ],
             id: 'ID',
             url: url
@@ -47,7 +49,7 @@
               { text: 'ID', datafield: 'ID', width: "10%" },
               { text: 'IDV', datafield: 'IDV', width: "10%" },
               { text: 'Name', datafield: 'skillName', width: "25%" },
-              { text: 'Level', datafield: 'skillLevel', width: "10%" }
+              { text: 'Level', datafield: 'skillLevelName', width: "10%" }
             ]
         });
 

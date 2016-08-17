@@ -22,6 +22,8 @@
 @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
 
 <script type="text/javascript">
+    var listCity = hris.list._dbLOV("Kabupaten");
+    var listCountry = hris.list._dbLOV("Country");
     function loadCertification(callback) {
         var url = "http://localhost:54636/api/profileCertification/" + cIDV;
         // prepare the data
@@ -31,8 +33,11 @@
             datafields: [
                 { name: 'ID', type: 'string' },
                 { name: 'IDV', type: 'string' },
+                { name: 'certificationName', type: 'string' },
                 { name: 'issuedCity', type: 'int' },
+                { name: 'issuedCityName', value: 'issuedCity', values: { source: listCity.records, value: 'value', name: 'label' } },
                 { name: 'issuedCountry', type: 'int' },
+                { name: 'issuedCountryName', value: 'issuedCountry', values: { source: listCountry.records, value: 'value', name: 'label' } },
                 { name: 'issuedDate', type: 'date' },
                 { name: 'issuedExpiredDate', type: 'date' }
             ],
@@ -48,8 +53,9 @@
             columns: [
               { text: 'ID', datafield: 'ID', width: "10%" },
               { text: 'IDV', datafield: 'IDV', width: "10%" },
-              { text: 'City', datafield: 'issuedCity', width: "20%" },
-              { text: 'Country', datafield: 'issuedCountry', width: "20%" },
+              { text: 'Name', datafield: 'certificationName', width: "20%" },
+              { text: 'City', datafield: 'issuedCityName', width: "20%" },
+              { text: 'Country', datafield: 'issuedCountryName', width: "20%" },
               { text: 'Date', datafield: 'issuedDate', width: "20%" },
               { text: 'Expired', datafield: 'issuedExpiredDate', width: "20%" }
             ]
@@ -63,8 +69,8 @@
         console.log("Create Form");
         hris.general.bindInput("certificationName", null);
         
-        hris.general.bindDropDown("issuedCountry", null);
-        hris.general.bindDropDown("issuedCity", null);
+        hris.general.bindDropDown("Country", null);
+        hris.general.bindDropDown("Kabupaten", null);
         hris.general.bindDateTime("issuedDate", null);
         hris.general.bindDateTime("issuedExpiredDate", null);
     }
@@ -99,22 +105,6 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Skill Form</h4>
             </div>
-
-            <!--
-
-                 public int ID { get; set; }
-        public Nullable<int> IDV { get; set; }
-        public string certificationName { get; set; }
-        public Nullable<int> issuedCountry { get; set; }
-        public Nullable<int> issuedCity { get; set; }
-        public Nullable<System.DateTime> issuedDate { get; set; }
-        public Nullable<System.DateTime> issuedExpiredDate { get; set; }
-        public Nullable<int> vCreatedBy { get; set; }
-        public Nullable<int> vUpdatedBy { get; set; }
-        public Nullable<int> isDeleted { get; set; }
-        public Nullable<System.DateTime> createTime { get; set; }
-        public Nullable<System.DateTime> updateTime { get; set; }
-                    -->
             <div class="modal-body">
                 <div class="form-group">
                     <label for="certificationName">Certification Name</label>
@@ -122,12 +112,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="issuedCountry">Country</label>
-                    <div class="form-control" id="issuedCountry"></div>
+                    <label for="Country">Country</label>
+                    <div class="form-control" id="Country"></div>
                 </div>
                 <div class="form-group">
-                    <label for="issuedCity">City</label>
-                    <div class="form-control" id="issuedCity"></div>
+                    <label for="Kabupaten">City</label>
+                    <div class="form-control" id="Kabupaten"></div>
                 </div>
                 <div class="form-group">
                     <label for="issuedDate">Date</label>

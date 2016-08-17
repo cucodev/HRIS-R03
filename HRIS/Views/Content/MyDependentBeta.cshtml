@@ -23,6 +23,7 @@
 @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
 
 <script type="text/javascript">
+    var listName = hris.list._getLOV("Name");
     function loadDependent(callback) {
         var url = "http://localhost:54636/api/profileDependent/" + cIDV;
         // prepare the data
@@ -33,6 +34,7 @@
                 { name: 'IDVDependent', type: 'string' },
                 { name: 'IDV', type: 'string' },
                 { name: 'relationType', type: 'date' },
+                { name: 'relationName', value: 'relationType', values: { source: listName.records, value: 'value', name: 'label' }},
                 { name: 'insuranceCovered', type: 'int' },
                 { name: 'taxDependent', type: 'int' }
             ],
@@ -48,7 +50,7 @@
             columns: [
               { text: 'IDV Dependent', datafield: 'IDVDependent', width: '10%' },
               { text: 'IDV', datafield: 'IDV', width: '10%' },
-              { text: 'Relation Type', datafield: 'relationType', width: '20%' },
+              { text: 'Relation Type', datafield: 'relationName', width: '20%' },
               { text: 'Insurance Covered', datafield: 'insuranceCovered', width: '20%' },
               { text: 'Tax Dependent', datafield: 'taxDependent', minwidth: '20%' }
             ]
@@ -67,6 +69,8 @@
     }
 
     $(document).ready(function () {
+        
+        console.log("listName", listName);
         hris.general.bindButton("addButton");
         loadDependent(createForm);  
     });
