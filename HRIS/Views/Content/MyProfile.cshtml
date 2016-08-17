@@ -31,14 +31,14 @@
         hris.general.bindDropDown("Religion", obj.Religion);
         hris.general.bindDropDown("Gender", obj.Gender);
         hris.general.bindDropDown("Marital", obj.Marital);
-        hris.general.bindDropDown("Nationality", obj.Nationality);
+        hris.general.bindDropDown("Country", obj.Nationality);
         hris.general.bindDateTime("Birthdate", obj.Birthdate);
 
         // Employee
         hris.general.bindInput("employeeID", obj.employeeID);
         hris.general.bindInput("UID_ABSENCE", obj.UID_ABSENCE);
         hris.general.bindInput("active", obj.active);
-        hris.general.bindDropDown("employmentStatus", obj.employmentStatus);
+        hris.general.bindDropDown("EmpStatus", obj.employmentStatus);
         hris.general.bindDateTime("joinDate", obj.joinDate);
         hris.general.bindDateTime("resignDate", obj.resignDate);
         hris.general.bindDateTime("contract1Start", obj.contract1start);
@@ -59,12 +59,12 @@
                 Religion : hris.general.getData("Religion"),
                 Gender : hris.general.getData("Gender"),
                 Marital : hris.general.getData("Marital"),
-                Nationality : hris.general.getData("Nationality"),
+                Nationality: hris.general.getData("Country"),
                 Birthdate: hris.general.getData("Birthdate"),
                 employeeID : hris.general.getData("employeeID"),
                 UID_ABSENCE : hris.general.getData("UID_ABSENCE"),
                 active : hris.general.getData("active"),
-                employmentStatus : hris.general.getData("employmentStatus"),
+                employmentStatus : hris.general.getData("EmpStatus"),
                 joinDate : hris.general.getData("joinDate"),
                 resignDate : hris.general.getData("resignDate"),
                 contract1Start : hris.general.getData("contract1Start"),
@@ -160,8 +160,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="Nationality">Nationality</label>
-                        <div class="form-control" id="Nationality"></div>
+                        <label for="Country">Nationality</label>
+                        <div class="form-control" id="Country"></div>
                     </div>
                 </div>
             </div>
@@ -190,8 +190,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="employmentStatus">Employment Status</label>
-                        <div class="form-control" id="employmentStatus"></div>
+                        <label for="EmpStatus">Employment Status</label>
+                        <div class="form-control" id="EmpStatus"></div>
                     </div>
                 </div>
             </div>

@@ -22,8 +22,11 @@
 @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        var url = "http://localhost:54636/api/profileIdentity/"+ cIDV;
+    var listID = hris.list._dbLOV("ID");
+    var listCountry = hris.list._dbLOV("Country");
+
+    function loadCertification(cb) {
+        var url = "http://localhost:54636/api/profileIdentity/" + cIDV;
         // prepare the data
         var source =
         {
@@ -34,7 +37,9 @@
                 { name: 'expiredDate', type: 'date' },
                 { name: 'idNumber', type: 'int' },
                 { name: 'idType', type: 'int' },
-                { name: 'issuedCountry', type: 'int' }
+                { name: 'idName', value: 'idType', values: { source: listID.records, value: 'value', name: 'label' } },
+                { name: 'issuedCountry', type: 'int' },
+                { name: 'issuedCountryName', value: 'issuedCountry', values: { source: listCountry.records, value: 'value', name: 'label' } }
             ],
             id: 'ID',
             url: url
@@ -46,15 +51,79 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: 125 },
-              { text: 'Expired Date', datafield: 'expiredDate', width: 250 },
-              { text: 'ID Number', datafield: 'idNumber', width: 180 },
-              { text: 'ID Type', datafield: 'idType', width: 120 },
-              { text: 'Issued Country', datafield: 'issuedCountry', minwidth: 120 }
+              { text: 'ID', datafield: 'ID', width: "10%" },
+              { text: 'Expired Date', datafield: 'expiredDate', width: "20%" },
+              { text: 'ID Number', datafield: 'idNumber', width: "20%" },
+              { text: 'ID Type', datafield: 'idName', width: "10%" },
+              { text: 'Issued Country', datafield: 'issuedCountryName', minwidth: "15%" }
             ]
         });
+        if (cb != undefined) {
+            cb();
+        }
+    }
+
+    function createForm() {
+        console.log("Create Form");
+       
+        hris.general.bindInput("idNumber", null);
+        hris.general.bindDropDown("ID", null);
+        hris.general.bindDropDown("Country", null);
+        hris.general.bindDateTime("expiredDate", null);
+    }
+        
+    $(document).ready(function () {
+        hris.general.bindButton("addButton");
+        loadCertification(createForm);
+        
     });
 </script>
+<div class="row">
+    <div class="col-lg-10">
+        <div class="pull-right btn-sm" id="addButton" data-toggle="modal" data-target="#myIdentityModal">Add</div>
+    </div>
+</div>
 
-<div id="identityTable"></div>
+<div class="row">
+    <div class="col-lg-10">
+        <div id="identityTable"></div>
+    </div>
+</div>
+
+<div id="myIdentityModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Identity Form</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="ID">Type</label>
+                    <div class="form-control" id="ID"></div>
+                </div>
+                <div class="form-group">
+                    <label for="idNumber">ID Number</label>
+                    <input type="text" class="form-control" id="idNumber" />
+                </div>
+                <div class="form-group">
+                    <label for="Country">Country</label>
+                    <div class="form-control" id="Country"></div>
+                </div>
+                <div class="form-group">
+                    <label for="expiredDate">Expired Date</label>
+                    <div class="form-control" id="expiredDate"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 
