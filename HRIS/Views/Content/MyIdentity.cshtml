@@ -63,7 +63,7 @@
         }
     }
     var Identity = {
-        url: "http://localhost:54636/api/profileIdentity/",
+        url: "http://localhost:54636/api/profileIdentity",
         add: function (data) {
             console.log("create new", data);
             $.ajax({
@@ -82,7 +82,7 @@
         update: function (data) {
             console.log("update dulu", data);
             $.ajax({
-                url: this.url + data.ID,
+                url: this.url +"/"+ data.ID,
                 method: 'PUT',
                 data: data,
                 success: function (result) {
@@ -235,7 +235,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Warning Form</h4>
+                <h4 class="modal-title">Warning</h4>
             </div>
             <div class="modal-body">    
                 No data selected!
