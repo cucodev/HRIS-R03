@@ -28,6 +28,13 @@ namespace HRIS_R03.Controllers
 
         public ActionResult Leave()
         {
+            ViewBag.menuForm = "Active";
+            return View(User);
+        }
+
+        public ActionResult Medical()
+        {
+            //ViewBag.menuForm = "Active";
             return View(User);
         }
 
@@ -44,31 +51,37 @@ namespace HRIS_R03.Controllers
 
         public ActionResult vProfile()
         {
+            ViewBag.menuProfile = "Active";
             return View(User);
         }
 
         public ActionResult vMap()
         {
-            return View();
+            ViewBag.menuProfile = "Active";
+            return View(User);
         }
 
         public ActionResult MyIdentity()
         {
+            ViewBag.menuProfile = "Active";
             return View(User);
         }
 
         public ActionResult Calendar()
         {
-            return View();
+            ViewBag.menuCalendar = "Active";
+            return View(User);
         }
 
         public ActionResult Timesheet()
         {
-            return View();
+            ViewBag.menuTimesheet = "Active";
+            return View(User);
         }
 
         public ActionResult Mailbox()
         {
+            ViewBag.menuMailbox = "Active";
             return View(User);
         }
 
@@ -79,7 +92,8 @@ namespace HRIS_R03.Controllers
 
         public ActionResult MyDependent()
         {
-            return View();
+            ViewBag.menuProfile = "Active";
+            return View(User);
         }
 
         public ActionResult MyMatrix()
@@ -90,6 +104,11 @@ namespace HRIS_R03.Controllers
             return View();
         }
 
+        public ActionResult Notifications()
+        {
+            return View(User);
+        }
+
         public ActionResult Temp()
         {
             return View();
@@ -97,36 +116,43 @@ namespace HRIS_R03.Controllers
 
         public ActionResult MyProfile()
         {
+            ViewBag.menuProfile = "Active";
             return View(User);
         }
 
         public ActionResult MyDependentBeta()
         {
+            ViewBag.menuProfile = "Active";
             return View(User);
         }
 
         public ActionResult MyEducation()
         {
+            ViewBag.menuProfile = "Active";
             return View(User);
         }
 
         public ActionResult MyTraining()
         {
+            ViewBag.menuProfile = "Active";
             return View(User);
         }
 
         public ActionResult MyLanguage()
         {
+            ViewBag.menuProfile = "Active";
             return View(User);
         }
 
         public ActionResult MySkill()
         {
+            ViewBag.menuProfile = "Active";
             return View(User);
         }
 
         public ActionResult MyCertification()
         {
+            ViewBag.menuProfile = "Active";
             return View(User);
         }
 

@@ -2,17 +2,22 @@
 using BusinessServices.Interface;
 using BusinessServices.InterfaceMethod;
 using DataModel;
+using HRIS.Controllers.api;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.UI.WebControls;
 
 namespace HRIS.Controllers.api
 {
+    
     public class FileController : ApiController
     {
         private readonly IFileData _pServices;
@@ -31,12 +36,10 @@ namespace HRIS.Controllers.api
         public IEnumerable<String> UploadMultiFiles()
         {
             List<string> Fx = new List<string>();
-            var streamProvider = new MultipartFormDataStreamProvider(UploadPath);
+            var streamProvider = new CustomMultipartFormDataStreamProvider(UploadPath);
             
             Request.Content.ReadAsMultipartAsync(streamProvider);
-
             
-
             var files = new FileSummaryEntities
             {
                 fileName = streamProvider.FileData.Select(entry => entry.LocalFileName.Replace(UploadPath + "\\", "")).ToList(),
@@ -52,20 +55,41 @@ namespace HRIS.Controllers.api
 
 
         [HttpPost]
-        [Route("api/file/UploadFiles")]
-        [ActionName("UploadFiles")]
-        public IEnumerable<String> UploadImageFiles(FileViewModel fileModel)
+        [Route("api/file/UploadImageFiles")]
+        [ActionName("UploadImageFiles")]
+        public Task<IEnumerable<FileDesc>> UploadImageFiles(HttpRequestMessage request)
         {
-            var files = new FileSummaryEntities();
-            var streamProvider = new MultipartFormDataStreamProvider(UploadImagePath);
-            Request.Content.ReadAsMultipartAsync(streamProvider);
+            string UploadPath = "\\\\HLSCP\\sqlserver\\HRIS\\personImage\\";
+            FileSummaryEntities files = new FileSummaryEntities();
+            var rootUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.AbsolutePath, String.Empty);
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                var streamProvider = new CustomMultipartFormDataStreamProvider(UploadPath);
+                var task = Request.Content.ReadAsMultipartAsync(streamProvider).ContinueWith<IEnumerable<FileDesc>>(t =>
+                {
+                    
+                    if (t.IsFaulted || t.IsCanceled)
+                    {
+                        System.Diagnostics.Debug.WriteLine("t status: " + t.Status.ToString() + ':' + t.Result);
+                        throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                    };
 
-            var fileData = new MemoryStream();
-            fileModel.File.InputStream.CopyTo(fileData);
-            fileModel.File.FileName.ToString();
+                    var fileInfo = streamProvider.FileData.Select(i => {
+                        var info = new FileInfo(i.LocalFileName);
+                        return new FileDesc(info.Name, UploadPath + info.Name, info.Length / 1024);
+                    });
+                    return fileInfo;
+                });
 
-            return _pServices.addFileDescription(files);
+                return task;
+            }
+            else
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable, "This request is not properly formatted"));
+            }
         }
+
+        
 
 
         // GET: api/list
@@ -122,4 +146,32 @@ namespace HRIS.Controllers.api
         }
 
     }
+
+    public class FileDesc
+    {
+        public string Name { get; set; }
+        public string Path { get; set; }
+        public long Size { get; set; }
+
+        public FileDesc(string n, string p, long s)
+        {
+            Name = n;
+            Path = p;
+            Size = s;
+        }
+    }
+
+    public class CustomMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
+    {
+        public CustomMultipartFormDataStreamProvider(string path) : base(path)
+        { }
+
+        public override string GetLocalFileName(HttpContentHeaders headers)
+        {
+            var name = !string.IsNullOrWhiteSpace(headers.ContentDisposition.FileName) ? headers.ContentDisposition.FileName : "NoName";
+            System.Diagnostics.Debug.WriteLine("Custom: getlocalfilename: " + name);
+            return name.Replace("\"",string.Empty); //this is here because Chrome submits files in quotation marks which get treated as part of the filename and get escaped
+        }
+    }
+
 }

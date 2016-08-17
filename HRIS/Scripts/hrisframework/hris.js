@@ -34,8 +34,68 @@
     hris.source = {
         _employeeRoleBased: function (IDV) {
             var PolicyName = hris.list._getLOV('PolicyType');
-            var ValueName = hris.list._getLOV('getValueType');
+            var ValueName = hris.list._getLOV('ValueType');
             var url = '/api/employee/getRoleBased/'+IDV;
+            var source =
+                {
+                    datatype: "json",
+                    datafields: [
+                        { name: 'ID', type: 'number' },
+                        { name: 'IDV', type: 'number' },
+                        { name: 'policyType', type: 'number' },
+                        { name: 'policyTypeName', value: 'policyType', values: { source: PolicyName.records, value: 'value', name: 'label' } },
+                        { name: 'valueType', type: 'number' },
+                        { name: 'valueTypeName', value: 'valueType', values: { source: ValueName.records, value: 'value', name: 'label' } },
+                        { name: 'roleBasedValue', type: 'number' },
+                        { name: 'currentValue', type: 'number' },
+                        { name: 'balanceValue', type: 'number' },
+                        { name: 'remainingValue', type: 'number' },
+                        { name: 'validDateStart', type: 'date' },
+                        { name: 'validDateStop', type: 'date' },
+                        { name: 'description', type: 'number' },
+                        { name: 'vCreatedBy', type: 'number' },
+                        { name: 'vUpdatedBy', type: 'number' },
+                        { name: 'createTime', type: 'date' },
+                        { name: 'updateTime', type: 'date' }
+                    ],
+                    url: url
+                };
+            return source;
+        },
+        _employeeMedicalRoleBased: function (IDV) {
+            var PolicyName = hris.list._getLOV('PolicyType');
+            var ValueName = hris.list._getLOV('ValueType');
+            var url = '/api/employee/getMedicalRoleBased/'+IDV;
+            var source =
+                {
+                    datatype: "json",
+                    datafields: [
+                        { name: 'ID', type: 'number' },
+                        { name: 'IDV', type: 'number' },
+                        { name: 'policyType', type: 'number' },
+                        { name: 'policyTypeName', value: 'policyType', values: { source: PolicyName.records, value: 'value', name: 'label' } },
+                        { name: 'valueType', type: 'number' },
+                        { name: 'valueTypeName', value: 'valueType', values: { source: ValueName.records, value: 'value', name: 'label' } },
+                        { name: 'roleBasedValue', type: 'number' },
+                        { name: 'currentValue', type: 'number' },
+                        { name: 'balanceValue', type: 'number' },
+                        { name: 'remainingValue', type: 'number' },
+                        { name: 'validDateStart', type: 'date' },
+                        { name: 'validDateStop', type: 'date' },
+                        { name: 'description', type: 'number' },
+                        { name: 'vCreatedBy', type: 'number' },
+                        { name: 'vUpdatedBy', type: 'number' },
+                        { name: 'createTime', type: 'date' },
+                        { name: 'updateTime', type: 'date' }
+                    ],
+                    url: url
+                };
+            return source;
+        },
+        _employeeLeaveRoleBased: function (IDV) {
+            var PolicyName = hris.list._getLOV('PolicyType');
+            var ValueName = hris.list._getLOV('ValueType');
+            var url = '/api/employee/getLeaveRoleBased/' + IDV;
             var source =
                 {
                     datatype: "json",
@@ -264,7 +324,7 @@
         },
         bindButton: function (div) {
             var i = $("#" + div);
-            i.jqxButton({ width: '100px', height: '20px', theme: themeButton });
+            i.jqxButton({ width: '100px', height: '35px', theme: themeButton });
         },
         bindDropDown: function (div, value) {
             var i = $("#" + div);

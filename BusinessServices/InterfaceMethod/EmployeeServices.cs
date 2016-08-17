@@ -8,7 +8,7 @@ using DataModel.UnitOfWork;
 using BusinessServices.Interface;
 using BusinessEntities.CrudEntities;
 using System.Transactions;
-
+using BusinessEntities;
 
 namespace BusinessServices.InterfaceMethod
 {
@@ -30,6 +30,102 @@ namespace BusinessServices.InterfaceMethod
             var approvalIDV = _u.personJobRepository.GetByCode(b => b.IDV == IDV && b.isDeleted == 0);
             return approvalIDV.parentIDV.HasValue ? approvalIDV.parentIDV.Value : 0;
         }
+
+        //MyMatrix
+        public IEnumerable<employeeRoleBasedEntities> getCurrentRoleBased(int IDV)
+        {
+            List<employeeRoleBasedEntities> ms = new List<employeeRoleBasedEntities>();
+            var emp = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == IDV && b.validDateStop < DateTime.Now );
+            if (emp.Any())
+            {
+                foreach (employeeRoleBased px in emp)
+                {
+                    ms.Add(_map.EmployeeRoleBasedFromModel(px));
+                }
+            }
+
+            return ms.AsEnumerable();
+        }
+
+        //Form Leave
+        public IEnumerable<employeeRoleBasedEntities> getCurrentRoleBasedLeave(int IDV)
+        {
+            List<employeeRoleBasedEntities> ms = new List<employeeRoleBasedEntities>();
+            var inPolicyType = new int[] { };
+            inPolicyType = filterPolicyID(GlobalVariable.policyTypeLeave).ToArray();
+            var emp = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == IDV && b.validDateStop >= DateTime.Now && inPolicyType.Contains(b.policyType));
+            if (emp.Any())
+            {
+                foreach (employeeRoleBased px in emp)
+                {
+                    ms.Add(_map.EmployeeRoleBasedFromModel(px));
+                }
+            }
+
+            return ms.AsEnumerable();
+        }
+
+        private List<int> filterPolicyID(string catCode)
+        {
+            List<int> inPolicyType = new List<int>();
+            var list = _u.categoryParentRepository.GetMany(b => b.catCode.Trim() == catCode.Trim());
+            if (list.Any())
+            {
+                foreach (categoryParent px in list)
+                {
+                    var listRolePolicyID = _u.roleBasedMatrixRepository.GetMany(b => b.PolicyType == px.catID);
+                    if (listRolePolicyID.Any())
+                    {
+                        foreach (roleBasedMatrix cx in listRolePolicyID)
+                        {
+                            System.Diagnostics.Debug.WriteLine("Data : " + cx.ID + ':' + px.catCode);
+                            inPolicyType.Add(cx.ID);
+                        }
+                    }
+                }
+            } else
+            {
+                System.Diagnostics.Debug.WriteLine("Categoryparent NOT Found, code: " + catCode);
+            }
+            return inPolicyType;
+        }
+
+        //Form Medical
+        public IEnumerable<employeeRoleBasedEntities> getCurrentRoleBasedMedical(int IDV)
+        {
+            List<employeeRoleBasedEntities> ms = new List<employeeRoleBasedEntities>();
+            var inPolicyType = new int[] { };
+            inPolicyType = filterPolicyID(GlobalVariable.policyTypeMedical).ToArray();
+            var emp = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == IDV && b.validDateStop >= DateTime.Now  && inPolicyType.Contains(b.policyType));
+            if (emp.Any())
+            {
+                foreach (employeeRoleBased px in emp)
+                {
+                    ms.Add(_map.EmployeeRoleBasedFromModel(px));
+                }
+            } 
+
+            return ms.AsEnumerable();
+        }
+
+        //Form Annual
+        public IEnumerable<employeeRoleBasedEntities> getCurrentRoleBasedAnnual(int IDV)
+        {
+            List<employeeRoleBasedEntities> ms = new List<employeeRoleBasedEntities>();
+            var inPolicyType = new int[] { };
+            inPolicyType = filterPolicyID(GlobalVariable.policyTypeAnnual).ToArray();
+            var emp = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == IDV && b.validDateStop >= DateTime.Now && inPolicyType.Contains(b.policyType));
+            if (emp.Any())
+            {
+                foreach (employeeRoleBased px in emp)
+                {
+                    ms.Add(_map.EmployeeRoleBasedFromModel(px));
+                }
+            }
+
+            return ms.AsEnumerable();
+        }
+
 
         public IEnumerable<employeeRoleBasedEntities> GetRoleBased(int IDV)
         {

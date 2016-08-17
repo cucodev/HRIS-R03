@@ -18,8 +18,9 @@
 
     <script src=@Url.Content("~/Scripts/bootstrap.min.js")></script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
+    <link href=@Url.Content("~/Content/bootstrap-dialog.min.css") rel="stylesheet" type="text/css" />
+    <script src=@Url.Content("~/Scripts/bootstrap-dialog.min.js")></script>
+    <script src=@Url.Content("~/Scripts/jquery.number.min.js")></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -175,17 +176,25 @@
 
 </head>
 <body>
+    @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
     <div class="row" style="height: 50px; box-shadow: 0px 1px #d7e9f3;">
+        <div class="col-md-12">
+            @{ Html.RenderPartial("~/Views/Shared/_LayoutHeader.cshtml"); }
+        </div>
+
+        <!--
         <div class="col-md-2"></div>
         <div class="col-md-6" style="margin-top:10px; margin-left: -38px"><img src="~/Content/bg/hollit-logo-small.png" alt="Logo" height="23"></div>
         <div class="col-md-4"></div>
+        -->
+
     </div>
     <div class="row" style="margin-top: 0; margin-left:-15px;">
         <div class="col-md-2">
             <section style="width: '100%';">
                 <ul class="sidebar-menu">
                     <li class="header" id="navmenu">HOLLIT INTERNATIONAL</li>
-                    <li class="treeview">
+                    <li id="menuMain" class="treeview '@ViewBag.menuMain'">
                         <a href="#">
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
                         </a>
@@ -194,7 +203,7 @@
 
                         </ul>
                     </li>
-                    <li class="treeview">
+                    <li id="menuTimesheet" class="treeview '@ViewBag.menuTimesheet'">
                         <a href="#">
                             <i class="fa fa-files-o"></i>
                             <span>Timesheets</span>
@@ -204,19 +213,19 @@
                             <li>@Html.ActionLink("Timesheet", "Timesheet", "Content")</li>
                         </ul>
                     </li>
-                    <li class="treeview">
+                    <li id="menuForm" class="treeview '@ViewBag.menuForm'">
                         <a href="#">
                             <i class="fa fa-edit"></i> <span>Forms</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
                             <li>@Html.ActionLink("Leave", "Leave", "Content")</li>
-                            <li>@Html.ActionLink("Medical", "vMedical", "Content")</li>
+                            <li>@Html.ActionLink("Medical", "Medical", "Content")</li>
                             <li>@Html.ActionLink("Approval", "vApproval", "Content")</li>
                         </ul>
                     </li>
                     <li class="header">ORGANIZATION</li>
-                    <li>
+                    <li id="menuStructure" class=" '@ViewBag.menuStructure' " >
                         <a href="#">
                             <i class="fa fa-th"></i> <span>Structure</span>
                             <small class="label pull-right label-info">new</small>
@@ -226,7 +235,7 @@
                         </ul>
                     </li>
                     </li>
-                    <li>
+                    <li id="menuCalendar" class=" '@ViewBag.menuCalendar' ">
                         <a href="#">
                             <i class="fa fa-calendar"></i> <span>Calendar</span>
                             <small class="label pull-right label-danger">3</small>
@@ -234,9 +243,9 @@
                         <ul class="treeview-menu">
                             <li>@Html.ActionLink("Calendar", "Calendar", "Content")</li>
                         </ul>
-                    </li>
+                    </liid="menuMain">
 
-                    <li class="treeview">
+                    <li id="menuNews" class="treeview '@ViewBag.menuNews'">
                         <a href="#">
                             <i class="fa fa-pie-chart"></i>
                             <span>News & Notification</span>
@@ -244,11 +253,11 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="#">@Html.ActionLink("News", "vNews", "Content")</li>
-                            <li><a href="#">@Html.ActionLink("Notifications", "vNotifications", "Content")</li>
+                            <li><a href="#">@Html.ActionLink("Notifications", "Notifications", "Content")</li>
                             <li><a href="#">@Html.ActionLink("File Management", "vFile", "Content")</li>
                         </ul>
                     </li>
-                    <li class="treeview">
+                    <li id="menuProfile" class="treeview '@ViewBag.menuProfile'">
                         <a href="#">
                             <i class="fa fa-laptop"></i>
                             <span>Employee</span>
@@ -271,7 +280,7 @@
                             <li>@Html.ActionLink("Employee Profile", "vEmployeeGrid", "Content")</li>
                         </ul>
                     </li>
-                    <li>
+                    <li id="menuMailbox" class=" @ViewBag.menuMailbox " >
                         <a href="#">
                             <i class="fa fa-envelope"></i> <span>Mailbox</span>
                             <small class="label pull-right label-warning">12</small>
@@ -281,7 +290,7 @@
                         </ul>
                     </li>
                     <li class="header">Administration</li>
-                    <li class="treeview">
+                    <li id="menuAdminHRD" class="treeview '@ViewBag.menuAdminHRD'">
                         <a href="#">
                             <i class="fa fa-folder"></i> <span>HRD</span>
                             <i class="fa fa-angle-left pull-right"></i>
@@ -291,13 +300,14 @@
                             <li><a href="#"><i class="fa fa-circle-o"></i> Employee</a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Employee Role</a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Employee Timesheet</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> News & Notification</a></li>
+                            <li>@Html.ActionLink("News", "News", "AdminHR")</li>
+                            <li>@Html.ActionLink("Notifications", "Notifications", "AdminHR")</li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Letter Template</a></li>
                             <li>@Html.ActionLink("File Management", "FileManagement", "AdminHR")</li>
                             <li>@Html.ActionLink("Master Data", "MaintainData", "AdminHR")</li>
                         </ul>
                     </li>
-                    <li class="treeview">
+                    <li id="menuAdminSys" class="treeview '@ViewBag.menuAdminSys'">
                         <a href="#">
                             <i class="fa fa-table"></i> <span>System Admin</span>
                             <i class="fa fa-angle-left pull-right"></i>

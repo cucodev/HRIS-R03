@@ -2,6 +2,7 @@
 using BusinessEntities.CrudEntities;
 using BusinessServices.Interface;
 using BusinessServices.InterfaceMethod;
+using HRIS_R03.Controllers.shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +11,19 @@ using System.Web.Mvc;
 
 namespace HRIS_R03.Controllers
 {
-    public class AdminHRController : Controller
+    public class AdminHRController : ApplicationController<LogOnModel>
     {
         private readonly IManageRoleBasedMatrix _pServices;
+        public new UserCredModel User;
         private int cIDV;
 
         public AdminHRController()
         {
             _pServices = new RoleBasedMatrixServices();
+            User = UserVariable.User;
         }
 
-
+        
         private void current()
         {
             if (Session[GlobalVariable.UserCred] != null)
@@ -41,7 +44,8 @@ namespace HRIS_R03.Controllers
 
         public ActionResult MaintainData()
         {
-            return View();
+            ViewBag.menuAdminHRD = "Active";
+            return View(User);
         }
 
         public ActionResult Test()
@@ -51,7 +55,13 @@ namespace HRIS_R03.Controllers
 
         public ActionResult EmployeeManagement()
         {
-            return View();
+            ViewBag.menuAdminHRD = "Active";
+            return View(User);
+        }
+
+        public ActionResult Notifications()
+        {
+            return View(User);
         }
 
 
@@ -66,7 +76,8 @@ namespace HRIS_R03.Controllers
 
         public ActionResult FileManagement()
         {
-            return View();
+            ViewBag.menuAdminHRD = "Active";
+            return View(User);
         }
     }
 }

@@ -1,0 +1,291 @@
+﻿@model BusinessEntities.CrudEntities.UserCredModel
+@{
+    ViewBag.Title = "Medical";
+    Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
+}
+
+@{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
+
+<script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
+<script src=@Url.Content("~/Scripts/jquery.ui.min.js")></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //Variable Declaration
+        var srcDoctor = [
+            { label: "General Practitioners", value: 1 },
+            { label: "Dentist", value: 2 },
+            { label: "Spetialist", value: 3 },
+            { label: "Others", value: 4 }];
+        var Balance = 0;
+        var MasterBalance = 0;
+        var totalValue = 0;
+        var empRoleBased = [];
+
+        //Variable API 
+        var Name = hris.list._getLOV("Name");
+        var MasterSource = hris.source._employeeMedicalRoleBased(cIDV);
+
+        var listofMedicalID = [1, 4, 5, 6]; //Medical Only
+
+        var MasterDataAdapter = new $.jqx.dataAdapter(MasterSource, {
+            autoBind: true,
+            loadComplete: function (records) {
+                console.log('records: ', records);
+                // update the loaded records. Dynamically add EmployeeName and EmployeeID fields. 
+                for (var i = 0; i < records.length; i++) {
+                    var emp = records[i];
+                    var x = emp.policyType;
+                    if (listofMedicalID.indexOf(x) < 0) {
+                        //console.log('remove non medicalType: ', emp);
+                    } else {
+                        empRoleBased.push(emp);
+                        console.log('Add medicalType: ', emp);
+                    }
+
+                    
+                }
+                return empRoleBased;
+            }
+        });
+
+        console.log('empRoleBased: ', empRoleBased);
+        //var MasterDataAdapter = hris.data._dataAdapter(MasterSource);
+
+
+        //Variable for Component
+        var renderText = function (text, value) {
+            if (value < 55) {
+                return "<span style='color: #333;'>" + text + " Days </span>";
+            }
+            return "<span style='color: #fff;'>" + text + " Days </span>";
+        }
+
+        //API
+        var sourceDependant =
+                {
+                    datatype: "json",
+                    datafields: [
+                        { name: 'IDV' },
+                        { name: 'IDVName', value: 'IDV', values: { source: Name.records, value: 'value', name: 'label' } }
+                    ],
+                    url: '/api/profileDependent/' + cIDV,
+                    async: false
+                };
+        var dependantAdapter = new $.jqx.dataAdapter(sourceDependant);
+
+        
+
+        //Component
+        $("#typeClaim").jqxComboBox({ selectedIndex: -1, theme: 'orange', source: dependantAdapter, displayMember: 'IDVName', valueMember: 'IDV', width: '100%', height: '25px', autoDropDownHeight: true });
+        $("#typeDoctor").jqxComboBox({ theme: 'orange', source: srcDoctor, displayMember: 'label', valueMember:'value', width: '100%', height: '25px', autoDropDownHeight: true });
+        $('#PolicyType').jqxDropDownList({ selectedIndex: -1, source: MasterDataAdapter, theme: 'orange', disabled: false, height: '35px', displayMember: "policyTypeName", valueMember: "ID", width: '100%' });
+        $("#balanceProgress").jqxProgressBar({ animationDuration: 0, showText: false, renderText: renderText, template: "info", width: '100%', height: 25, value: Balance, max: Balance });
+        hris.general.bindButton('Apply');
+        $("#doctorFee").jqxNumberInput({ theme: 'orange', width: '100%', height: '25px', symbol: "Rp ", decimalDigits: 0, min: 0, spinButtons: true });
+        $("#prescribeMedicines").jqxNumberInput({ theme: 'orange', width: '100%', height: '25px', symbol: "Rp ", decimalDigits: 0, min: 0, spinButtons: true });
+        // Settings
+        
+        //Event
+        $('#PolicyType').on('select', function (event) {
+            var i = $('#PolicyType');
+            var index = event.args.index;
+            var MasterData = MasterDataAdapter.records[index];
+            
+            //Reset
+            
+
+            //Calculate
+            Balance = MasterData.roleBasedValue;
+            MasterBalance = MasterData.roleBasedValue;
+            $("#doctorFee").jqxNumberInput({ max: Balance });
+            $("#prescribeMedicines").jqxNumberInput({ max: Balance });
+            setProgress(Balance);
+        });
+        $("#doctorFee").on("valueChanged", function (event) {
+            //var value = event.args.value;
+            //checkMaximum(value);
+            getTotalAndClaim();
+        });
+        $("#prescribeMedicines").on("valueChanged", function (event) {
+            //var value = event.args.value;
+            //checkMaximum(value);
+            getTotalAndClaim();
+        });
+
+        //Function
+        function setProgress(value) {
+            $("#totalBalance").html("<strong>Rp. " + Balance.toLocaleString() + "</strong>");
+            $("#balanceProgress").jqxProgressBar({
+                value: value,
+                max: Balance
+            });
+        }
+
+        function checkMaximum(value) {
+            if (value > Balance) {
+                $("#doctorFee").val(0);
+                $("#prescribeMedicines").val(0);
+                BootstrapDialog.show({
+                    message: 'Error : Maximum Reached Balance  !!'
+                });
+            }
+        }
+       
+
+        function getTotalAndClaim() {
+            var totalFee = parseInt($("#doctorFee").val()) + parseInt($("#prescribeMedicines").val());
+            var totalClaim = totalFee - ((totalFee * 20) / 100);
+            if (isNaN(totalFee)) {
+                $("#totalAmount").html("Rp. 0");
+                $("#totalClaim").html("Rp. 0");
+            } else {
+                if (totalClaim <= Balance) {
+
+                    setProgress(Balance - totalClaim);
+                    $("#totalAmount").html("Rp. " + $.number(totalFee, '.'));
+                    $("#totalClaim").html("Rp. " + $.number(totalClaim, '.'));
+                } else {
+                    checkMaximum(totalClaim);
+                }
+                
+            }
+        }
+
+        //Test
+        
+
+    });
+    
+</script>
+
+<div class="row">
+    <div class="btn-group btn-breadcrumb">
+        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
+        <a href="#" class="btn btn-info">Forms</a>
+        <a href="#" class="btn btn-success">Medical</a>
+    </div>
+    <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
+    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">MEDICAL CLAIM FORM</h1>
+    <h2 style="margin-bottom:0px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Claim Your Medical..</h2>
+</div>
+
+<div class="row"  style="margin-top:0; padding-top:0; 
+     background-image:url(@Url.Content("~/Content/bg/medical.jpg"));
+     background-size: 90% 100%;
+     background-repeat: no-repeat;">
+    <div class="col-md-6">
+        
+    </div>
+    <div class="col-md-4" style="background: rgba(255, 255, 255, .7); margin-top:0;  height:350px; margin-left:10px;">
+        <div class="row">
+            <div class="col-md-12" ">
+                <div style="">
+                    <div class="form-group">
+                        <br />
+                        <label>Type:</label>
+                        <div id="PolicyType"></div>
+                        <hr style="margin-top:0" />
+                        <label>Claim for:</label>
+                        <div id="typeClaim"></div>
+                        <hr style="margin-top:0" />
+                        <label>Type of Doctor:</label>
+                        <div id="typeDoctor"></div>
+                        <hr style="margin-top:0"  />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label style="background-color: white;" for="doctorFee">Doctor Fee</label>
+                                <input type="text" class="form-control" id="doctorFee" placeholder="Doctor Fee">
+                            </div>
+                            <div class="col-md-6">
+                                <label style="background-color: white;" for="prescribeMedicines">Prescribe Medicines</label>
+                                <input type="text" class="form-control" id="prescribeMedicines" placeholder="Prescribe Medicine">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 pull-right">
+                    <input type="submit" value="Submit" id='Apply' />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top:10px">
+    <div class="col-md-4 pull-left">
+        <div class="form-group thumbnail text-center">
+            <label for="totalBalance">Balance Amount</label>
+            <div id="balanceProgress"></div>
+            <p class="form-control-static" id="totalBalance">Rp. 0</p>
+        </div>
+    </div>
+    <div class="col-md-3 pull-left">
+        <div class="form-group thumbnail text-center">
+            <label for="totalAmount">Total Amount</label>
+            <p class="form-control-static" id="totalAmount">Rp. 0</p><p class="form-control-static"><br /></p>
+        </div>
+    </div>
+    <div class="col-md-3 pull-left">
+        <div class="form-group thumbnail text-center" style="background-color:#b8ddf8">
+            <label for="totalClaim">Total Claim</label>
+            <p class="form-control-static" id="totalClaim">Rp. 0</p><p class="form-control-static">after 20% deduction</p>
+        </div>
+    </div>
+</div>
+   
+        
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+
+                    
+
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Calculation-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+        </div>
+
+        <!--BUTTON-->
+        <div class="row">
+            <div class="col-md-12">
+                
+            </div>
+        </div>

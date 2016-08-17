@@ -927,6 +927,10 @@
     <Content Include="Views\Content\MyLanguage.cshtml" />
     <Content Include="Views\Content\MySkill.cshtml" />
     <Content Include="Views\Content\MyCertification.cshtml" />
+    <Content Include="Views\Content\Medical.cshtml" />
+    <Content Include="Views\Shared\_LayoutHeader.cshtml" />
+    <Content Include="Views\Content\Notifications.cshtml" />
+    <Content Include="Views\AdminHR\Notifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

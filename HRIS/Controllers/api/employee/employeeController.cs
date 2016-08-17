@@ -46,6 +46,37 @@ namespace HRIS.Controllers.api.employee
         }
 
         [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getMedicalRoleBased")]
+        [System.Web.Http.Route("api/employee/getMedicalRoleBased/{IDV}")]
+        public HttpResponseMessage getMedicalRoleBased(int IDV)
+        {
+            var p = _pServices.getCurrentRoleBasedMedical(IDV);
+            if (p != null)
+            {
+                var pEntities = p as List<employeeRoleBasedEntities> ?? p.ToList();
+                if (pEntities.Any())
+                    return Request.CreateResponse(HttpStatusCode.OK, pEntities);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "HRD Matrix for this employee are not found");
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getLeaveRoleBased")]
+        [System.Web.Http.Route("api/employee/getLeaveRoleBased/{IDV}")]
+        public HttpResponseMessage getLeaveRoleBased(int IDV)
+        {
+            var p = _pServices.getCurrentRoleBasedLeave(IDV);
+            if (p != null)
+            {
+                var pEntities = p as List<employeeRoleBasedEntities> ?? p.ToList();
+                if (pEntities.Any())
+                    return Request.CreateResponse(HttpStatusCode.OK, pEntities);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "HRD Matrix for this employee are not found");
+        }
+
+
+        [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getRoleBasedValue")]
         [System.Web.Http.Route("api/employee/getRoleBasedValue/{IDV}/{policyType}")]
         public HttpResponseMessage getRoleBasedValue(int IDV, int policyType)

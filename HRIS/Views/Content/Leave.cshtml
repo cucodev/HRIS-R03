@@ -5,7 +5,7 @@
 }
 <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
 <script src=@Url.Content("~/Scripts/jquery.ui.min.js")></script>
-<
+
 
 <script src=@Url.Content("~/Scripts/multidatepicker/jquery-ui.multidatespicker.js")></script>
 
@@ -29,7 +29,7 @@
     $(document).ready(function () {
 
         //API 
-        var MasterSource = hris.source._employeeRoleBased(cIDV);
+        var MasterSource = hris.source._employeeLeaveRoleBased(cIDV);
         var MasterDataAdapter = hris.data._dataAdapter(MasterSource);
 
         var getLovType = hris.list._getLOV("PolicyType");

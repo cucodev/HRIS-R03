@@ -14,6 +14,10 @@ namespace BusinessServices.Interface
     public interface IEmployee
     {
         IEnumerable<employeeRoleBasedEntities> GetRoleBased(int IDV);
+        IEnumerable<employeeRoleBasedEntities> getCurrentRoleBasedAnnual(int IDV);
+        IEnumerable<employeeRoleBasedEntities> getCurrentRoleBasedLeave(int IDV);
+        IEnumerable<employeeRoleBasedEntities> getCurrentRoleBasedMedical(int IDV);
+        IEnumerable<employeeRoleBasedEntities> getCurrentRoleBased(int IDV);
         profileEntities GetEmployee(int IDV);
         employeeRoleBasedEntities getRoleBasedValue(int IDV, int policyType);
         employeeRoleBasedEntities getRoleBasedAnnualValue(int IDV);
