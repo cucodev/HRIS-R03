@@ -256,6 +256,10 @@
             var i = $("#" + value);
             if (value !== null) { return i.jqxInput('val', null); }
         },
+        cleanDateTime: function (value) {
+            var i = $("#" + value);
+            if (value !== null) { return i.jqxDateTimeInput({ value: new Date() }); }
+        },
         bindInput: function (div, value) {
             var i = $("#" + div);
             i.jqxInput({ width: "100%", height: '35px' });
