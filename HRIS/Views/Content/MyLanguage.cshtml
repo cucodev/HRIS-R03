@@ -22,6 +22,7 @@
 @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
 
 <script type="text/javascript">
+    var listSkillLevel = hris.list._dbLOV("SkillLevel");
     function loadLanguage(callback) {
         var url = "http://localhost:54636/api/profileLanguage/" + cIDV;
         // prepare the data
@@ -33,7 +34,11 @@
                 { name: 'IDV', type: 'string' },
                 { name: 'languageName', type: 'string' },
                 { name: 'spoken', type: 'int' },
-                { name: 'written', type: 'int' }
+                { name: 'spokenName', value: 'spoken', values: { source: listSkillLevel.records, value: 'value', name: 'label' } },
+                { name: 'written', type: 'int' },
+                { name: 'writtenName', value: 'written', values: { source: listSkillLevel.records, value: 'value', name: 'label' } }
+
+
             ],
             id: 'ID',
             url: url
@@ -48,8 +53,8 @@
               { text: 'ID', datafield: 'ID', width: "10%" },
               { text: 'IDV', datafield: 'IDV', width: "10%" },
               { text: 'Name', datafield: 'languageName', width: "20%" },
-              { text: 'Spoken', datafield: 'spoken', width: "10%" },
-              { text: 'Written', datafield: 'written', minwidth: "10%" }
+              { text: 'Spoken', datafield: 'spokenName', width: "10%" },
+              { text: 'Written', datafield: 'writtenName', minwidth: "10%" }
             ]
         });
 

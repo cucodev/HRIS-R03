@@ -318,7 +318,7 @@
         },
         bindInput: function (div, value) {
             var i = $("#" + div);
-            i.jqxInput({ width: '100%', height: '35px' });
+            i.jqxInput({ width: "100%", height: '35px' });
             value = $.trim(value);
             if (value !== null) { i.jqxInput('val', value); }
         },

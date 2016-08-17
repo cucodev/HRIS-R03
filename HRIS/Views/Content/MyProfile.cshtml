@@ -31,14 +31,14 @@
         hris.general.bindDropDown("Religion", obj.Religion);
         hris.general.bindDropDown("Gender", obj.Gender);
         hris.general.bindDropDown("Marital", obj.Marital);
-        hris.general.bindDropDown("Nationality", obj.Nationality);
+        hris.general.bindDropDown("Country", obj.Nationality);
         hris.general.bindDateTime("Birthdate", obj.Birthdate);
 
         // Employee
         hris.general.bindInput("employeeID", obj.employeeID);
         hris.general.bindInput("UID_ABSENCE", obj.UID_ABSENCE);
         hris.general.bindInput("active", obj.active);
-        hris.general.bindDropDown("employmentStatus", obj.employmentStatus);
+        hris.general.bindDropDown("EmpStatus", obj.employmentStatus);
         hris.general.bindDateTime("joinDate", obj.joinDate);
         hris.general.bindDateTime("resignDate", obj.resignDate);
         hris.general.bindDateTime("contract1Start", obj.contract1start);
@@ -48,6 +48,34 @@
         hris.general.bindDateTime("contract3Start", obj.contract3start);
         hris.general.bindDateTime("contract3End", obj.contract3End);
 
+    }
+    Profile = {
+        save : function(){
+            var data = {
+                Name : hris.general.getData("Name"),
+                NickName : hris.general.getData("NickName"),
+                NIP : hris.general.getData("NIP"),
+                Birthplace : hris.general.getData("Birthplace"),
+                Religion : hris.general.getData("Religion"),
+                Gender : hris.general.getData("Gender"),
+                Marital : hris.general.getData("Marital"),
+                Nationality: hris.general.getData("Country"),
+                Birthdate: hris.general.getData("Birthdate"),
+                employeeID : hris.general.getData("employeeID"),
+                UID_ABSENCE : hris.general.getData("UID_ABSENCE"),
+                active : hris.general.getData("active"),
+                employmentStatus : hris.general.getData("EmpStatus"),
+                joinDate : hris.general.getData("joinDate"),
+                resignDate : hris.general.getData("resignDate"),
+                contract1Start : hris.general.getData("contract1Start"),
+                contract1End : hris.general.getData("contract1End"),
+                contract2Start : hris.general.getData("contract2Start"),
+                contract2End : hris.general.getData("contract2End"),
+                contract3Start : hris.general.getData("contract3Start"),
+                contract3End : hris.general.getData("contract3End")
+            }
+            console.log("etsave",data);
+        }
     }
     $(document).ready(function () {
         $.ajax({
@@ -59,175 +87,181 @@
                 console.log("Err", e);
             }
         });
+
+        $("#submit").click(Profile.save);
     });
 </script>
+<div class="row">
+    <div class="col-md-10">
+        
+    </div>
+</div>
+<div class="row col-md-10">
+    <div class="panel panel-info">
+        <div class="panel-heading">General Information
+        <button id="submit" class="btn btn-info pull-right">Update</button></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="NIP">NIP</label>
+                        <input class="form-control" type="text" id="NIP" placeholder="NIP" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input class="form-control" type="text" id="Name" placeholder="Name" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="NickName">Nickname</label>
+                        <input class="form-control" type="text" id="NickName" placeholder="Nickname" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Birthdate">Birth Date</label>
+                        <div class="form-control" id="Birthdate"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Birthplace">Birth Place</label>
+                        <input class="form-control" type="text" id="Birthplace" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Religion">Religion</label>
+                        <div class="form-control" id="Religion"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Gender">Gender</label>
+                        <div class="form-control" id="Gender"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Marital">Marital</label>
+                        <div class="form-control" id="Marital"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Country">Nationality</label>
+                        <div class="form-control" id="Country"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="row col-md-10">
+    <div class="panel panel-info">
+        <div class="panel-heading">Employee Information</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="employeeID">Employee ID</label>
+                        <input class="form-control" type="text" id="employeeID" placeholder="Employee ID" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="UID_ABSENCE">UID ABSENCE</label>
+                        <input class="form-control" type="text" id="UID_ABSENCE" placeholder="UID_ABSENCE" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="EmpStatus">Employment Status</label>
+                        <div class="form-control" id="EmpStatus"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="joinDate">Join Date</label>
+                        <div class="form-control" id="joinDate"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="resignDate">Resign Date</label>
+                        <div class="form-control" id="resignDate"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="contract1Start">Contract#1 Start</label>
+                        <div class="form-control" id="contract1Start"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="contract1End">Contract#1 End</label>
+                        <div class="form-control" id="contract1End"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="contract2Start">Contract#2 Start</label>
+                        <div class="form-control" id="contract2Start"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="contract2End">Contract#2 End</label>
+                        <div class="form-control" id="contract2End"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="contract3Start">Contract#3 Start</label>
+                        <div class="form-control" id="contract3Start"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="contract3End">Contract#3 End</label>
+                        <div class="form-control" id="contract3End"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="active">Active</label>
+                        <input class="form-control" type="text" id="active" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="NIP">NIP</label>
-            <input class="form-control" type="text" id="NIP" placeholder="NIP" />
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="Name">Name</label>
-            <input class="form-control" type="text" id="Name" placeholder="Name" />
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="NickName">Nickname</label>
-            <input class="form-control" type="text" id="NickName" placeholder="Nickname" />
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="Religion">Religion</label>
-            <div class="form-control" id="Religion"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="Gender">Gender</label>
-            <div class="form-control" id="Gender"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="Marital">Marital</label>
-            <div class="form-control" id="Marital"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="Nationality">Nationality</label>
-            <div class="form-control" id="Nationality"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="Birthdate">Birth Date</label>
-            <div class="form-control" id="Birthdate"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="Birthplace">Birth Place</label>
-            <input class="form-control" id="Birthplace" />
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="employeeID">Employee ID</label>
-            <input class="form-control" id="employeeID" placeholder="Employee ID" />
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="UID_ABSENCE">UID ABSENCE</label>
-            <input class="form-control" id="UID_ABSENCE" placeholder="UID_ABSENCE" />
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="employmentStatus">Employment Status</label>
-            <div class="form-control" id="employmentStatus"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="joinDate">Join Date</label>
-            <div class="form-control" id="joinDate"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="resignDate">Resign Date</label>
-            <div class="form-control" id="resignDate"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="contract1Start">Contract#1 Start</label>
-            <div class="form-control" id="contract1Start"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="contract1End">Contract#1 End</label>
-            <div class="form-control" id="contract1End"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="contract2Start">Contract#2 Start</label>
-            <div class="form-control" id="contract2Start"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="contract2End">Contract#2 End</label>
-            <div class="form-control" id="contract2End"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="contract3Start">Contract#3 Start</label>
-            <div class="form-control" id="contract3Start"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="contract3End">Contract#3 End</label>
-            <div class="form-control" id="contract3End"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="active">Active</label>
-            <input class="form-control" type="text" id="active"/>
-        </div>
-    </div>
-</div>
+
 
