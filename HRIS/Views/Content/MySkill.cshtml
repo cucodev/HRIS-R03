@@ -46,10 +46,8 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: "10%" },
-              { text: 'IDV', datafield: 'IDV', width: "10%" },
-              { text: 'Name', datafield: 'skillName', width: "25%" },
-              { text: 'Level', datafield: 'skillLevelName', width: "10%" }
+              { text: 'Name', datafield: 'skillName', width: "75%" },
+              { text: 'Level', datafield: 'skillLevelName', width: "25%" }
             ]
         });
 
@@ -67,6 +65,7 @@
         url: "http://localhost:54636/api/profileSkill",
         add: function (data) {
             console.log("create new", data);
+            data.vCreatedBy = cIDV;
             $.ajax({
                 url: this.url,
                 method: 'POST',
@@ -82,6 +81,7 @@
         },
         update: function (data) {
             console.log("update dulu", data);
+            data.vUpdatedBy = cIDV;
             $.ajax({
                 url: this.url + "/" + data.ID,
                 method: 'PUT',
@@ -196,14 +196,17 @@
                 <div class="form-group">
                     <input type="hidden" class="form-control" id="rowId" />
                 </div>
-                <div class="form-group">
-                    <label for="skillName">Skill Name</label>
-                    <input type="text" class="form-control" id="skillName" />
-                </div>
-
-                <div class="form-group">
-                    <label for="skillLevel">Level</label>
-                    <div class="form-control" id="skillLevel"></div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="skillName">Skill Name</label>
+                            <input type="text" class="form-control" id="skillName" />
+                        </div>
+                        <div class="form-group">
+                            <label for="skillLevel">Level</label>
+                            <div class="form-control" id="skillLevel"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

@@ -47,12 +47,10 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: "10%" },
-              { text: 'IDV', datafield: 'IDV', width: "10%" },
               { text: 'Name', datafield: 'TrainingName', width: "25%" },
-              { text: 'Sponsor', datafield: 'TrainingSponsor', width: "20%" },
-              { text: 'Start', datafield: 'startDate', minwidth: "10%" },
-              { text: 'End', datafield: 'endDate', minwidth: "10%" }
+              { text: 'Sponsor', datafield: 'TrainingSponsor', minwidth: "20%" },
+              { text: 'Start', datafield: 'startDate', width: "15%" },
+              { text: 'End', datafield: 'endDate', width: "15%" }
             ]
         });
 
@@ -73,6 +71,7 @@
         url: "http://localhost:54636/api/profileTraining",
         add: function (data) {
             console.log("create new", data);
+            data.vCreatedBy = cIDV;
             $.ajax({
                 url: this.url,
                 method: 'POST',
@@ -88,6 +87,7 @@
         },
         update: function (data) {
             console.log("update dulu", data);
+            data.vUpdatedBy = cIDV;
             $.ajax({
                 url: this.url + "/" + data.ID,
                 method: 'PUT',

@@ -51,13 +51,11 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: "10%" },
-              { text: 'IDV', datafield: 'IDV', width: "10%" },
               { text: 'Name', datafield: 'certificationName', width: "20%" },
               { text: 'City', datafield: 'issuedCityName', width: "20%" },
               { text: 'Country', datafield: 'issuedCountryName', width: "20%" },
               { text: 'Date', datafield: 'issuedDate', width: "20%" },
-              { text: 'Expired', datafield: 'issuedExpiredDate', width: "20%" }
+              { text: 'Expired Date', datafield: 'issuedExpiredDate', width: "20%" }
             ]
         });
         if (callback != undefined) {
@@ -73,6 +71,7 @@
         url: "http://localhost:54636/api/profileCertification",
         add: function (data) {
             console.log("create new", data);
+            data.vCreatedBy = cIDV;
             $.ajax({
                 url: this.url,
                 method: 'POST',
@@ -88,6 +87,7 @@
         },
         update: function (data) {
             console.log("update dulu", data);
+            data.vUpdatedBy = cIDV;
             $.ajax({
                 url: this.url + "/" + data.ID,
                 method: 'PUT',

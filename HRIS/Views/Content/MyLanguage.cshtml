@@ -37,8 +37,6 @@
                 { name: 'spokenName', value: 'spoken', values: { source: listSkillLevel.records, value: 'value', name: 'label' } },
                 { name: 'written', type: 'int' },
                 { name: 'writtenName', value: 'written', values: { source: listSkillLevel.records, value: 'value', name: 'label' } }
-
-
             ],
             id: 'ID',
             url: url
@@ -50,11 +48,9 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: "10%" },
-              { text: 'IDV', datafield: 'IDV', width: "10%" },
-              { text: 'Name', datafield: 'languageName', width: "20%" },
-              { text: 'Spoken', datafield: 'spokenName', width: "10%" },
-              { text: 'Written', datafield: 'writtenName', minwidth: "10%" }
+              { text: 'Name', datafield: 'languageName', minwidth: "35%" },
+              { text: 'Spoken', datafield: 'spokenName', width: "20%" },
+              { text: 'Written', datafield: 'writtenName', width: "20%" }
             ]
         });
 
@@ -73,6 +69,7 @@
         url: "http://localhost:54636/api/profileLanguage",
         add: function (data) {
             console.log("create new", data);
+            data.vCreatedBy = cIDV;
             $.ajax({
                 url: this.url,
                 method: 'POST',
@@ -88,6 +85,7 @@
         },
         update: function (data) {
             console.log("update dulu", data);
+            data.vUpdatedBy = cIDV;
             $.ajax({
                 url: this.url + "/" + data.ID,
                 method: 'PUT',

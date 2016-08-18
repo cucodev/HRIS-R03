@@ -51,11 +51,10 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: "10%" },
               { text: 'Expired Date', datafield: 'expiredDate', width: "20%" },
               { text: 'ID Number', datafield: 'idNumber', width: "20%" },
-              { text: 'ID Type', datafield: 'idName', width: "10%" },
-              { text: 'Issued Country', datafield: 'issuedCountryName', minwidth: "15%" }
+              { text: 'Type', datafield: 'idName', width: "10%" },
+              { text: 'Country', datafield: 'issuedCountryName', minwidth: "15%" }
             ]
         });
         if (cb != undefined) {
@@ -66,6 +65,7 @@
         url: "http://localhost:54636/api/profileIdentity",
         add: function (data) {
             console.log("create new", data);
+            data.vCreatedBy = cIDV;
             $.ajax({
                 url: this.url,
                 method: 'POST',
@@ -81,6 +81,7 @@
         },
         update: function (data) {
             console.log("update dulu", data);
+            data.vUpdatedBy = cIDV;
             $.ajax({
                 url: this.url +"/"+ data.ID,
                 method: 'PUT',

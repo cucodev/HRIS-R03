@@ -22,36 +22,80 @@
 @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
 
 <script type="text/javascript">
-    function bindElement(obj) {
-        // personDetailEntities
-        hris.general.bindInput("Name", obj.Name);
-        hris.general.bindInput("NickName", obj.NickName);
-        hris.general.bindInput("NIP", obj.NIP);
-        hris.general.bindInput("Birthplace", obj.Birthplace);
-        hris.general.bindDropDown("Religion", obj.Religion);
-        hris.general.bindDropDown("Gender", obj.Gender);
-        hris.general.bindDropDown("Marital", obj.Marital);
-        hris.general.bindDropDown("Country", obj.Nationality);
-        hris.general.bindDateTime("Birthdate", obj.Birthdate);
-
-        // Employee
-        hris.general.bindInput("employeeID", obj.employeeID);
-        hris.general.bindInput("UID_ABSENCE", obj.UID_ABSENCE);
-        hris.general.bindInput("active", obj.active);
-        hris.general.bindDropDown("EmpStatus", obj.employmentStatus);
-        hris.general.bindDateTime("joinDate", obj.joinDate);
-        hris.general.bindDateTime("resignDate", obj.resignDate);
-        hris.general.bindDateTime("contract1Start", obj.contract1start);
-        hris.general.bindDateTime("contract1End", obj.contract1End);
-        hris.general.bindDateTime("contract2Start", obj.contract2start);
-        hris.general.bindDateTime("contract2End", obj.contract2End);
-        hris.general.bindDateTime("contract3Start", obj.contract3start);
-        hris.general.bindDateTime("contract3End", obj.contract3End);
-
-    }
     Profile = {
-        save : function(){
+        url: 'http://localhost:54636/api/profile',
+        id: cIDV,
+        add: function (data) {
+            console.log("Add New", data);
+            $.ajax({
+                url: this.url,
+                method: 'POST',
+                data: data,
+                success: function (o) {
+                    console.log("Sukses", o);
+                    Profile.load();
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        edit: function (data) {
+            console.log("edit data", data);
+            $.ajax({
+                url: this.url + "/" + this.id,
+                method: 'PUT',
+                data: data,
+                success: function (result) {
+                    console.log("Sukses", result);
+                    Profile.load();
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        load: function () {
+            $.ajax({
+                url: this.url+"/" + this.id,
+                success: function (result) {
+                    Profile.fill(result);
+                },
+                error: function (e) {
+                    console.log("Err", e);
+                }
+            });
+        },
+        fill: function (obj) {
+            console.log("Fill Form");
+            hris.general.bindInput("IDV", obj.IDV);
+            hris.general.bindInput("Name", obj.Name);
+            hris.general.bindInput("NickName", obj.NickName);
+            hris.general.bindInput("NIP", obj.NIP);
+            hris.general.bindInput("Birthplace", obj.Birthplace);
+            hris.general.bindDropDown("Religion", obj.Religion);
+            hris.general.bindDropDown("Gender", obj.Gender);
+            hris.general.bindDropDown("Marital", obj.Marital);
+            hris.general.bindDropDown("Country", obj.Nationality);
+            hris.general.bindDateTime("Birthdate", obj.Birthdate);
+
+            // Employee
+            hris.general.bindInput("employeeID", obj.employeeID);
+            hris.general.bindInput("UID_ABSENCE", obj.UID_ABSENCE);
+            hris.general.bindInput("active", obj.active);
+            hris.general.bindDropDown("EmpStatus", obj.employmentStatus);
+            hris.general.bindDateTime("joinDate", obj.joinDate);
+            hris.general.bindDateTime("resignDate", obj.resignDate);
+            hris.general.bindDateTime("contract1Start", obj.contract1start);
+            hris.general.bindDateTime("contract1End", obj.contract1End);
+            hris.general.bindDateTime("contract2Start", obj.contract2start);
+            hris.general.bindDateTime("contract2End", obj.contract2End);
+            hris.general.bindDateTime("contract3Start", obj.contract3start);
+            hris.general.bindDateTime("contract3End", obj.contract3End);
+        },
+        submit : function(){
             var data = {
+                IDV : hris.general.getData("IDV"),
                 Name : hris.general.getData("Name"),
                 NickName : hris.general.getData("NickName"),
                 NIP : hris.general.getData("NIP"),
@@ -74,21 +118,17 @@
                 contract3Start : hris.general.getData("contract3Start"),
                 contract3End : hris.general.getData("contract3End")
             }
-            console.log("etsave",data);
+            console.log("etsave", data);
+            if (data.IDV) {
+                Profile.edit(data);
+            } else {
+                Profile.add(data);
+            }
         }
     }
     $(document).ready(function () {
-        $.ajax({
-            url: "http://localhost:54636/api/profile/"+ cIDV,
-            success: function (result) {
-                bindElement(result);
-            },
-            error: function (e) {
-                console.log("Err", e);
-            }
-        });
-
-        $("#submit").click(Profile.save);
+        Profile.load();
+        $("#submit").click(Profile.submit);
     });
 </script>
 <div class="row">
@@ -101,6 +141,9 @@
         <div class="panel-heading">General Information
         <button id="submit" class="btn btn-info pull-right">Update</button></div>
         <div class="panel-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="IDV" />
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
