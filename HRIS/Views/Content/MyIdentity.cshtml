@@ -13,9 +13,12 @@
         <a href="#" class="btn btn-info">Employee</a>
         <a href="#" class="btn btn-success">My Identity</a>
     </div>
-
+    <!--
     <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">My Identity</h1>
-    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri"></h2>
+    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri"></h2>    
+    
+        -->
+    
 </div>
 <br />
 
@@ -52,9 +55,9 @@
             columnsresize: true,
             columns: [
               { text: 'Expired Date', datafield: 'expiredDate', width: "20%" },
-              { text: 'ID Number', datafield: 'idNumber', width: "20%" },
+              { text: 'ID Number', datafield: 'idNumber', minwidth: "20%" },
               { text: 'Type', datafield: 'idName', width: "10%" },
-              { text: 'Country', datafield: 'issuedCountryName', minwidth: "15%" }
+              { text: 'Country', datafield: 'issuedCountryName', width: "15%" }
             ]
         });
         if (cb != undefined) {
@@ -185,7 +188,7 @@
         </div>
     </div>
 </div>
-
+<br />
 <div class="row">
     <div class="col-lg-10">
         <div id="identityTable"></div>
