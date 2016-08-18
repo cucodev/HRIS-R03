@@ -69,17 +69,120 @@
         hris.general.bindInput("spoken", null);
         hris.general.bindInput("written", null);
     }
-
+    var Language = {
+        url: "http://localhost:54636/api/profileLanguage",
+        add: function (data) {
+            console.log("create new", data);
+            $.ajax({
+                url: this.url,
+                method: 'POST',
+                data: data,
+                success: function (o) {
+                    console.log("Sukses", o);
+                    $('#languageTable').jqxGrid('refreshdata');
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        update: function (data) {
+            console.log("update dulu", data);
+            $.ajax({
+                url: this.url + "/" + data.ID,
+                method: 'PUT',
+                data: data,
+                success: function (result) {
+                    console.log("Sukses", result);
+                    $('#languageTable').jqxGrid('refreshdata');
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        Grid: {
+            dataSelected: {},
+            rowSelected: function (o) {
+                console.log("rowSel", o);
+                Language.Grid.dataSelected = o.args.row;
+                console.log("modal data", Language.Grid.dataSelected);
+            }
+        },
+        Modal: {
+            data: {},
+            create: function () {
+                console.log("Create Form");
+                hris.general.bindInput("rowId", null);
+                hris.general.bindInput("languageName", null);
+                hris.general.bindInput("spoken", null);
+                hris.general.bindInput("written", null);
+            },
+            show: function () {
+                $("#myLanguageModal").modal("show", true);
+            },
+            clean: function () {
+                console.log("Modal Cleaned");
+                hris.general.cleanInput("rowId");
+                hris.general.cleanInput("languageName");
+                hris.general.cleanInput("spoken");
+                hris.general.cleanInput("written");
+            },
+            fill: function () {
+                console.log("Fill Form");
+                var data = Language.Grid.dataSelected;
+                hris.general.bindInput("rowId", data.ID);
+                hris.general.bindInput("languageName", data.languageName);
+                hris.general.bindInput("spoken", data.spoken);
+                hris.general.bindInput("written", data.written);
+            },
+            submit: function () {
+                var data = {
+                    ID: hris.general.getData("rowId"),
+                    languageName: hris.general.getData("languageName"),
+                    spoken: hris.general.getData("spoken"),
+                    written: hris.general.getData("written")
+                }
+                console.log("Modal Submit", data);
+                // Proses save
+                if (data.ID) {
+                    Language.update(data);
+                } else {
+                    Language.add(data);
+                }
+            },
+            add: function () {
+                Language.Modal.clean();
+                Language.Modal.show();
+            },
+            edit: function () {
+                if (Language.Grid.dataSelected.uniqueid) {
+                    Language.Modal.clean();
+                    Language.Modal.fill();
+                    Language.Modal.show();
+                } else {
+                    Language.Modal.error();
+                }
+            },
+            error: function () {
+                $("#myErrorModal").modal("show", true);
+            }
+        },
+    }
     $(document).ready(function () {
-        hris.general.bindButton("addButton");
-        loadLanguage(createForm);
+        loadLanguage(Language.Modal.create);
+        $("#submit").click(Language.Modal.submit);
+        $("#editButton").click(Language.Modal.edit);
+        $("#addButton").click(Language.Modal.add);
+        $("#languageTable").on('rowselect', Language.Grid.rowSelected);
     });
 </script>
-
-
 <div class="row">
     <div class="col-lg-10">
-        <div class="pull-right btn-sm" id="addButton" data-toggle="modal" data-target="#myLanguageModal">Add</div>
+        <div class="btn-group pull-right" role="group" aria-label="...">
+            <button id="addButton" class="btn btn-success ">Add</button>
+            <button id="editButton" class="btn btn-info">Edit</button>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -99,6 +202,9 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <input type="hidden" class="form-control" id="rowId" />
+                </div>
+                <div class="form-group">
                     <label for="languageName">Language Name</label>
                     <input type="text" class="form-control" id="languageName" />
                 </div>
@@ -113,6 +219,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -120,6 +227,22 @@
     </div>
 </div>
 
+<div id="myErrorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Warning</h4>
+            </div>
+            <div class="modal-body">
+                No data selected!
+            </div>
+
+        </div>
+
+    </div>
+</div>
 
 
