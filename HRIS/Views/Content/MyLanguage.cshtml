@@ -79,7 +79,7 @@
                 data: data,
                 success: function (o) {
                     console.log("Sukses", o);
-                    $('#languageTable').jqxGrid('refreshdata');
+                    $('#languageTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -94,7 +94,7 @@
                 data: data,
                 success: function (result) {
                     console.log("Sukses", result);
-                    $('#languageTable').jqxGrid('refreshdata');
+                    $('#languageTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -139,6 +139,7 @@
             submit: function () {
                 var data = {
                     ID: hris.general.getData("rowId"),
+                    IDV: cIDV,
                     languageName: hris.general.getData("languageName"),
                     spoken: hris.general.getData("spoken"),
                     written: hris.general.getData("written")

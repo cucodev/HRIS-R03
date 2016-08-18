@@ -79,7 +79,7 @@
                 data: data,
                 success: function (o) {
                     console.log("Sukses", o);
-                    $('#certificationTable').jqxGrid('refreshdata');
+                    $('#certificationTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -94,7 +94,7 @@
                 data: data,
                 success: function (result) {
                     console.log("Sukses", result);
-                    $('#certificationTable').jqxGrid('refreshdata');
+                    $('#certificationTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -146,6 +146,7 @@
             submit: function () {
                 var data = {
                     ID: hris.general.getData("rowId"),
+                    IDV: cIDV,
                     certificationName: hris.general.getData("certificationName"),
                     issuedCountry: hris.general.getData("Country"),
                     issuedCity: hris.general.getData("Kabupaten"),

@@ -42,7 +42,7 @@
                 { name: 'eduMajor', type: 'int' },
                 { name: 'eduValue', type: 'string' }
             ],
-            id: 'IDV',
+            id: 'ID',
             url: url
         };
         var dataAdapter = new $.jqx.dataAdapter(source);
@@ -52,13 +52,13 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: 125 },
-              { text: 'IDV', datafield: 'IDV', width: 125 },
-              { text: 'Country', datafield: 'countryName', width: 125 },
-              { text: 'Graduate', datafield: 'eduGraduate', width: 120 },
-              { text: 'Level', datafield: 'levelName', minwidth: 120 },
-              { text: 'Major', datafield: 'eduMajor', minwidth: 120 },
-              { text: 'Value', datafield: 'eduValue', minwidth: 120 }
+              { text: 'ID', datafield: 'ID', width: "10%" },
+              { text: 'IDV', datafield: 'IDV', width: "10%" },
+              { text: 'Country', datafield: 'countryName', width: "15%" },
+              { text: 'Graduate', datafield: 'eduGraduate', width: "20%" },
+              { text: 'Level', datafield: 'levelName', minwidth: "15%" },
+              { text: 'Major', datafield: 'eduMajor', minwidth: "20%" },
+              { text: 'Value', datafield: 'eduValue', minwidth: "10%" }
             ]
         });
 
@@ -85,7 +85,7 @@
                 data: data,
                 success: function (o) {
                     console.log("Sukses", o);
-                    $('#educationTable').jqxGrid('refreshdata');
+                    $('#educationTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -100,7 +100,7 @@
                 data: data,
                 success: function (result) {
                     console.log("Sukses", result);
-                    $('#educationTable').jqxGrid('refreshdata');
+                    $('#educationTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -167,6 +167,7 @@
             submit: function () {
                 var data = {
                     ID: hris.general.getData("rowId"),
+                    IDV: cIDV,
                     eduMajor: hris.general.getData("eduMajor"),
                     eduGraduate: hris.general.getData("eduGraduate"),
                     eduCountry: hris.general.getData("Country"),
