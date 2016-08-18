@@ -25,7 +25,7 @@
     var listID = hris.list._dbLOV("ID");
     var listCountry = hris.list._dbLOV("Country");
 
-    function loadCertification(cb) {
+    function loadIdentity(cb) {
         var url = "http://localhost:54636/api/profileIdentity/" + cIDV;
         // prepare the data
         var source =
@@ -62,25 +62,125 @@
             cb();
         }
     }
-
-    function createForm() {
-        console.log("Create Form");
-       
-        hris.general.bindInput("idNumber", null);
-        hris.general.bindDropDown("ID", null);
-        hris.general.bindDropDown("Country", null);
-        hris.general.bindDateTime("expiredDate", null);
+    var Identity = {
+        url: "http://localhost:54636/api/profileIdentity",
+        add: function (data) {
+            console.log("create new", data);
+            $.ajax({
+                url: this.url,
+                method: 'POST',
+                data: data,
+                success: function (o) {
+                    console.log("Sukses", o);
+                    $('#identityTable').jqxGrid('refreshdata');
+                },
+                error: function (e) {
+                    console.log("Error",e);
+                }
+            });
+        },
+        update: function (data) {
+            console.log("update dulu", data);
+            $.ajax({
+                url: this.url +"/"+ data.ID,
+                method: 'PUT',
+                data: data,
+                success: function (result) {
+                    console.log("Sukses", result);
+                    $('#identityTable').jqxGrid('refreshdata');
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        Grid: {
+            dataSelected : {},
+            rowSelected: function (o) {
+                console.log("rowSel", o);
+                Identity.Grid.dataSelected = o.args.row;
+                console.log("modal data", Identity.Grid.dataSelected);
+            }
+        },
+        Modal: {
+            data : {},
+            create: function () {
+                console.log("Create Form");
+                hris.general.bindInput("rowId", null);
+                hris.general.bindInput("idNumber", null);
+                hris.general.bindDropDown("ID", null);
+                hris.general.bindDropDown("Country", null);
+                hris.general.bindDateTime("expiredDate", null);
+            },
+            show : function () {
+                $("#myIdentityModal").modal("show", true);
+            },
+            clean: function () {
+                console.log("Modal Cleaned");
+                hris.general.cleanInput("rowId");
+                hris.general.cleanInput("idNumber");
+                hris.general.cleanDropDown("ID");
+                hris.general.cleanDropDown("Country");
+                hris.general.cleanDateTime("expiredDate");
+            },
+            add: function () {
+                Identity.Modal.clean();
+                Identity.Modal.show();
+            },
+            edit: function () {
+                if (Identity.Grid.dataSelected.uniqueid) {
+                    Identity.Modal.clean();
+                    Identity.Modal.fill();
+                    Identity.Modal.show();
+                } else {
+                    Identity.Modal.error();
+                }
+            },
+            fill: function () {
+                console.log("Fill Form");
+                var data = Identity.Grid.dataSelected;
+                hris.general.bindInput("rowId", data.ID);
+                hris.general.bindInput("idNumber", data.idNumber);
+                hris.general.bindDropDown("ID", data.idType);
+                hris.general.bindDropDown("Country", data.issuedCountry);
+                hris.general.bindDateTime("expiredDate", data.expiredDate);
+            },
+            error: function () {
+                $("#myErrorModal").modal("show",true);
+            },
+            submit: function () {
+                var data = {
+                    ID: hris.general.getData("rowId"),
+                    idNumber: hris.general.getData("idNumber"),
+                    idType: hris.general.getData("ID"),
+                    issuedCountry: hris.general.getData("Country"),
+                    expiredDate: hris.general.getData("expiredDate")
+                }
+                console.log("Modal Submit", data);
+                // Proses save
+                if (data.ID) {
+                    Identity.update(data);
+                } else {
+                    Identity.add(data);
+                }
+            }
+        },
     }
         
     $(document).ready(function () {
-        hris.general.bindButton("addButton");
-        loadCertification(createForm);
-        
+        loadIdentity(Identity.Modal.create);
+        $("#submit").click(Identity.Modal.submit);
+        $("#editButton").click(Identity.Modal.edit);
+        $("#addButton").click(Identity.Modal.add);
+        $("#identityTable").on('rowselect', Identity.Grid.rowSelected);
     });
 </script>
 <div class="row">
     <div class="col-lg-10">
-        <div class="pull-right btn-sm" id="addButton" data-toggle="modal" data-target="#myIdentityModal">Add</div>
+        <div class="btn-group pull-right" role="group" aria-label="...">
+            <button id="addButton" class="btn btn-success ">Add</button>
+            <button id="editButton" class="btn btn-info">Edit</button>
+        </div>
     </div>
 </div>
 
@@ -101,6 +201,9 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                   <input type="hidden" class="form-control" id="rowId" />
+                </div>
+                <div class="form-group">
                     <label for="ID">Type</label>
                     <div class="form-control" id="ID"></div>
                 </div>
@@ -118,8 +221,26 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
+        </div>
+
+    </div>
+</div>
+<div id="myErrorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Warning</h4>
+            </div>
+            <div class="modal-body">    
+                No data selected!
+                </div>
+            
         </div>
 
     </div>

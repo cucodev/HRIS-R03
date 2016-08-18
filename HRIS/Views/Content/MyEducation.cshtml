@@ -75,15 +75,130 @@
         hris.general.bindDropDown("Country", null);
         hris.general.bindDateTime("eduGraduate", null);
     }
+    var Education = {
+        url: "http://localhost:54636/api/profileEdu",
+        add: function (data) {
+            console.log("create new", data);
+            $.ajax({
+                url: this.url,
+                method: 'POST',
+                data: data,
+                success: function (o) {
+                    console.log("Sukses", o);
+                    $('#educationTable').jqxGrid('refreshdata');
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        update: function (data) {
+            console.log("update dulu", data);
+            $.ajax({
+                url: this.url +"/"+ data.ID,
+                method: 'PUT',
+                data: data,
+                success: function (result) {
+                    console.log("Sukses", result);
+                    $('#educationTable').jqxGrid('refreshdata');
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        Grid: {
+            dataSelected: {},
+            rowSelected: function (o) {
+                console.log("rowSel", o);
+                Education.Grid.dataSelected = o.args.row;
+                console.log("modal data", Education.Grid.dataSelected);
+            }
+        },
+        Modal: {
+            data: {},
+            create: function () {
+                console.log("Create Form");
+                hris.general.bindInput("rowId", null);
+                hris.general.bindInput("eduMajor", null);
+                hris.general.bindInput("eduValue", null);
+                hris.general.bindDropDown("Edu", null);
+                hris.general.bindDropDown("Country", null);
+                hris.general.bindDateTime("eduGraduate", null);
+            },
+            show: function () {
+                $("#myEducationModal").modal("show", true);
+            },
+            clean: function () {
+                console.log("Modal Cleaned");
+                hris.general.cleanInput("rowId");
+                hris.general.cleanInput("eduMajor");
+                hris.general.cleanInput("eduValue");
+                hris.general.cleanDropDown("Edu");
+                hris.general.cleanDropDown("Country");
+                hris.general.cleanDateTime("eduGraduate");
+            },
+            add: function () {
+                Education.Modal.clean();
+                Education.Modal.show();
+            },
+            edit: function () {
+                if (Education.Grid.dataSelected.uniqueid) {
+                    Education.Modal.clean();
+                    Education.Modal.fill();
+                    Education.Modal.show();
+                } else {
+                    Education.Modal.error();
+                }
+            },
+            fill: function () {
+                console.log("Fill Form");
+                var data = Education.Grid.dataSelected;
+                hris.general.bindInput("rowId", data.ID);
+                hris.general.bindInput("eduMajor", data.eduMajor);
+                hris.general.bindInput("eduValue", data.eduValue);
+                hris.general.bindDropDown("Edu", data.eduLevel);
+                hris.general.bindDropDown("Country", data.eduCountry);
+                hris.general.bindDateTime("eduGraduate", data.eduGraduate);
+            },
+            error: function () {
+                $("#myErrorModal").modal("show", true);
+            },
+            submit: function () {
+                var data = {
+                    ID: hris.general.getData("rowId"),
+                    eduMajor: hris.general.getData("eduMajor"),
+                    eduGraduate: hris.general.getData("eduGraduate"),
+                    eduCountry: hris.general.getData("Country"),
+                    eduLevel: hris.general.getData("Edu"),
+                    eduValue: hris.general.getData("eduValue")
+                }
+                console.log("Modal Submit", data);
+                // Proses save
+                if (data.ID) {
+                    Education.update(data);
+                } else {
+                    Education.add(data);
+                }
+            }
+        },
+    }
+
     $(document).ready(function () {
-        hris.general.bindButton("addButton");
-        loadEducation(createForm);
+        loadEducation(Education.Modal.create);
+        $("#submit").click(Education.Modal.submit);
+        $("#editButton").click(Education.Modal.edit);
+        $("#addButton").click(Education.Modal.add);
+        $("#educationTable").on('rowselect', Education.Grid.rowSelected);
     });
 </script>
 
 <div class="row">
     <div class="col-lg-10">
-        <div class="pull-right btn-sm" id="addButton" data-toggle="modal" data-target="#myEducationModal">Add</div>
+        <div class="btn-group pull-right" role="group" aria-label="...">
+            <button id="addButton" class="btn btn-success ">Add</button>
+            <button id="editButton" class="btn btn-info">Edit</button>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -103,6 +218,9 @@
             </div>
             
             <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" class="form-control" id="rowId" />
+                </div>
                 <div class="form-group">
                     <label for="Edu">Level</label>
                     <div class="form-control" id="Edu"></div>
@@ -125,6 +243,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -132,3 +251,20 @@
     </div>
 </div>
 
+<div id="myErrorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Warning</h4>
+            </div>
+            <div class="modal-body">
+                No data selected!
+            </div>
+
+        </div>
+
+    </div>
+</div>

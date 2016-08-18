@@ -67,23 +67,131 @@
 
     function createForm() {
         console.log("Create Form");
-        hris.general.bindInput("certificationName", null);
         
-        hris.general.bindDropDown("Country", null);
-        hris.general.bindDropDown("Kabupaten", null);
-        hris.general.bindDateTime("issuedDate", null);
-        hris.general.bindDateTime("issuedExpiredDate", null);
     }
+    var Certification = {
+        url: "http://localhost:54636/api/profileCertification",
+        add: function (data) {
+            console.log("create new", data);
+            $.ajax({
+                url: this.url,
+                method: 'POST',
+                data: data,
+                success: function (o) {
+                    console.log("Sukses", o);
+                    $('#certificationTable').jqxGrid('refreshdata');
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        update: function (data) {
+            console.log("update dulu", data);
+            $.ajax({
+                url: this.url + "/" + data.ID,
+                method: 'PUT',
+                data: data,
+                success: function (result) {
+                    console.log("Sukses", result);
+                    $('#certificationTable').jqxGrid('refreshdata');
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        Grid: {
+            dataSelected: {},
+            rowSelected: function (o) {
+                console.log("rowSel", o);
+                Certification.Grid.dataSelected = o.args.row;
+                console.log("modal data", Certification.Grid.dataSelected);
+            }
+        },
+        Modal: {
+            data: {},
+            create: function () {
+                console.log("Create Form");
+                hris.general.bindInput("rowId", null);
+                hris.general.bindInput("certificationName", null);
+                hris.general.bindDropDown("Country", null);
+                hris.general.bindDropDown("Kabupaten", null);
+                hris.general.bindDateTime("issuedDate", null);
+                hris.general.bindDateTime("issuedExpiredDate", null);
+            },
+            show: function () {
+                $("#myCertificationModal").modal("show", true);
+            },
+            clean: function () {
+                console.log("Modal Cleaned");
+                hris.general.cleanInput("rowId");
+                hris.general.cleanInput("certificationName");
+                hris.general.cleanDropDown("Country");
+                hris.general.cleanDropDown("Kabupaten");
+                hris.general.cleanDateTime("issuedDate");
+                hris.general.cleanDateTime("issuedExpiredDate");
 
+            },
+            fill: function () {
+                console.log("Fill Form");
+                var data = Certification.Grid.dataSelected;
+                hris.general.bindInput("rowId", data.ID);
+                hris.general.bindInput("certificationName", data.certificationName);
+                hris.general.bindDropDown("Country", data.issuedCountry);
+                hris.general.bindDropDown("Kabupaten", data.issuedCity);
+                hris.general.bindDateTime("issuedDate", data.CertificationLevel);
+                hris.general.bindDateTime("issuedExpiredDate", data.CertificationLevel);
+            },
+            submit: function () {
+                var data = {
+                    ID: hris.general.getData("rowId"),
+                    certificationName: hris.general.getData("certificationName"),
+                    issuedCountry: hris.general.getData("Country"),
+                    issuedCity: hris.general.getData("Kabupaten"),
+                    issuedDate: hris.general.getData("issuedDate"),
+                    issuedExpiredDate: hris.general.getData("issuedExpiredDate")
+                }
+                console.log("Modal Submit", data);
+                // Proses save
+                if (data.ID) {
+                    Certification.update(data);
+                } else {
+                    Certification.add(data);
+                }
+            },
+            add: function () {
+                Certification.Modal.clean();
+                Certification.Modal.show();
+            },
+            edit: function () {
+                if (Certification.Grid.dataSelected.uniqueid) {
+                    Certification.Modal.clean();
+                    Certification.Modal.fill();
+                    Certification.Modal.show();
+                } else {
+                    Certification.Modal.error();
+                }
+            },
+            error: function () {
+                $("#myErrorModal").modal("show", true);
+            }
+        },
+    }
     $(document).ready(function () {
-        hris.general.bindButton("addButton");
-        loadCertification(createForm);
+        loadCertification(Certification.Modal.create);
+        $("#submit").click(Certification.Modal.submit);
+        $("#editButton").click(Certification.Modal.edit);
+        $("#addButton").click(Certification.Modal.add);
+        $("#certificationTable").on('rowselect', Certification.Grid.rowSelected);
     });
 </script>
-
 <div class="row">
     <div class="col-lg-10">
-        <div class="pull-right btn-sm" id="addButton" data-toggle="modal" data-target="#mySkillModal">Add</div>
+        <div class="btn-group pull-right" role="group" aria-label="...">
+            <button id="addButton" class="btn btn-success ">Add</button>
+            <button id="editButton" class="btn btn-info">Edit</button>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -92,16 +200,19 @@
     </div>
 </div>
 
-<div id="mySkillModal" class="modal fade" role="dialog">
+<div id="myCertificationModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Skill Form</h4>
+                <h4 class="modal-title">Certification Form</h4>
             </div>
             <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" class="form-control" id="rowId" />
+                </div>
                 <div class="form-group">
                     <label for="certificationName">Certification Name</label>
                     <input type="text" class="form-control" id="certificationName" />
@@ -125,13 +236,30 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
 
     </div>
 </div>
+<div id="myErrorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Warning</h4>
+            </div>
+            <div class="modal-body">
+                No data selected!
+            </div>
+
+        </div>
+
+    </div>
+</div>
 
 
 
