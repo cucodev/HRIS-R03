@@ -8,6 +8,8 @@
 {
     <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
     <script type="text/javascript">
+        
+
         function dragEnter(evt) {
             evt.stopPropagation();
             evt.preventDefault();
@@ -21,6 +23,7 @@
         }
 
         function drop(evt) {
+            $("#popup").hide();
             evt.stopPropagation();
             evt.preventDefault();
             $(evt.target).removeClass('over');
@@ -59,20 +62,315 @@
             $box.bind("dragenter", dragEnter);
             $box.bind("dragleave", dragLeave);
             $box.bind("drop", drop);
+
+            //var viewModel = { uploads: ko.observableArray([]) }
+            //ko.applyBindings(viewModel);
+
+
+            //Grid
+            var data = new Array();
+
+            var firstNames = ["Nancy", "Andrew", "Janet", "Margaret", "Steven", "Michael", "Robert", "Laura", "Anne"];
+            var lastNames = ["Davolio", "Fuller", "Leverling", "Peacock", "Buchanan", "Suyama", "King", "Callahan", "Dodsworth"];
+            var k = 0;
+            for (var i = 0; i < firstNames.length; i++) {
+                var row = {};
+                row["firstname"] = firstNames[k];
+                row["lastname"] = lastNames[k];
+                data[i] = row;
+                k++;
+            }
+
+            var source =
+            {
+                localData: data,
+                dataType: "array"
+            };
+
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            $("#dataTable").jqxDataTable(
+            {
+                width: 850,
+                source: dataAdapter,
+                sortable: true,
+                pageable: true,
+                pageSize: 4,
+                pagerButtonsCount: 5,
+                columns: [
+                      {
+                          text: ' ', align: 'center', dataField: 'firstname', width: 150,
+                          // row - row's index.
+                          // column - column's data field.
+                          // value - cell's value.
+                          // rowData - rendered row's object.
+                          cellsRenderer: function (row, column, value, rowData) {
+                              var image = "<div class='new_storylising_img'>";
+                              var imgurl = 'http://i.ndtvimg.com/i/2016-08/donald-trump-afp_240x180_71470884757.jpg';
+                              var img = '<img src="' + imgurl + '"/>';
+                              image += img;
+                              image += "</div>";
+                              return image;
+                          }
+                      },
+                      {
+                          text: ' ', align: 'center', dataField: 'lastname', width: '100%',
+                          // row - row's index.
+                          // column - column's data field.
+                          // value - cell's value.
+                          // rowData - rendered row's object.
+                          cellsRenderer: function (row, column, value, rowData) {
+                              var container = '<div class="new_storylising_contentwrap">'
+                              var leftcolumn = '<div class="nstory_header"';
+
+                              var title = '<a href="#" title="Donald Trump Injects New Faces To Boost Faltering Campaign">Donald Trump Injects New Faces To Boost Faltering Campaign</a>';
+                              var time = '<div  class="nstory_dateline"><a href="">Attachment</a>   | Wednesday August 17, 2016, Washington</div>';
+                              var content = "<div class='nstory_intro'>"
+                                  +
+                                  "A rattled Donald Trump today rejigged his campaign for the second time in two months by introducing fresh faces, including a CEO, to propel his faltering presidential bid after recent polls showed him lagging behind rival Hillary Clinton."
+                                  + "</div>";
+
+                              leftcolumn += title;
+                              leftcolumn += time;
+                              // leftcolumn += "<hr>";
+                              leftcolumn += content;
+                              leftcolumn += "</div>";
+
+                              container += leftcolumn;
+                              //container += rightcolumn;
+                              container += "</div>";
+                              return container;
+                          }
+                      }
+                ]
+            });
+
+            $('#btnAdd').click(function (e) {
+                e.preventDefault();
+
+                var courseId = $('#courseId').val();
+                var fileId = $('#fileId').val();
+                if (!courseId || !fileId) {
+                    return;
+                }
+
+                var headers = new Array();
+                headers["SessionId"] = sessionId;
+                headers["contentType"] = "application/json; charset=UTF-8";
+
+                var formData = new FormData();
+                var opmlFile = $('#fileInput').get(0).files;
+
+                // this is like the model we're expecting on the server
+                var files = [];
+                files.push({ 'Id': $('#fileId').val(), 'OriginalFileName': opmlFile[0].name, 'FileName': $('#FileName').val(), 'Extension': $('#Extension').val(), 'EntityId': $('#EntityId').val() });
+
+                formData.append("fileModels", JSON.stringify(files));
+                formData.append("File_0", opmlFile[0]);
+
+
+                $.ajax({
+                    url: "/api/file/UploadJXFiles/",
+                    headers: headers,
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json'
+                });
+            });
+
+
+            $('#editor').jqxEditor({
+                height: "300px",
+                width: '550px'
+            });
+
+           
         });
 
-        var viewModel = { uploads: ko.observableArray([]) }
-        ko.applyBindings(viewModel);
+
+
     </script>
 }
 
 
+<style>
+    
+   .custom-file-upload-hidden {
+      display: none;
+      visibility: hidden;
+      position: absolute;
+      left: -9999px;
+    }
 
-<h2>Notifications</h2>
+    .custom-file-upload {
+      display: block;
+      width: auto;
+      font-size: 16px;
+      margin-top: 30px;
+    }
+    .custom-file-upload label {
+      display: block;
+      margin-bottom: 5px;
+    }
 
-<div id="ulbox">
-    <span>Drop your s*** here...</span>
+    .file-upload-wrapper {
+      position: relative;
+      margin-bottom: 5px;
+    }
+
+    .file-upload-input {
+      width: 300px;
+      color: #fff;
+      font-size: 16px;
+      padding: 11px 17px;
+      border: none;
+      background-color: #c0392b;
+      -moz-transition: all 0.2s ease-in;
+      -o-transition: all 0.2s ease-in;
+      -webkit-transition: all 0.2s ease-in;
+      transition: all 0.2s ease-in;
+      float: left;
+      /* IE 9 Fix */
+    }
+    .file-upload-input:hover, .file-upload-input:focus {
+      background-color: #ab3326;
+      outline: none;
+    }
+
+    .file-upload-button {
+      cursor: pointer;
+      display: inline-block;
+      color: #fff;
+      font-size: 16px;
+      text-transform: uppercase;
+      padding: 11px 20px;
+      border: none;
+      margin-left: -1px;
+      background-color: #962d22;
+      float: left;
+      /* IE 9 Fix */
+      -moz-transition: all 0.2s ease-in;
+      -o-transition: all 0.2s ease-in;
+      -webkit-transition: all 0.2s ease-in;
+      transition: all 0.2s ease-in;
+    }
+    .file-upload-button:hover {
+      background-color: #6d2018;
+    }
+
+    .ins_page_header_wrap {
+        width: 100%;
+        float: left;
+        margin-bottom: 5px;
+        /*border-bottom: 1px solid #e0e0e0;*/
+        padding-bottom: 5px;
+    }
+
+        .ins_page_header_wrap .ins_page_header {
+            float: left;
+            color: #666;
+            font-family: 'Montserrat',sans-serif;
+            font-size: 32px;
+        }
+
+    h1 {
+        font-weight: normal;
+        font-size: 32px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .jqx-grid {
+        overflow: hidden;
+        border-style: none;
+        border-width: 0;
+    }
+
+    .jqx-widget-header {
+        background: none;
+    }
+
+    .jqx-grid-cell {
+        border-style: solid;
+        border-top-style: none;
+        border-right-style: none;
+        border-bottom-style: solid;
+        border-left-style: none;
+        vertical-align: top;
+    }
+
+    .jqx-grid-pager-top {
+        border: none;
+        border-bottom: none;
+    }
+
+    .jqx-grid-column-header, .jqx-grid-columngroup-header {
+        border: none;
+        border-bottom: none;
+        border-bottom-style: none;
+    }
+
+    .new_storylising_img {
+        width: 150px;
+        float: left;
+    }
+
+    .new_storylising_contentwrap {
+        width: 100%;
+        box-sizing: border-box;
+        vertical-align: top;
+        -moz-box-sizing: border-box;
+    }
+    .nstory_header {
+        width: 100%;
+        float: left;
+        font-family: "Roboto",sans-serif;
+        font-size: 20px;
+        line-height: 26px;
+        margin-bottom: 5px;
+    }
+    .nstory_dateline {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+    .nstory_intro {
+        font-size: 14px;
+        color: #666;
+        line-height: 20px;
+    }
+</style>
+
+<div class="row">
+    <div class="btn-group btn-breadcrumb">
+        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
+        <a href="#" class="btn btn-info">HRD</a>
+        <a href="#" class="btn btn-success">NEWS</a>
+    </div>
+    <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
+    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">NEWS FORM</h1>
+<!--    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Manage News </h2>-->
 </div>
+
+<div class="row">
+    <div class="col-md-9">
+        <div id="dataTable"></div>
+    </div>
+    <div class="col-lg-3">
+        <input type="button" class="btn btn-breadcrumb" id="btnAdd" data-toggle="modal" data-target="#newsModal" value="Add News" />
+    </div>
+</div>
+
+
+
+
+
+
+<div id="ulbox"></div>
 <ul data-bind="template: { name: 'upload-template', foreach: uploads }"></ul>
 <script type="text/html" id="upload-template">
     <li>
@@ -85,10 +383,51 @@
     </li>
 </script>
 
-
-
 <form action="/api/file/UploadImageFiles" method="post" enctype="multipart/form-data">
-    <label for="somefile">File</label>
-    <input name="somefile" type="file" multiple />
-    <input type="submit" value="Submit" />
+    <div id="newsModal" class="modal fade modal-wide" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">News </h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input id="newsTitle" type="text" class="input-lg" maxlength="100" width="500px" style="max-width:none" placeholder="Title" />
+                    </div>
+                    <div class="form-group">
+                        <div id="editor"></div>
+                    </div>
+                    <div class="form-group">
+
+                        <!--<label for="somefile">File</label>-->
+                        <div class="custom-file-upload">
+                            <input type="file" id="fileId" name="files[0].Id"  name="somefile" multiple />
+                            <input type="hidden" name="files[0].FileName" id="FileName" />
+                            <input type="hidden" name="files[0].Extension" id="Extension" />
+                            <input type="hidden" name="files[0].EntityId" id="EntityId" />
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info" id="submit">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </form>
+
+
+
+
+
+
+
+

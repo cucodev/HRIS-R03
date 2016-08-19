@@ -101,7 +101,7 @@ namespace HRIS_R03.Controllers
             ViewBag.cIDV = 3;//dt.IDV;
             ViewBag.cIDVParent = 40;// dt.parentIDV;
             ViewBag.cIDVLevel = 71;
-            return View();
+            return View(User);
         }
 
         public ActionResult Notifications()

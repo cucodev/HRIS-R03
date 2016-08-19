@@ -391,7 +391,7 @@ namespace DataModel.UnitOfWork
                     foreach (var ve in eve.ValidationErrors)
                     {
                         System.Diagnostics.Debug.WriteLine(string.Format("- Property: \"{0}\", Error: \"{1}\"", ve.PropertyName, ve.ErrorMessage));
-                        //outputLines.Add(string.Format("- Property: \"{0}\", Error: \"{1}\"", ve.PropertyName, ve.ErrorMessage));
+                        outputLines.Add(string.Format("- Property: \"{0}\", Error: \"{1}\"", ve.PropertyName, ve.ErrorMessage));
                     }
                 }
                 System.IO.File.AppendAllLines(@"C:\e\errors.txt", outputLines);

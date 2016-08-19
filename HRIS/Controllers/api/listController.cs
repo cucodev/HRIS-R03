@@ -401,6 +401,8 @@ namespace HRIS_R03.Controllers.api
         [System.Web.Http.Route("api/list/getCountry")]
         public IEnumerable<LOVLocation> getCountry()
         {
+            /*
+
             var p = _pServices.getCountry();
             if (p != null)
             {
@@ -408,8 +410,14 @@ namespace HRIS_R03.Controllers.api
                 if (pEntities.Any())
                     return pEntities;
             }
-            // return null;
-            return null;
+            // return null;*/
+            List<LOVLocation> t = new List<LOVLocation>();
+            LOVLocation ms = new LOVLocation();
+            ms.label = "Indonesia";
+            ms.value = 360;
+            t.Add(ms);
+            return t;
+            //return new  { 'label' : 'Indonesia', 'value': 360 };
         }
 
         //Province

@@ -57,9 +57,10 @@ namespace HRIS.Controllers.api
         [HttpPost]
         [Route("api/file/UploadImageFiles")]
         [ActionName("UploadImageFiles")]
-        public Task<IEnumerable<FileDesc>> UploadImageFiles(HttpRequestMessage request)
+        public void UploadImageFiles()
         {
             string UploadPath = "\\\\HLSCP\\sqlserver\\HRIS\\personImage\\";
+
             FileSummaryEntities files = new FileSummaryEntities();
             var rootUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.AbsolutePath, String.Empty);
             if (Request.Content.IsMimeMultipartContent())
@@ -68,6 +69,43 @@ namespace HRIS.Controllers.api
                 var task = Request.Content.ReadAsMultipartAsync(streamProvider).ContinueWith<IEnumerable<FileDesc>>(t =>
                 {
                     
+                    if (t.IsFaulted || t.IsCanceled)
+                    {
+                        //System.Diagnostics.Debug.WriteLine("t status: " + t.Status.ToString() + ':' + t.Result);
+                        throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                    };
+
+                    var fileInfo = streamProvider.FileData.Select(i => {
+                        var info = new FileInfo(i.LocalFileName);
+                        return new FileDesc(info.Name, UploadPath + info.Name, info.Length / 1024);
+                    });
+                    return fileInfo;
+                });
+
+                //return task;
+            }
+            else
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable, "This request is not properly formatted"));
+            }
+        }
+
+        [HttpPost]
+        [Route("api/file/UploadJXFiles")]
+        [ActionName("UploadJXFiles")]
+        public  Task<IEnumerable<FileDesc>> UploadJXFiles()
+        {
+            string UploadPath = "\\\\HLSCP\\sqlserver\\HRIS\\personImage\\";
+            const string paramName = "fileModels";
+
+            FileSummaryEntities files = new FileSummaryEntities();
+            var rootUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.AbsolutePath, String.Empty);
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                var streamProvider = new CustomMultipartFormDataStreamProvider(UploadPath);
+                var task = Request.Content.ReadAsMultipartAsync(streamProvider).ContinueWith<IEnumerable<FileDesc>>(t =>
+                {
+
                     if (t.IsFaulted || t.IsCanceled)
                     {
                         System.Diagnostics.Debug.WriteLine("t status: " + t.Status.ToString() + ':' + t.Result);
@@ -89,7 +127,7 @@ namespace HRIS.Controllers.api
             }
         }
 
-        
+
 
 
         // GET: api/list
@@ -161,6 +199,19 @@ namespace HRIS.Controllers.api
         }
     }
 
+    public class FileListDesc
+    {
+        public List<string> Name { get; set; }
+        public List<string> Path { get; set; }
+        public List<long> Size { get; set; }
+
+        public FileListDesc(List<string> n, List<string> p, List<long> s)
+        {
+            Name = n;
+            Path = p;
+            Size = s;
+        }
+    }
     public class CustomMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
     {
         public CustomMultipartFormDataStreamProvider(string path) : base(path)
