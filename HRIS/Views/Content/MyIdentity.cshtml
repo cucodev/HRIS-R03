@@ -13,9 +13,12 @@
         <a href="#" class="btn btn-info">Employee</a>
         <a href="#" class="btn btn-success">My Identity</a>
     </div>
-
+    <!--
     <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">My Identity</h1>
-    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri"></h2>
+    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri"></h2>    
+    
+        -->
+    
 </div>
 <br />
 
@@ -49,11 +52,10 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: "10%" },
               { text: 'Expired Date', datafield: 'expiredDate', width: "20%" },
-              { text: 'ID Number', datafield: 'idNumber', width: "20%" },
-              { text: 'ID Type', datafield: 'idName', width: "10%" },
-              { text: 'Issued Country', datafield: 'issuedCountryName', minwidth: "15%" }
+              { text: 'ID Number', datafield: 'idNumber', minwidth: "20%" },
+              { text: 'Type', datafield: 'idName', width: "10%" },
+              { text: 'Country', datafield: 'issuedCountryName', width: "15%" }
             ]
         });
         if (cb != undefined) {
@@ -64,13 +66,14 @@
         url: "http://localhost:54636/api/profileIdentity",
         add: function (data) {
             console.log("create new", data);
+            data.vCreatedBy = cIDV;
             $.ajax({
                 url: this.url,
                 method: 'POST',
                 data: data,
                 success: function (o) {
                     console.log("Sukses", o);
-                    $('#identityTable').jqxGrid('refreshdata');
+                    $('#identityTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error",e);
@@ -79,13 +82,14 @@
         },
         update: function (data) {
             console.log("update dulu", data);
+            data.vUpdatedBy = cIDV;
             $.ajax({
                 url: this.url +"/"+ data.ID,
                 method: 'PUT',
                 data: data,
                 success: function (result) {
                     console.log("Sukses", result);
-                    $('#identityTable').jqxGrid('refreshdata');
+                    $('#identityTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -149,6 +153,7 @@
             submit: function () {
                 var data = {
                     ID: hris.general.getData("rowId"),
+                    IDV: cIDV,
                     idNumber: hris.general.getData("idNumber"),
                     idType: hris.general.getData("ID"),
                     issuedCountry: hris.general.getData("Country"),
@@ -181,7 +186,7 @@
         </div>
     </div>
 </div>
-
+<br />
 <div class="row">
     <div class="col-lg-10">
         <div id="identityTable"></div>

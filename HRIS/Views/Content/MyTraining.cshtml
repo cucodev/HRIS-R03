@@ -12,7 +12,7 @@
     <div class="btn-group btn-breadcrumb">
         <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
         <a href="#" class="btn btn-info">Employee</a>
-        <a href="#" class="btn btn-success">(Beta) My Training</a>
+        <a href="#" class="btn btn-success">My Training</a>
     </div>
 
     <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">(Beta) My Training</h1>
@@ -47,12 +47,10 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: "10%" },
-              { text: 'IDV', datafield: 'IDV', width: "10%" },
               { text: 'Name', datafield: 'TrainingName', width: "25%" },
-              { text: 'Sponsor', datafield: 'TrainingSponsor', width: "20%" },
-              { text: 'Start', datafield: 'startDate', minwidth: "10%" },
-              { text: 'End', datafield: 'endDate', minwidth: "10%" }
+              { text: 'Sponsor', datafield: 'TrainingSponsor', minwidth: "20%" },
+              { text: 'Start', datafield: 'startDate', width: "15%" },
+              { text: 'End', datafield: 'endDate', width: "15%" }
             ]
         });
 
@@ -73,6 +71,7 @@
         url: "http://localhost:54636/api/profileTraining",
         add: function (data) {
             console.log("create new", data);
+            data.vCreatedBy = cIDV;
             $.ajax({
                 url: this.url,
                 method: 'POST',
@@ -88,6 +87,7 @@
         },
         update: function (data) {
             console.log("update dulu", data);
+            data.vUpdatedBy = cIDV;
             $.ajax({
                 url: this.url + "/" + data.ID,
                 method: 'PUT',
@@ -193,6 +193,7 @@
         </div>
     </div>
 </div>
+<br />
 <div class="row">
     <div class="col-lg-10">
         <div id="trainingTable"></div>

@@ -340,6 +340,13 @@
             value = $.trim(value);
             i.jqxDateTimeInput({ width: '70%', height: '35px' });
             if (value !== null) { i.jqxDateTimeInput({ value: new Date(value) }); }
+        },
+        ajax: function (method, url, data, cb) {
+            // Prototype for general AJAX
+            console.log("hris.ajax method", method);
+            console.log("hris.ajax url", url);
+            console.log("hris.ajax data", data);
+            console.log("hris.ajax cb", cb);
         }
     };
 

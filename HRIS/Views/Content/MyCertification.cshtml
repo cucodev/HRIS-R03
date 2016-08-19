@@ -11,11 +11,13 @@
     <div class="btn-group btn-breadcrumb">
         <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
         <a href="#" class="btn btn-info">Employee</a>
-        <a href="#" class="btn btn-success">(Beta) My Certification</a>
+        <a href="#" class="btn btn-success">My Certification</a>
     </div>
 
+    <!--
     <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">(Beta) My Certification</h1>
     <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri"></h2>
+        -->
 </div>
 <br />
 
@@ -51,13 +53,11 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: "10%" },
-              { text: 'IDV', datafield: 'IDV', width: "10%" },
-              { text: 'Name', datafield: 'certificationName', width: "20%" },
+              { text: 'Name', datafield: 'certificationName', minwidth: "20%" },
               { text: 'City', datafield: 'issuedCityName', width: "20%" },
               { text: 'Country', datafield: 'issuedCountryName', width: "20%" },
               { text: 'Date', datafield: 'issuedDate', width: "20%" },
-              { text: 'Expired', datafield: 'issuedExpiredDate', width: "20%" }
+              { text: 'Expired Date', datafield: 'issuedExpiredDate', width: "20%" }
             ]
         });
         if (callback != undefined) {
@@ -73,13 +73,14 @@
         url: "http://localhost:54636/api/profileCertification",
         add: function (data) {
             console.log("create new", data);
+            data.vCreatedBy = cIDV;
             $.ajax({
                 url: this.url,
                 method: 'POST',
                 data: data,
                 success: function (o) {
                     console.log("Sukses", o);
-                    $('#certificationTable').jqxGrid('refreshdata');
+                    $('#certificationTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -88,13 +89,14 @@
         },
         update: function (data) {
             console.log("update dulu", data);
+            data.vUpdatedBy = cIDV;
             $.ajax({
                 url: this.url + "/" + data.ID,
                 method: 'PUT',
                 data: data,
                 success: function (result) {
                     console.log("Sukses", result);
-                    $('#certificationTable').jqxGrid('refreshdata');
+                    $('#certificationTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -146,6 +148,7 @@
             submit: function () {
                 var data = {
                     ID: hris.general.getData("rowId"),
+                    IDV: cIDV,
                     certificationName: hris.general.getData("certificationName"),
                     issuedCountry: hris.general.getData("Country"),
                     issuedCity: hris.general.getData("Kabupaten"),
@@ -194,6 +197,7 @@
         </div>
     </div>
 </div>
+<br />
 <div class="row">
     <div class="col-lg-10">
         <div id="certificationTable"></div>

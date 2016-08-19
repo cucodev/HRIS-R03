@@ -11,11 +11,12 @@
     <div class="btn-group btn-breadcrumb">
         <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
         <a href="#" class="btn btn-info">Employee</a>
-        <a href="#" class="btn btn-success">(Beta) My Language</a>
+        <a href="#" class="btn btn-success">My Language</a>
     </div>
-
+    <!--
     <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">(Beta) My Language</h1>
     <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri"></h2>
+        -->
 </div>
 <br />
 
@@ -37,8 +38,6 @@
                 { name: 'spokenName', value: 'spoken', values: { source: listSkillLevel.records, value: 'value', name: 'label' } },
                 { name: 'written', type: 'int' },
                 { name: 'writtenName', value: 'written', values: { source: listSkillLevel.records, value: 'value', name: 'label' } }
-
-
             ],
             id: 'ID',
             url: url
@@ -50,11 +49,9 @@
             source: dataAdapter,
             columnsresize: true,
             columns: [
-              { text: 'ID', datafield: 'ID', width: "10%" },
-              { text: 'IDV', datafield: 'IDV', width: "10%" },
-              { text: 'Name', datafield: 'languageName', width: "20%" },
-              { text: 'Spoken', datafield: 'spokenName', width: "10%" },
-              { text: 'Written', datafield: 'writtenName', minwidth: "10%" }
+              { text: 'Name', datafield: 'languageName', minwidth: "35%" },
+              { text: 'Spoken', datafield: 'spokenName', width: "20%" },
+              { text: 'Written', datafield: 'writtenName', width: "20%" }
             ]
         });
 
@@ -73,13 +70,14 @@
         url: "http://localhost:54636/api/profileLanguage",
         add: function (data) {
             console.log("create new", data);
+            data.vCreatedBy = cIDV;
             $.ajax({
                 url: this.url,
                 method: 'POST',
                 data: data,
                 success: function (o) {
                     console.log("Sukses", o);
-                    $('#languageTable').jqxGrid('refreshdata');
+                    $('#languageTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -88,13 +86,14 @@
         },
         update: function (data) {
             console.log("update dulu", data);
+            data.vUpdatedBy = cIDV;
             $.ajax({
                 url: this.url + "/" + data.ID,
                 method: 'PUT',
                 data: data,
                 success: function (result) {
                     console.log("Sukses", result);
-                    $('#languageTable').jqxGrid('refreshdata');
+                    $('#languageTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -139,6 +138,7 @@
             submit: function () {
                 var data = {
                     ID: hris.general.getData("rowId"),
+                    IDV: cIDV,
                     languageName: hris.general.getData("languageName"),
                     spoken: hris.general.getData("spoken"),
                     written: hris.general.getData("written")
@@ -185,6 +185,7 @@
         </div>
     </div>
 </div>
+<br />
 <div class="row">
     <div class="col-lg-10">
         <div id="languageTable"></div>
