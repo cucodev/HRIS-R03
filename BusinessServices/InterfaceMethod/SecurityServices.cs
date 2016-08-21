@@ -71,6 +71,8 @@ namespace BusinessServices.InterfaceMethod
                     if (cc != null)
                     {
                         ms.Name = cc.Name;
+                        ms.NIP = cc.NIP;
+                        ms.Image = GlobalVariable.pathImage + cc.NIP + ".png"; 
                     }
                     #endregion
 

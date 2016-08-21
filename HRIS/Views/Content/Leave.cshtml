@@ -11,20 +11,141 @@
 
 <link rel="stylesheet" type="text/css" href=@Url.Content("~/Content/multidatepicker/mdp.css")>
 
-<div class="row">
-    <div class="btn-group btn-breadcrumb">
-        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
-        <a href="#" class="btn btn-info">Forms</a>
-        <a href="#" class="btn btn-success">Leave</a>
-    </div>
-    <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
-    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">LEAVE FORM</h1>
-    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Apply Leave and See Your Form Status</h2>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">Form</li>
+        <li class="active">Leave</li>
+    </ul><!-- /.breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="ace-icon fa fa-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- /.nav-search -->
 </div>
+
+<div class="page-content">
+    <div class="row">
+        <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
+        <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">LEAVE FORM</h1>
+        <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Apply Leave and See Your Form Status</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-2 pull-left">
+            <input type="button" value="COMMON" id='isAnnual' style="margin-left:5px" />
+        </div>
+
+        <div class="col-xs-5">
+            <div id="PolicyType"></div>
+        </div>
+        <div class="col-xs-5 ">
+            <input type="button" value="APPLY" id='Apply' />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-10">
+            <div id="demo">
+                <ul style="margin-left: 0; padding-left: 0;">
+                    <li class="demo full-row">
+                        <div id="full-year" style="width: auto"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-2">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="table" style="margin-top:15px"></div>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="margin-top:5px">
+                <div class="col-xs-5">
+                    <div class="HR-Div alert-success">Balance</div>
+                </div>
+                <div class="col-xs-7 ">
+                    <div id="balanceProgress"></div>
+                    <div class="HR-Div " id="totalBalance">Days</div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:5px">
+                <div class="col-xs-5">
+                    <div class="HR-Div HR-Info">Applied Days</div>
+                </div>
+                <div class="col-xs-7 ">
+                    <div class="HR-Div " id="totalFullDays">Days</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <hr class="Line" style="margin-bottom: 0" />
+                </div>
+            </div>
+
+
+
+
+            <div id="labelCommon">
+                <div class="row" style="margin-top:0">
+                    <div class="col-xs-5">
+                        <div class="HR-Div alert-info">Balance </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="HR-Div" id="totalBalance"> Days</div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:0">
+                    <div class="col-xs-5">
+                        <div class="HR-Div alert-info">Remaining </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="HR-Div" id="totalRemaining"> Days</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <hr class="Line" />
+                </div>
+            </div>
+
+
+            <div class="row" style="margin-top:0">
+                <div class="col-xs-5">
+                    <div class="HR-Div alert-info" id="totalAnnualCarryLabel">Carry Over</div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="HR-Div" id="totalAnnualCarry"> Days</div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:0">
+                <div class="col-xs-5">
+                    <div class="HR-Div alert-info" id="totalAnnualCurrentLabel">Annual </div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="HR-Div" id="totalAnnualCurrent"> Days</div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
 <br />
-
-@{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
-
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -151,7 +272,7 @@
                 }
             }
         });
-        $("#balanceProgress").jqxProgressBar({ animationDuration: 0, showText: false, renderText: renderText, template: "info", width: 250, height: 25, value: Balance, max: Balance });
+        $("#balanceProgress").jqxProgressBar({ animationDuration: 0, showText: false, renderText: renderText, template: "info", width: '100%', height: 25, value: Balance, max: Balance });
 
 
         //Iniitalization
@@ -328,118 +449,8 @@
     }
 
 </style>
-<div class="row">
-    <div class="col-md-2 pull-left">
-        <input type="button" value="COMMON" id='isAnnual' style="margin-left:5px" />
-    </div>
-
-    <div class="col-md-5">
-        <div id="PolicyType"></div>
-    </div>
-    <div class="col-md-5 ">
-        <input type="button" value="APPLY" id='Apply' />
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-7">
-        <div id="demo">
-            <ul style="margin-left: 0; padding-left: 0;">
-                <li class="demo full-row">
-                    <div id="full-year"></div>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="col-md-5">
-
-        <div class="row">
-            <div class="col-md-10">
-                <div id="table" style="margin-top:15px"></div>
-            </div>
-        </div>
-        <br />
-        <div class="row" style="margin-top:5px">
-            <div class="col-md-3">
-                <div class="HR-Div alert-success">Balance</div>
-            </div>
-            <div class="col-md-7 ">
-                <div id="balanceProgress"></div>
-                <div class="HR-Div " id="totalBalance">Days</div>
-            </div>
-        </div>
-        <div class="row" style="margin-top:5px">
-            <div class="col-md-3">
-                <div class="HR-Div HR-Info">Applied Days</div>
-            </div>
-            <div class="col-md-7 ">
-                <div class="HR-Div " id="totalFullDays">Days</div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-10">
-                <hr class="Line" style="margin-bottom: 0" />
-            </div>
-        </div>
-        
-
-
-
-        <div id="labelCommon">
-            <div class="row" style="margin-top:0">
-                <div class="col-md-3">
-                    <div class="HR-Div alert-info" >Balance </div>
-                </div>
-                <div class="col-md-7">
-                    <div class="HR-Div" id="totalBalance"> Days</div>
-                </div>
-            </div>
-            <div class="row" style="margin-top:0">
-                <div class="col-md-3">
-                    <div class="HR-Div alert-info" >Remaining </div>
-                </div>
-                <div class="col-md-7">
-                    <div class="HR-Div" id="totalRemaining"> Days</div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10">
-                <hr class="Line" />
-            </div>
-        </div>
-
-
-        <div class="row" style="margin-top:0">
-            <div class="col-md-3">
-                <div class="HR-Div alert-info" id="totalAnnualCarryLabel">Carry Over</div>
-            </div>
-            <div class="col-md-7">
-                <div class="HR-Div" id="totalAnnualCarry"> Days</div>
-            </div>
-        </div>
-        <div class="row" style="margin-top:0">
-            <div class="col-md-3">
-                <div class="HR-Div alert-info" id="totalAnnualCurrentLabel">Annual </div>
-            </div>
-            <div class="col-md-7">
-                <div class="HR-Div" id="totalAnnualCurrent"> Days</div>
-            </div>
-        </div>
-
-    </div>
-
-
-</div>
 
 
 
 
-<div class="row">
-    <div class="col-md-10">
-        <!--FOOTER-->
-        <label style="font-size:12px; font-family:Calibri; color:indianred; margin-right:30px">
-            Credential Info: @ViewBag.cUser : @ViewBag.cIDV : Parent= @ViewBag.cIDVParent , ParentLevel= @ViewBag.cIDVParentLevel , Name= @ViewBag.cName
-        </label>
-    </div>
-</div>
+

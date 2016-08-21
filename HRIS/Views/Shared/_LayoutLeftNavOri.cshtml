@@ -1,0 +1,340 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - HRIS</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/jqwidgets")
+    @Styles.Render("~/Content/Sidebar")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/Sidebar")
+    @Scripts.Render("~/bundles/jstorage")
+    @Scripts.Render("~/bundles/jqwidgets")
+
+    @RenderSection("scripts", required: false)
+    @RenderSection("jsData", required: false)
+
+    <script src=@Url.Content("~/Scripts/bootstrap.min.js")></script>
+
+    <link href=@Url.Content("~/Content/bootstrap-dialog.min.css") rel="stylesheet" type="text/css" />
+    <script src=@Url.Content("~/Scripts/bootstrap-dialog.min.js")></script>
+    <script src=@Url.Content("~/Scripts/jquery.number.min.js")></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.sidebarMenu($('.sidebar-menu'));
+            $('#navmenu').click(function() {
+                    $('.sidebar-menu').slideToggle("fast");
+            });
+        });
+    </script>
+    <style>
+                body {
+                    padding-top: 0;
+                    padding-bottom: 0;
+                    font-size: 12px;
+                }
+
+                .jqx-tabs {
+                    border: 0;
+                }
+
+
+                .Line {
+                    margin-top: 0;
+                }
+
+                /** The Magic **/
+        .btn-breadcrumb .btn:not(:last-child):after {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 17px solid transparent;
+          border-bottom: 17px solid transparent;
+          border-left: 10px solid white;
+          position: absolute;
+          top: 50%;
+          margin-top: -17px;
+          left: 100%;
+          z-index: 3;
+        }
+        .btn-breadcrumb .btn:not(:last-child):before {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 17px solid transparent;
+          border-bottom: 17px solid transparent;
+          border-left: 10px solid rgb(173, 173, 173);
+          position: absolute;
+          top: 50%;
+          margin-top: -17px;
+          margin-left: 1px;
+          left: 100%;
+          z-index: 3;
+        }
+
+        /** The Spacing **/
+        .btn-breadcrumb .btn {
+          padding:6px 12px 6px 24px;
+        }
+        .btn-breadcrumb .btn:first-child {
+          padding:6px 6px 6px 10px;
+        }
+        .btn-breadcrumb .btn:last-child {
+          padding:6px 18px 6px 24px;
+        }
+
+        /** Default button **/
+        .btn-breadcrumb .btn.btn-default:not(:last-child):after {
+          border-left: 10px solid #fff;
+        }
+        .btn-breadcrumb .btn.btn-default:not(:last-child):before {
+          border-left: 10px solid #ccc;
+        }
+        .btn-breadcrumb .btn.btn-default:hover:not(:last-child):after {
+          border-left: 10px solid #ebebeb;
+        }
+        .btn-breadcrumb .btn.btn-default:hover:not(:last-child):before {
+          border-left: 10px solid #adadad;
+        }
+
+        /** Primary button **/
+        .btn-breadcrumb .btn.btn-primary:not(:last-child):after {
+          border-left: 10px solid #428bca;
+        }
+        .btn-breadcrumb .btn.btn-primary:not(:last-child):before {
+          border-left: 10px solid #357ebd;
+        }
+        .btn-breadcrumb .btn.btn-primary:hover:not(:last-child):after {
+          border-left: 10px solid #3276b1;
+        }
+        .btn-breadcrumb .btn.btn-primary:hover:not(:last-child):before {
+          border-left: 10px solid #285e8e;
+        }
+
+        /** Success button **/
+        .btn-breadcrumb .btn.btn-success:not(:last-child):after {
+          border-left: 10px solid #5cb85c;
+        }
+        .btn-breadcrumb .btn.btn-success:not(:last-child):before {
+          border-left: 10px solid #4cae4c;
+        }
+        .btn-breadcrumb .btn.btn-success:hover:not(:last-child):after {
+          border-left: 10px solid #47a447;
+        }
+        .btn-breadcrumb .btn.btn-success:hover:not(:last-child):before {
+          border-left: 10px solid #398439;
+        }
+
+        /** Danger button **/
+        .btn-breadcrumb .btn.btn-danger:not(:last-child):after {
+          border-left: 10px solid #d9534f;
+        }
+        .btn-breadcrumb .btn.btn-danger:not(:last-child):before {
+          border-left: 10px solid #d43f3a;
+        }
+        .btn-breadcrumb .btn.btn-danger:hover:not(:last-child):after {
+          border-left: 10px solid #d2322d;
+        }
+        .btn-breadcrumb .btn.btn-danger:hover:not(:last-child):before {
+          border-left: 10px solid #ac2925;
+        }
+
+        /** Warning button **/
+        .btn-breadcrumb .btn.btn-warning:not(:last-child):after {
+          border-left: 10px solid #f0ad4e;
+        }
+        .btn-breadcrumb .btn.btn-warning:not(:last-child):before {
+          border-left: 10px solid #eea236;
+        }
+        .btn-breadcrumb .btn.btn-warning:hover:not(:last-child):after {
+          border-left: 10px solid #ed9c28;
+        }
+        .btn-breadcrumb .btn.btn-warning:hover:not(:last-child):before {
+          border-left: 10px solid #d58512;
+        }
+
+        /** Info button **/
+        .btn-breadcrumb .btn.btn-info:not(:last-child):after {
+          border-left: 10px solid #5bc0de;
+        }
+        .btn-breadcrumb .btn.btn-info:not(:last-child):before {
+          border-left: 10px solid #46b8da;
+        }
+        .btn-breadcrumb .btn.btn-info:hover:not(:last-child):after {
+          border-left: 10px solid #39b3d7;
+        }
+        .btn-breadcrumb .btn.btn-info:hover:not(:last-child):before {
+          border-left: 10px solid #269abc;
+        }
+
+    </style>
+
+</head>
+<body>
+    @{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
+    <div class="row" style="height: 50px; box-shadow: 0px 1px #d7e9f3;">
+        <div class="col-md-12">
+            @{ Html.RenderPartial("~/Views/Shared/_LayoutHeader.cshtml"); }
+        </div>
+
+        <!--
+        <div class="col-md-2"></div>
+        <div class="col-md-6" style="margin-top:10px; margin-left: -38px"><img src="~/Content/bg/hollit-logo-small.png" alt="Logo" height="23"></div>
+        <div class="col-md-4"></div>
+        -->
+
+    </div>
+    <div class="row" style="margin-top: 0; margin-left:-15px;">
+        <div class="col-md-2">
+            <section style="width: '100%';">
+                <ul class="sidebar-menu">
+                    <li class="header" id="navmenu">HOLLIT INTERNATIONAL</li>
+                    <li id="menuMain" class="treeview '@ViewBag.menuMain'">
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Content")</li>
+
+                        </ul>
+                    </li>
+                    <li id="menuTimesheet" class="treeview '@ViewBag.menuTimesheet'">
+                        <a href="#">
+                            <i class="fa fa-files-o"></i>
+                            <span>Timesheets</span>
+                            <span class="label label-primary pull-right">4</span>
+                        </a>
+                        <ul class="treeview-menu" style="display: none;">
+                            <li>@Html.ActionLink("Timesheet", "Timesheet", "Content")</li>
+                        </ul>
+                    </li>
+                    <li id="menuForm" class="treeview '@ViewBag.menuForm'">
+                        <a href="#">
+                            <i class="fa fa-edit"></i> <span>Forms</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Leave", "Leave", "Content")</li>
+                            <li>@Html.ActionLink("Medical", "Medical", "Content")</li>
+                            <li>@Html.ActionLink("Approval", "vApproval", "Content")</li>
+                        </ul>
+                    </li>
+                    <li class="header">ORGANIZATION</li>
+                    <li id="menuStructure" class=" '@ViewBag.menuStructure' " >
+                        <a href="#">
+                            <i class="fa fa-th"></i> <span>Structure</span>
+                            <small class="label pull-right label-info">new</small>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Structure", "vStructure", "Content")</li>
+                        </ul>
+                    </li>
+                    </li>
+                    <li id="menuCalendar" class=" '@ViewBag.menuCalendar' ">
+                        <a href="#">
+                            <i class="fa fa-calendar"></i> <span>Calendar</span>
+                            <small class="label pull-right label-danger">3</small>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Calendar", "Calendar", "Content")</li>
+                        </ul>
+                    </liid="menuMain">
+
+                    <li id="menuNews" class="treeview '@ViewBag.menuNews'">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>News & Notification</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#">@Html.ActionLink("News", "vNews", "Content")</li>
+                            <li><a href="#">@Html.ActionLink("Notifications", "Notifications", "Content")</li>
+                            <li><a href="#">@Html.ActionLink("File Management", "vFile", "Content")</li>
+                        </ul>
+                    </li>
+                    <li id="menuProfile" class="treeview '@ViewBag.menuProfile'">
+                        <a href="#">
+                            <i class="fa fa-laptop"></i>
+                            <span>Employee</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            
+                            <li>@Html.ActionLink("My Profile", "MyProfile", "Content")</li>
+                            <li>@Html.ActionLink("My Identity", "MyIdentity", "Content")</li>                            
+                            
+                            <li>@Html.ActionLink("My Dependent", "MyDependentBeta", "Content")</li>
+                            <li>@Html.ActionLink("My Education", "MyEducation", "Content")</li>
+                            <li>@Html.ActionLink("My Training", "MyTraining", "Content")</li>
+                            <li>@Html.ActionLink("My Language", "MyLanguage", "Content")</li>
+                            <li>@Html.ActionLink("My Skill", "MySkill", "Content")</li>
+                            <li>@Html.ActionLink("My Certification", "MyCertification", "Content")</li>
+                            <li>@Html.ActionLink("My Matrix", "MyMatrix", "Content")</li>
+                            <li>@Html.ActionLink("My Maps", "vMap", "Content")</li>
+                            <li>@Html.ActionLink("Employee Profile", "vEmployeeGrid", "Content")</li>
+                        </ul>
+                    </li>
+                    <li id="menuMailbox" class=" @ViewBag.menuMailbox " >
+                        <a href="#">
+                            <i class="fa fa-envelope"></i> <span>Mailbox</span>
+                            <small class="label pull-right label-warning">12</small>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Mailbox", "Mailbox", "Content")</li>
+                        </ul>
+                    </li>
+                    <li class="header">Administration</li>
+                    <li id="menuAdminHRD" class="treeview '@ViewBag.menuAdminHRD'">
+                        <a href="#">
+                            <i class="fa fa-folder"></i> <span>HRD</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Approval</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Employee</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Employee Role</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Employee Timesheet</a></li>
+                            <li>@Html.ActionLink("News", "News", "AdminHR")</li>
+                            <li>@Html.ActionLink("Notifications", "Notifications", "AdminHR")</li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Letter Template</a></li>
+                            <li>@Html.ActionLink("File Management", "FileManagement", "AdminHR")</li>
+                            <li>@Html.ActionLink("Master Data", "MaintainData", "AdminHR")</li>
+                        </ul>
+                    </li>
+                    <li id="menuAdminSys" class="treeview '@ViewBag.menuAdminSys'">
+                        <a href="#">
+                            <i class="fa fa-table"></i> <span>System Admin</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> User Management</a></li>
+                        </ul>
+                    </li>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-share"></i> <span>Logout</span>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </section>
+        </div>
+        <div class="col-md-10" style=" margin-top: 0">
+            
+                @RenderBody()
+        </div>
+       
+    </div>
+</body>
+</html>

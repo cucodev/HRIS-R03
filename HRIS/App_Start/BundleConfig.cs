@@ -21,7 +21,43 @@ namespace HRIS
                 "~/Content/bootstrap.css", 
                 "~/Content/site.css"));
 
+
+
+            //==========================================================================================START ACE
+
+            bundles.Add(new StyleBundle("~/Content/ACEStyle").Include(
+                "~/Content/assets/css/bootstrap.min.css",
+                "~/Content/assets/font-awesome/4.5.0/css/font-awesome.min.css",
+                "~/Content/assets/css/fonts.googleapis.com.css",
+                "~/Content/assets/css/ace.min.css",
+                "~/Content/assets/css/ace-skins.min.css",
+                "~/Content/assets/css/ace-rtl.min.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/ACEJSonTOP").Include(
+                                  "~/Content/assets/js/ace-extra.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/ACEJSonBOTTOM").Include(
+                                  "~/Content/assets/js/jquery-2.1.4.min.js",
+                                  "~/Content/assets/js/bootstrap.min.js",
+                                  "~/Content/assets/js/jquery-ui.custom.min.js",
+                                  "~/Content/assets/js/jquery.ui.touch-punch.min.js",
+                                  "~/Content/assets/js/jquery.easypiechart.min.js",
+                                  "~/Content/assets/js/jquery.sparkline.index.min.js",
+                                  "~/Content/assets/js/jquery.flot.min.js",
+                                  "~/Content/assets/js/jquery.flot.pie.min.js",
+                                  "~/Content/assets/js/jquery.flot.resize.min.js",
+                                  "~/Content/assets/js/ace-elements.min.js",
+                                  "~/Content/assets/js/ace.min.js"
+                                  ));
+
+
+
+            //==========================================================================================END ACE
+
+
             //==========================================================================================CUSTOM css
+            #region CUSTOMCSS
             bundles.Add(new StyleBundle("~/Content/Sidebar").Include(
                 "~/Content/Sidebar/sidebar-menu.css",
                 "~/Content/Sidebar/font-awesome.min.css"));
@@ -54,8 +90,10 @@ namespace HRIS
                     "~/Content/jqwidgets/jqx.ui-smoothness.css",
                     "~/Content/jqwidgets/jqx.ui-start.css",
                     "~/Content/jqwidgets/jqx.ui-sunny.css"));
+            #endregion
 
             //==========================================================================================CUSTOM js
+            #region CUSTOMJS
             bundles.Add(new ScriptBundle("~/bundles/Sidebar").Include(
                                   "~/Scripts/Sidebar/sidebar-menu.js"));
             bundles.Add(new ScriptBundle("~/bundles/jsmenu").Include(
@@ -120,8 +158,9 @@ namespace HRIS
                         "~/Scripts/jqwidgets/jqxexpander.js",
                         "~/Scripts/jqwidgets/jqxcombobox.js"
                         ));
+            #endregion
 
-            
+
         }
     }
 }

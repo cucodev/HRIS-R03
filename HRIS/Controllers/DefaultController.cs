@@ -55,7 +55,7 @@ namespace HRIS_R03.Controllers
                             {
                                 ViewBag.Msg = "Login OK";
                                 System.Diagnostics.Debug.WriteLine("Login OK");
-                                return this.RedirectToAction("vProfile", "Content");
+                                return this.RedirectToAction("MyProfile", "Content");
                             }
                             else
                             {

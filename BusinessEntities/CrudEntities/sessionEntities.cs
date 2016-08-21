@@ -73,6 +73,8 @@ namespace BusinessEntities.CrudEntities
     {
         public int IDV { get; set; }
         public string IDVMail { get; set; }
+        public string NIP { get; set; }
+        public string Image { get; set; }
         public string Name { get; set; }
         public int parentIDV { get; set; }
         public string parentIDVMail { get; set; }
