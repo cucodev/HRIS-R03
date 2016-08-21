@@ -159,133 +159,97 @@
     
 </script>
 
-<div class="row">
-    <div class="btn-group btn-breadcrumb">
-        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
-        <a href="#" class="btn btn-info">Forms</a>
-        <a href="#" class="btn btn-success">Medical</a>
-    </div>
-    <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
-    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">MEDICAL CLAIM FORM</h1>
-    <h2 style="margin-bottom:0px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Claim Your Medical..</h2>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">Form</li>
+        <li class="active">Medical</li>
+    </ul><!-- /.breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="ace-icon fa fa-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- /.nav-search -->
 </div>
 
-<div class="row"  style="margin-top:0; padding-top:0; 
+<div class="page-content">
+    <div class="row">
+        <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
+        <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">MEDICAL CLAIM FORM</h1>
+        <h2 style="margin-bottom:0px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Claim Your Medical..</h2>
+    </div>
+
+    <div class="row" style="margin-top:0; padding-top:0;
      background-image:url(@Url.Content("~/Content/bg/medical.jpg"));
      background-size: 90% 100%;
      background-repeat: no-repeat;">
-    <div class="col-md-6">
-        
-    </div>
-    <div class="col-md-4" style="background: rgba(255, 255, 255, .7); margin-top:0;  height:350px; margin-left:10px;">
-        <div class="row">
-            <div class="col-md-12" ">
-                <div style="">
-                    <div class="form-group">
-                        <br />
-                        <label>Type:</label>
-                        <div id="PolicyType"></div>
-                        <hr style="margin-top:0" />
-                        <label>Claim for:</label>
-                        <div id="typeClaim"></div>
-                        <hr style="margin-top:0" />
-                        <label>Type of Doctor:</label>
-                        <div id="typeDoctor"></div>
-                        <hr style="margin-top:0"  />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label style="background-color: white;" for="doctorFee">Doctor Fee</label>
-                                <input type="text" class="form-control" id="doctorFee" placeholder="Doctor Fee">
-                            </div>
-                            <div class="col-md-6">
-                                <label style="background-color: white;" for="prescribeMedicines">Prescribe Medicines</label>
-                                <input type="text" class="form-control" id="prescribeMedicines" placeholder="Prescribe Medicine">
+        <div class="col-xs-8" style="width:100%">
+
+        </div>
+        <div class="col-xs-4" style="background: rgba(255, 255, 255, .7); margin-top:0;  height:350px; margin-left:10px;">
+            <div class="row pull-right">
+                <div class="col-xs-12 pull-right">
+                    <div style="">
+                        <div class="form-group">
+                            <br />
+                            <label>Type:</label>
+                            <div id="PolicyType"></div>
+                            <hr style="margin-top:0" />
+                            <label>Claim for:</label>
+                            <div id="typeClaim"></div>
+                            <hr style="margin-top:0" />
+                            <label>Type of Doctor:</label>
+                            <div id="typeDoctor"></div>
+                            <hr style="margin-top:0" />
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <label style="background-color: white;" for="doctorFee">Doctor Fee</label>
+                                    <input type="text" class="form-control" id="doctorFee" placeholder="Doctor Fee">
+                                </div>
+                                <div class="col-xs-6">
+                                    <label style="background-color: white;" for="prescribeMedicines">Prescribe Medicines</label>
+                                    <input type="text" class="form-control" id="prescribeMedicines" placeholder="Prescribe Medicine">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 pull-right">
+            <div class="row">
+                <div class="col-xs-12 pull-right">
                     <input type="submit" value="Submit" id='Apply' />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:10px">
+        <div class="col-xs-4 pull-left">
+            <div class="form-group thumbnail text-center">
+                <label for="totalBalance">Balance Amount</label>
+                <div id="balanceProgress"></div>
+                <p class="form-control-static" id="totalBalance">Rp. 0</p>
+            </div>
+        </div>
+        <div class="col-xs-4 pull-left">
+            <div class="form-group thumbnail text-center">
+                <label for="totalAmount">Total Amount</label>
+                <p class="form-control-static" id="totalAmount">Rp. 0</p><p class="form-control-static"><br /></p>
+            </div>
+        </div>
+        <div class="col-xs-4 pull-left">
+            <div class="form-group thumbnail text-center" style="background-color:#b8ddf8">
+                <label for="totalClaim">Total Claim</label>
+                <p class="form-control-static" id="totalClaim">Rp. 0</p><p class="form-control-static">after 20% deduction</p>
             </div>
         </div>
     </div>
 </div>
-
-<div class="row" style="margin-top:10px">
-    <div class="col-md-4 pull-left">
-        <div class="form-group thumbnail text-center">
-            <label for="totalBalance">Balance Amount</label>
-            <div id="balanceProgress"></div>
-            <p class="form-control-static" id="totalBalance">Rp. 0</p>
-        </div>
-    </div>
-    <div class="col-md-3 pull-left">
-        <div class="form-group thumbnail text-center">
-            <label for="totalAmount">Total Amount</label>
-            <p class="form-control-static" id="totalAmount">Rp. 0</p><p class="form-control-static"><br /></p>
-        </div>
-    </div>
-    <div class="col-md-3 pull-left">
-        <div class="form-group thumbnail text-center" style="background-color:#b8ddf8">
-            <label for="totalClaim">Total Claim</label>
-            <p class="form-control-static" id="totalClaim">Rp. 0</p><p class="form-control-static">after 20% deduction</p>
-        </div>
-    </div>
-</div>
-   
-        
-
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-6">
-
-                    
-
-
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--Calculation-->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    
-                </div>
-                <div class="col-md-6">
-                    
-                </div>
-            </div>
-        </div>
-
-        <!--BUTTON-->
-        <div class="row">
-            <div class="col-md-12">
-                
-            </div>
-        </div>
+    

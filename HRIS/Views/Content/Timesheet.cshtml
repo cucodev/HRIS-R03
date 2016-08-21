@@ -47,7 +47,7 @@
                 theme: themes,
                 width: '100%',
                 height: 'auto',
-                minHeight: 400,
+                minHeight: 500,
                 maxWidth: 500,
                 resizable: false, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.9
             });
@@ -71,7 +71,7 @@
             "Unit Bussiness"
             ];
 
-            $("#contributor").jqxInput({ source: listEmployee, displayMember: "Name", valueMember: "ID", width: "100%", height: 35 });
+            //$("#contributor").jqxInput({ source: listEmployee, displayMember: "Name", valueMember: "ID", width: "100%", height: 35 });
             $("#commDateFrom").jqxDateTimeInput({ width: '100%', height: '35px', formatString: 'MM/dd/yyyy', showTimeButton: false, showCalendarButton: true });
             $("#commDateTo").jqxDateTimeInput({ width: '100%', height: '35px', formatString: 'MM/dd/yyyy', showTimeButton: false, showCalendarButton: true });
             $('#activity').jqxTextArea({ placeHolder: "Describe activity here...", width: '100%', height: 80 });
