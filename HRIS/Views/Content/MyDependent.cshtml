@@ -4,133 +4,256 @@
     Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
 }
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        var x = location.hostname;
-        //var imgurl = "//" + x + "/SQLSERVER/HRIS/personImage/person-small.png";
-        var imgurl = "\\\\HLSCP\\SQLSERVER\\HRIS\\personImage\\person-small.png";
-        var data = [
-                  {
-                      laptops:
-                      [
-                          { img: imgurl, ram: '8GB DD3', cpu: 'Intel Core i7-3720QM', price: 2999, display: 15.4, hdd: '512GB SSD', model: 'Apple MacBook Pro' },
-                          { img: imgurl, ram: '8GB DD3', cpu: 'Intel Core i7-3667U', price: 1299, display: 13.3, hdd: '256GB SSD', model: 'Apple MacBook Air' },
-                          { img: imgurl, ram: '8GB DD3', cpu: 'Intel Core i7-3632QM', price: 2199, display: 15.4, hdd: '256GB SSD', model: 'Asus ZenBook UX51VZ' }
-                      ]
-                  },
-                  {
-                      laptops:
-                      [
-                          { img: imgurl, ram: '4GB DD3', cpu: 'Intel Core i5-3317U', price: 1899, display: 13.3, hdd: '128GB SSD', model: 'ASUS TAICHI31-CX009H' },
-                          { img: imgurl, ram: '4GB DD3', cpu: 'Intel Core i7-3517U', price: 1799, display: 13.3, hdd: '628GB', model: 'Asus TX300CA-C4024H' },
-                          { img: imgurl, ram: '16GB DD3', cpu: 'Intel Core i7-3820QM', price: 2499, display: 15.6, hdd: '1TB', model: 'Lenovo ThinkPad T530' }
-                      ]
-                  },
-                  {
-                      laptops:
-                      [
-                          { img: imgurl, ram: '8GB DD3', cpu: 'Intel Core i5-3210M', price: 1499, display: 15.6, hdd: '750GB', model: 'Samsung Series 7 Chronos' },
-                          { img: imgurl, ram: '8GB DD3', cpu: 'Intel Core i7-3720QM', price: 1499, display: 17.3, hdd: '256GB SSD', model: 'HP EliteBook 8770w' },
-                          { img: imgurl, ram: '8GB DD3', cpu: 'Intel Core i7-3517U', price: 1499, display: 14.0, hdd: '512GB', model: 'Dell XPS 14' }
-                      ]
-                  },
-                  {
-                      laptops:
-                      [
-                          { img: imgurl, ram: '32GB DD3', cpu: 'Intel Core i7-4800MQ', price: 3499, display: 17.3, hdd: '750GB', model: 'Dell Alienware 17' },
-                          { img: imgurl, ram: '8GB DD3', cpu: 'Intel Core i7-3537U', price: 1699, display: 15.6, hdd: '1TB', model: 'Acer Aspire R7-571G' },
-                          { img: imgurl, ram: '8GB DD3', cpu: 'Intel Core i7-4500U', price: 1599, display: 15.6, hdd: '256GB SSD', model: 'Acer Aspire V5-573G' }
-                      ]
-                  },
-                  {
-                      laptops:
-                      [
-                          { img: imgurl, ram: '32GB DD3', cpu: 'Intel Core i7-4700MQ', price: 2199, display: 17.3, hdd: '1TB', model: 'Toshiba Qosmio X70-A-114' },
-                          { img: imgurl, ram: '4GB DD3', cpu: 'Intel Core i7-3667U', price: 2699, display: 14.0, hdd: '256GB SSD', model: 'Lenovo Thinkpad X1 Carbon' },
-                          { img: imgurl, ram: '8GB DD3', cpu: 'Intel Core i5-3317U ', price: 1699, display: 12.5, hdd: '128GB SSD', model: 'Dell XPS Duo 12' }
-                      ]
-                  },
-                  {
-                      laptops:
-                      [
-                          { img: imgurl, ram: '8GB DD3', cpu: 'Intel Core i7-3537U', price: 1799, display: 12.5, hdd: '256GB SSD', model: 'Lenovo ThinkPad Twist S230u' },
-                          { img: imgurl, ram: '4GB DD3', cpu: 'Intel Core i5-3317U ', price: 1299, display: 11.6, hdd: '128GB SSD', model: 'Sony Vaio Duo' },
-                          { img: imgurl, ram: '4GB DD3', cpu: 'Intel Core i5-3230M', price: 999, display: 15.5, hdd: '256GB SSD', model: 'Sony VAIO' },
-                      ]
-                  }
-        ];
+<script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
+<script src=@Url.Content("~/Scripts/jquery.ui.min.js")></script>
 
+<script type="text/javascript">
+    var listName = hris.list._getLOV("Name");
+    function loadDependent(callback) {
+        var url = "http://localhost:54636/api/profileDependent/" + cIDV;
+        // prepare the data
         var source =
         {
-            localData: data,
-            dataType: "array"
+            datatype: "json",
+            datafields: [
+                { name: 'IDVDependent', type: 'string' },
+                { name: 'IDV', type: 'string' },
+                { name: 'relationType', type: 'date' },
+                { name: 'relationName', value: 'relationType', values: { source: listName.records, value: 'value', name: 'label' }},
+                { name: 'insuranceCovered', type: 'int' },
+                { name: 'taxDependent', type: 'int' }
+            ],
+            id: 'IDV',
+            url: url
         };
-
         var dataAdapter = new $.jqx.dataAdapter(source);
-        var itemsInCart = 0;
-
-        $("#dataTable").jqxDataTable(
+        $("#dependentTable").jqxGrid(
         {
-            width: 640,
+            width: '100%',
             source: dataAdapter,
-            sortable: true,
-            pagerHeight: 36,
-            pageable: true,
-            pageSize: 2,
-            theme: 'arctic',
-            pagerButtonsCount: 5,
-            enableHover: false,
-            selectionMode: 'none',
-            rendered: function () {
-                $(".buy").jqxButton({ theme: 'arctic' });
-                $(".buy").click(function () {
-                    itemsInCart++;
-                    $(".cart-top p").html(itemsInCart + " products");
-                });
-            },
+            columnsresize: true,
             columns: [
-                  {
-                      text: 'Products', align: 'left', dataField: 'model',
-                      // row - row's index.
-                      // column - column's data field.
-                      // value - cell's value.
-                      // rowData - rendered row's object.
-                      cellsRenderer: function (row, column, value, rowData) {
-                          var laptops = rowData.laptops;
-                          var container = "<div>";
-                          for (var i = 0; i < laptops.length; i++) {
-                              var laptop = laptops[i];
-                              var item = "<div style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
-                              var image = "<div style='margin: 5px; margin-bottom: 3px;'>";
-                              var imgurl = laptop.img;
-                              var img = '<img width=160 height=120 style="display: block;" src="' + imgurl + '"/>';
-                              image += img;
-                              image += "</div>";
-
-                              var info = "<div style='margin: 5px; margin-left: 10px; margin-bottom: 3px;'>";
-                              info += "<div><i>" + laptop.model + "</i></div>";
-                              info += "<div>Price: $" + laptop.price + "</div>";
-                              info += "<div>RAM: " + laptop.ram + "</div>";
-                              info += "<div>HDD: " + laptop.hdd + "</div>";
-                              info += "<div>CPU: " + laptop.cpu + "</div>";
-                              info += "<div>Display: " + laptop.display + "</div>";
-                              info += "</div>";
-
-                              var buy = "<button class='buy' style='margin: 5px; width: 80px; left: -40px; position: relative; margin-left: 50%; margin-bottom: 3px;'>Buy</button>";
-
-                              item += image;
-                              item += info;
-                              item += buy;
-                              item += "</div>";
-                              container += item;
-                          }
-                          container += "</div>";
-                          return container;
-                      }
-                  }
+              { text: 'Relation Type', datafield: 'relationName', width: '30%' },
+              { text: 'Insurance Covered', datafield: 'insuranceCovered', width: '30%' },
+              { text: 'Tax Dependent', datafield: 'taxDependent', minwidth: '20%' }
             ]
         });
+
+        if (callback != undefined) {
+            callback();
+        }
+    }
+
+    function createForm() {
+
+    }
+    var Dependent = {
+        url: "http://localhost:54636/api/profileDependent/",
+        add: function (data) {
+            console.log("create new", data);
+            $.ajax({
+                url: this.url,
+                method: 'POST',
+                data: data,
+                success: function (o) {
+                    console.log("Sukses", o);
+                    $('#dependentTable').jqxGrid('refreshdata');
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        update: function (data) {
+            console.log("update dulu", data);
+            $.ajax({
+                url: this.url + data.ID,
+                method: 'PUT',
+                data: data,
+                success: function (result) {
+                    console.log("Sukses", result);
+                    $('#dependentTable').jqxGrid('refreshdata');
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        Grid: {
+            dataSelected: {},
+            rowSelected: function (o) {
+                console.log("rowSel", o);
+                Dependent.Grid.dataSelected = o.args.row;
+                console.log("modal data", Dependent.Grid.dataSelected);
+            }
+        },
+        Modal: {
+            data: {},
+            create: function () {
+                console.log("Create Form");
+                hris.general.bindInput("rowId", null);
+                hris.general.bindInput("insuranceCovered", null);
+                hris.general.bindInput("taxDependent", null);
+                hris.general.bindDropDown("relationType", null);
+            },
+            show: function () {
+                $("#myDependentModal").modal("show", true);
+            },
+            clean: function () {
+                console.log("Modal Cleaned");
+                hris.general.cleanInput("rowId");
+                hris.general.cleanInput("insuranceCovered");
+                hris.general.cleanInput("taxDependent");
+                hris.general.cleanDropDown("relationType");
+            },
+            add: function () {
+                Dependent.Modal.clean();
+                Dependent.Modal.show();
+            },
+            edit: function () {
+                if (Dependent.Grid.dataSelected.uniqueid) {
+                    Dependent.Modal.clean();
+                    Dependent.Modal.fill();
+                    Dependent.Modal.show();
+                } else {
+                    Dependent.Modal.error();
+                }
+            },
+            fill: function () {
+                console.log("Fill Form");
+                var data = Dependent.Grid.dataSelected;
+                hris.general.bindInput("rowId", null);
+                hris.general.bindInput("insuranceCovered", null);
+                hris.general.bindInput("taxDependent", null);
+                hris.general.bindDropDown("relationType", null);
+            },
+            error: function () {
+                $("#myErrorModal").modal("show", true);
+            },
+            submit: function () {
+                var data = {
+                    ID: hris.general.getData("rowId"),
+                    idNumber: hris.general.getData("idNumber"),
+                    idType: hris.general.getData("ID"),
+                    issuedCountry: hris.general.getData("Country"),
+                    expiredDate: hris.general.getData("expiredDate")
+                }
+                console.log("Modal Submit", data);
+                // Proses save
+                if (data.ID) {
+                    Dependent.update(data);
+                } else {
+                    Dependent.add(data);
+                }
+            }
+        },
+    }
+    $(document).ready(function () {
+        loadDependent(Dependent.Modal.create);
+        $("#submit").click(Dependent.Modal.submit);
+        $("#editButton").click(Dependent.Modal.edit);
+        $("#addButton").click(Dependent.Modal.add);
+        $("#dependentTable").on('rowselect', Dependent.Grid.rowSelected);
     });
 </script>
 
-<div id="dataTable"></div>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">Employee</li>
+        <li class="active">Dependent</li>
+    </ul><!-- /.breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="ace-icon fa fa-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="col-sm-12">
+        <div class="widget-box transparent" id="recent-box">
+            <div class="widget-header">
+                <h4 class="widget-title lighter smaller">
+                    <i class="ace-icon fa fa-rss orange"></i>EMPLOYEE DEPENDENT
+                </h4>
+                <div class="widget-toolbar no-border">
+                    <ul class="nav nav-tabs" id="recent-tab">
+                        <li>
+                            <button id="addButton" class="btn btn-success pull-right">Create</button>
+                        </li>
+                        <li>
+                            <button id="editButton" class="btn btn-info pull-right">Update</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main padding-4">
+                    <div id="dependentTable"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myDependentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Dependent Info</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" class="form-control" id="rowId" />
+                </div>
+                <div class="form-group">
+                    <label for="relationType">Relation</label>
+                    <div class="form-control" id="relationType"></div>
+                </div>
+                <div class="form-group">
+                    <label for="insuranceCovered">Insurance Covered</label>
+                    <input type="text" class="form-control" id="insuranceCovered" />
+                </div>
+                <div class="form-group">
+                    <label for="taxDependent">Tax Dependent</label>
+                    <input type="text" class="form-control" id="taxDependent" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="myErrorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Warning Form</h4>
+            </div>
+            <div class="modal-body">
+                No data selected!
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

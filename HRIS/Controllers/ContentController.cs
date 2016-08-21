@@ -120,12 +120,6 @@ namespace HRIS_R03.Controllers
             return View(User);
         }
 
-        public ActionResult MyDependentBeta()
-        {
-            ViewBag.menuProfile = "Active";
-            return View(User);
-        }
-
         public ActionResult MyEducation()
         {
             ViewBag.menuProfile = "Active";
