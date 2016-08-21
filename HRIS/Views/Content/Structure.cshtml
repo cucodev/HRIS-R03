@@ -10,55 +10,85 @@
 
 <link rel="stylesheet" href=@Url.Content("~/Scripts/primitives/primitives.latest.css") />
 
-<div class="row">
-    <div class="btn-group btn-breadcrumb">
-        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
-        <a href="#" class="btn btn-info">Employee</a>
-        <a href="#" class="btn btn-success">Structure</a>
-    </div>
-
-    <!--
-    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">(Beta) My Certification</h1>
-    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri"></h2>
-        -->
-</div>
-<br />
-
 <script type="text/javascript">
+    Structure = {
+        options : new primitives.orgdiagram.Config(),
+        items: [],
+        data: function (obj) {
+            Structure.items = [];
+            
+            $.each(obj, function (i, v) {
+                var item = new primitives.orgdiagram.ItemConfig({
+                    id: v.IDV,
+                    parent: v.parentIDV,
+                    title: v.Name,
+                    description: v.NIP+"idx"+i
+                });
+                Structure.items.push(item);
+            });
+            Structure.init();
+        },
+        load: function (callback) {
+            $.ajax({
+                url: 'http://localhost:54636/api/profile',
+                success: function (obj) {
+                    console.log("Obj", obj);
+                    Structure.data(obj);
+                },
+                error: function (e) {
+                    console.log("Err", e);
+                }
+            });
+        },
+        init: function () {
+            console.log("Init");
+            console.log("items",this.items);
+            var opt = this.options;
+
+            opt.items = this.items;
+            opt.cursorItem = cIDV;
+            opt.hasSelectorCheckbox = primitives.common.Enabled.False;
+
+            $("#basicdiagram").orgDiagram(opt);
+        },
+    }
+    
     $(document).ready(function () {
-        console.log("Run?");
-        var options = new primitives.orgdiagram.Config();
-
-        var items = [
-            new primitives.orgdiagram.ItemConfig({
-                id: 0,
-                parent: null,
-                title: "Scott Aasrudss",
-                description: "VP, Public Sector",
-                image: "demo/images/photos/a.png"
-            }),
-            new primitives.orgdiagram.ItemConfig({
-                id: 1,
-                parent: 0,
-                title: "Ted Lucas",
-                description: "VP, Human Resources",
-                image: "demo/images/photos/b.png"
-            }),
-            new primitives.orgdiagram.ItemConfig({
-                id: 2,
-                parent: 0,
-                title: "Joao Stuger",
-                description: "Business Solutions, US",
-                image: "demo/images/photos/c.png"
-            })
-        ];
-
-        options.items = items;
-        options.cursorItem = 0;
-        options.hasSelectorCheckbox = primitives.common.Enabled.True;
-
-        $("#basicdiagram").orgDiagram(options);
+        Structure.load();
     });
 </script>
 
-<div id="basicdiagram" style="width: 640px; height: 480px; border-style: dotted; border-width: 1px;" ></div>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">Structure</li>
+    </ul><!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="col-sm-12">
+        <div class="widget-box transparent" id="recent-box">
+            <div class="widget-header">
+                <h4 class="widget-title lighter smaller">
+                    <i class="ace-icon fa fa-rss orange"></i>ORGANIZATION STRUCTURE
+                </h4>
+                <div class="widget-toolbar no-border">
+                    <ul class="nav nav-tabs" id="recent-tab">
+                       
+                    </ul>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main padding-4">
+                    <div id="basicdiagram" style="min-width: 720px; height: 480px; border-width: 1px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
