@@ -995,6 +995,20 @@
     <Content Include="Scripts\List\jsVar.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\multidatepicker\jquery-ui.multidatespicker.js" />
+    <Content Include="Scripts\primitives\bporgeditor.latest.css" />
+    <Content Include="Scripts\primitives\bporgeditor.latest.js" />
+    <Content Include="Scripts\primitives\bporgeditor.min.js" />
+    <Content Include="Scripts\primitives\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Scripts\primitives\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Scripts\primitives\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Scripts\primitives\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Scripts\primitives\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Scripts\primitives\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Scripts\primitives\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Scripts\primitives\primitives.latest.css" />
+    <Content Include="Scripts\primitives\primitives.latest.js" />
+    <Content Include="Scripts\primitives\primitives.min.js" />
+    <Content Include="Scripts\primitives\readme.txt" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Sidebar\sidebar-menu.js" />
@@ -1057,6 +1071,8 @@
     <Content Include="Views\Content\Notifications.cshtml" />
     <Content Include="Views\AdminHR\Notifications.cshtml" />
     <Content Include="Views\Shared\_LayoutLeftNavOri.cshtml" />
+    <Content Include="Views\Content\Structure.cshtml" />
+    <Content Include="Scripts\primitives\license.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
