@@ -322,7 +322,7 @@
         },
         bindInput: function (div, value) {
             var i = $("#" + div);
-            i.jqxInput({ width: "100%", height: '35px' });
+            i.jqxInput({ width: "99%", height: '35px' });
             value = $.trim(value);
             if (value !== null) { i.jqxInput('val', value); }
         },
@@ -332,13 +332,13 @@
         },
         bindDropDown: function (div, value) {
             var i = $("#" + div);
-            i.jqxDropDownList({ source: hris.list._getLOV(div), theme: th, disabled: false, height: '25px', displayMember: "label", valueMember: "value", width: '90%' });
+            i.jqxDropDownList({ source: hris.list._getLOV(div), theme: th, disabled: false, height: '25px', displayMember: "label", valueMember: "value", width: '96%' });
             if (value !== null) { i.jqxDropDownList('val', value); }
         },
         bindDateTime: function (div, value) {
             var i = $("#" + div);
             value = $.trim(value);
-            i.jqxDateTimeInput({ width: '70%', height: '35px' });
+            i.jqxDateTimeInput({ width: '75%', height: '35px' });
             if (value !== null) { i.jqxDateTimeInput({ value: new Date(value) }); }
         },
         ajax: function (method, url, data, cb) {
