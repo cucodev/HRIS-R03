@@ -24,10 +24,8 @@
 </div>
 <br />
 
-@{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
-
 <script type="text/javascript">
-    (function () {
+    $(document).ready(function () {
         console.log("Run?");
         var options = new primitives.orgdiagram.Config();
 
@@ -60,7 +58,7 @@
         options.hasSelectorCheckbox = primitives.common.Enabled.True;
 
         $("#basicdiagram").orgDiagram(options);
-    })();
+    });
 </script>
 
-<div id="basicdiagram"/>
+<div id="basicdiagram" style="width: 640px; height: 480px; border-style: dotted; border-width: 1px;" ></div>
