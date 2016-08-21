@@ -7,21 +7,6 @@
 <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
 <script src=@Url.Content("~/Scripts/jquery.ui.min.js")></script>
 
-<div class="row">
-    <div class="btn-group btn-breadcrumb">
-        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
-        <a href="#" class="btn btn-info">Employee</a>
-        <a href="#" class="btn btn-success">My Language</a>
-    </div>
-    <!--
-    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">(Beta) My Language</h1>
-    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri"></h2>
-        -->
-</div>
-<br />
-
-@{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
-
 <script type="text/javascript">
     var listSkillLevel = hris.list._dbLOV("SkillLevel");
     function loadLanguage(callback) {
@@ -177,20 +162,54 @@
         $("#languageTable").on('rowselect', Language.Grid.rowSelected);
     });
 </script>
-<div class="row">
-    <div class="col-lg-10">
-        <div class="btn-group pull-right" role="group" aria-label="...">
-            <button id="addButton" class="btn btn-success ">Add</button>
-            <button id="editButton" class="btn btn-info">Edit</button>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">Employee</li>
+        <li class="active">Identity</li>
+    </ul><!-- /.breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="ace-icon fa fa-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="col-sm-12">
+        <div class="widget-box transparent" id="recent-box">
+            <div class="widget-header">
+                <h4 class="widget-title lighter smaller">
+                    <i class="ace-icon fa fa-rss orange"></i>EMPLOYEE LANGUAGE
+                </h4>
+                <div class="widget-toolbar no-border">
+                    <ul class="nav nav-tabs" id="recent-tab">
+                        <li>
+                            <button id="addButton" class="btn btn-success pull-right">Create</button>
+                        </li>
+                        <li>
+                            <button id="editButton" class="btn btn-info pull-right">Update</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main padding-4">
+                    <div id="languageTable"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<br />
-<div class="row">
-    <div class="col-lg-10">
-        <div id="languageTable"></div>
-    </div>
-</div>
+
 
 <div id="myLanguageModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
