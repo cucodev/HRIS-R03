@@ -7,21 +7,6 @@
 <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
 <script src=@Url.Content("~/Scripts/jquery.ui.min.js")></script>
 
-<div class="row">
-    <div class="btn-group btn-breadcrumb">
-        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
-        <a href="#" class="btn btn-info">Employee</a>
-        <a href="#" class="btn btn-success">My Identity</a>
-    </div>
-    <!--
-    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">My Identity</h1>
-    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri"></h2>    
-    
-        -->
-    
-</div>
-<br />
-
 <script type="text/javascript">
     var listID = hris.list._dbLOV("ID");
     var listCountry = hris.list._dbLOV("Country");
@@ -178,24 +163,57 @@
         $("#identityTable").on('rowselect', Identity.Grid.rowSelected);
     });
 </script>
-<div class="row">
-    <div class="col-lg-10">
-        <div class="btn-group pull-right" role="group" aria-label="...">
-            <button id="addButton" class="btn btn-success ">Add</button>
-            <button id="editButton" class="btn btn-info">Edit</button>
-        </div>
-    </div>
+
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">Employee</li>
+        <li class="active">Identity</li>
+    </ul><!-- /.breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="ace-icon fa fa-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- /.nav-search -->
 </div>
-<br />
-<div class="row">
-    <div class="col-lg-10">
-        <div id="identityTable"></div>
+
+<div class="page-content">
+    <div class="col-sm-12">
+        <div class="widget-box transparent" id="recent-box">
+            <div class="widget-header">
+                <h4 class="widget-title lighter smaller">
+                    <i class="ace-icon fa fa-rss orange"></i>EMPLOYEE IDENTITY
+                </h4>
+                <div class="widget-toolbar no-border">
+                    <ul class="nav nav-tabs" id="recent-tab">
+                        <li>
+                            <button id="addButton" class="btn btn-success pull-right">Create</button>
+                        </li>
+                        <li>
+                            <button id="editButton" class="btn btn-info pull-right">Update</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="widget-body">
+                <div class="widget-main padding-4">
+                    <div id="identityTable"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <div id="myIdentityModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -203,25 +221,49 @@
                 <h4 class="modal-title">Identity Form</h4>
             </div>
             <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="ID">Type</label>
+                                    <div class="form-control" id="ID"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="idNumber">ID Number</label>
+                                    <input type="text" class="form-control" id="idNumber" />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="Country">Country</label>
+                                    <div class="form-control" id="Country"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="expiredDate">Expired Date</label>
+                                    <div class="form-control" id="expiredDate"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                    <input type="hidden" class="form-control" id="rowId" />
                 </div>
-                <div class="form-group">
-                    <label for="ID">Type</label>
-                    <div class="form-control" id="ID"></div>
-                </div>
-                <div class="form-group">
-                    <label for="idNumber">ID Number</label>
-                    <input type="text" class="form-control" id="idNumber" />
-                </div>
-                <div class="form-group">
-                    <label for="Country">Country</label>
-                    <div class="form-control" id="Country"></div>
-                </div>
-                <div class="form-group">
-                    <label for="expiredDate">Expired Date</label>
-                    <div class="form-control" id="expiredDate"></div>
-                </div>
+                
+                
             </div>
             <div class="modal-footer">
                 <button type="button" id="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
