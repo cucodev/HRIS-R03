@@ -45,12 +45,6 @@
         }
     }
 
-    function createForm() {
-        console.log("Create Form");
-        hris.general.bindInput("languageName", null);
-        hris.general.bindInput("spoken", null);
-        hris.general.bindInput("written", null);
-    }
     var Language = {
         url: "http://localhost:54636/api/profileLanguage",
         add: function (data) {
@@ -99,8 +93,8 @@
                 console.log("Create Form");
                 hris.general.bindInput("rowId", null);
                 hris.general.bindInput("languageName", null);
-                hris.general.bindInput("spoken", null);
-                hris.general.bindInput("written", null);
+                Language.Modal.custom.bindDropDown("spoken", "SkillLevel", null);
+                Language.Modal.custom.bindDropDown("written", "SkillLevel", null);
             },
             show: function () {
                 $("#myLanguageModal").modal("show", true);
@@ -109,16 +103,16 @@
                 console.log("Modal Cleaned");
                 hris.general.cleanInput("rowId");
                 hris.general.cleanInput("languageName");
-                hris.general.cleanInput("spoken");
-                hris.general.cleanInput("written");
+                hris.general.cleanDropDown("spoken");
+                hris.general.cleanDropDown("written");
             },
             fill: function () {
                 console.log("Fill Form");
                 var data = Language.Grid.dataSelected;
                 hris.general.bindInput("rowId", data.ID);
                 hris.general.bindInput("languageName", data.languageName);
-                hris.general.bindInput("spoken", data.spoken);
-                hris.general.bindInput("written", data.written);
+                Language.Modal.custom.bindDropDown("spoken", "SkillLevel", data.spoken);
+                Language.Modal.custom.bindDropDown("written", "SkillLevel", data.written);
             },
             submit: function () {
                 var data = {
@@ -151,6 +145,13 @@
             },
             error: function () {
                 $("#myErrorModal").modal("show", true);
+            },
+            custom: {
+                bindDropDown: function (div, list, value) {
+                    var i = $("#" + div);
+                    i.jqxDropDownList({ source: hris.list._getLOV(list), disabled: false, height: '25px', displayMember: "label", valueMember: "value", width: '96%' });
+                    if (value !== null) { i.jqxDropDownList('val', value); }
+                }
             }
         },
     }
@@ -231,11 +232,11 @@
                 
                 <div class="form-group">
                     <label for="spoken">Spoken</label>
-                    <input type="text" class="form-control" id="spoken" />
+                    <div class="form-control" id="spoken"></div>
                 </div>
                 <div class="form-group">
                     <label for="written">Written</label>
-                    <input type="text" class="form-control" id="written" />
+                    <div class="form-control" id="written"></div>
                 </div>
             </div>
             <div class="modal-footer">
