@@ -11,7 +11,7 @@ namespace BusinessServices.Interface
     public interface IList
     {
         //listEntities getListByParentID(int parentID);
-
+       
 
         IEnumerable<LOV> getEdu();
         IEnumerable<LOV> getRelationFamilyType();

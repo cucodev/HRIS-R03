@@ -9,6 +9,7 @@ using BusinessServices.Interface;
 using BusinessEntities.CrudEntities;
 using System.Transactions;
 using BusinessEntities;
+using System.IO;
 
 namespace BusinessServices.InterfaceMethod
 {
@@ -23,6 +24,57 @@ namespace BusinessServices.InterfaceMethod
         {
             _u = new UnitOfWork();
             _map = new Mapping();
+        }
+
+        public IEnumerable<employeeStructure> getStructure()
+        {
+            List<employeeStructure> ms = new List<employeeStructure>();
+            var empJob = _u.personJobRepository.Get();
+            if (empJob.Any())
+            {
+                foreach (personJob n in empJob)
+                {
+                    employeeStructure ts = new employeeStructure();
+                    var emp = _u.personDetailRepository.GetByCode(a => a.IDV == n.IDV && a.isDeleted.HasValue);
+                    var empParent = _u.personDetailRepository.GetByCode(a => a.IDV == n.parentIDV && a.isDeleted.HasValue);
+
+                    if (emp != null)
+                    {
+                        if (emp.isDeleted == 0 && emp.ID > 0)
+                        {
+                            ts.ID = n.ID;
+                            ts.IDV = n.IDV;
+                            ts.IDVName = emp.Name;
+                            string ImagePath = GlobalVariable.pathImageURL + emp.NIP.Trim() + ".png";
+                            string curFile = @ImagePath;
+                            if (File.Exists(curFile))
+                            {
+                                System.Diagnostics.Debug.WriteLine(File.Exists(curFile) ? "File exists." : "File does not exist.");
+                                ts.IDVImagePath = ImagePath;
+                            }
+                            else
+                            {
+                                ts.IDVImagePath = GlobalVariable.pathImageURL + "person.png";
+                            }
+
+                        }
+                    }
+
+                    if (empParent != null)
+                    {
+                        if (empParent.isDeleted == 0 && empParent.ID > 0)
+                        {
+                            ts.parentIDV = n.parentIDV.HasValue ? n.parentIDV.Value : 0;
+                            ts.parentName = empParent.Name;
+                        }
+                    }
+
+                   
+                    ms.Add(ts);
+                }
+            }
+
+            return ms.AsEnumerable();
         }
 
         public int getApprovalIDV(int IDV)

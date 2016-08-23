@@ -14,8 +14,9 @@ namespace BusinessEntities
     {
         public const string UserCred = "UserCred";
 
-        
+
         public const string pathImage = "\\\\HLSCP\\\\sqlserver\\\\HRIS\\\\personImage\\\\";
+        public const string pathImageURL = "\\\\HLSCP\\sqlserver\\HRIS\\personImage\\";
 
         //Purpose
         public const string purposeLeave = "txLeave";

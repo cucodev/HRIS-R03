@@ -13,6 +13,7 @@ namespace BusinessServices.Interface
     //Maintain Matrix Role of Employee
     public interface IEmployee
     {
+        IEnumerable<employeeStructure> getStructure();
         IEnumerable<employeeRoleBasedEntities> GetRoleBased(int IDV);
         IEnumerable<employeeRoleBasedEntities> getCurrentRoleBasedAnnual(int IDV);
         IEnumerable<employeeRoleBasedEntities> getCurrentRoleBasedLeave(int IDV);

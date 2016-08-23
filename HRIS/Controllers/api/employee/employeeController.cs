@@ -20,6 +20,17 @@ namespace HRIS.Controllers.api.employee
         }
 
         [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getStructure")]
+        [System.Web.Http.Route("api/employee/getStructure")]
+        public HttpResponseMessage getStructure()
+        {
+            var p = _pServices.getStructure();
+            if (p != null)
+                return Request.CreateResponse(HttpStatusCode.OK, p);
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee Structure Not found");
+        }
+
+        [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getEmployee")]
         [System.Web.Http.Route("api/employee/getEmployee/{IDV}")]
         public HttpResponseMessage getEmployee(int IDV)

@@ -31,6 +31,15 @@ namespace BusinessEntities.CrudEntities
         
     }
 
+    public class employeeStructure
+    {
+        public int ID { get; set; }
+        public int IDV { get; set; }
+        public string IDVName { get; set; }
+        public string IDVImagePath { get; set; }
+        public int parentIDV { get; set; }
+        public string parentName { get; set; }
+    }
 
     public class employeeLeaveEntities
     {
