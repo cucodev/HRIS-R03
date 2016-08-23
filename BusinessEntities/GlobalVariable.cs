@@ -15,13 +15,15 @@ namespace BusinessEntities
         public const string UserCred = "UserCred";
 
         
-        public const string pathImage = "\\\\HLSCP\\sqlserver\\HRIS\\personImage\\";
+        public const string pathImage = "\\\\HLSCP\\\\sqlserver\\\\HRIS\\\\personImage\\\\";
 
         //Purpose
         public const string purposeLeave = "txLeave";
 
         //General
         public const string lov_valueType = "valueType";
+        public const string lov_relationTypeFamily = "relationFamily";
+
 
         //Category Medical & Leave
         public const string policyType = "policyType";

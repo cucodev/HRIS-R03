@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "UserManagement";
+    Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
+    List<DataModel.user> Model = new List<DataModel.user>();
+    Model = ViewBag.UserDetail;
+}
+<script src="~/Scripts/hrisframework/hris.js"></script>
+
+<script type="text/javascript">
+    var UserData = [];
+
+    @foreach (var r in Model)
+    {
+        <text>
+            var row = {};
+            row.ID = @r.ID;
+            row.IDV = @r.IDV;
+            row.IDVMAIL = '@r.IDVMAIL';
+            row.IDVMAILPASSWORD = '@r.IDVMAILPASSWORD';
+            row.IDVROLE = @r.IDVROLE;
+            UserData.push(row);
+            //console.log("Row:", row);
+        </text>
+    }
+
+    var Name = hris.list._getLOV("Name");
+
+    $(document).ready(function () {
+        console.log(Name);
+        
+        var buttonRender = function (row, column, value) {
+            var btnAll  = '<div class="hidden-sm hidden-xs btn-group">';
+            var btnEdit = '<button class="btn btn-xs btn-info"><i class="ace-icon fa fa-pencil bigger-120"></i></button>';
+            var btnDelete = '<button class="btn btn-xs btn-danger"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>';
+                            
+            btnAll += btnEdit;
+            btnAll += btnDelete;
+            btnAll += '</div>';
+            return btnAll;
+        }
+
+        
+        var source =
+                {
+                    localdata: UserData,
+                    datatype: "json",
+                    datafields:
+                    [
+                        { name: 'ID', type: 'number' },
+                        { name: 'IDV', type: 'number' },
+                        { name: 'IDVName', value: 'IDV', values: { source: Name.records, displayMember: 'label', valueMember: 'value' } },
+                        { name: 'IDVMAIL', type: 'string' },
+                        { name: 'IDVMAILPASSWORD', type: 'password' },
+                        { name: 'IDVRole', type: 'number' },
+                        { name: 'IDVRoleName', type: 'number' }
+                    ]
+                };
+        var dataAdapter = new $.jqx.dataAdapter(source);
+       
+        $("#jqxgrid").jqxGrid(
+        {
+            width:750,
+            source: dataAdapter,
+            columnsresize: true,
+            theme: 'ui-redmond',
+            selectionmode: 'multiplerowsextended',
+            sortable: true,
+            pageable: true,
+            autoheight: true,
+            columnsresize: true,
+            pagermode: 'simple',
+            rowsheight: 30,
+            columns: [
+              { text: 'Name', datafield: 'IDVName', width: 320 },
+              { text: 'Mail', datafield: 'IDVMAIL', width: 195 },
+              { text: 'Password', datafield: 'IDVMAILPASSWORD', width: 80, cellsalign: 'right' },
+              { text: 'Role', datafield: 'IDVRole', width: 90, cellsalign: 'right', cellsformat: 'c2' },
+              { text: 'Actions', datafield: 'IDV', cellsrenderer: buttonRender }
+            ]
+        });
+    });
+    
+    //console.log("UserData:", UserData);
+</script>
+
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">System</li>
+        <li class="active">User Management</li>
+    </ul><!-- /.breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="ace-icon fa fa-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- /.nav-search -->
+</div>
+
+
+<div class="page-content">
+    <div class="row">
+        <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
+        <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">USER MANAGEMENT</h1>
+        <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Manage User Account</h2>
+    </div>
+    <div class="row">
+        <div id="jqxgrid"></div>
+    </div>
+</div>
+
+

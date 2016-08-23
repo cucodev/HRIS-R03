@@ -12,7 +12,7 @@
     @Styles.Render("~/Content/ACEStyle")
     @Styles.Render("~/Content/jqwidgets")
 
-    <link rel="stylesheet" href=@Url.Content("assets/css/ace.min.css") class="ace-main-stylesheet" id="main-ace-style" />
+    <link rel="stylesheet" href=@Url.Content("~/Content/assets/css/ace.min.css") class="ace-main-stylesheet" id="main-ace-style" />
     <style>
         .no-skin .sidebar-shortcuts {
             background-color: #F5F5F5;
@@ -61,7 +61,7 @@
 
 
     <script type="text/javascript">
-        if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        if ('ontouchstart' in document.documentElement) document.write("<script src='~/Content/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
     </script>
     <script src=@Url.Content("~/Scripts/bootstrap-dialog.min.js")></script>
     <script src=@Url.Content("~/Scripts/jquery.number.min.js")></script>
@@ -276,7 +276,7 @@
                                 <ul class="dropdown-menu dropdown-navbar">
                                     <li>
                                         <a href="#" class="clearfix">
-                                            <img src="assets/images/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+                                            <img src="~/Content/assets/images/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
                                             <span class="msg-body">
                                                 <span class="msg-title">
                                                     <span class="blue">Alex:</span>
@@ -293,7 +293,7 @@
 
                                     <li>
                                         <a href="#" class="clearfix">
-                                            <img src="assets/images/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
+                                            <img src="~/Content/assets/images/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
                                             <span class="msg-body">
                                                 <span class="msg-title">
                                                     <span class="blue">Susan:</span>
@@ -310,7 +310,7 @@
 
                                     <li>
                                         <a href="#" class="clearfix">
-                                            <img src="assets/images/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
+                                            <img src="~/Content/assets/images/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
                                             <span class="msg-body">
                                                 <span class="msg-title">
                                                     <span class="blue">Bob:</span>
@@ -327,7 +327,7 @@
 
                                     <li>
                                         <a href="#" class="clearfix">
-                                            <img src="assets/images/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
+                                            <img src="~/Content/assets/images/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
                                             <span class="msg-body">
                                                 <span class="msg-title">
                                                     <span class="blue">Kate:</span>
@@ -344,7 +344,7 @@
 
                                     <li>
                                         <a href="#" class="clearfix">
-                                            <img src="assets/images/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
+                                            <img src="~/Content/assets/images/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
                                             <span class="msg-body">
                                                 <span class="msg-title">
                                                     <span class="blue">Fred:</span>
@@ -372,7 +372,7 @@
 
                     <li class="light-blue dropdown-modal">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                            <img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
+                            <img class="nav-user-photo" src="~/Content/assets/images/avatars/user.jpg" alt="Jason's Photo" />
                             <span class="user-info">
                                 <small>Welcome,</small>
                                 <div id="cName"></div>
@@ -382,15 +382,9 @@
                         </a>
 
                         <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            
                             <li>
-                                <a href="#">
-                                    <i class="ace-icon fa fa-cog"></i>
-                                    Settings
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="profile.html">
+                                <a href="~/Content/MyProfile">
                                     <i class="ace-icon fa fa-user"></i>
                                     Profile
                                 </a>
@@ -399,7 +393,7 @@
                             <li class="divider"></li>
 
                             <li>
-                                <a href="#">
+                                <a href="@Url.Action("LogOff", "Default")">
                                     <i class="ace-icon fa fa-power-off"></i>
                                     Logout
                                 </a>
@@ -626,7 +620,21 @@
 
                     </ul>
                 </li>
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-pencil-square-o"></i>
+                        <span class="menu-text"> System </span><b class="arrow fa fa-angle-down"></b>
+                    </a><b class="arrow"></b>
 
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="~/Admin/UserManagement">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                User Management
+                            </a><b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
             </ul><!-- /.nav-list -->
 
             <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

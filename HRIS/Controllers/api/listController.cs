@@ -54,6 +54,22 @@ namespace HRIS_R03.Controllers.api
             return null;
         }
 
+        // GET: api/list
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getRelationFamilyType")]
+        [System.Web.Http.Route("api/list/getRelationFamilyType")]
+        public IEnumerable<LOV> RelationFamilyType()
+        {
+            var p = _pServices.getRelationFamilyType();
+            if (p != null)
+            {
+                var pEntities = p as List<LOV> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            return null;
+        }
+
 
         // GET: api/list
         [System.Web.Http.HttpGet]

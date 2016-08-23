@@ -1072,10 +1072,10 @@
     <Content Include="Views\Shared\_LayoutLeftNavOri.cshtml" />
     <Content Include="Views\Content\Structure.cshtml" />
     <Content Include="Scripts\primitives\license.pdf" />
+    <Content Include="Views\Admin\UserManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Application\" />
     <Folder Include="Views\Data\" />
   </ItemGroup>

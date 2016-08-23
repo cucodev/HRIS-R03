@@ -72,7 +72,7 @@ namespace BusinessServices.InterfaceMethod
                     {
                         ms.Name = cc.Name;
                         ms.NIP = cc.NIP;
-                        ms.Image = GlobalVariable.pathImage + cc.NIP + ".png"; 
+                        ms.Image = GlobalVariable.pathImage + cc.NIP.Trim() + ".png"; 
                     }
                     #endregion
 

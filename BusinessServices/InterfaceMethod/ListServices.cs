@@ -34,6 +34,27 @@ namespace BusinessServices.InterfaceMethod
             return msLOV.AsEnumerable();
         }
 
+        public IEnumerable<LOV> getRelationFamilyType()
+        {
+            List<LOV> ms = new List<LOV>();
+            var vparentID = _unitOfWork.categoryParentRepository.GetByCode(b => (b.catCode).Trim() == GlobalVariable.lov_relationTypeFamily);
+            var vData = _unitOfWork.categoryRepository.GetMany(b => (b.catParentID == vparentID.catID));
+
+            if (vData.Any())
+            {
+                foreach (category n in vData)
+                {
+                    LOV xx = new LOV();
+                    xx.label = n.catName;
+                    xx.value = n.catID;
+                    ms.Add(xx);
+                }
+            }
+           
+            return ms.AsEnumerable();
+        }
+
+
         public IEnumerable<LOV> getEdu()
         {
             //return null;

@@ -29,6 +29,13 @@ namespace HRIS_R03.Controllers
             return View();
         }
 
+       // [HttpPost]
+        public ActionResult LogOff()
+        {
+            AbandonSession();
+            return RedirectToAction("LogOn");
+        }
+
         [HttpPost]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
