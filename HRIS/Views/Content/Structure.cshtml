@@ -14,9 +14,10 @@
     Structure = {
         options : new primitives.orgdiagram.Config(),
         items: [],
+        getParent : function(){
+        },
         data: function (obj) {
             Structure.items = [];
-            
             $.each(obj, function (i, v) {
                 var item = new primitives.orgdiagram.ItemConfig({
                     id: v.IDV,

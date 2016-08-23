@@ -10,6 +10,8 @@
 
 <script type="text/javascript">
     function loadTraining(callback) {
+        var CertificateName = Training.Modal.custom.list();
+        console.log("ako", CertificateName);
         var url = "http://localhost:54636/api/profileTraining/" + cIDV;
         // prepare the data
         var source =
@@ -20,6 +22,8 @@
                 { name: 'IDV', type: 'string' },
                 { name: 'TrainingName', type: 'string' },
                 { name: 'TrainingSponsor', type: 'string' },
+                { name: 'Certificate', type: 'int' },
+                { name: 'CertificateName', value: 'Certificate', values: { source: CertificateName.records, value: 'ID', name: 'certificationName' } },
                 { name: 'startDate', type: 'date' },
                 { name: 'endDate', type: 'date' }
             ],
@@ -35,6 +39,7 @@
             columns: [
               { text: 'Name', datafield: 'TrainingName', width: "25%" },
               { text: 'Sponsor', datafield: 'TrainingSponsor', minwidth: "20%" },
+              { text: 'Certificate', datafield: 'CertificateName', minwidth: "20%" },
               { text: 'Start', datafield: 'startDate', width: "15%" },
               { text: 'End', datafield: 'endDate', width: "15%" }
             ]
@@ -45,14 +50,6 @@
         }
     }
 
-    function createForm() {
-        console.log("Create Form");
-        hris.general.bindInput("TrainingName", null);
-        hris.general.bindInput("TrainingSponsor", null);
-        hris.general.bindDropDown("Certificate", null);
-        hris.general.bindDateTime("startDate", null);
-        hris.general.bindDateTime("endDate", null);
-    }
     var Training = {
         url: "http://localhost:54636/api/profileTraining",
         add: function (data) {
@@ -64,7 +61,7 @@
                 data: data,
                 success: function (o) {
                     console.log("Sukses", o);
-                    $('#trainingTable').jqxGrid('refreshdata');
+                    $('#trainingTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -80,7 +77,7 @@
                 data: data,
                 success: function (result) {
                     console.log("Sukses", result);
-                    $('#trainingTable').jqxGrid('refreshdata');
+                    $('#trainingTable').jqxGrid('updatebounddata');
                 },
                 error: function (e) {
                     console.log("Error", e);
@@ -102,7 +99,8 @@
                 hris.general.bindInput("rowId", null);
                 hris.general.bindInput("TrainingName", null);
                 hris.general.bindInput("TrainingSponsor", null);
-                hris.general.bindDropDown("Certificate", null);
+                Training.Modal.custom.bindDropDown("Certificate", null)
+                //hris.general.bindDropDown("Certificate", null);
                 hris.general.bindDateTime("startDate", null);
                 hris.general.bindDateTime("endDate", null);
             },
@@ -121,16 +119,19 @@
             fill: function () {
                 console.log("Fill Form");
                 var data = Training.Grid.dataSelected;
+                console.log("data",data);
                 hris.general.bindInput("rowId", data.ID);
                 hris.general.bindInput("TrainingName", data.TrainingName);
                 hris.general.bindInput("TrainingSponsor", data.TrainingSponsor);
-                hris.general.bindDropDown("Certificate", data.Certificate);
+                Training.Modal.custom.bindDropDown("Certificate", data.Certificate)
+                //hris.general.bindDropDown("Certificate", data.Certificate);
                 hris.general.bindDateTime("startDate", data.startDate);
                 hris.general.bindDateTime("endDate", data.endDate);
             },
             submit: function () {
                 var data = {
                     ID: hris.general.getData("rowId"),
+                    IDV: cIDV,
                     TrainingName: hris.general.getData("TrainingName"),
                     TrainingSponsor: hris.general.getData("TrainingSponsor"),
                     Certificate: hris.general.getData("Certificate"),
@@ -160,7 +161,33 @@
             },
             error: function () {
                 $("#myErrorModal").modal("show", true);
-            }
+            },
+            custom: {
+                bindDropDown: function (div, value) {
+                    var list = this.list();
+                    var i = $("#" + div);
+                    i.jqxDropDownList({ source: list, disabled: false, height: '25px', displayMember: "certificationName", valueMember: "ID", width: '96%' });
+                    if (value !== null) { i.jqxDropDownList('val', value); }
+                },
+                list: function () {
+                    var source = {
+                        datatype: "json",
+                        dataFields: [
+                        { name: 'ID', type: 'number' },
+                        { name: 'certificationName', type: 'string' }
+                        ],
+                        url: '/api/profileCertification/' + cIDV,
+                        async: false
+                    };
+
+
+                    return jsList = new $.jqx.dataAdapter(source, {
+                        autoBind: true,
+                        contentType: 'application/json; charset=utf-8'
+                    });
+                }
+            },
+            
         },
     }
     $(document).ready(function () {
