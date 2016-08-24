@@ -80,6 +80,7 @@ namespace BusinessServices.Interface
     public interface IprofileJob
     {
         IEnumerable<profileJobEntities> getJobByIDV(int IDV);
+        IEnumerable<profileJobEntities> getJobHistoryByIDV(int IDV);
         int addJob(profileJobEntities personJobEntity);
         bool UpdateJob(int parentIDV, profileJobEntities personJobEntity);
         bool DeleteJob(int parentIDV, profileJobEntities personJobEntity);

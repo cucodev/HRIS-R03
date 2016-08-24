@@ -32,6 +32,22 @@ namespace HRIS.Controllers.api.profile
             return new string[] { "value1", "value2" };
         }
 
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("History")]
+        [System.Web.Http.Route("api/profileJob/History/")]
+        public HttpResponseMessage History(int id)
+        {
+            var p = _pServices.getJobHistoryByIDV(id);
+            if (p != null)
+            {
+                var pEntities = p as List<profileJobEntities> ?? p.ToList();
+                if (pEntities.Any())
+                    return Request.CreateResponse(HttpStatusCode.OK, pEntities);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Data Not found");
+        }
+
         public HttpResponseMessage Get(int id)
         {
             var p = _pServices.getJobByIDV(id);

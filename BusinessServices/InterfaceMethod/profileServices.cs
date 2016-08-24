@@ -1278,7 +1278,40 @@ namespace BusinessServices.InterfaceMethod
 
             return ms.AsEnumerable();
         }
-        
+
+        public IEnumerable<profileJobEntities> getJobHistoryByIDV(int IDV)
+        {
+            List<profileJobEntities> ms = new List<profileJobEntities>();
+            var emp = _u.personJobRepository.GetMany(b => b.IDV == IDV);
+            if (emp.Any())
+            {
+                foreach (personJob px in emp)
+                {
+                    profileJobEntities t = new profileJobEntities();
+                    t.ID = px.ID;
+                    t.IDV = px.IDV;
+                    t.JobDepartement = px.JobDepartement;
+                    t.JobDivision = px.JobDivision;
+                    t.JobLevel = px.JobLevel;
+                    t.JobLocation = px.JobLocation;
+                    t.jobName = px.jobName;
+                    t.JobPosition = px.JobPosition;
+                    t.startDate = px.startDate;
+                    t.endDate = px.endDate;
+                    t.Note = px.Note;
+                    t.parentIDV = px.parentIDV;
+                    t.updateTime = px.updateTime;
+                    t.createTime = px.createTime;
+                    t.vCreatedBy = px.vCreatedBy;
+                    t.vUpdatedBy = px.vUpdatedBy;
+                    t.isDeleted = px.isDeleted;
+                    ms.Add(t);
+                }
+            }
+
+            return ms.AsEnumerable();
+        }
+
         public bool DeleteJob(int ID, profileJobEntities p)
         {
             return UpdateJob(ID, p);
