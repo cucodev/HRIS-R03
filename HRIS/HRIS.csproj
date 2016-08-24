@@ -1075,6 +1075,7 @@
     <Content Include="Scripts\primitives\license.pdf" />
     <Content Include="Views\Admin\UserManagement.cshtml" />
     <Content Include="Views\AdminHR\Employee.cshtml" />
+    <Content Include="Views\Content\MyJob.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

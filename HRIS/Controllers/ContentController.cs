@@ -148,6 +148,12 @@ namespace HRIS_R03.Controllers
             return View(User);
         }
 
+        public ActionResult MyJob()
+        {
+            ViewBag.menuProfile = "Active";
+            return View(User);
+        }
+
         public ActionResult Structure() {
             ViewBag.menuProfile = "Active";
             return View(User);
