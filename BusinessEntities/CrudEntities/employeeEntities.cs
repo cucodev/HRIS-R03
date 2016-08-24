@@ -42,6 +42,29 @@ namespace BusinessEntities.CrudEntities
         public string parentName { get; set; }
     }
 
+    public partial class employeeDetail
+    {
+        public int ID { get; set; }
+        public Nullable<int> IDV { get; set; }
+        public string NIP { get; set; }
+        public string Name { get; set; }
+        public string NickName { get; set; }
+        public Nullable<int> Nationality { get; set; }
+        public string Birthplace { get; set; }
+        public Nullable<System.DateTime> Birthdate { get; set; }
+        public Nullable<int> Marital { get; set; }
+        public Nullable<int> Religion { get; set; }
+        public Nullable<int> Gender { get; set; }
+        public Nullable<int> OrganizationID { get; set; }
+        public Nullable<int> vCreatedBy { get; set; }
+        public Nullable<int> vUpdatedBy { get; set; }
+        public Nullable<int> isDeleted { get; set; }
+        public Nullable<System.DateTime> createTime { get; set; }
+        public Nullable<System.DateTime> updateTime { get; set; }
+
+       
+    }
+
     public class employeeLeaveEntities
     {
         //null

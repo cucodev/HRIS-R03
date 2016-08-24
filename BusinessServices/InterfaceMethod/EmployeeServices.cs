@@ -77,6 +77,40 @@ namespace BusinessServices.InterfaceMethod
             return approvalIDV.parentIDV.HasValue ? approvalIDV.parentIDV.Value : 0;
         }
 
+        public IEnumerable<employeeDetail> getEmployeeByOrg(int OrgID)
+        {
+            List<employeeDetail> ms = new List<employeeDetail>();
+            var person = _u.personRepository.GetMany(b => b.OrganizationID == OrgID);
+            if (person.Any())
+            {
+                foreach (person p in person)
+                {
+                    var emp = _u.personDetailRepository.GetByCode(c => c.IDV == p.IDV && p.isDeleted == 0);
+                    if (emp != null)
+                    {
+                        employeeDetail bc = new employeeDetail();
+                        bc.ID = emp.ID;
+                        bc.IDV = emp.IDV;
+                        bc.Marital = emp.Marital;
+                        bc.Name = emp.Name;
+                        bc.Nationality = emp.Nationality;
+                        bc.NickName = emp.NickName;
+                        bc.NIP = emp.NIP;
+                        bc.Religion = emp.Religion;
+                        bc.updateTime = emp.updateTime;
+                        bc.vUpdatedBy = emp.vUpdatedBy;
+                        bc.createTime = emp.createTime;
+                        bc.vCreatedBy = emp.vCreatedBy;
+                        bc.Birthdate = emp.Birthdate;
+                        bc.Birthplace = emp.Birthplace;
+                        bc.isDeleted = emp.isDeleted;
+                        ms.Add(bc);
+                    }
+                }
+            }
+            return ms.AsEnumerable();
+        }
+
         //MyMatrix
         public IEnumerable<employeeRoleBasedEntities> getCurrentRoleBased(int IDV)
         {

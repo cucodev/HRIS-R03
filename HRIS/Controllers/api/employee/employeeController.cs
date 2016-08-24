@@ -42,6 +42,17 @@ namespace HRIS.Controllers.api.employee
         }
 
         [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getEmployeeByOrg")]
+        [System.Web.Http.Route("api/employee/getEmployeeByOrg/{OrgID}")]
+        public HttpResponseMessage getEmployeeByOrg(int OrgID)
+        {
+            var p = _pServices.getEmployeeByOrg(OrgID);
+            if (p != null)
+                return Request.CreateResponse(HttpStatusCode.OK, p);
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee Not found");
+        }
+
+        [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getRoleBased")]
         [System.Web.Http.Route("api/employee/getRoleBased/{IDV}")]
         public HttpResponseMessage getRoleBased(int IDV)
