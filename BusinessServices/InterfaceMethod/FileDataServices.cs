@@ -10,6 +10,7 @@ using BusinessServices.Interface;
 using BusinessEntities.CrudEntities;
 using System.Transactions;
 using System.IO;
+using System.Web.Hosting;
 
 namespace BusinessServices.InterfaceMethod
 {
@@ -84,6 +85,39 @@ namespace BusinessServices.InterfaceMethod
         }
 
         #endregion ========================================================================================================
+
+        public string ImagePath(string NIP)
+        {
+            var photoDir = HostingEnvironment.MapPath("~/Content/photo/"); //Check to localhost, server hris folder
+            var fileName = "/" + NIP.Trim() + ".png";
+            var tempfileName = "\\" + NIP.Trim() + ".png";
+            string ImagePath;
+            if (File.Exists(photoDir + tempfileName)) //Check to local webroot folder
+            {
+                ImagePath = GlobalVariable.pathWebImage + fileName;
+                System.Diagnostics.Debug.WriteLine("Image File Found :)");
+            }
+            else
+            {
+                ImagePath = GlobalVariable.fileWebTempImage;
+                System.Diagnostics.Debug.WriteLine("Image File Not FOund !!");
+            }
+
+            return ImagePath;
+        }
+
+        public byte[] ReadImageFile(string imageLocation)
+        {
+            byte[] imageData = null;
+            FileInfo fileInfo = new FileInfo(imageLocation);
+            long imageFileLength = fileInfo.Length;
+            FileStream fs = new FileStream(imageLocation, FileMode.Open, FileAccess.Read);
+            BinaryReader br = new BinaryReader(fs);
+            imageData = br.ReadBytes((int)imageFileLength);
+            return imageData;
+            //return null;
+        }
+
 
         public Guid saveImageFile(MemoryStream fileModel, FileViewModel fileView)
         {

@@ -888,6 +888,8 @@ namespace BusinessServices.InterfaceMethod
                     createTime = DateTime.Now,
                     isDeleted = 0
                 };
+                System.Diagnostics.Debug.WriteLine("Post Training : " + p.IDV + ":" + p.TrainingName + ":" + p.startDate + ":" + p.endDate);
+                System.Diagnostics.Debug.WriteLine("Insert Training : " + t.startDate + ":" + t.endDate);
                 _u.personTrainingRepository.Insert(t);
                 _u.Save();
                 scope.Complete();

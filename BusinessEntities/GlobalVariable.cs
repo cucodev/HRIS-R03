@@ -17,6 +17,8 @@ namespace BusinessEntities
 
         public const string pathImage = "\\\\HLSCP\\\\sqlserver\\\\HRIS\\\\personImage\\\\";
         public const string pathImageURL = "\\\\HLSCP\\sqlserver\\HRIS\\personImage\\";
+        public const string fileWebTempImage = "~/Content/photo/temp/person.png";
+        public const string pathWebImage = "~/Content/photo";
 
         //Purpose
         public const string purposeLeave = "txLeave";

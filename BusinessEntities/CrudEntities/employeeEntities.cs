@@ -35,6 +35,7 @@ namespace BusinessEntities.CrudEntities
     {
         public int ID { get; set; }
         public int IDV { get; set; }
+        public string NIP { get; set; }
         public string IDVName { get; set; }
         public string IDVImagePath { get; set; }
         public int parentIDV { get; set; }

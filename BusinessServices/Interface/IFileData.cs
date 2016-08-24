@@ -14,6 +14,10 @@ namespace BusinessServices.Interface
         IEnumerable<string> addFileDescription(FileSummaryEntities Fx);
         IEnumerable<FileSummaryEntities> getFileDescription();
 
+        //File Handling
+        byte[] ReadImageFile(string imageLocation);
+        string ImagePath(string NIP);
+
         //EMployee Related
         LOVFile getTempImage();
         IEnumerable<LOVFile> getAllImageFiles();

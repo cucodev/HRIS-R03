@@ -10,6 +10,7 @@ using BusinessEntities.CrudEntities;
 using System.Transactions;
 using BusinessEntities;
 using System.IO;
+using System.Web.Hosting;
 
 namespace BusinessServices.InterfaceMethod
 {
@@ -18,12 +19,14 @@ namespace BusinessServices.InterfaceMethod
     {
         private readonly UnitOfWork _u;
         private readonly Mapping _map;
+        private readonly FileDataServices _file;
         private int isDelete = 0;
 
         public employeeServices()
         {
             _u = new UnitOfWork();
             _map = new Mapping();
+            _file = new FileDataServices();
         }
 
         public IEnumerable<employeeStructure> getStructure()
@@ -37,26 +40,17 @@ namespace BusinessServices.InterfaceMethod
                     employeeStructure ts = new employeeStructure();
                     var emp = _u.personDetailRepository.GetByCode(a => a.IDV == n.IDV && a.isDeleted.HasValue);
                     var empParent = _u.personDetailRepository.GetByCode(a => a.IDV == n.parentIDV && a.isDeleted.HasValue);
-
                     if (emp != null)
                     {
                         if (emp.isDeleted == 0 && emp.ID > 0)
                         {
                             ts.ID = n.ID;
                             ts.IDV = n.IDV;
+                            ts.NIP = emp.NIP.Trim();
                             ts.IDVName = emp.Name;
-                            string ImagePath = GlobalVariable.pathImageURL + emp.NIP.Trim() + ".png";
-                            string curFile = @ImagePath;
-                            if (File.Exists(curFile))
-                            {
-                                System.Diagnostics.Debug.WriteLine(File.Exists(curFile) ? "File exists." : "File does not exist.");
-                                ts.IDVImagePath = ImagePath;
-                            }
-                            else
-                            {
-                                ts.IDVImagePath = GlobalVariable.pathImageURL + "person.png";
-                            }
-
+                            
+                            ts.IDVImagePath = _file.ImagePath(emp.NIP);
+                            
                         }
                     }
 

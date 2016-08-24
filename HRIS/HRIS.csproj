@@ -738,6 +738,7 @@
     <Content Include="Content\jsmenu\style.css" />
     <Content Include="Content\LoginStyle.css" />
     <Content Include="Content\photo\person.png" />
+    <Content Include="Content\photo\temp\person.png" />
     <Content Include="Content\Sidebar\bootstrap.min.css" />
     <Content Include="Content\Sidebar\font-awesome.css" />
     <Content Include="Content\Sidebar\font-awesome.min.css" />
@@ -1122,7 +1123,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54636</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

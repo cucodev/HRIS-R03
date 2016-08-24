@@ -98,9 +98,7 @@ namespace HRIS_R03.Controllers
 
         public ActionResult MyMatrix()
         {
-            ViewBag.cIDV = 3;//dt.IDV;
-            ViewBag.cIDVParent = 40;// dt.parentIDV;
-            ViewBag.cIDVLevel = 71;
+            ViewBag.MenuMyMatrix = "active";
             return View(User);
         }
 

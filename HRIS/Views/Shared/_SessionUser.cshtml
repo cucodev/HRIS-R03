@@ -7,12 +7,11 @@
 else
 {
     <script type="text/javascript">
-        //$(document).ready(function () {
         //Model Controller
         try {
             var cIDV = '@Model.IDV';
             var cName = '@Model.Name';
-            var cImage = '@Model.Image'
+            var cImage = '@Model.Image';
             var cIDVParent = '@Model.parentIDV';
             var cIDVMail = '@Model.IDVMail';
             var cIDVParentMail = '@Model.parentIDVMail';
@@ -32,10 +31,15 @@ else
             console.log("cTimeLogin: " + ctimeLogin);
             console.log("======================================================================")
 
-            
+            //$("#cImage").attr("src", '@Url.Content(Model.Image)');
+
         } catch (err) {
             window.open("/");
         }
-       // });
+
+        $(document).ready(function () {
+            $("#cImage").attr("src", '@Url.Content(Model.Image)');
+        });
+
     </script>
 }

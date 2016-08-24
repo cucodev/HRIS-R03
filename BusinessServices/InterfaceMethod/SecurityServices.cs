@@ -10,12 +10,14 @@ namespace BusinessServices.InterfaceMethod
     {
         private readonly Iprofile _pProfile;
         private readonly UnitOfWork _unitOfWork;
+        private readonly FileDataServices _file;
         private int isDelete = 0;
 
         public SecurityServices()
         {
             _pProfile = new ProfileServices();
             _unitOfWork = new UnitOfWork();
+            _file = new FileDataServices();
         }
 
         public int isExist(LogOnModel model)
@@ -72,7 +74,7 @@ namespace BusinessServices.InterfaceMethod
                     {
                         ms.Name = cc.Name;
                         ms.NIP = cc.NIP;
-                        ms.Image = GlobalVariable.pathImage + cc.NIP.Trim() + ".png"; 
+                        ms.Image = _file.ImagePath(cc.NIP);
                     }
                     #endregion
 
