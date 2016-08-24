@@ -4,11 +4,107 @@
     Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
 }
 
+
+
 @section scripts
 {
+    <link rel="stylesheet" href=@Url.Content("~/Content/assets/css/dropzone.min.css") />
+    <link rel="stylesheet" href=@Url.Content("~/Content/assets/css/ace-skins.min.css") />
+    <link rel="stylesheet" href=@Url.Content("~/Content/assets/css/ace-rtl.min.css") />
+    <script src=@Url.Content("~/Content/assets/js/ace-extra.min.js")></script>
+    <!-- page specific plugin scripts -->
+    <script src=@Url.Content("~/Content/assets/js/dropzone.min.js")></script>
+
+    <!-- ace scripts -->
+    <script src=@Url.Content("~/Content/assets/js/ace-elements.min.js")></script>
+    <script src=@Url.Content("~/Content/assets/js/ace.min.js")></script>
     <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
     <script type="text/javascript">
-        
+        var data = new FormData();
+
+        jQuery(function () {
+            try {
+                Dropzone.autoDiscover = false;
+
+                var myDropzone = new Dropzone('#dropzone', {
+                    previewTemplate: $('#preview-template').html(),
+
+                    thumbnailHeight: 120,
+                    thumbnailWidth: 120,
+                    maxFilesize: 0.5,
+
+                    //addRemoveLinks : true,
+                    //dictRemoveFile: 'Remove',
+
+                    dictDefaultMessage:
+                    '<span class="bigger-150 bolder"><i class="ace-icon fa fa-caret-right red"></i> Drop files</span> to upload \
+				    <span class="smaller-80 grey">(or click)</span> <br /> \
+				    <i class="upload-icon ace-icon fa fa-cloud-upload blue fa-3x"></i>',
+
+                    thumbnail: function (file, dataUrl) {
+                        if (file.previewElement) {
+                            $(file.previewElement).removeClass("dz-file-preview");
+                            var images = $(file.previewElement).find("[data-dz-thumbnail]").each(function () {
+                                var thumbnailElement = this;
+                                thumbnailElement.alt = file.name;
+                                thumbnailElement.src = dataUrl;
+                            });
+                            setTimeout(function () { $(file.previewElement).addClass("dz-image-preview"); }, 1);
+                        }
+                    }
+
+                });
+
+
+                //simulating upload progress
+                var minSteps = 6,
+                    maxSteps = 60,
+                    timeBetweenSteps = 100,
+                    bytesPerStep = 100000;
+
+                myDropzone.uploadFiles = function (files) {
+                    var self = this;
+                    data.append("UploadedImage", files[0]);
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
+
+                        
+                        for (var step = 0; step < totalSteps; step++) {
+                            var duration = timeBetweenSteps * (step + 1);
+                            setTimeout(function (file, totalSteps, step) {
+                                return function () {
+                                    file.upload = {
+                                        progress: 100 * (step + 1) / totalSteps,
+                                        total: file.size,
+                                        bytesSent: (step + 1) * file.size / totalSteps
+                                    };
+
+                                    self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
+                                    if (file.upload.progress == 100) {
+                                        file.status = Dropzone.SUCCESS;
+                                        self.emit("success", file, 'success', null);
+                                        self.emit("complete", file);
+                                        self.processQueue();
+                                    }
+                                };
+                            }(file, totalSteps, step), duration);
+                        }
+                    }
+                }
+
+
+                //remove dropzone instance when leaving this page in ajax mode
+                $(document).one('ajaxloadstart.page', function (e) {
+                    try {
+                        myDropzone.destroy();
+                    } catch (e) { }
+                });
+
+            } catch (e) {
+                console.log('Dropzone.js does not support older browsers! : ', e.message);
+            }
+        });
 
         function dragEnter(evt) {
             evt.stopPropagation();
@@ -115,7 +211,7 @@
                           }
                       },
                       {
-                          text: ' ', align: 'center', dataField: 'lastname', width: '100%',
+                          text: ' ', align: 'center', dataField: 'lastname', width: 700,
                           // row - row's index.
                           // column - column's data field.
                           // value - cell's value.
@@ -184,11 +280,28 @@
 
 
             $('#editor').jqxEditor({
-                height: "300px",
-                width: '550px'
+                height: "200px",
+                theme: 'metro',
+                width: '100%'
             });
 
-           
+            $('#submit').on('click', function () {
+
+                // Make Ajax request with the contentType = false, and procesDate = false
+                var ajaxRequest = $.ajax({
+                    type: "POST",
+                    url: "/api/file/UploadMultipleFiles",
+                    contentType: false,
+                    processData: false,
+                    data: data
+                });
+
+                ajaxRequest.done(function (xhr, textStatus) {
+                    // Do other operation
+                    console.log("data Updated: ",textStatus);
+                });
+            });
+
         });
 
 
@@ -198,192 +311,220 @@
 
 
 <style>
-    
-   .custom-file-upload-hidden {
-      display: none;
-      visibility: hidden;
-      position: absolute;
-      left: -9999px;
-    }
 
-    .custom-file-upload {
-      display: block;
-      width: auto;
-      font-size: 16px;
-      margin-top: 30px;
-    }
-    .custom-file-upload label {
-      display: block;
-      margin-bottom: 5px;
-    }
+    .custom-file-upload-hidden {
+       display: none;
+       visibility: hidden;
+       position: absolute;
+       left: -9999px;
+     }
 
-    .file-upload-wrapper {
-      position: relative;
-      margin-bottom: 5px;
-    }
+     .custom-file-upload {
+       display: block;
+       width: auto;
+       font-size: 16px;
+       margin-top: 30px;
+     }
+     .custom-file-upload label {
+       display: block;
+       margin-bottom: 5px;
+     }
 
-    .file-upload-input {
-      width: 300px;
-      color: #fff;
-      font-size: 16px;
-      padding: 11px 17px;
-      border: none;
-      background-color: #c0392b;
-      -moz-transition: all 0.2s ease-in;
-      -o-transition: all 0.2s ease-in;
-      -webkit-transition: all 0.2s ease-in;
-      transition: all 0.2s ease-in;
-      float: left;
-      /* IE 9 Fix */
-    }
-    .file-upload-input:hover, .file-upload-input:focus {
-      background-color: #ab3326;
-      outline: none;
-    }
+     .file-upload-wrapper {
+       position: relative;
+       margin-bottom: 5px;
+     }
 
-    .file-upload-button {
-      cursor: pointer;
-      display: inline-block;
-      color: #fff;
-      font-size: 16px;
-      text-transform: uppercase;
-      padding: 11px 20px;
-      border: none;
-      margin-left: -1px;
-      background-color: #962d22;
-      float: left;
-      /* IE 9 Fix */
-      -moz-transition: all 0.2s ease-in;
-      -o-transition: all 0.2s ease-in;
-      -webkit-transition: all 0.2s ease-in;
-      transition: all 0.2s ease-in;
-    }
-    .file-upload-button:hover {
-      background-color: #6d2018;
-    }
+     .file-upload-input {
+       width: 300px;
+       color: #fff;
+       font-size: 16px;
+       padding: 11px 17px;
+       border: none;
+       background-color: #c0392b;
+       -moz-transition: all 0.2s ease-in;
+       -o-transition: all 0.2s ease-in;
+       -webkit-transition: all 0.2s ease-in;
+       transition: all 0.2s ease-in;
+       float: left;
+       /* IE 9 Fix */
+     }
+     .file-upload-input:hover, .file-upload-input:focus {
+       background-color: #ab3326;
+       outline: none;
+     }
 
-    .ins_page_header_wrap {
-        width: 100%;
-        float: left;
-        margin-bottom: 5px;
-        /*border-bottom: 1px solid #e0e0e0;*/
-        padding-bottom: 5px;
-    }
+     .file-upload-button {
+       cursor: pointer;
+       display: inline-block;
+       color: #fff;
+       font-size: 16px;
+       text-transform: uppercase;
+       padding: 11px 20px;
+       border: none;
+       margin-left: -1px;
+       background-color: #962d22;
+       float: left;
+       /* IE 9 Fix */
+       -moz-transition: all 0.2s ease-in;
+       -o-transition: all 0.2s ease-in;
+       -webkit-transition: all 0.2s ease-in;
+       transition: all 0.2s ease-in;
+     }
+     .file-upload-button:hover {
+       background-color: #6d2018;
+     }
 
-        .ins_page_header_wrap .ins_page_header {
-            float: left;
-            color: #666;
-            font-family: 'Montserrat',sans-serif;
-            font-size: 32px;
-        }
+     .ins_page_header_wrap {
+         width: 100%;
+         float: left;
+         margin-bottom: 5px;
+         /*border-bottom: 1px solid #e0e0e0;*/
+         padding-bottom: 5px;
+     }
 
-    h1 {
-        font-weight: normal;
-        font-size: 32px;
-        margin: 0;
-        padding: 0;
-    }
+         .ins_page_header_wrap .ins_page_header {
+             float: left;
+             color: #666;
+             font-family: 'Montserrat',sans-serif;
+             font-size: 32px;
+         }
 
-    .jqx-grid {
-        overflow: hidden;
-        border-style: none;
-        border-width: 0;
-    }
+     h1 {
+         font-weight: normal;
+         font-size: 32px;
+         margin: 0;
+         padding: 0;
+     }
 
-    .jqx-widget-header {
-        background: none;
-    }
+     .jqx-grid {
+         overflow: hidden;
+         border-style: none;
+         border-width: 0;
+     }
 
-    .jqx-grid-cell {
-        border-style: solid;
-        border-top-style: none;
-        border-right-style: none;
-        border-bottom-style: solid;
-        border-left-style: none;
-        vertical-align: top;
-    }
+     .jqx-widget-header {
+         background: none;
+     }
 
-    .jqx-grid-pager-top {
-        border: none;
-        border-bottom: none;
-    }
+     .jqx-grid-cell {
+         border-style: solid;
+         border-top-style: none;
+         border-right-style: none;
+         border-bottom-style: solid;
+         border-left-style: none;
+         vertical-align: top;
+     }
 
-    .jqx-grid-column-header, .jqx-grid-columngroup-header {
-        border: none;
-        border-bottom: none;
-        border-bottom-style: none;
-    }
+     .jqx-grid-pager-top {
+         border: none;
+         border-bottom: none;
+     }
 
-    .new_storylising_img {
-        width: 150px;
-        float: left;
-    }
+     .jqx-grid-column-header, .jqx-grid-columngroup-header {
+         border: none;
+         border-bottom: none;
+         border-bottom-style: none;
+     }
 
-    .new_storylising_contentwrap {
-        width: 100%;
-        box-sizing: border-box;
-        vertical-align: top;
-        -moz-box-sizing: border-box;
-    }
-    .nstory_header {
-        width: 100%;
-        float: left;
-        font-family: "Roboto",sans-serif;
-        font-size: 20px;
-        line-height: 26px;
-        margin-bottom: 5px;
-    }
-    .nstory_dateline {
-        font-size: 12px;
-        color: #666;
-        margin-bottom: 5px;
-    }
-    .nstory_intro {
-        font-size: 14px;
-        color: #666;
-        line-height: 20px;
-    }
+     .new_storylising_img {
+         width: 150px;
+         float: left;
+     }
+
+     .new_storylising_contentwrap {
+         width: 100%;
+         box-sizing: border-box;
+         vertical-align: top;
+         -moz-box-sizing: border-box;
+     }
+     .nstory_header {
+         width: 100%;
+         float: left;
+         font-family: "Roboto",sans-serif;
+         font-size: 20px;
+         line-height: 26px;
+         margin-bottom: 5px;
+     }
+     .nstory_dateline {
+         font-size: 12px;
+         color: #666;
+         margin-bottom: 5px;
+     }
+     .nstory_intro {
+         font-size: 14px;
+         color: #666;
+         line-height: 20px;
+     }
+     .maxWidth {
+         width: 100%;
+     }
 </style>
 
-<div class="row">
-    <div class="btn-group btn-breadcrumb">
-        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
-        <a href="#" class="btn btn-info">HRD</a>
-        <a href="#" class="btn btn-success">NEWS</a>
-    </div>
-    <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
-    <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">NEWS FORM</h1>
-<!--    <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Manage News </h2>-->
+
+
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">HRD</a>
+        </li>
+        <li class="active">News</li>
+        <li class="active">Manage</li>
+    </ul><!-- /.breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="ace-icon fa fa-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- /.nav-search -->
 </div>
 
-<div class="row">
-    <div class="col-md-9">
-        <div id="dataTable"></div>
-    </div>
-    <div class="col-lg-3">
-        <input type="button" class="btn btn-breadcrumb" id="btnAdd" data-toggle="modal" data-target="#newsModal" value="Add News" />
+<div class="page-header">
+    <h1>
+        NEWS
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            Manage
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-10">
+            <div id="dataTable"></div>
+        </div>
+        <div class="col-xs-2">
+            <input type="button" class="btn btn-breadcrumb" id="btnAdd" data-toggle="modal" data-target="#newsModal" value="Add News" />
+        </div>
     </div>
 </div>
 
+            
 
 
 
 
 
-<div id="ulbox"></div>
-<ul data-bind="template: { name: 'upload-template', foreach: uploads }"></ul>
-<script type="text/html" id="upload-template">
-    <li>
-        <span>Uploaded: <small data-bind="text: name"></small>.</span><span>
-            Size: <small data-bind="text: size"></small>kB
-        </span><span>
-            Server path: <a data-bind="attr:{href: path}, text:path">
-            </a>
-        </span>
-    </li>
-</script>
 
-<form action="/api/file/UploadImageFiles" method="post" enctype="multipart/form-data">
+            <div id="ulbox"></div>
+            <ul data-bind="template: { name: 'upload-template', foreach: uploads }"></ul>
+            <script type="text/html" id="upload-template">
+                <li>
+                    <span>Uploaded: <small data-bind="text: name"></small>.</span><span>
+                        Size: <small data-bind="text: size"></small>kB
+                    </span><span>
+                        Server path: <a data-bind="attr:{href: path}, text:path">
+                        </a>
+                    </span>
+                </li>
+            </script>
+
+
     <div id="newsModal" class="modal fade modal-wide" role="dialog">
         <div class="modal-dialog">
 
@@ -395,24 +536,66 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="form-group">
-                        <input id="newsTitle" type="text" class="input-lg" maxlength="100" width="500px" style="max-width:none" placeholder="Title" />
-                    </div>
-                    <div class="form-group">
-                        <div id="editor"></div>
-                    </div>
-                    <div class="form-group">
-
-                        <!--<label for="somefile">File</label>-->
-                        <div class="custom-file-upload">
-                            <input type="file" id="fileId" name="files[0].Id"  name="somefile" multiple />
-                            <input type="hidden" name="files[0].FileName" id="FileName" />
-                            <input type="hidden" name="files[0].Extension" id="Extension" />
-                            <input type="hidden" name="files[0].EntityId" id="EntityId" />
+                    <form action="/api/file/UploadImageFiles" method="post" enctype="multipart/form-data" class="">
+                        <div class="form-group">
+                            <span class="input-icon maxWidth">
+                                <input type="text" id="newsTitle" placeholder="TITLE" class="maxWidth" maxlength="200">
+                                <i class="ace-icon fa fa-leaf blue"></i>
+                            </span>
                         </div>
-
+                        <div class="form-group">
+                            <div id="editor"></div>
+                        </div>
+                    </form>
+                    <div>
+                        <form action="/api/file/UploadImageFiles" method="post" enctype="multipart/form-data" class="dropzone well" id="dropzone">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple="" />
+                            </div>
+                        </form>
                     </div>
+                    <div id="preview-template" class="hide">
+                        <div class="dz-preview dz-file-preview">
+                            <div class="dz-image">
+                                <img data-dz-thumbnail="" />
+                            </div>
 
+                            <div class="dz-details">
+                                <div class="dz-size">
+                                    <span data-dz-size=""></span>
+                                </div>
+
+                                <div class="dz-filename">
+                                    <span data-dz-name=""></span>
+                                </div>
+                            </div>
+
+                            <div class="dz-progress">
+                                <span class="dz-upload" data-dz-uploadprogress=""></span>
+                            </div>
+
+                            <div class="dz-error-message">
+                                <span data-dz-errormessage=""></span>
+                            </div>
+
+                            <div class="dz-success-mark">
+                                <span class="fa-stack fa-lg bigger-150">
+                                    <i class="fa fa-circle fa-stack-2x white"></i>
+
+                                    <i class="fa fa-check fa-stack-1x fa-inverse green"></i>
+                                </span>
+                            </div>
+
+                            <div class="dz-error-mark">
+                                <span class="fa-stack fa-lg bigger-150">
+                                    <i class="fa fa-circle fa-stack-2x white"></i>
+
+                                    <i class="fa fa-remove fa-stack-1x fa-inverse red"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-info" id="submit">Submit</button>
@@ -422,7 +605,7 @@
 
         </div>
     </div>
-</form>
+
 
 
 

@@ -1074,6 +1074,7 @@
     <Content Include="Views\Content\Structure.cshtml" />
     <Content Include="Scripts\primitives\license.pdf" />
     <Content Include="Views\Admin\UserManagement.cshtml" />
+    <Content Include="Views\AdminHR\Employee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

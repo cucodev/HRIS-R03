@@ -24,6 +24,7 @@ namespace HRIS_R03.Controllers
         }
 
         
+        
         private void current()
         {
             if (Session[GlobalVariable.UserCred] != null)
@@ -35,6 +36,11 @@ namespace HRIS_R03.Controllers
             }
         }
 
+        public ActionResult Employee()
+        {
+
+            return View(User);
+        }
 
         // GET: AdminHR
         public ActionResult Index()

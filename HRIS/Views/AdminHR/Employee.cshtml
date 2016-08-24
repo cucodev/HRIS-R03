@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Employee";
+    Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
+}
+
+<style>
+    .sidebar.h-sidebar .nav-list {
+        border-width: 0;
+        border-top: 2px solid #79B0CE;
+        border-bottom: 2px solid #79B0CE;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#load_home").on("click", function () {
+            $("#content").load("content.html");
+        });
+    });
+</script>
+<div class="main-content-inner">
+    <div id="sidebar2" class="sidebar h-sidebar navbar-collapse collapse ace-save-state" data-sidebar="true" data-sidebar-scroll="true" data-sidebar-hover="true">
+        <ul class="nav nav-list" style="top: 0px;">
+            <li class="hover"><a href="#" id="profilegrid"><i class="menu-icon fa fa-database"></i><span class="menu-text"> Employee DB </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileDetail"><i class="menu-icon fa fa-users"></i><span class="menu-text"> Profile </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileAddress"><i class="menu-icon fa fa-map"></i><span class="menu-text"> Address </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileJob"><i class="menu-icon fa fa-newspaper-o"></i><span class="menu-text"> Job </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileBank"><i class="menu-icon fa fa-dollar"></i><span class="menu-text"> Bank </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileIdentity"><i class="menu-icon fa fa-qrcode"></i><span class="menu-text"> Identity </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileDependant"><i class="menu-icon fa fa-sitemap"></i><span class="menu-text"> Dependant </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileEdu"><i class="menu-icon fa fa-bank"></i><span class="menu-text"> Education </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileTraining"><i class="menu-icon fa fa-book"></i><span class="menu-text"> Training </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileLanguage"><i class="menu-icon fa fa-language"></i><span class="menu-text"> Language </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileSKill"><i class="menu-icon fa fa-star"></i><span class="menu-text"> Skill </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileCertification"><i class="menu-icon fa fa-briefcase"></i><span class="menu-text"> Certification </span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileMatrix"><i class="menu-icon fa fa-server"></i><span class="menu-text"> Matrix </span></a><b class="arrow"></b></li>
+
+        </ul><!-- /.nav-list -->
+    </div>
+    <div class="page-content">
+        
+        <div class="page-header">
+            <h1>Employee Management </h1>
+        </div><!-- /.page-header -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="invisible" id="contentGrid">1</div>
+                <div class="invisible" id="contentDetail">1</div>
+                <div class="invisible" id="contentAddress">1</div>
+                <div class="invisible" id="contentJob">1</div>
+                <div class="invisible" id="contentBank">1</div>
+                <div class="invisible" id="contentIdentity">1</div>
+                <div class="invisible" id="contentDependant">1</div>
+                <div class="invisible" id="contentEdu">1</div>
+                <div class="invisible" id="contentTraining">1</div>
+                <div class="invisible" id="contentLanguage">1</div>
+                <div class="invisible" id="contentSkill">1</div>
+                <div class="invisible" id="contentCertification">1</div>
+                <div class="invisible" id="contentMatrix">1</div>
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div>
