@@ -21,6 +21,23 @@ namespace HRIS_R03.Controllers.api
 
         // GET: api/list
         [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getOrganization")]
+        [System.Web.Http.Route("api/list/getOrganization")]
+        public IEnumerable<LOV> getOrganization()
+        {
+            var p = _pServices.getOrganization();
+            if (p != null)
+            {
+                var pEntities = p as List<LOV> ?? p.ToList();
+                if (pEntities.Any())
+                    return pEntities;
+            }
+            // return null;
+            return null;
+        }
+
+        // GET: api/list
+        [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getDatafieldJobLevel")]
         [System.Web.Http.Route("api/list/getDatafieldJobLevel")]
         public IEnumerable<DynamicDatafield> getDatafieldJobLevel()

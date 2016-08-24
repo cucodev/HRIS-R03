@@ -11,10 +11,13 @@
         border-bottom: 2px solid #79B0CE;
     }
 </style>
+<script src="~/Scripts/hrisframework/hris.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        hris.general.bindDropDown("Organization", null);
         $("#load_home").on("click", function () {
             $("#content").load("content.html");
+           
         });
     });
 </script>
@@ -40,7 +43,8 @@
     <div class="page-content">
         
         <div class="page-header">
-            <h1>Employee Management </h1>
+            <h1>Employee Management <div id="Organization"></div></h1>
+            
         </div><!-- /.page-header -->
 
         <div class="row">

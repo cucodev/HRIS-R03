@@ -21,7 +21,24 @@ namespace BusinessServices.InterfaceMethod
             _unitOfWork = new UnitOfWork();
         }
 
-        
+        public IEnumerable<LOV> getOrganization()
+        {
+            List<LOV> ms = new List<LOV>();
+            var vDataDiv = _unitOfWork.organizationRepository.Get();
+            if (vDataDiv.Any())
+            {
+                foreach (organization n in vDataDiv)
+                {
+                    LOV xx = new LOV();
+
+                    xx.label = (n.orgName).TrimEnd();
+                    xx.value = n.orgID;
+                    ms.Add(xx);
+                }
+                return ms.AsEnumerable();
+            }
+            else { return null; };
+        }
 
         public IEnumerable<LOV> getValueType()
         {
@@ -55,7 +72,6 @@ namespace BusinessServices.InterfaceMethod
            
             return ms.AsEnumerable();
         }
-
 
         public IEnumerable<LOV> getEdu()
         {
