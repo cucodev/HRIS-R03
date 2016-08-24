@@ -1,0 +1,284 @@
+﻿
+@{
+    ViewBag.Title = "MyJob";
+    Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
+}
+
+<script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
+<script src=@Url.Content("~/Scripts/jquery.ui.min.js")></script>
+
+<script type="text/javascript">
+    var listJobLevel = hris.list._dbLOV("JobLevel");
+    var listDivision = hris.list._dbLOV("Division");
+    var listLevel = hris.list._dbLOV("Level");
+    var listPosition = hris.list._dbLOV("Position");
+    var listEmpStatus = hris.list._dbLOV("EmpStatus");
+    function loadJob(callback) {
+        var url = "http://localhost:54636/api/profileJob/" + cIDV;
+        // prepare the data
+        var source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'ID', type: 'string' },
+                { name: 'IDV', type: 'string' },
+                { name: 'JobDepartement', type: 'int' },
+                //{ name: 'DepartementName', value: 'JobDepartement', values: { source: listJobLevel.records, value: 'value', name: 'label' } },
+                { name: 'JobDivision', type: 'int' },
+                { name: 'DivisionName', value: 'JobDivision', values: { source: listDivision.records, value: 'value', name: 'label' } },
+                { name: 'JobLocation', type: 'string' },
+                { name: 'JobPosition', type: 'int' },
+                { name: 'PositionName', value: 'JobPosition', values: { source: listPosition.records, value: 'value', name: 'label' } },
+                { name: 'employmentStatus', type: 'int' },
+                { name: 'employmentStatusName', value: 'employmentStatus', values: { source: listEmpStatus.records, value: 'value', name: 'label' } },
+                { name: 'JobLevel', type: 'int' },
+                { name: 'LevelName', value: 'JobLevel', values: { source: listLevel.records, value: 'value', name: 'label' } },
+                { name: 'startDate', type: 'date' },
+                { name: 'endDate', type: 'date' },
+                
+            ],
+            id: 'ID',
+            url: url
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source);
+        $("#JobTable").jqxGrid(
+        {
+            width: '100%',
+            source: dataAdapter,
+            columnsresize: true,
+            columns: [
+                { text: 'Division', datafield: 'DivisionName', minwidth: "25%" },
+                { text: 'Position', datafield: 'PositionName', minwidth: "25%" },
+                { text: 'Level', datafield: 'LevelName', width: "10%" },
+                { text: 'Status', datafield: 'employmentStatusName', width: "10%" }
+            ]
+        });
+
+        if (callback != undefined) {
+            callback();
+        }
+    }
+
+    var Job = {
+        url: "http://localhost:54636/api/profileJob",
+        add: function (data) {
+            console.log("create new", data);
+            data.vCreatedBy = cIDV;
+            $.ajax({
+                url: this.url,
+                method: 'POST',
+                data: data,
+                success: function (o) {
+                    console.log("Sukses", o);
+                    $('#JobTable').jqxGrid('updatebounddata');
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        update: function (data) {
+            console.log("update dulu", data);
+            data.vUpdatedBy = cIDV;
+            $.ajax({
+                url: this.url + "/" + data.ID,
+                method: 'PUT',
+                data: data,
+                success: function (result) {
+                    console.log("Sukses", result);
+                    $('#JobTable').jqxGrid('updatebounddata');
+                },
+                error: function (e) {
+                    console.log("Error", e);
+                }
+            });
+        },
+        Grid: {
+            dataSelected: {},
+            rowSelected: function (o) {
+                console.log("rowSel", o);
+                Job.Grid.dataSelected = o.args.row;
+                console.log("modal data", Job.Grid.dataSelected);
+            }
+        },
+        Modal: {
+            data: {},
+            create: function () {
+                console.log("Create Form");
+                hris.general.bindInput("rowId", null);
+                hris.general.bindInput("JobLocation", null);
+                //hris.general.bindDropDown("Departement", null);
+                hris.general.bindDropDown("Division", null);
+                hris.general.bindDropDown("Position", null); 
+                hris.general.bindDropDown("EmpStatus", null);
+                hris.general.bindDropDown("Level", null);
+            },
+            show: function () {
+                $("#myJobModal").modal("show", true);
+            },
+            clean: function () {
+                console.log("Modal Cleaned");
+                hris.general.cleanInput("rowId");
+                hris.general.cleanInput("JobLocation");
+                hris.general.cleanDropDown("Division");
+                hris.general.cleanDropDown("Position");
+                hris.general.cleanDropDown("EmpStatus");
+                hris.general.cleanDropDown("Level");
+
+            },
+            fill: function () {
+                console.log("Fill Form");
+                var data = Job.Grid.dataSelected;
+                hris.general.bindInput("rowId", data.ID);
+                hris.general.bindInput("JobLocation", data.JobName);
+                //hris.general.bindDropDown("Departement", null);
+                hris.general.bindDropDown("Division", null);
+                hris.general.bindDropDown("Position", null);
+                hris.general.bindDropDown("EmpStatus", null);
+                hris.general.bindDropDown("Level", null);
+            },
+            submit: function () {
+                var data = {
+                    ID: hris.general.getData("rowId"),
+                    IDV: cIDV,
+                    JobName: hris.general.getData("JobName"),
+                    JobLevel: hris.general.getData("JobLevel")
+                }
+                console.log("Modal Submit", data);
+                // Proses save
+                if (data.ID) {
+                    Job.update(data);
+                } else {
+                    Job.add(data);
+                }
+            },
+            add: function () {
+                Job.Modal.clean();
+                Job.Modal.show();
+            },
+            edit: function () {
+                if (Job.Grid.dataSelected.uniqueid) {
+                    Job.Modal.clean();
+                    Job.Modal.fill();
+                    Job.Modal.show();
+                } else {
+                    Job.Modal.error();
+                }
+            },
+            error: function () {
+                $("#myErrorModal").modal("show", true);
+            }
+        },
+    }
+    $(document).ready(function () {
+        loadJob(Job.Modal.create);
+        $("#submit").click(Job.Modal.submit);
+        $("#editButton").click(Job.Modal.edit);
+        $("#addButton").click(Job.Modal.add);
+        $("#JobTable").on('rowselect', Job.Grid.rowSelected);
+    });
+</script>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">Employee</li>
+        <li class="active">Job</li>
+    </ul><!-- /.breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="ace-icon fa fa-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="col-sm-12">
+        <div class="widget-box transparent" id="recent-box">
+            <div class="widget-header">
+                <h4 class="widget-title lighter smaller">
+                    <i class="ace-icon fa fa-rss orange"></i>EMPLOYEE JOB
+                </h4>
+                <div class="widget-toolbar no-border">
+                    <ul class="nav nav-tabs" id="recent-tab">
+                        <li>
+                            <button id="addButton" class="btn btn-success pull-right">Create</button>
+                        </li>
+                        <li>
+                            <button id="editButton" class="btn btn-info pull-right">Update</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main padding-4">
+                    <div id="JobTable"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myJobModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Job Form</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" class="form-control" id="rowId" />
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="JobName">Job Name</label>
+                            <input type="text" class="form-control" id="JobName" />
+                        </div>
+                        <div class="form-group">
+                            <label for="JobLevel">Level</label>
+                            <div class="form-control" id="JobLevel"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="myErrorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Warning</h4>
+            </div>
+            <div class="modal-body">
+                No data selected!
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+

@@ -19,11 +19,15 @@
         data: function (obj) {
             Structure.items = [];
             $.each(obj, function (i, v) {
+                if (i == 0) {
+                    v.parentIDV = null;
+                }
                 var item = new primitives.orgdiagram.ItemConfig({
                     id: v.IDV,
                     parent: v.parentIDV,
                     title: v.Name,
-                    description: v.NIP+"idx"+i
+                    description: v.NIP,
+                    image: v.IDVImagePath
                 });
                 Structure.items.push(item);
             });
@@ -31,7 +35,7 @@
         },
         load: function (callback) {
             $.ajax({
-                url: 'http://localhost:54636/api/profile',
+                url: 'http://localhost:54636/api/employee/getStructure',
                 success: function (obj) {
                     console.log("Obj", obj);
                     Structure.data(obj);
@@ -47,7 +51,7 @@
             var opt = this.options;
 
             opt.items = this.items;
-            opt.cursorItem = cIDV;
+            opt.cursorItem = null;
             opt.hasSelectorCheckbox = primitives.common.Enabled.False;
 
             $("#basicdiagram").orgDiagram(opt);
