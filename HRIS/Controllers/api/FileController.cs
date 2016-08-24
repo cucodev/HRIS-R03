@@ -13,11 +13,29 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
 using System.Web.UI.WebControls;
 
 namespace HRIS.Controllers.api
 {
-    
+    public class ValidateMimeMultipartContentFilter : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(HttpActionContext actionContext)
+        {
+            if (!actionContext.Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+        }
+
+        public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
+        {
+
+        }
+
+    }
+
     public class FileController : ApiController
     {
         private readonly IFileData _pServices;
@@ -30,12 +48,77 @@ namespace HRIS.Controllers.api
         private static readonly string UploadPath = "\\\\HLSCP\\sqlserver\\HRIS\\upload\\"; //Path.GetTempPath();
         private static readonly string UploadImagePath = "\\\\HLSCP\\sqlserver\\HRIS\\personImage\\"; //Path.GetTempPath();
 
+        //===============================================================================================================
+
+        public class FileResult
+        {
+            public IEnumerable<string> FileNames { get; set; }
+            public string Description { get; set; }
+            public DateTime CreatedTimestamp { get; set; }
+            public DateTime UpdatedTimestamp { get; set; }
+            public string DownloadLink { get; set; }
+            public IEnumerable<string> ContentTypes { get; set; }
+            public IEnumerable<string> Names { get; set; }
+        }
+
+        private static readonly string ServerUploadFolder = "C:\\Temp"; //Path.GetTempPath();
+
+        [HttpPost]
+        [Route("api/file/UploadMultipleFiles")]
+        [ActionName("UploadMultipleFiles")]
+        [ValidateMimeMultipartContentFilter]
+        public async Task<FileResult> UploadMultipleFiles()
+        {
+            var provider = new CustomMultipartFormDataStreamProvider(UploadPath);
+            try
+            {
+                var streamProvider = StreamConversion();
+                await streamProvider.ReadAsMultipartAsync(provider);
+                return new FileResult
+                {
+                    FileNames = provider.FileData.Select(entry => entry.LocalFileName),
+                    Names = provider.FileData.Select(entry => entry.Headers.ContentDisposition.FileName),
+                    Description = provider.FormData["description"],
+                    CreatedTimestamp = DateTime.UtcNow,
+                    UpdatedTimestamp = DateTime.UtcNow,
+                    DownloadLink = "TODO, will implement when file is persisited"
+                };
+            }
+            catch (System.Exception e)
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        private StreamContent StreamConversion()
+        {
+            Stream reqStream = Request.Content.ReadAsStreamAsync().Result;
+            var tempStream = new MemoryStream();
+            reqStream.CopyTo(tempStream);
+
+            tempStream.Seek(0, SeekOrigin.End);
+            var writer = new StreamWriter(tempStream);
+            writer.WriteLine();
+            writer.Flush();
+            tempStream.Position = 0;
+
+            var streamContent = new StreamContent(tempStream);
+            foreach (var header in Request.Content.Headers)
+            {
+                streamContent.Headers.Add(header.Key, header.Value);
+            }
+            return streamContent;
+        }
+
+        //===============================================================================================================
+
         [HttpPost]
         [Route("api/file/UploadMultiFiles")]
         [ActionName("UploadMultiFiles")]
         public IEnumerable<String> UploadMultiFiles()
         {
             List<string> Fx = new List<string>();
+            //var httpPostedFile = HttpContext.Current.Request.Files["UploadedImage"];
             var streamProvider = new CustomMultipartFormDataStreamProvider(UploadPath);
             
             Request.Content.ReadAsMultipartAsync(streamProvider);
@@ -57,7 +140,7 @@ namespace HRIS.Controllers.api
         [HttpPost]
         [Route("api/file/UploadImageFiles")]
         [ActionName("UploadImageFiles")]
-        public void UploadImageFiles()
+        public Task<IEnumerable<FileDesc>> UploadImageFiles()
         {
             string UploadPath = "\\\\HLSCP\\sqlserver\\HRIS\\personImage\\";
 
@@ -82,10 +165,12 @@ namespace HRIS.Controllers.api
                     return fileInfo;
                 });
 
-                //return task;
+                return task;
             }
             else
             {
+                //var info = new FileInfo(null);
+               // return new FileDesc("error","error",0);
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable, "This request is not properly formatted"));
             }
         }
