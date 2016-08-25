@@ -25,8 +25,8 @@
                 var item = new primitives.orgdiagram.ItemConfig({
                     id: v.IDV,
                     parent: v.parentIDV,
-                    title: v.Name,
-                    description: v.NIP,
+                    title: v.IDVName,
+                    description: "NIP:"+v.NIP,
                     image: v.IDVImagePath
                 });
                 Structure.items.push(item);
