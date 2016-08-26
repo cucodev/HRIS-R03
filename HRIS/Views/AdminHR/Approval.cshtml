@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Mailbox";
+    ViewBag.Title = "HR - Approval";
     Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
 }
 
@@ -9,8 +9,6 @@
         border: none;
         border-left-width: 0;
     }
-
-
 </style>
 
 <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
@@ -56,30 +54,21 @@
 
         var source = [
             {
-                icon: "@Url.Content("~/Content/jqwidgets/images/mailIcon.png")", label: "Mail", expanded: true, items: [
-                    { icon: "@Url.Content("~/Content/jqwidgets/images/calendarIcon.png")", label: "Calendar" },
-                    { icon: "@Url.Content("~/Content/jqwidgets/images/contactsIcon.png")", label: "Timesheets", selected: true }
-                ]
-            },
-            {
                 icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Status", expanded: true, items: [
                  { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Profile Update", value: "txProfile" },
-                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Notifications", value: "txNotifications" },
-                 { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "News", value: "txNews" },
                  { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Leaves", value: "txLeave" },
                  { icon: "@Url.Content("~/Content/jqwidgets/images/folder.png")", label: "Medical", value: "txMedical" },
                 ]
             },
                 { icon: "@Url.Content("~/Content/jqwidgets/images/recycle.png")", label: "Declined Items" },
-                { icon: "@Url.Content("~/Content/jqwidgets/images/notesIcon.png")", label: "Approved Items" },
-                { icon: "@Url.Content("~/Content/jqwidgets/images/favorites.png")", label: "Applied Items" }
+                { icon: "@Url.Content("~/Content/jqwidgets/images/notesIcon.png")", label: "Approved Items" }
         ];
 
 
         $('#jqxTree').jqxTree({ theme: 'orange',source: source, width: 200, height: '100%'});
         $('#jqxTree').jqxTree('selectItem', null);
 
-        $('#Events').jqxPanel({ height: '250px', width: '200px' });
+        $('#Events').jqxPanel({ height:'100%', width: '100%' });
         $('#Events').css('border', 'none');
         // on to 'expand', 'collapse' and 'select' events.
         $('#jqxTree').on('expand', function (event) {
@@ -245,14 +234,14 @@
 
 
 
-            <!---<div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                            
-                    </div>
-                    <div class="col-md-9">
-                        
-                    </div>
-                </div>
-            </div>
-            -->
+<!---<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-9">
+
+        </div>
+    </div>
+</div>
+-->

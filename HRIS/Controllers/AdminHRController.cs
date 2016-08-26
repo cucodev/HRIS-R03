@@ -42,6 +42,11 @@ namespace HRIS_R03.Controllers
             return View(User);
         }
 
+        public ActionResult Approval()
+        {
+            return View(User);
+        }
+
         // GET: AdminHR
         public ActionResult Index()
         {

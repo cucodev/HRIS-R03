@@ -14,7 +14,7 @@
     var listPosition = hris.list._dbLOV("Position");
     var listEmpStatus = hris.list._dbLOV("EmpStatus");
     function loadJob(callback) {
-        var url = "http://localhost:54636/api/profileJob/" + cIDV;
+        var url = "/api/profileJob/" + cIDV;
         // prepare the data
         var source =
         {
@@ -62,7 +62,7 @@
     }
 
     var Job = {
-        url: "http://localhost:54636/api/profileJob",
+        url: "/api/profileJob",
         add: function (data) {
             console.log("create new", data);
             data.vCreatedBy = cIDV;

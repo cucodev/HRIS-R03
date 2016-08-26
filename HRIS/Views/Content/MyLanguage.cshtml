@@ -10,7 +10,7 @@
 <script type="text/javascript">
     var listSkillLevel = hris.list._dbLOV("SkillLevel");
     function loadLanguage(callback) {
-        var url = "http://localhost:54636/api/profileLanguage/" + cIDV;
+        var url = "/api/profileLanguage/" + cIDV;
         // prepare the data
         var source =
         {
@@ -46,7 +46,7 @@
     }
 
     var Language = {
-        url: "http://localhost:54636/api/profileLanguage",
+        url: "/api/profileLanguage",
         add: function (data) {
             console.log("create new", data);
             data.vCreatedBy = cIDV;

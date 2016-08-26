@@ -98,18 +98,10 @@
             <div id="labelCommon">
                 <div class="row" style="margin-top:0">
                     <div class="col-xs-5">
-                        <div class="HR-Div alert-info">Balance </div>
+                        <div class="HR-Div alert-info">Entitled </div>
                     </div>
                     <div class="col-xs-5">
-                        <div class="HR-Div" id="totalBalance"> Days</div>
-                    </div>
-                </div>
-                <div class="row" style="margin-top:0">
-                    <div class="col-xs-5">
-                        <div class="HR-Div alert-info">Remaining </div>
-                    </div>
-                    <div class="col-xs-7">
-                        <div class="HR-Div" id="totalRemaining"> Days</div>
+                        <div class="HR-Div" id="totalEntitled"> Days</div>
                     </div>
                 </div>
             </div>
@@ -358,17 +350,17 @@
             $("#totalAnnualCarryLabel").show();
             $("#totalAnnualCurrentLabel").show();
             $('#PolicyType').hide();
-            $('labelCommon').hide();
+            //$('labelCommon').hide();
             clear();
         });
         $('.jqx-switchbutton').on('checked', function (event) {
             $('#isAnnual').jqxSwitchButton({ onLabel: 'ANNUAL' });
             $('#PolicyType').show();
             $('labelCommon').show();
-            $("#totalAnnualCarry").hide();
-            $("#totalAnnualCurrent").hide();
-            $("#totalAnnualCarryLabel").hide();
-            $("#totalAnnualCurrentLabel").hide();
+            //$("#totalAnnualCarry").hide();
+            //$("#totalAnnualCurrent").hide();
+            //$("#totalAnnualCarryLabel").hide();
+            //$("#totalAnnualCurrentLabel").hide();
             clear();
         });
         $('#PolicyType').on('select', function (event) {

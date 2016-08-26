@@ -14,12 +14,216 @@
 <script src="~/Scripts/hrisframework/hris.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        Profile.HideAll();
+        $("#contentGrid").toggle();
         hris.general.bindDropDown("Organization", null);
         $("#load_home").on("click", function () {
             $("#content").load("content.html");
-           
+        });
+
+        $("#Organization").on('change', Profile.DB.Load);
+        
+        $("#profilegrid").on("click", function () {
+            console.log("Grid clicked");
+            Profile.HideAll();
+            $("#contentGrid").toggle();
+        });
+        $("#profileJob").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentJob").toggle();
+                console.log(Profile.Job.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Job.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Job.Load();
+                }
+            }
+        });
+
+        $('#employeeDB').on('rowselect', function (event) {
+            // event arguments.
+            var args = event.args;
+            // row's bound index.
+            var rowBoundIndex = args.rowindex;
+            // row's data. The row's data object or null(when all rows are being selected or unselected with a single action). If you have a datafield called "firstName", to access the row's firstName, use var firstName = rowData.firstName;
+            var rowData = args.row;
+            console.log("DB Grid row", rowData);
+            Profile.DB.selectedRow = rowData;
         });
     });
+
+    var Profile = {
+        DB: {
+            Url: '/api/employee/getEmployeeByOrg/',
+            Data: [],
+            selectedRow: {},
+            Load: function (o) {
+                var id = o.args.item.value;
+                Profile.DB.Grid.Url = Profile.DB.Url +""+ id;
+                Profile.DB.Grid.Render();
+            },
+            Grid: {
+                Url: "",
+                Render: function () {
+                    console.log("url:", Profile.DB.Grid.Url);
+                    var source = {
+                        datatype: "json",
+                        datafields: [
+                            { name: 'ID', type: 'int' },
+                            { name: 'IDV', type: 'int' },
+                            { name: 'NIP', type: 'string' },
+                            { name: 'Name', type: 'string' },
+                            { name: 'NickName', type: 'string' },
+                        ],
+                        id: 'ID',
+                        url: Profile.DB.Grid.Url
+                    }
+                    var dataAdapter = new $.jqx.dataAdapter(source);
+                    $("#employeeDB").jqxGrid({
+                        width: '100%',
+                        source: dataAdapter,
+                        columnsresize: true,
+                        columns: [
+                            { text: 'NIP', datafield: 'NIP', minwidth: "25%" },
+                            { text: 'Name', datafield: 'Name', minwidth: "25%" },
+                            { text: 'NickName', datafield: 'NickName', minwidth: "25%" },
+                        ]
+                    });
+                    $("#employeeDB").on("bindingcomplete", function (event) {
+                        console.log("binding finish");
+                    });
+                }
+            },
+        },
+        Detail: {
+            Data: [],
+            Load: function () {
+                $.ajax({
+                    url: '',
+                    success: function (s) {
+                        console.log("Detail", s);
+                    },
+                    error: function(e){}
+                });
+            },
+        },
+        Address: {},
+        Job: {
+            ID: "",
+            Data: [],
+            Load: function () {
+                Profile.Job.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: '/api/profileJob/History?id=' + Profile.Job.ID,
+                    success: function (data) {
+                        Profile.Job.Data = data;
+                        Profile.Job.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-job").empty();
+                $("#task-tab-job").empty();
+                $.each(Profile.Job.Data, function (i, v) {
+                    $('#recent-tab-job').append('<li><a data-toggle="tab" href="#task-tab-job' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Job.CreateForm(v);
+                });
+                $('#recent-tab-job li:first').addClass("active");
+                $("#task-tab-job div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-job")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-job' + data.ID));
+                $("#task-tab-job" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("form-group")
+                    .html($("<input>").addClass("form-control")
+                    .attr("id", "IDV" + data.ID)
+                    .attr("disabled", "disabled")
+                    .attr("type", "text")
+                    .val(data.ID))
+                    )
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "Org" + data.ID).text("Department"))
+                    .append($("<div>").addClass("form-control").attr('id', 'Org' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "Division" + data.ID).text("Division"))
+                    .append($("<div>").addClass("form-control").attr('id', 'Division' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "Level" + data.ID).text("Level"))
+                    .append($("<div>").addClass("form-control").attr('id', 'Level' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "Position" + data.ID).text("Position"))
+                    .append($("<div>").addClass("form-control").attr('id', 'Position' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "Location" + data.ID).text("Location"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type","text").attr('id', 'Location' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "Status" + data.ID).text("Status"))
+                    .append($("<div>").addClass("form-control").attr('id', 'Status' + data.ID)))))
+                    );
+
+                
+                Profile.Job.BindForm(data);
+            },
+            BindForm: function (data) {
+                Profile.Bind.DropDown("Org" + data.ID, "Org", data.JobDepartement);
+                Profile.Bind.DropDown("Division" + data.ID, "Division", data.JobDivision);
+                Profile.Bind.DropDown("Level" + data.ID, "level", data.JobLevel);
+                Profile.Bind.DropDown("Position" + data.ID, "Position", data.JobPosition);
+                Profile.Bind.DropDown("Status" + data.ID, "EmpStatus", data.employmentStatus);
+                Profile.Bind.Input("Location" + data.ID, data.JobLocation);
+            }
+        },
+        Bank: {},
+        Identity: {},
+        Dependant: {},
+        Education: {},
+        Training: {},
+        Language: {},
+        Skill: {},
+        Certification: {},
+        Matrix: {},
+        Bind: {
+            DropDown: function (div, list, value) {
+                var i = $("#" + div);
+                i.jqxDropDownList({ source: hris.list._getLOV(list), disabled: false, height: '25px', displayMember: "label", valueMember: "value", width: '96%' });
+                if (value !== null) { i.jqxDropDownList('val', value); }
+            },
+            Input: function (div, value) {
+                var i = $("#" + div);
+                i.jqxInput({ width: "99%", height: '35px' });
+                value = $.trim(value);
+                if (value !== null) { i.jqxInput('val', value); }
+            }
+        },
+        HideAll: function () {
+            $("#contentGrid,#contentDetail,#contentAddress,#contentJob,#contentBank,#contentIdentity,#contentDependant,#contentEdu,#contentTraining,#contentLanguage,#contentSkill,#contentCertification,#contentMatrix").hide();
+        }
+    }
 </script>
 <div class="main-content-inner">
     <div id="sidebar2" class="sidebar h-sidebar navbar-collapse collapse ace-save-state" data-sidebar="true" data-sidebar-scroll="true" data-sidebar-hover="true">
@@ -50,21 +254,72 @@
         <div class="row">
             <div class="col-xs-12">
                 <!-- PAGE CONTENT BEGINS -->
-                <div class="invisible" id="contentGrid">1</div>
-                <div class="invisible" id="contentDetail">contentDetail</div>
-                <div class="invisible" id="contentAddress">1</div>
-                <div class="invisible" id="contentJob">1</div>
-                <div class="invisible" id="contentBank">1</div>
-                <div class="invisible" id="contentIdentity">1</div>
-                <div class="invisible" id="contentDependant">1</div>
-                <div class="invisible" id="contentEdu">1</div>
-                <div class="invisible" id="contentTraining">1</div>
-                <div class="invisible" id="contentLanguage">1</div>
-                <div class="invisible" id="contentSkill">1</div>
-                <div class="invisible" id="contentCertification">1</div>
-                <div class="invisible" id="contentMatrix">1</div>
+                <div id="contentGrid">
+                    <div id="employeeDB"></div>
+                </div>
+                <div id="contentDetail">1</div>
+                <div id="contentAddress">1</div>
+                <div id="contentJob">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-job">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>JOB
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-job">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-job" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+                                                
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
+                <div id="contentBank">1</div>
+                <div id="contentIdentity">1</div>
+                <div id="contentDependant">1</div>
+                <div id="contentEdu">1</div>
+                <div id="contentTraining">1</div>
+                <div id="contentLanguage">1</div>
+                <div id="contentSkill">1</div>
+                <div id="contentCertification">1</div>
+                <div id="contentMatrix">1</div>
 
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.page-content -->
+</div>
+
+<div id="myErrorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Warning</h4>
+            </div>
+            <div class="modal-body">
+                No data selected!
+            </div>
+
+        </div>
+
+    </div>
 </div>
