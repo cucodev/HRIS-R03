@@ -42,6 +42,33 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="Entities-Deployment" Order="1">
+          <Destination Path="Data Source=HLSCP%3bInitial Catalog=HRIS%3bIntegrated Security=True" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=HLSCP%3bInitial Catalog=HRIS%3bIntegrated Security=True%3bApplication Name=EntityFramework" ScriptSchema="True" ScriptData="True" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Release\AutoScripts\Entities-Deployment_SchemaAndData.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="HRISEntities-Deployment" Order="2">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=HLSCP%3bInitial Catalog=HRIS%3bIntegrated Security=True%3bApplication Name=EntityFramework" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Release\AutoScripts\HRISEntities-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="DefaultConnection-Deployment" Order="3">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=%28LocalDb%29\MSSQLLocalDB%3bAttachDbFilename=|DataDirectory|\aspnet-HRIS-20160718122021.mdf%3bInitial Catalog=aspnet-HRIS-20160718122021%3bIntegrated Security=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Release\AutoScripts\DefaultConnection-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <IncludeIisSettings>true</IncludeIisSettings>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -793,6 +820,7 @@
     <Content Include="Content\assets\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\assets\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fullcalendar\CHANGELOG.txt" />
     <Content Include="Scripts\fullcalendar\CONTRIBUTING.txt" />
@@ -1013,7 +1041,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Sidebar\sidebar-menu.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
