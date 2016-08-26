@@ -10,7 +10,7 @@
 <script type="text/javascript">
     var listSkillLevel = hris.list._dbLOV("SkillLevel");
     function loadSkill(callback) {
-        var url = "http://localhost:54636/api/profileSkill/" + cIDV;
+        var url = "/api/profileSkill/" + cIDV;
         // prepare the data
         var source =
         {
@@ -48,7 +48,7 @@
         hris.general.bindDropDown("skillLevel", null);
     }
     var Skill = {
-        url: "http://localhost:54636/api/profileSkill",
+        url: "/api/profileSkill",
         add: function (data) {
             console.log("create new", data);
             data.vCreatedBy = cIDV;

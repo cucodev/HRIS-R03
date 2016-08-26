@@ -12,7 +12,7 @@
     var listEdu = hris.list._dbLOV("Edu");
     var listCountry = hris.list._dbLOV("Country");
     function loadEducation(callback) {
-        var url = "http://localhost:54636/api/profileEdu/" + cIDV;
+        var url = "/api/profileEdu/" + cIDV;
         // prepare the data
         var source =
         {
@@ -52,7 +52,7 @@
     }
 
     var Education = {
-        url: "http://localhost:54636/api/profileEdu",
+        url: "/api/profileEdu",
         add: function (data) {
             console.log("create new", data);
             data.vCreatedBy = cIDV;

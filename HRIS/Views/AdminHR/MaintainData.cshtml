@@ -10,7 +10,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             th = "ui-redmond";
-            $('#dataForm').jqxTabs({ theme: th, width: '100%', height: '100%' });
+           // $('#dataForm').jqxTabs({ theme: th, width: '100%', height: '100%' });
         })
     </script>
 }
@@ -30,25 +30,17 @@
         </div>
     </div>
 </div>
-<div class="row" style="margin-left: 3px">
-
-        <h1 style="margin-bottom:1px; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:0;">Maintain Master Data</h1>
-        <h2 style="margin-bottom:15px; border-bottom: solid 1px #d7e9f3; padding-left:30px; padding-top:0;  margin-top:0; font-size:14px; font-family:Calibri;">Master Data</h2>
-</div>
-    <div class="row" style="margin-left: 3px">
-        <div id="dataForm">
-            <ul>
-                <li style="margin-left:30px">Matrix Role</li>
-                <li>MATRIX - HRD STANDARD</li>
-            </ul>
-            <div style=" margin-right:20px;margin-top:20px; margin-left:30px"></div>
-            <div style=" margin-top:20px;">
-
+<div class="row">
+    <div class="col-md-12">
+        <div class="container">
+            <div class="row">
+          
                 @{ Html.RenderPartial("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml"); }
-
             </div>
         </div>
     </div>
+</div>
+
 
          
    

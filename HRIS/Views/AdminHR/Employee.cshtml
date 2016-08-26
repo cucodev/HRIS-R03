@@ -56,7 +56,7 @@
 
     var Profile = {
         DB: {
-            Url: 'http://localhost:54636/api/employee/getEmployeeByOrg/',
+            Url: '/api/employee/getEmployeeByOrg/',
             Data: [],
             selectedRow: {},
             Load: function (o) {
@@ -116,7 +116,7 @@
             Load: function () {
                 Profile.Job.ID = Profile.DB.selectedRow.IDV;
                 $.ajax({
-                    url: 'http://localhost:54636/Api/profileJob/History?id=' + Profile.Job.ID,
+                    url: '/api/profileJob/History?id=' + Profile.Job.ID,
                     success: function (data) {
                         Profile.Job.Data = data;
                         Profile.Job.CreateTab();

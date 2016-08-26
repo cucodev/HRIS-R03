@@ -10,7 +10,7 @@
 <script type="text/javascript">
     var listName = hris.list._getLOV("Name");
     function loadDependent(callback) {
-        var url = "http://localhost:54636/api/profileDependent/" + cIDV;
+        var url = "/api/profileDependent/" + cIDV;
         // prepare the data
         var source =
         {
@@ -48,7 +48,7 @@
 
     }
     var Dependent = {
-        url: "http://localhost:54636/api/profileDependent/",
+        url: "/api/profileDependent/",
         add: function (data) {
             console.log("create new", data);
             $.ajax({

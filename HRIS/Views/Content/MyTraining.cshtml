@@ -12,7 +12,7 @@
     function loadTraining(callback) {
         var CertificateName = Training.Modal.custom.list();
         console.log("ako", CertificateName);
-        var url = "http://localhost:54636/api/profileTraining/" + cIDV;
+        var url = "/api/profileTraining/" + cIDV;
         // prepare the data
         var source =
         {
@@ -51,7 +51,7 @@
     }
 
     var Training = {
-        url: "http://localhost:54636/api/profileTraining",
+        url: "/api/profileTraining",
         add: function (data) {
             console.log("create new", data);
             data.vCreatedBy = cIDV;

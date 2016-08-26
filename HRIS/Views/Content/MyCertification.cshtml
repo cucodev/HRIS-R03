@@ -11,7 +11,7 @@
     var listCity = hris.list._dbLOV("Kabupaten");
     var listCountry = hris.list._dbLOV("Country");
     function loadCertification(callback) {
-        var url = "http://localhost:54636/api/profileCertification/" + cIDV;
+        var url = "/api/profileCertification/" + cIDV;
         // prepare the data
         var source =
         {
@@ -54,7 +54,7 @@
         
     }
     var Certification = {
-        url: "http://localhost:54636/api/profileCertification",
+        url: "/api/profileCertification",
         add: function (data) {
             console.log("create new", data);
             data.vCreatedBy = cIDV;

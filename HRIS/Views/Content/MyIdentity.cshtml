@@ -12,7 +12,7 @@
     var listCountry = hris.list._dbLOV("Country");
 
     function loadIdentity(cb) {
-        var url = "http://localhost:54636/api/profileIdentity/" + cIDV;
+        var url = "/api/profileIdentity/" + cIDV;
         // prepare the data
         var source =
         {
@@ -48,7 +48,7 @@
         }
     }
     var Identity = {
-        url: "http://localhost:54636/api/profileIdentity",
+        url: "/api/profileIdentity",
         add: function (data) {
             console.log("create new", data);
             data.vCreatedBy = cIDV;
