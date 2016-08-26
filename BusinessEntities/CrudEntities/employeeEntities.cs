@@ -49,20 +49,18 @@ namespace BusinessEntities.CrudEntities
         public string NIP { get; set; }
         public string Name { get; set; }
         public string NickName { get; set; }
-        public Nullable<int> Nationality { get; set; }
+        public string Nationality { get; set; }
         public string Birthplace { get; set; }
         public Nullable<System.DateTime> Birthdate { get; set; }
-        public Nullable<int> Marital { get; set; }
-        public Nullable<int> Religion { get; set; }
-        public Nullable<int> Gender { get; set; }
+        public string Marital { get; set; }
+        public string Religion { get; set; }
+        public string Gender { get; set; }
         public Nullable<int> OrganizationID { get; set; }
-        public Nullable<int> vCreatedBy { get; set; }
-        public Nullable<int> vUpdatedBy { get; set; }
+        public string vCreatedBy { get; set; }
+        public string vUpdatedBy { get; set; }
         public Nullable<int> isDeleted { get; set; }
         public Nullable<System.DateTime> createTime { get; set; }
         public Nullable<System.DateTime> updateTime { get; set; }
-
-       
     }
 
     public class employeeLeaveEntities

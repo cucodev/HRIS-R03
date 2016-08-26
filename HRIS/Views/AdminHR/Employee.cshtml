@@ -75,6 +75,10 @@
                             { name: 'IDV', type: 'int' },
                             { name: 'NIP', type: 'string' },
                             { name: 'Name', type: 'string' },
+                            { name: 'Gender', type: 'string' },
+                            { name: 'Religion', type: 'string' },
+                            { name: 'Marital', type: 'string' },
+                            { name: 'Nationality', type: 'string' },
                             { name: 'NickName', type: 'string' },
                         ],
                         id: 'ID',
@@ -84,9 +88,12 @@
                     $("#employeeDB").jqxGrid({
                         width: '100%',
                         source: dataAdapter,
+                        filterable: true,
+                        sortable: true,
+                        editable: true,
                         columnsresize: true,
                         columns: [
-                            { text: 'NIP', datafield: 'NIP', minwidth: "25%" },
+                            { text: 'NIP', editable: false, datafield: 'NIP', minwidth: "25%" },
                             { text: 'Name', datafield: 'Name', minwidth: "25%" },
                             { text: 'NickName', datafield: 'NickName', minwidth: "25%" },
                         ]

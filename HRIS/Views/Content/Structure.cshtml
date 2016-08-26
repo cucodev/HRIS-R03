@@ -39,7 +39,7 @@
         },
         load: function (callback) {
             $.ajax({
-                url: '/api/employee/getStructure',
+                url: 'api/employee/getStructure',
                 success: function (obj) {
                     console.log("Obj", obj);
                     Structure.data(obj);

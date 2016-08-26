@@ -20,6 +20,7 @@ namespace BusinessServices.InterfaceMethod
         private readonly UnitOfWork _u;
         private readonly Mapping _map;
         private readonly FileDataServices _file;
+        private readonly ListServices _list;
         private int isDelete = 0;
 
         public employeeServices()
@@ -27,6 +28,7 @@ namespace BusinessServices.InterfaceMethod
             _u = new UnitOfWork();
             _map = new Mapping();
             _file = new FileDataServices();
+            _list = new ListServices();
         }
 
         public IEnumerable<employeeStructure> getStructure()
@@ -77,6 +79,7 @@ namespace BusinessServices.InterfaceMethod
             return approvalIDV.parentIDV.HasValue ? approvalIDV.parentIDV.Value : 0;
         }
 
+
         public IEnumerable<employeeDetail> getEmployeeByOrg(int OrgID)
         {
             List<employeeDetail> ms = new List<employeeDetail>();
@@ -91,16 +94,17 @@ namespace BusinessServices.InterfaceMethod
                         employeeDetail bc = new employeeDetail();
                         bc.ID = emp.ID;
                         bc.IDV = emp.IDV;
-                        bc.Marital = emp.Marital;
+                        var xMarital = emp.Marital;
+                        bc.Marital = _list.getStringCatName(emp.Marital ?? 0);
                         bc.Name = emp.Name;
-                        bc.Nationality = emp.Nationality;
+                        bc.Nationality = _list.getStringCatName(emp.Nationality ?? 0);
                         bc.NickName = emp.NickName;
                         bc.NIP = emp.NIP;
-                        bc.Religion = emp.Religion;
+                        bc.Religion = _list.getStringCatName(emp.Religion ?? 0);
                         bc.updateTime = emp.updateTime;
-                        bc.vUpdatedBy = emp.vUpdatedBy;
+                        bc.vUpdatedBy = _list.getStringName(emp.vUpdatedBy ?? 0);
                         bc.createTime = emp.createTime;
-                        bc.vCreatedBy = emp.vCreatedBy;
+                        bc.vCreatedBy = _list.getStringName(emp.vCreatedBy ?? 0);
                         bc.Birthdate = emp.Birthdate;
                         bc.Birthplace = emp.Birthplace;
                         bc.isDeleted = emp.isDeleted;
