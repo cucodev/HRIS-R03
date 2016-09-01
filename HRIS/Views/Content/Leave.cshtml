@@ -338,7 +338,7 @@
         }
 
         function getRoleBasedValue(policyType) {
-            var uri = '/api/employee/getRoleBasedValue/'+ cIDV + '/' + policyType;
+            var uri = baseURL + 'api/employee/getRoleBasedValue/'+ cIDV + '/' + policyType;
             
         }
 
@@ -394,7 +394,7 @@
        
         $('#Apply').on('click', function (event) {
             console.log("Posted: ", data);
-            $.post('/api/employeeForm/postLeave/'+cIDV, { '': data })
+            $.post(baseURL + 'api/employeeForm/postLeave/'+cIDV, { '': data })
                 .done(function(data){
                     console.log("ajax, Data Posted: ", data);
                     BootstrapDialog.show({
@@ -406,7 +406,7 @@
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: '/api/form/postLeave',
+                url: baseURL + 'api/form/postLeave',
                 ContentType: 'application/json; charset=utf-8',
                 data: dataObject,
                 success: function (data, status, xhr) {

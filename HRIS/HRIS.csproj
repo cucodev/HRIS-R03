@@ -34,6 +34,36 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="Entities-Deployment" Order="1">
+          <Destination Path="Data Source=hlscp\sqlexpress%3bInitial Catalog=HRIS%3bIntegrated Security=True" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=.\SQLEXPRESS%3bInitial Catalog=HRIS%3bIntegrated Security=True%3bApplication Name=EntityFramework" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\Entities-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+          <Object Type="DbFullSql">
+            <Source Path="..\Grant.sql" Transacted="False" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="HRISEntities-Deployment" Order="2">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=.\SQLEXPRESS%3bInitial Catalog=HRIS%3bIntegrated Security=True%3bApplication Name=EntityFramework" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\HRISEntities-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="DefaultConnection-Deployment" Order="3">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=.\SQLEXPRESS%3bAttachDbFilename=|DataDirectory|\aspnet-HRIS-20160718122021.mdf%3bInitial Catalog=aspnet-HRIS-20160718122021%3bIntegrated Security=True%3bUser Instance=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\DefaultConnection-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -802,6 +832,7 @@
     <Content Include="Content\Sidebar\font-awesome.min.css" />
     <Content Include="Content\Sidebar\sidebar-menu.css" />
     <Content Include="favicon.ico" />
+    <Content Include="font-awesome\4.5.0\css\font-awesome.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-dialog.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -853,6 +884,18 @@
     <Content Include="Content\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\assets\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\jquery-ui-1.12.0.custom\package.json" />
+    <Content Include="font-awesome\4.5.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="font-awesome\4.5.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="font-awesome\4.5.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="font-awesome\4.5.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="font-awesome\4.5.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <None Include="Properties\PublishProfiles\local iis hris.pubxml" />
+    <None Include="Properties\PublishProfiles\local iis.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fullcalendar\CHANGELOG.txt" />
     <Content Include="Scripts\fullcalendar\CONTRIBUTING.txt" />
@@ -957,19 +1000,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.cs-CZ.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.de-DE.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.en-CA.js" />
     <Content Include="Scripts\jqwidgets\globalize.culture.en-US.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.fr-FR.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.he-IL.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.hr-HR.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.hu-HU.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.it-IT.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.ja-JP.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.lt.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.ru-RU.js" />
-    <Content Include="Scripts\jqwidgets\globalize.culture.sa-IN.js" />
     <Content Include="Scripts\jqwidgets\globalize.js" />
     <Content Include="Scripts\jqwidgets\jqx-all.js" />
     <Content Include="Scripts\jqwidgets\jqxangular.js" />
@@ -1151,6 +1182,8 @@
     <Content Include="Views\AdminHR\Employee.cshtml" />
     <Content Include="Views\Content\MyJob.cshtml" />
     <Content Include="Views\AdminHR\Approval.cshtml" />
+    <Content Include="Views\AdminHR\_roleBasedMatrix.cshtml" />
+    <Content Include="Views\AdminHR\shared\Matrix.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1200,7 +1233,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54636</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

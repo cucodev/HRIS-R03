@@ -6,14 +6,14 @@
 <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#MenuMyMatrix").addClass("active");
+        $("#MenuProfile").addClass("active");
 
         var PolicyName = hris.list._getLOV('PolicyType');
         var ValueName = hris.list._getLOV('ValueType');
 
         //GRID
         //================================================================================================================
-        var url = '/api/employee/getRoleBased/41';
+        var url = baseURL + 'api/employee/getRoleBased/41';
         var source =
             {
                 datatype: "json",

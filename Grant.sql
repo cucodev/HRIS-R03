@@ -1,12 +1,12 @@
-﻿IF NOT EXISTS (SELECT name FROM sys.server_principals WHERE name = 'IIS APPPOOL\DefaultAppPool')
+﻿IF NOT EXISTS (SELECT name FROM sys.server_principals WHERE name = 'IIS APPPOOL\HRIS')
 BEGIN
-    CREATE LOGIN [IIS APPPOOL\DefaultAppPool] 
-      FROM WINDOWS WITH DEFAULT_DATABASE=[master], 
+    CREATE LOGIN [IIS APPPOOL\HRIS] 
+      FROM WINDOWS WITH DEFAULT_DATABASE=[HRIS], 
       DEFAULT_LANGUAGE=[us_english]
 END
 GO
 CREATE USER [HRIS] 
-  FOR LOGIN [IIS APPPOOL\DefaultAppPool]
+  FOR LOGIN [IIS APPPOOL\HRIS]
 GO
 EXEC sp_addrolemember 'db_owner', 'HRIS'
 GO

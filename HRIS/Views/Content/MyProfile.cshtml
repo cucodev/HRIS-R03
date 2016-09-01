@@ -10,8 +10,11 @@
 
 
 <script type="text/javascript">
+    //var baseURL = '@Url.Content("~")';
+    //var baseUrl = document.location.origin;
+    //console.log(baseURL);
     Profile = {
-        url: '/api/profile',
+        url:  baseURL + 'api/profile',
         id: cIDV,
         add: function (data) {
             console.log("Add New", data);

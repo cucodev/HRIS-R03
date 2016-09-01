@@ -11,8 +11,8 @@ namespace HRIS.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-
-            return View();
+            return RedirectToAction("LogOn", "Default");
+            //return View();
         }
     }
 }

@@ -7,38 +7,79 @@
 @section scripts
 {
     <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            th = "ui-redmond";
-           // $('#dataForm').jqxTabs({ theme: th, width: '100%', height: '100%' });
-        })
-    </script>
+    
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="container">
-            <div class="row">
-                <div class="btn-group btn-breadcrumb">
-                    <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
-                    <a href="#" class="btn btn-info">HRD</a>
-                    <a href="#" class="btn btn-success">Maintain Master Data</a>
-                </div>
-                <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
 
-            </div>
-        </div>
+<script src="~/Scripts/hrisframework/hris.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        M.Menu();
+        M.Load.Default();
+    });
+
+    var M = {
+        Menu: function() {
+            $("#MenuHRD").addClass("active");
+        },
+        Load: {
+            Default: function() {
+                M.Load.Matrix();
+            },
+            Matrix: function () {
+                $("#ContentHeader").html("HRD Matrix");
+                //$('#ContentFrame').prop('src', "");
+                $("#Content").html("@{ Html.RenderPartial("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml"); }")
+            },
+            Leave: function () {
+                $("#ContentHeader").html("Leave Setting");
+                $("#Content").load("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml")
+            }
+        },
+        Click: function (tabID) {
+            switch (tabID) {
+                case 'matrixSetting': M.Load.Matrix(); break;
+                case 'leaveSetting': M.Load.Leave(); break;
+                default: M.Load.Matrix()
+            }
+        }
+    };
+
+</script>
+<div class="main-content-inner">
+    <div id="sidebar2" class="sidebar h-sidebar navbar-collapse collapse ace-save-state" data-sidebar="true" data-sidebar-scroll="true" data-sidebar-hover="true">
+        <ul class="nav nav-list" style="top: 0px;">
+            <li class="hover"><a href="#" id="matrixSetting"><i class="menu-icon fa fa-database"></i><span class="menu-text">Employee DB</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="leaveSetting"><i class="menu-icon fa fa-users"></i><span class="menu-text">Profile</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileAddress"><i class="menu-icon fa fa-map"></i><span class="menu-text">Address</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileJob"><i class="menu-icon fa fa-newspaper-o"></i><span class="menu-text">Job</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileBank"><i class="menu-icon fa fa-dollar"></i><span class="menu-text">Bank</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileIdentity"><i class="menu-icon fa fa-qrcode"></i><span class="menu-text">Identity</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileDependant"><i class="menu-icon fa fa-sitemap"></i><span class="menu-text">Dependant</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileEdu"><i class="menu-icon fa fa-bank"></i><span class="menu-text">Education</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileTraining"><i class="menu-icon fa fa-book"></i><span class="menu-text">Training</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileLanguage"><i class="menu-icon fa fa-language"></i><span class="menu-text">Language</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileSKill"><i class="menu-icon fa fa-star"></i><span class="menu-text">Skill</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileCertification"><i class="menu-icon fa fa-briefcase"></i><span class="menu-text">Certification</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileMatrix"><i class="menu-icon fa fa-server"></i><span class="menu-text">Matrix</span></a><b class="arrow"></b></li>
+
+        </ul><!-- /.nav-list -->
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="container">
-            <div class="row">
-          
-                @{ Html.RenderPartial("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml"); }
-            </div>
-        </div>
-    </div>
+    <div class="page-content">
+
+        <div class="page-header">
+            <h1<div id="ContentHeader">MASTER DATA</div></h1>
+
+        </div><!-- /.page-header -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <iframe id="ContentFrame"></iframe>
+                <div id="Content"></div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
 </div>
 
 
