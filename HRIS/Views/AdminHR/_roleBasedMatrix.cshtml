@@ -1,0 +1,389 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        hris.general.bindButton('categoryMatrixUpdate');
+        hris.general.bindButton('categoryMatrixCreate');
+        hris.general.bindButton('categoryMatrixDelete');
+        
+        var PolicyRootName = hris.list._getLOV('PolicyRootType');
+        console.log("PolicyRootName: ", PolicyRootName);
+
+        //POPUP
+        //================================================================================================================
+        var main = $('body');
+        var offset = main.offset();
+
+
+
+        $('#customWindow2').jqxWindow({
+            width: 400,
+            isModal: true,
+            modalOpacity: 0.9,
+            height: 265, resizable: false,
+            cancelButton: $('#cancelCategory'),
+            position: { x: offset.left + 50, y: offset.top + 50 },
+            initContent: function () {
+                hris.general.bindDropDown("PolicyRootType", null);
+                hris.general.bindDropDown("ValueType", null);
+                hris.general.bindInput("CatPolicyName");
+                hris.general.bindButton('submitCategory');
+                hris.general.bindButton('cancelCategory');
+                //$('#cancelButton').jqxButton({ width: '120px', height: '45px' });
+            }
+        });
+        $('#customWindow2').jqxWindow('close');
+        $("#customWindow2").css('visibility', 'visible');
+
+        //Button & PopOver
+        //================================================================================================================
+        
+        $("#manageCategory").jqxPopover({ theme: 'fresh', offset: { left: -50, top: 0 }, arrowOffsetValue: 50, title: "Manage Category", showCloseButton: true, selector: $("#categoryButton") });
+
+
+        //GRID
+        //================================================================================================================
+        var url = baseURL + 'api/role/getRoleBasedMatrix';
+        var source =
+            {
+                datatype: "json",
+                datafields: [
+                    { name: 'ID', type: 'number' },
+                    { name: 'PolicyType', type: 'number' },
+                    { name: 'PolicyTypeName', value: 'PolicyType', values: { source: PolicyRootName.records, value: 'value', name: 'label' } },
+                    { name: 'PolicyName', type: 'string' },
+                    { name: 'Value', type: 'number' },
+                    { name: 'ValueType', type: 'number' },
+                    { name: 'L1', type: 'number' },
+                    { name: 'L2', type: 'number' },
+                    { name: 'L3', type: 'number' },
+                    { name: 'L4', type: 'number' },
+                    { name: 'L5', type: 'number' },
+                    { name: 'L6', type: 'number' },
+                    { name: 'L7', type: 'number' },
+                    { name: 'L8', type: 'number' },
+                    { name: 'L9', type: 'number' }
+                ],
+                url: url,
+                updateRow: function (rowID, rowData, commit) {
+                    txType = 1;
+                    ID = rowData.ID;
+                    console.log("updateRow: ID source : " + rowData.ID);
+                    process(txType, rowData);
+                    commit();
+                },
+            };
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            //autoBind: true,
+            contentType: 'application/json; charset=utf-8',
+            loadComplete: function (records) {
+                //console.log('Data Adapter OK : ', records);
+            },
+            loadError: function (jqXHR, status, error) {
+                console.log('Retrieve Error : ', jqXHR.responseText);
+            },
+            beforeLoadComplete: function (records) {
+                //console.log(records);
+            }
+        });
+
+        $("#jqxgrid").jqxGrid(
+            {
+                width: '100%',
+                height: '100%',
+                theme: 'ui-start',
+                source: dataAdapter,
+                editable: true,
+                pageable: true,
+                autorowheight: true,
+                altrows: true,
+                columnsresize: true,
+                //selectionmode: 'multiplecellsadvanced',
+                columns: [
+                    { text: 'ID', datafield: 'ID', width: 20, hidden: true },
+                    { text: 'Type', datafield: 'PolicyType', displayfield: 'PolicyTypeName', columngroup: 'Policy', width: 155, editable: false, hidden: false },
+                    { text: 'Description', datafield: 'PolicyName', columngroup: 'Policy', width: 310, editable: false },
+                    { text: 'IN', datafield: 'ValueType', columngroup: 'Policy', width: 70, hidden: true, editable: false },
+                    { text: 'Direksi', datafield: 'L1', columngroup: 'Position', cellsformat: 'n', width: 50 },
+                    { text: 'GM', datafield: 'L2', columngroup: 'Position', cellsformat: 'n', width: 50 },
+                    { text: 'Manager', datafield: 'L3', columngroup: 'Manager', cellsformat: 'n', width: 80 },
+                    { text: 'Assistant', datafield: 'L4', columngroup: 'Manager', cellsformat: 'n', width: 80 },
+                    { text: 'Team Leader', datafield: 'L5', columngroup: 'Position', cellsformat: 'n', width: 120 },
+                    { text: 'Senior', datafield: 'L6', columngroup: 'Staff', cellsformat: 'n', width: 80 },
+                    { text: 'Middle', datafield: 'L7', columngroup: 'Staff', cellsformat: 'n', width: 80 },
+                    { text: 'Junior', datafield: 'L8', columngroup: 'Staff', cellsformat: 'n', width: 80 },
+                    { text: 'Service', datafield: 'L9', columngroup: 'Staff', cellsformat: 'n', width: 80 }
+                ],
+                columngroups:
+                [
+                  { text: 'Policy', align: 'center', name: 'Policy' },
+                  { text: 'Level Position', align: 'center', name: 'Position' },
+                  { text: 'Staff', parentgroup: 'Position', align: 'center', name: 'Staff' },
+                  { text: 'Manager', parentgroup: 'Position', align: 'center', name: 'Manager' }
+                ]
+            });
+
+        //EVENT
+        //================================================================================================================
+        var txType = null;
+        var ID = null;
+        $('#categoryMatrixCreate').on('click', function (event) {
+            cleanform();
+            txType = 0;
+            $('#customWindow2').jqxWindow('open');
+        });
+
+        $('#categoryMatrixUpdate').on('click', function (event) {
+            cleanform();
+            txType = 3;
+            var rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+            if (rowindex == -1) {
+                alert("Please Select Row first !");
+            } else {
+                var data = $('#jqxgrid').jqxGrid('getrowdata', rowindex);
+                ID = data.ID;
+                hris.general.bindDropDown("PolicyRootType", data.PolicyType);
+                hris.general.bindDropDown("ValueType", data.ValueType);
+                hris.general.bindInput("CatPolicyName", data.PolicyName);
+                $('#customWindow2').jqxWindow('open');
+            }
+        });
+
+        $('#categoryMatrixDelete').on('click', function (event) {
+            try {
+                txType = 2;
+                var rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+                if (rowindex == -1) {
+                    alert("Please Select Row first !");
+                } else {
+                    var data = $('#jqxgrid').jqxGrid('getrowdata', rowindex);
+                    var r = confirm("Confirm to Delete " + data.PolicyName + " ? ");
+                    if (r == true) {
+                        ID = data.ID;
+                        process(txType, null);
+                        $('#jqxgrid').jqxGrid('updatebounddata');
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+            }
+
+
+        });
+
+        $("#submitCategory").click(function () {
+            var x1 = hris.general.getData("PolicyRootType");
+            var x2 = hris.general.getData("ValueType");
+            var x3 = hris.general.getData("CatPolicyName");
+            //var L1 = hris.general.getDat
+            if ((x1 == null) && (x3 == null)) {
+                alert("Select Medical or Annual Leave first");
+            } else {
+                var row = new Object();
+                row.ID = ID;
+                row.PolicyType = x1;
+                row.ValueType = x2;
+                row.PolicyName = x3.trim();
+                process(txType, row);
+                $('#customWindow2').jqxWindow('close');
+            }
+        });
+
+
+
+        //FUNCTION
+        //================================================================================================================
+        function cleanform() {
+            hris.general.cleanDropDown('PolicyRootType');
+            hris.general.cleanDropDown('ValueType');
+            hris.general.cleanInput('CatPolicyName');
+        }
+
+        //Data
+        //============================================================================================================
+        function process(txType, row) {
+            switch (txType) {
+                case 0:
+                    console.log("Create Ajax");
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: baseURL + 'api/role/createRoleBasedMatrix',
+                        data: row,
+                        type: "POST",
+                        success: function (data, status, xhr) {
+                            $('#jqxgrid').jqxGrid('updatebounddata');
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Error " + errorThrown);
+                        }
+                    }); txType = null; break;
+                case 1:
+                    console.log("Update Ajax");
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: baseURL + 'api/role/updateRoleBasedMatrix/' + ID,
+                        data: row,
+                        type: 'PUT',
+                        success: function (data, status, xhr) {
+                            $('#jqxgrid').jqxGrid('updatebounddata');
+                            console.log("Update Ajax Success : ", row, " on ID: ", ID);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Error " + errorThrown);
+                        }
+                    }); txType = null; break;
+                case 2:
+                    console.log("Delete Ajax");
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: baseURL + 'api/role/deleteRoleBasedMatrix/' + ID,
+                        type: 'DELETE',
+                        success: function (data, status, xhr) {
+                            $('#jqxgrid').jqxGrid('updatebounddata');
+                            console.log("Delete Ajax Success : ", row, " ID: ", ID);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Error " + errorThrown);
+                        }
+                    }); txType = null; break;
+                case 3:
+                    console.log("Update Ajax");
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: baseURL + 'api/role/updateRoleBasedMatrixCategory/' + ID,
+                        data: row,
+                        type: 'PUT',
+                        success: function (data, status, xhr) {
+                            $('#jqxgrid').jqxGrid('updatebounddata');
+                            console.log("Update Ajax Success : ", row, " on ID: ", ID);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Error " + errorThrown);
+                        }
+                    }); txType = null; break;
+            }
+        }
+
+        /* DYNAMIC COLUMN
+        var colSource =
+                {
+                    datatype: 'json',
+                    url: baseURL + 'api/list/getColumnJobLevel'
+                };
+
+
+        var dataAdapter = new $.jqx.dataAdapter(colSource, {
+            autoBind: true,
+            downloadComplete: function (data) {
+
+                //Assign Dynamic Column
+                var columns = data;
+
+
+                var datafieldSource =
+                               {
+                                   datatype: 'json',
+                                   url: baseURL + 'api/list/getDatafieldJobLevel'
+                               };
+                var rows = {};
+                var datafieldAdapter = new $.jqx.dataAdapter(datafieldSource, {
+                    autoBind: true,
+                    downloadComplete: function (data) {
+                        console.log('datafields: ', data);
+                        var gridAdapter = new $.jqx.dataAdapter({
+                            datafields:
+                                data,
+                                id: 'ID',
+                                localdata: rows
+                        });
+                        $("#jqxgrid").jqxGrid('hideloadelement');
+                        $("#jqxgrid").jqxGrid('beginupdate', true);
+                        $("#jqxgrid").jqxGrid(
+                          {
+                              source: gridAdapter,
+                              width: '100%',
+                              columns: columns
+                          });
+                        $("#jqxgrid").jqxGrid('endupdate');
+                    }
+                });
+
+
+
+
+            }
+        }); */
+    })
+</script>
+
+<style>
+    .jqx-widget-content-ui-redmond { background: none; }
+    .jqx-widget-header-ui-redmond {  background: white; }
+</style>
+
+
+<!--Grid & Main Content-->
+<div class="row">
+    <button class="btn btn-primary" id="categoryButton">
+        <i class="ace-icon fa fa-pencil align-top bigger-125"></i>
+        Category
+    </button>
+    <button class="btn btn-info" id="calculate" onclick="location.href='@Url.Action("Calculate","AdminHR")'">
+        <i class="ace-icon fa fa-cloud-upload bigger-125"></i>
+        Calculate
+    </button>
+</div>
+
+<div class="row" style="padding-top: 1em;">
+    <div id="jqxgrid"></div>
+</div>
+
+
+
+    
+
+
+<!--Button Category-->
+<div id="manageCategory">
+    <div class="row pull-right" style="margin-left: 5px; margin-right:5px; ">
+        <input type="button" value="Create" style="padding:4px 16px;" id="categoryMatrixCreate">
+        <input type="button" value="Update" style="padding:4px 16px;" id="categoryMatrixUpdate">
+        <input type="button" value="Delete" style="padding:4px 16px;" id="categoryMatrixDelete">
+
+        <hr />
+    </div>
+</div>
+
+<!--popup Manage Category-->
+<div id="customWindow2" style="overflow: hidden; visibility: hidden;">
+    <div id="customWindowHeader">
+        <span id="captureContainer" style="float: left">HR Based Matrix Form </span>
+    </div>
+    <div id="customWindowContent">
+        <div style="margin: 10px">
+            <div class="row">
+                <div class="col-md-6"><label for="PolicyRootType">Type</label><div id="PolicyRootType"></div></div>
+                <div class="col-md-6"><label for="ValueType">Value Type</label><div id="ValueType"></div></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="catPolicyName">CategoryName</label><br />
+                    <input type="text" style="width: 175px; border: 1px solid #aaa" id="CatPolicyName" />
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6"><input type="button" value="Submit" style="margin-bottom: 5px;" id="submitCategory" /></div>
+                <div class="col-md-6"><input type="button" value="Cancel" id="cancelCategory" /></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
