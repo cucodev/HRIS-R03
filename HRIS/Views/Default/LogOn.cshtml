@@ -75,10 +75,9 @@
         //$("#forgotlink").jqxLinkButton({ theme: theme, width: '137px', height: '30' });
     });
 </script>
-
 <style>
     body {
-        background-image: url("/Content/bg/bg2.jpg");
+        background-image: url("@Url.Content("~/Content/bg/bg2.jpg")");
         background-size: cover;
         background-color: #fff;
     }
@@ -110,7 +109,7 @@
                     <th class="tg-yw4l" colspan="4" align="right" height="75px">
 
                         <div>
-                            <img src="~/Content/bg/hollit-logo-large.png" sizes="40%" /><br /><br />
+                            <img src="@Url.Content("~/Content/bg/hollit-logo-large.png")" sizes="40%" /><br /><br />
                             <h2>@ViewBag.LoginError</h2>
                         </div>
                     </th>

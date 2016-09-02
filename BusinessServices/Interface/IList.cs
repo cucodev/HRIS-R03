@@ -12,6 +12,9 @@ namespace BusinessServices.Interface
     {
         //listEntities getListByParentID(int parentID);
 
+        string getStringCatName(int catID);
+        string getStringName(int IDV);
+
         IEnumerable<LOV> getOrganization();
         IEnumerable<LOV> getEdu();
         IEnumerable<LOV> getRelationFamilyType();

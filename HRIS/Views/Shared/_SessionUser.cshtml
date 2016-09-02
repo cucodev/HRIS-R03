@@ -10,6 +10,7 @@ else
     <script type="text/javascript">
         //Model Controller
         try {
+            var baseURL = document.location.origin + '/';
             var cIDV = '@Model.IDV';
             var cName = '@Model.Name';
             var cImage = '@Model.Image';
@@ -30,12 +31,14 @@ else
             console.log("cIDVParentMail: " + cIDVParentMail);
             console.log("cRole: " + cRole);
             console.log("cTimeLogin: " + ctimeLogin);
+            console.log("Location: " + baseURL);
             console.log("======================================================================")
 
             //$("#cImage").attr("src", '@Url.Content(Model.Image)');
 
         } catch (err) {
-            window.open("/");
+            console.log("Error: " + err.message);
+            //window.open("/");
         }
 
         $(document).ready(function () {

@@ -52,13 +52,7 @@
     </div>
     <div class="row">
         <div class="col-xs-9">
-            <div id="demo">
-                <ul style="margin-left: 0; padding-left: 0;">
-                    <li class="demo full-row">
-                        <div id="full-year" style="width: auto"></div>
-                    </li>
-                </ul>
-            </div>
+            <div id="full-year" style="width: auto"></div>
         </div>
         <div class="col-xs-3">
 
@@ -139,6 +133,24 @@
 
 <br />
 <script type="text/javascript">
+    var Balance = 0;
+
+    var dateInArray = [];
+    var totalDays = 0;
+    //var data = new Array();
+
+    var data = [];
+    var row = {};
+
+    var subrow = {};
+    var durations = new Array();
+    var today = new Date();
+    var y = today.getFullYear();
+
+    var roleBasedValue = [];
+    var policyID = 0;
+    var policyType = 0;
+
     $(document).ready(function () {
 
         //API 
@@ -147,29 +159,6 @@
 
         var getLovType = hris.list._getLOV("PolicyType");
 
-        console.log("getPolicyType:", getLovType);
-        console.log("MasterDataAdapter: " ,  MasterDataAdapter );
-
-        var Balance = 0;
-
-        var dateInArray = [];
-        var totalDays = 0;
-        //var data = new Array();
-
-        var data = [];
-        var row = {};
-
-        var subrow = {};
-        var durations = new Array();
-        var today = new Date();
-        var y = today.getFullYear();
-
-        var roleBasedValue = [];
-        var policyID = 0;
-        var policyType = 0;
-        
-        //var MasterData = MasterDataAdapter.records;
-
         var renderText = function (text, value) {
             if (value < 55) {
                 return "<span style='color: #333;'>" + text + " Days </span>";
@@ -177,83 +166,166 @@
             return "<span style='color: #fff;'>" + text + " Days </span>";
         }
 
+        var Leave = {
+            Init: function (MasterDataAdapter, Balance, data) {
 
-        //GRID
-        var source = {
-            localdata: data,
-            dataType: "array",
-            dataFields:
-            [
-                { name: 'ID', type: 'number' },
-                { name: 'Date', type: 'date' },
-                { name: 'Duration', type: 'int' },
-                { name: 'DurationLabel', type: 'bool' }
-                //{ name: 'durationLabel', value: 'duration', values: { source: durations.records, value: 'value', name: 'label' } }
-            ],
-            updaterow: function (rowid, rowdata, commit) {
+                Leave.Table.Source.localdata = data;
                 
-                /*console.log('rowid: ', rowid);
-                console.log('rowid: Date: ', rowdata.Date);
-                console.log('rowid: Duration: ', rowdata.Duration);
-                console.log('rowid: DurationLabel: ', rowdata.DurationLabel);
-                console.log('---------------------------------------------');
-                console.log('data: ', data[rowid].ID);
-                console.log('data: Date: ', data[rowid].Date);
-                console.log('data: Duration: ', data[rowid].Duration);
-                console.log('data: DurationLabel: ', data[rowid].DurationLabel);*/
+                Leave.Table.Bind();
+                Leave.CreateComponent.PolicyType(MasterDataAdapter);
+                Leave.CreateComponent.AnnualButton();
+                Leave.CreateComponent.ApplyButton();
+                Leave.CreateComponent.ProgreesBar(Balance);
 
-                
-                if (rowdata.DurationLabel) {
-                    data[rowdata.ID].Duration = 1;
-                    data[rowdata.ID].DurationLabel = true;
-                } else {
-                    data[rowdata.ID].Duration = 0.5;
-                    data[rowdata.ID].DurationLabel = false;
-                }
+                $("#PolicyType").hide();
+            },
+            Clear: function() {
+                $('#full-year').multiDatesPicker('resetDates', 'picked');
+                $('#PolicyType').jqxDropDownList('clearSelection');
+                td = 0;
                 totalDays = 0;
-                for (i = 0; i < data.length; i++) {
-                    b = data[i].Duration;
-                    totalDays = totalDays + b;
-                };
-                updateBalance(Balance, totalDays);
-                commit(true); 
-            }
-
-        };
-        var dataAdapter = new $.jqx.dataAdapter(source, { autoBind: true });
-        var columns = [
-                          { text: 'Index', dataField: 'ID', width: 10, hidden: true },
+                data = [];
+                dateInArray = [];
+                Leave.Table.Source.localdata = [];
+                //source.localdata = data;
+                $("#table").jqxGrid('updatebounddata');
+                document.getElementById('full-year').style.pointerEvents = 'auto';
+            },
+            Calculate: {
+                updateBalance: function (maxDays, allDays) {
+                    CurrentValue = maxDays - allDays;
+                    $("#balanceProgress").jqxProgressBar({
+                        value: CurrentValue,
+                        max: maxDays
+                    });
+                    //.val(CurrentValue);
+                    $("#totalBalance").html("<strong>" + CurrentValue.toLocaleString() + "</strong> Days Left");
+                    $("#totalFullDays").html("<strong>" + allDays.toLocaleString() + "</strong> Days");
+                    $("#totalBalance").html("<strong>" + maxDays.toLocaleString() + "</strong> Days");
+                    $("#totalRemaining").html("<strong>" + CurrentValue.toLocaleString() + "</strong> Days");
+                },
+                checkBalance: function (varData, varBalance) {
+                    if (varData <= (varBalance)) return true;
+                }
+            },
+            CalculateDate: {
+                addDate: function (varDate, varDateInArray) {
+                    if (varDateInArray.find(Leave.CalculateDate.checkDate, varDate)) {
+                        var i = varDateInArray.indexOf(varDate, 0);
+                        if (i != -1) varDateInArray.splice(i, 1);
+                    } else {
+                        varDateInArray.push(varDate);
+                    }
+                    return varDateInArray;
+                },
+                checkDate: function () {
+                    return dateInArray == dateTemp;
+                },
+                dateSelected(item, index) {
+                    data.push({
+                        "ID": index,
+                        "Date": item,
+                        "Duration": 1,
+                        "DurationLabel": true,
+                        "vCreatedBy": cIDV,
+                        "createTime": null,
+                        "policyID": policyType,
+                        "IDV": cIDV
+                    });
+                    totalDays = totalDays + 1;
+                }
+            },
+            CreateComponent: {
+                PolicyType: function(varData) {
+                    $('#PolicyType').jqxDropDownList({ source: varData, theme: 'fresh', disabled: false, height: '35px', displayMember: "policyTypeName", valueMember: "ID", width: '100%' });
+                },
+                ProgreesBar: function(varData) {
+                    $("#balanceProgress").jqxProgressBar({ animationDuration: 0, showText: false, renderText: renderText, template: "info", width: '100%', height: 25, value: varData, max: varData });
+                },
+                AnnualButton: function() {
+                    $('#isAnnual').jqxSwitchButton({ height: 35, width: '100%', checked: true, onLabel: 'ANNUAL', offLabel: 'COMMON', theme: 'orange' });
+                },
+                ApplyButton: function () {
+                    hris.general.bindButton('Apply');
+                }
+            },
+            Table: {
+                Column:  [{ text: 'Index', dataField: 'ID', width: 10, hidden: true },
                           { text: 'Date', dataField: 'Date', cellsformat: 'D', width: '65%', editable: false },
-                          { text: 'Full Days', dataField: 'DurationLabel', columntype: 'checkbox', width: '35%' } ];
+                          { text: 'Full Days', dataField: 'DurationLabel', columntype: 'checkbox', width: '35%' }],
+                Source : {  localdata: [],
+                            dataType: "array",
+                            dataFields:
+                            [
+                                { name: 'ID', type: 'number' },
+                                { name: 'Date', type: 'date' },
+                                { name: 'Duration', type: 'int' },
+                                { name: 'DurationLabel', type: 'bool' }
+                            ],
+                            updaterow: function (rowid, rowdata, commit) {
+                                if (rowdata.DurationLabel) {
+                                    data[rowdata.ID].Duration = 1;
+                                    data[rowdata.ID].DurationLabel = true;
+                                } else {
+                                    data[rowdata.ID].Duration = 0.5;
+                                    data[rowdata.ID].DurationLabel = false;
+                                }
+                                totalDays = 0;
+                                for (i = 0; i < data.length; i++) {
+                                    b = data[i].Duration;
+                                    totalDays = totalDays + b;
+                                };
+                                Leave.Calculate.updateBalance(Balance, totalDays);
+                                Leave.Table.Source.localdata = data;
 
-        $("#table").jqxGrid({
-            width: '100%',
-            height: 200,
-            theme: 'metro',
-            //height: 300,
-            editable: true,
-            source: dataAdapter,
-            columns: columns,
-            //selectionmode: 'singlecell'
-        });
+                                commit(true);
+                            }   
+                },
+                SourceReturn : function() {
+                    return this.Source;
+                },
+                dataAdapter: function() {
+                    var s = this.Source;
+                    console.log("dataAdapter Source: ", s);
+                    return new $.jqx.dataAdapter(s, { autoBind: true })
+                },
+                Bind: function () {
+                    $("#table").jqxGrid({
+                        width: '100%',
+                        height: 200,
+                        theme: 'metro',
+                        editable: true,
+                        source: this.dataAdapter(),
+                        columns: this.Column
+                    });
+                }
+            }
+        };
 
+        Leave.Init(MasterDataAdapter, Balance, data);
+        
         //COMPONENT
-        hris.general.bindButton('Apply');     
-        $('#PolicyType').jqxDropDownList({ source: MasterDataAdapter, theme: 'fresh', disabled: false, height: '35px', displayMember: "policyTypeName", valueMember: "ID", width: '100%' });
-        $('#isAnnual').jqxSwitchButton({ height: 35, width: '100%', checked: true, onLabel: 'ANNUAL', offLabel: 'COMMON', theme: 'orange' });
+             
         $('#full-year').multiDatesPicker({
             numberOfMonths: [2, 3],
             dateFormat: "dd/mm/yy",
             onSelect: function (date, el) {
                 data = [];
                 totalDays = 0;
+
                 dateTemp = date;
-                addDate(date);
-                dateInArray.forEach(dateSelected);
-                if (checkBalance(totalDays)) {
+                dateInArray = Leave.CalculateDate.addDate(date, dateInArray);
+                //addDate(date);
+                dateInArray.forEach(Leave.CalculateDate.dateSelected);
+                //dateInArray.forEach(dateSelected);
+                if (Leave.Calculate.checkBalance(totalDays,Balance)) {
+               // if (checkBalance(totalDays)) {
                     try {
-                        source.localdata = data;
-                        updateBalance(Balance, totalDays)
+                        Leave.Table.Source.localdata = data;
+                        //Leave.Table.Bind();
+                        //source.localdata = data;
+                        Leave.Calculate.updateBalance(Balance, totalDays);
+                        //updateBalance(Balance, totalDays)
                         $("#table").jqxGrid('updatebounddata');
                     } catch (err) {
                         console.log("Error : ", err);
@@ -264,81 +336,10 @@
                 }
             }
         });
-        $("#balanceProgress").jqxProgressBar({ animationDuration: 0, showText: false, renderText: renderText, template: "info", width: '100%', height: 25, value: Balance, max: Balance });
-
-
-        //Iniitalization
-        $("#PolicyType").hide();
-        //durations.records = [{ label: 'FullDay', value: 1 }, { label: 'Half Day', value: 0 }];
-
-
-
-        //FUNCTION
-        function updateBalance(maxDays, allDays) {
-            //values = (allDays / Balance ) * 100;
-            //$("#balanceProgress").jqxProgressBar({ value: values });
-            CurrentValue = maxDays - allDays;
-            $("#balanceProgress").jqxProgressBar({
-                value: CurrentValue,
-                max: maxDays
-            });
-                //.val(CurrentValue);
-            $("#totalBalance").html("<strong>" + CurrentValue.toLocaleString() + "</strong> Days Left");
-            $("#totalFullDays").html("<strong>" + allDays.toLocaleString() + "</strong> Days");
-            $("#totalBalance").html("<strong>" + maxDays.toLocaleString() + "</strong> Days");
-            $("#totalRemaining").html("<strong>" + CurrentValue.toLocaleString() + "</strong> Days");
-        }
-
-        function checkBalance(td) {
-            //if (totalDays >= 4) $('#full-year').multiDatesPicker({ disabled: true });
-            if (td <= (Balance)) return true;
-        }
-
-        function addDate(date) {
-            if (dateInArray.find(checkDate, date)) {
-                var i = dateInArray.indexOf(date, 0);
-                if (i != -1) dateInArray.splice(i, 1);
-            } else {
-                dateInArray.push(date);
-            }
-
-        }
-
-        function checkDate(dateInArray) {
-            return dateInArray == dateTemp;
-        }
-
-        function dateSelected(item, index) {
-            data.push({
-                "ID": index,
-                "Date": item,
-                "Duration": 1,
-                "DurationLabel": true,
-                "vCreatedBy": cIDV,
-                "createTime": null,
-                "policyID": policyType,
-                "IDV": cIDV
-            });
-            totalDays = totalDays + 1;
-        }
-
         
 
-
-        function clear() {
-            $('#full-year').multiDatesPicker('resetDates', 'picked');
-            $('#PolicyType').jqxDropDownList('clearSelection');
-            td = 0;
-            totalDays = 0;
-            data = [];
-            dateInArray = [];
-            source.localdata = data;
-            $("#table").jqxGrid('updatebounddata');
-            document.getElementById('full-year').style.pointerEvents = 'auto';
-        }
-
         function getRoleBasedValue(policyType) {
-            var uri = '/api/employee/getRoleBasedValue/'+ cIDV + '/' + policyType;
+            var uri = baseURL + 'api/employee/getRoleBasedValue/'+ cIDV + '/' + policyType;
             
         }
 
@@ -350,19 +351,16 @@
             $("#totalAnnualCarryLabel").show();
             $("#totalAnnualCurrentLabel").show();
             $('#PolicyType').hide();
-            //$('labelCommon').hide();
-            clear();
+            Leave.Clear();
         });
+
         $('.jqx-switchbutton').on('checked', function (event) {
             $('#isAnnual').jqxSwitchButton({ onLabel: 'ANNUAL' });
             $('#PolicyType').show();
             $('labelCommon').show();
-            //$("#totalAnnualCarry").hide();
-            //$("#totalAnnualCurrent").hide();
-            //$("#totalAnnualCarryLabel").hide();
-            //$("#totalAnnualCurrentLabel").hide();
-            clear();
+            Leave.Clear();
         });
+
         $('#PolicyType').on('select', function (event) {
             var i = $('#PolicyType');
             var index = event.args.index;
@@ -370,16 +368,13 @@
             
             console.log(MasterData);
             policyType = MasterData.policyType;
-            
-
-           
             //Reset
             $('#full-year').multiDatesPicker('resetDates', 'picked');
             td = 0;
             totalDays = 0;
             data = [];
             dateInArray = [];
-            source.localdata = data;
+            Leave.Table.Source.localdata = [];
             $("#table").jqxGrid('updatebounddata');
             //document.getElementById('full-year').style.pointerEvents = 'auto';
 
@@ -387,14 +382,14 @@
             //Calculate
             Balance = MasterData.roleBasedValue;
             i.jqxDropDownList({ selectedIndex: index });
-            updateBalance(Balance, totalDays);
+            Leave.Calculate.updateBalance(Balance, totalDays);
 
             
         });
        
         $('#Apply').on('click', function (event) {
             console.log("Posted: ", data);
-            $.post('/api/employeeForm/postLeave/'+cIDV, { '': data })
+            $.post(baseURL + 'api/employeeForm/postLeave/'+cIDV, { '': data })
                 .done(function(data){
                     console.log("ajax, Data Posted: ", data);
                     BootstrapDialog.show({
@@ -402,20 +397,6 @@
                     });
                     clear();
                 });
-            /*
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '/api/form/postLeave',
-                ContentType: 'application/json; charset=utf-8',
-                data: dataObject,
-                success: function (data, status, xhr) {
-                    console.log("2nd Ajax, Data Posted: ", data);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log("Error " + errorThrown);
-                }
-            }); */
         });
 
         

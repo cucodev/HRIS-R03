@@ -38,18 +38,16 @@ namespace HRIS
                                   "~/Content/assets/js/ace-extra.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/ACEJSonBOTTOM").Include(
-                                  "~/Content/assets/js/jquery-2.1.4.min.js",
                                   "~/Content/assets/js/bootstrap.min.js",
-                                  "~/Content/assets/js/jquery-ui.custom.min.js",
-                                  "~/Content/assets/js/jquery.ui.touch-punch.min.js",
-                                  "~/Content/assets/js/jquery.easypiechart.min.js",
-                                  "~/Content/assets/js/jquery.sparkline.index.min.js",
-                                  "~/Content/assets/js/jquery.flot.min.js",
-                                  "~/Content/assets/js/jquery.flot.pie.min.js",
-                                  "~/Content/assets/js/jquery.flot.resize.min.js",
                                   "~/Content/assets/js/ace-elements.min.js",
                                   "~/Content/assets/js/ace.min.js"
                                   ));
+
+            bundles.Add(new ScriptBundle("~/bundles/ACEJQuery").Include(
+                                              "~/Content/assets/js/jquery-2.1.4.min.js",
+                                              "~/Content/assets/js/jquery-ui.custom.min.js",
+                                              "~/Content/assets/js/jquery.ui.touch-punch.min.js"
+                                              ));
 
 
 
@@ -65,7 +63,7 @@ namespace HRIS
             bundles.Add(new StyleBundle("~/Content/jsmenu").Include(
                      "~/Content/jsmenu/reset.css",
                      "~/Content/jsmenu/style.css"));
-            bundles.Add(new StyleBundle("~/Content/jqwidgets").Include(
+            bundles.Add(new StyleBundle("~/Content/jqx").Include(
                    "~/Content/jqwidgets/jqx.base.css",
                     "~/Content/jqwidgets/jqx.arctic.css",
                     "~/Content/jqwidgets/jqx.black.css",

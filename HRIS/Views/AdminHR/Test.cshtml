@@ -322,7 +322,7 @@
                                                     $.ajax({
                                                         cache: false,
                                                         dataType: 'json',
-                                                        url: '/api/role/createRoleBased',
+                                                        url: baseURL + 'api/role/createRoleBased',
                                                         data: row,
                                                         type: "POST",
                                                         success: function (data, status, xhr) {
@@ -336,7 +336,7 @@
                                                     $.ajax({
                                                         cache: false,
                                                         dataType: 'json',
-                                                        url: '/api/role/updateRoleBased/' + row.ID,
+                                                        url: baseURL + 'api/role/updateRoleBased/' + row.ID,
                                                         contentType: 'application/json',
                                                         data: row,
                                                         type: 'PUT',
@@ -441,7 +441,7 @@
                                             var colSource =
                                                     {
                                                         datatype: 'json',
-                                                        url: '/api/list/getColumnJobLevel'
+                                                        url: baseURL + 'api/list/getColumnJobLevel'
                                                     };
 
 
@@ -456,7 +456,7 @@
                                                     var datafieldSource =
                                                                    {
                                                                        datatype: 'json',
-                                                                       url: '/api/list/getDatafieldJobLevel'
+                                                                       url: baseURL + 'api/list/getDatafieldJobLevel'
                                                                    };
                                                     var rows = {};
                                                     var datafieldAdapter = new $.jqx.dataAdapter(datafieldSource, {

@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
     @Styles.Render("~/Content/ACEStyle")
-    @Styles.Render("~/Content/jqwidgets")
-
+    @Styles.Render("~/Content/jqx")
+    <link href=@Url.Content("~/Content/assets/css/font-awesome.min.css") rel="stylesheet" />
     <link rel="stylesheet" href=@Url.Content("~/Content/assets/css/ace.min.css") class="ace-main-stylesheet" id="main-ace-style" />
     <style>
         .no-skin .sidebar-shortcuts {
@@ -55,6 +55,7 @@
 
     <link href=@Url.Content("~/Content/bootstrap-dialog.min.css") rel="stylesheet" type="text/css" />
 
+    @Scripts.Render("~/bundles/ACEJQuery")
     @Scripts.Render("~/bundles/ACEJSonBOTTOM")
     @Scripts.Render("~/bundles/jqwidgets")
     @Scripts.Render("~/bundles/jstorage")
@@ -98,7 +99,7 @@
 
     <!-- NAVBAR ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <div id="navbar" class="navbar navbar-default          ace-save-state">
-        <div class="navbar-container ace-save-state" id="navbar-container">
+        <div class="navbar-container ace-save-state" style="padding-right:0;" id="navbar-container">
             <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
                 <span class="sr-only">Toggle sidebar</span>
 
@@ -413,7 +414,7 @@
         </script><!-- ace.settings.loadState main-container-->
 
         <!--SIDE BAR-->
-        <div id="sidebar" class="sidebar responsive ace-save-state">
+        <div id="sidebar" class="sidebar responsive ace-save-state menu-min">
             <script type="text/javascript">
 					try{ace.settings.loadState('sidebar')}catch(e){}
             </script><!-- ace.settings.loadState sidebar-->
@@ -493,7 +494,7 @@
                     </a><b class="arrow"></b>
                 </li>
 
-                <li class="" id="MenuMyMatrix">
+                <li class="" id="MenuProfile">
                     <a href="#" class="dropdown-toggle"><i class="menu-icon fa fa-pencil-square-o"></i>
                         <span class="menu-text"> Employee </span><b class="arrow fa fa-angle-down"></b>
                     </a><b class="arrow"></b>
@@ -576,7 +577,7 @@
                 
                 <!-- ///////////////////////-->
                 <li class="header" id="navmenu">ADMINISTRATION</li>
-                <li class="">
+                <li id="MenuHRD" class="">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-pencil-square-o"></i>
                         <span class="menu-text"> HRD </span><b class="arrow fa fa-angle-down"></b>

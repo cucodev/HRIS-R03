@@ -21,6 +21,37 @@ namespace BusinessServices.InterfaceMethod
             _unitOfWork = new UnitOfWork();
         }
 
+        private string getCategoryName(int catID)
+        {
+            var data = _unitOfWork.categoryRepository.GetByCode(b => b.catID == catID);
+            if (data != null) return data.catName;
+            return null;
+        }
+
+        private string getParentCategoryName(int catID)
+        {
+            var data = _unitOfWork.categoryParentRepository.GetByCode(b => b.catID == catID);
+            if (data != null) return data.catName;
+            return null;
+        }
+
+        public string getStringCatName(int catID)
+        {
+            var name = getCategoryName(catID);
+            if (name == null)
+            {
+                name = getParentCategoryName(catID);
+            }
+            return name;
+        }
+
+        public string getStringName(int IDV)
+        {
+            var vDataDiv = _unitOfWork.personDetailRepository.GetByCode(b => b.isDeleted != 1 && b.IDV == IDV);
+            if (vDataDiv != null) return vDataDiv.Name;
+            else { return null; };
+        }
+
         public IEnumerable<LOV> getOrganization()
         {
             List<LOV> ms = new List<LOV>();

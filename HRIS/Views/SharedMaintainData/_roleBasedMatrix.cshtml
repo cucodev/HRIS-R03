@@ -5,8 +5,7 @@
         hris.general.bindButton('categoryMatrixUpdate');
         hris.general.bindButton('categoryMatrixCreate');
         hris.general.bindButton('categoryMatrixDelete');
-        hris.general.bindButton('calculate');
-
+        
         var PolicyRootName = hris.list._getLOV('PolicyRootType');
         console.log("PolicyRootName: ", PolicyRootName);
 
@@ -38,8 +37,7 @@
 
         //Button & PopOver
         //================================================================================================================
-        $("#categoryButton").jqxButton({ template: "inverse", height: '35px' });
-
+        
         $("#manageCategory").jqxPopover({ theme: 'fresh', offset: { left: -50, top: 0 }, arrowOffsetValue: 50, title: "Manage Category", showCloseButton: true, selector: $("#categoryButton") });
 
 
@@ -323,40 +321,30 @@
 </script>
 
 <style>
-    
-    
-
-    .jqx-widget-content-ui-redmond {
-            background: none;
-        }
-
-        .jqx-widget-header-ui-redmond {
-            background: white;
-        }
-
+    .jqx-widget-content-ui-redmond { background: none; }
+    .jqx-widget-header-ui-redmond {  background: white; }
 </style>
 
 
 <!--Grid & Main Content-->
+<div class="row">
+    <button class="btn btn-primary" id="categoryButton">
+        <i class="ace-icon fa fa-pencil align-top bigger-125"></i>
+        Category
+    </button>
+    <button class="btn btn-info" id="calculate" onclick="location.href='@Url.Action("Calculate","AdminHR")'">
+        <i class="ace-icon fa fa-cloud-upload bigger-125"></i>
+        Calculate
+    </button>
+</div>
 
-    <div class="row">
-        <div class="col-md-8"></div>
-        <div class="col-md-2 pull-right">
-            @using (Html.BeginForm("Calculate", "AdminHR", FormMethod.Post))
-            {
-                <input type="submit" id="calculate" value="Calculate" style="margin-right:10px" />
-            }
-        </div>
-        <div class="col-md-2 pull-right">
-            <button style="float: right; margin-right: 10px; padding: 8px 12px; border-radius: 6px;" id="categoryButton">Category</button>
-        </div>
-    </div>
-    <div class="row" style="margin-top:20px">
-        <div class="col-md-12">
-            <div id="jqxgrid"></div>
-        </div>
-    </div>
+<div class="row" style="padding-top: 1em;">
+    <div id="jqxgrid"></div>
+</div>
 
+
+
+    
 
 
 <!--Button Category-->
