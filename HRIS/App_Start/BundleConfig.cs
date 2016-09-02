@@ -63,7 +63,7 @@ namespace HRIS
             bundles.Add(new StyleBundle("~/Content/jsmenu").Include(
                      "~/Content/jsmenu/reset.css",
                      "~/Content/jsmenu/style.css"));
-            bundles.Add(new StyleBundle("~/Content/jqwidgets").Include(
+            bundles.Add(new StyleBundle("~/Content/jqx").Include(
                    "~/Content/jqwidgets/jqx.base.css",
                     "~/Content/jqwidgets/jqx.arctic.css",
                     "~/Content/jqwidgets/jqx.black.css",
