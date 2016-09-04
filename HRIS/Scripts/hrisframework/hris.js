@@ -8,7 +8,7 @@
         _getLOV: function (name) {
             if (obj[name] == null) {
                 obj[name] = this._dbLOV(name);
-                console.log('Existing  ', name, ' is Null, fillin with Data:', obj[name]);
+                //console.log('Existing  ', name, ' is Null, fillin with Data:', obj[name]);
             }
 
             return obj[name];
@@ -145,8 +145,8 @@
                 //async: false,
                 url: '/api/role/getRoleBased',
                 updateRow: function (rowID, rowData, commit) {
-                    console.log("Updaterow : " + rowid);
-                    console.log("Updaterow : ", rowdata);
+                    //console.log("Updaterow : " + rowid);
+                    //console.log("Updaterow : ", rowdata);
                     //rowdata.ID = rowid;
                     var uri = '/api/role/updateRoleBased/' + rowid;
                     $.ajax({
@@ -158,12 +158,12 @@
                         type: 'PUT',
                         success: function (data, status, xhr) {
                             // update command is executed.
-                            console.log("Row Updated on ID : " + rowdata.ID);
+                            //console.log("Row Updated on ID : " + rowdata.ID);
                             commit(true);
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            console.log(rowdata);
-                            console.log('Error Update on ID : ' + rowdata.ID + ' Messages: ' + jqXHR.responseText);
+                            //console.log(rowdata);
+                            //console.log('Error Update on ID : ' + rowdata.ID + ' Messages: ' + jqXHR.responseText);
                             var output = JSON.parse(jqXHR.responseText);
                             window.open('about:blank').document.body.innerText += output.StackTrace;
                             commit(false);
@@ -205,8 +205,8 @@
                 //async: false,
                 url: '/api/role/getRoleBasedBypolicyType/' + policyType,
                 updateRow: function (rowID, rowData, commit) {
-                    console.log("Updaterow : " + rowid);
-                    console.log("Updaterow : ", rowdata);
+                    //console.log("Updaterow : " + rowid);
+                    //console.log("Updaterow : ", rowdata);
                     //rowdata.ID = rowid;
                     var uri = '/api/role/updateRoleBased/' + rowid;
                     $.ajax({
@@ -218,12 +218,12 @@
                         type: 'PUT',
                         success: function (data, status, xhr) {
                             // update command is executed.
-                            console.log("Row Updated on ID : " + rowdata.ID);
+                            //console.log("Row Updated on ID : " + rowdata.ID);
                             commit(true);
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            console.log(rowdata);
-                            console.log('Error Update on ID : ' + rowdata.ID + ' Messages: ' + jqXHR.responseText);
+                            //console.log(rowdata);
+                            //console.log('Error Update on ID : ' + rowdata.ID + ' Messages: ' + jqXHR.responseText);
                             var output = JSON.parse(jqXHR.responseText);
                             window.open('about:blank').document.body.innerText += output.StackTrace;
                             commit(false);
@@ -245,18 +245,18 @@
             });
         },
         _dataAdapterManual: function (source) {
-            //console.log('_dataAdapterManual: source: ',source);
+            ////console.log('_dataAdapterManual: source: ',source);
             return dataAdapter = new $.jqx.dataAdapter(source, {
                 //autoBind: true,
                 contentType: 'application/json; charset=utf-8',
                 loadComplete: function (records) {
-                    //console.log('Data Adapter OK : ', records);
+                    ////console.log('Data Adapter OK : ', records);
                 },
                 loadError: function (jqXHR, status, error) {
-                    console.log('loadError : Error : ', jqXHR.responseText);
+                    //console.log('loadError : Error : ', jqXHR.responseText);
                 },
                 beforeLoadComplete: function (records) {
-                    //console.log('beforeLoadComplete : Error : ',records);
+                    ////console.log('beforeLoadComplete : Error : ',records);
                 }
             });
         },
@@ -277,13 +277,13 @@
             return dataAdapter = new $.jqx.dataAdapter(treesource, {
                 contentType: 'application/json; charset=utf-8',
                 loadComplete: function (records) {
-                    //console.log('OK : ', records);
+                    ////console.log('OK : ', records);
                 },
                 loadError: function (jqXHR, status, error) {
-                    console.log('Retrieve Error : ', jqXHR.responseText);
+                    //console.log('Retrieve Error : ', jqXHR.responseText);
                 },
                 beforeLoadComplete: function (records) {
-                    // console.log(records);
+                    // //console.log(records);
                 }
             });
 
@@ -343,10 +343,10 @@
         },
         ajax: function (method, url, data, cb) {
             // Prototype for general AJAX
-            console.log("hris.ajax method", method);
-            console.log("hris.ajax url", url);
-            console.log("hris.ajax data", data);
-            console.log("hris.ajax cb", cb);
+            //console.log("hris.ajax method", method);
+            //console.log("hris.ajax url", url);
+            //console.log("hris.ajax data", data);
+            //console.log("hris.ajax cb", cb);
         }
     };
 
