@@ -59,6 +59,48 @@
             }
         });
 
+        $("#profileBank").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentBank").toggle();
+                console.log(Profile.Bank.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Bank.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Bank.Load();
+                }
+            }
+        });
+
+        $("#profileIdentity").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentIdentity").toggle();
+                console.log(Profile.Identity.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Identity.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Identity.Load();
+                }
+            }
+        });
+
+        $("#profileEducation").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentEducation").toggle();
+                console.log(Profile.Education.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Education.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Education.Load();
+                }
+            }
+        });
+
         $('#employeeDB').on('rowselect', function (event) {
             // event arguments.
             var args = event.args;
@@ -209,8 +251,6 @@
                     .append($("<label>").attr("for", "Status" + data.ID).text("Status"))
                     .append($("<div>").addClass("form-control").attr('id', 'Status' + data.ID)))))
                     );
-
-                
                 Profile.Job.BindForm(data);
             },
             BindForm: function (data) {
@@ -223,9 +263,150 @@
             }
         },
         Bank: {},
-        Identity: {},
+        Identity: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Identity.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileIdentity/' + Profile.Identity.ID,
+                    success: function (data) {
+                        console.log("Identity",data);
+                        Profile.Identity.Data = data;
+                        Profile.Identity.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-identity").empty();
+                $("#task-tab-identity").empty();
+                $.each(Profile.Identity.Data, function (i, v) {
+                    $('#recent-tab-identity').append('<li><a data-toggle="tab" href="#task-tab-identity' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Identity.CreateForm(v);
+                });
+                $('#recent-tab-identity li:first').addClass("active");
+                $("#task-tab-identity div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-identity")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-identity' + data.ID));
+                $("#task-tab-identity" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "expiredDate" + data.ID).text("Expired Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'expiredDate' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "idType" + data.ID).text("Type"))
+                    .append($("<div>").addClass("form-control").attr('id', 'idType' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "idNumber" + data.ID).text("Number"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'idNumber' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "issuedCountry" + data.ID).text("Country"))
+                    .append($("<div>").addClass("form-control").attr('id', 'issuedCountry' + data.ID)))))
+                    );
+                Profile.Identity.BindForm(data);
+            },
+            BindForm: function (data) {
+                Profile.Bind.Date("expiredDate" + data.ID, data.expiredDate);
+                Profile.Bind.Input("idNumber" + data.ID, data.idNumber);
+                Profile.Bind.DropDown("issuedCountry" + data.ID, "Country", data.issuedCountry);
+                Profile.Bind.DropDown("idType" + data.ID, "ID", data.idType);
+            }
+        },
         Dependant: {},
-        Education: {},
+        Education: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Education.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileEdu/' + Profile.Education.ID,
+                    success: function (data) {
+                        console.log("Education", data);
+                        Profile.Education.Data = data;
+                        Profile.Education.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-education").empty();
+                $("#task-tab-education").empty();
+                $.each(Profile.Education.Data, function (i, v) {
+                    $('#recent-tab-education').append('<li><a data-toggle="tab" href="#task-tab-education' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Education.CreateForm(v);
+                });
+                $('#recent-tab-education li:first').addClass("active");
+                $("#task-tab-education div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-education")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-education' + data.ID));
+                $("#task-tab-education" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "eduLevel" + data.ID).text("Level"))
+                    .append($("<div>").addClass("form-control").attr('id', 'eduLevel' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "eduCountry" + data.ID).text("Country"))
+                    .append($("<div>").addClass("form-control").attr('id', 'eduCountry' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "eduMajor" + data.ID).text("Major"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'eduMajor' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "eduValue" + data.ID).text("Value"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'eduValue' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "eduGraduate" + data.ID).text("Graduate Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'eduGraduate' + data.ID))))
+                    )
+                    );
+                Profile.Education.BindForm(data);
+            },
+            BindForm: function (data) {
+                Profile.Bind.Date("eduGraduate" + data.ID, data.eduGraduate);
+                Profile.Bind.Input("eduMajor" + data.ID, data.eduMajor);
+                Profile.Bind.Input("eduValue" + data.ID, data.eduValue);
+                Profile.Bind.DropDown("eduCountry" + data.ID, "Country", data.eduCountry);
+                Profile.Bind.DropDown("eduLevel" + data.ID, "Edu", data.eduLevel);
+            }
+        },
         Training: {},
         Language: {},
         Skill: {},
@@ -242,10 +423,16 @@
                 i.jqxInput({ width: "99%", height: '35px' });
                 value = $.trim(value);
                 if (value !== null) { i.jqxInput('val', value); }
+            },
+            Date: function (div, value) {
+                var i = $("#" + div);
+                value = $.trim(value);
+                i.jqxDateTimeInput({ width: '75%', height: '35px' });
+                if (value !== null) { i.jqxDateTimeInput({ value: new Date(value) }); }
             }
         },
         HideAll: function () {
-            $("#contentGrid,#contentDetail,#contentAddress,#contentJob,#contentBank,#contentIdentity,#contentDependant,#contentEdu,#contentTraining,#contentLanguage,#contentSkill,#contentCertification,#contentMatrix").hide();
+            $("#contentGrid,#contentDetail,#contentAddress,#contentJob,#contentBank,#contentIdentity,#contentDependant,#contentEducation,#contentTraining,#contentLanguage,#contentSkill,#contentCertification,#contentMatrix").hide();
         }
     }
 </script>
@@ -458,7 +645,7 @@
             <li class="hover"><a href="#" id="profileBank"><i class="menu-icon fa fa-dollar"></i><span class="menu-text">Bank</span></a><b class="arrow"></b></li>
             <li class="hover"><a href="#" id="profileIdentity"><i class="menu-icon fa fa-qrcode"></i><span class="menu-text">Identity</span></a><b class="arrow"></b></li>
             <li class="hover"><a href="#" id="profileDependant"><i class="menu-icon fa fa-sitemap"></i><span class="menu-text">Dependant</span></a><b class="arrow"></b></li>
-            <li class="hover"><a href="#" id="profileEdu"><i class="menu-icon fa fa-bank"></i><span class="menu-text">Education</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileEducation"><i class="menu-icon fa fa-bank"></i><span class="menu-text">Education</span></a><b class="arrow"></b></li>
             <li class="hover"><a href="#" id="profileTraining"><i class="menu-icon fa fa-book"></i><span class="menu-text">Training</span></a><b class="arrow"></b></li>
             <li class="hover"><a href="#" id="profileLanguage"><i class="menu-icon fa fa-language"></i><span class="menu-text">Language</span></a><b class="arrow"></b></li>
             <li class="hover"><a href="#" id="profileSKill"><i class="menu-icon fa fa-star"></i><span class="menu-text">Skill</span></a><b class="arrow"></b></li>
@@ -521,10 +708,74 @@
                         </div>
                     </div>
                 </div>
-                <div id="contentBank">1</div>
-                <div id="contentIdentity">1</div>
+                <div id="contentBank">
+                    Content for Bank
+                </div>
+                <div id="contentIdentity">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-identity">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>IDENTITY
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-identity">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-identity" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
                 <div id="contentDependant">1</div>
-                <div id="contentEdu">1</div>
+                <div id="contentEducation">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-education">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>EDUCATION
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-education">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-education" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
                 <div id="contentTraining">1</div>
                 <div id="contentLanguage">1</div>
                 <div id="contentSkill">1</div>
