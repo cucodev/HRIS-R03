@@ -101,6 +101,20 @@
             }
         });
 
+        $("#profileTraining").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentTraining").toggle();
+                console.log(Profile.Training.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Training.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Training.Load();
+                }
+            }
+        });
+
         $('#employeeDB').on('rowselect', function (event) {
             // event arguments.
             var args = event.args;
@@ -407,7 +421,107 @@
                 Profile.Bind.DropDown("eduLevel" + data.ID, "Edu", data.eduLevel);
             }
         },
-        Training: {},
+        Training: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Training.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileTraining/' + Profile.Training.ID,
+                    success: function (data) {
+                        console.log("Training", data);
+                        Profile.Training.Data = data;
+                        Profile.Training.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-training").empty();
+                $("#task-tab-training").empty();
+                $.each(Profile.Training.Data, function (i, v) {
+                    $('#recent-tab-training').append('<li><a data-toggle="tab" href="#task-tab-training' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Training.CreateForm(v);
+                });
+                $('#recent-tab-training li:first').addClass("active");
+                $("#task-tab-training div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-training")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-training' + data.ID));
+                $("#task-tab-training" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "TrainingName" + data.ID).text("Training Name"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'TrainingName' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "TrainingSponsor" + data.ID).text("Training Sponsor"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'TrainingSponsor' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "startDate" + data.ID).text("Start Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'startDate' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "endDate" + data.ID).text("End Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'endDate' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "Certificate" + data.ID).text("Certificate"))
+                    .append($("<div>").addClass("form-control").attr('id', 'Certificate' + data.ID)))))
+                    );
+                Profile.Training.BindForm(data);
+            },
+            BindForm: function (data) {
+                Profile.Bind.Date("startDate" + data.ID, data.startDate);
+                Profile.Bind.Date("endDate" + data.ID, data.endDate);
+                Profile.Bind.Input("TrainingName" + data.ID, data.TrainingName);
+                Profile.Bind.Input("TrainingSponsor" + data.ID, data.TrainingSponsor);
+                
+                Profile.Training.Custom.bindDropDown("Certificate" + data.ID, data.Certificate);
+            },
+            Custom: {
+                bindDropDown: function (div, value) {
+                    var list = this.list();
+                    var i = $("#" + div);
+                    i.jqxDropDownList({ source: list, disabled: false, height: '25px', displayMember: "certificationName", valueMember: "ID", width: '96%' });
+                    if (value !== null) { i.jqxDropDownList('val', value); }
+                },
+                list: function () {
+                    var source = {
+                        datatype: "json",
+                        dataFields: [
+                        { name: 'ID', type: 'number' },
+                        { name: 'certificationName', type: 'string' }
+                        ],
+                        url: baseURL + 'api/profileCertification/' + cIDV,
+                        async: false
+                    };
+
+
+                    return jsList = new $.jqx.dataAdapter(source, {
+                        autoBind: true,
+                        contentType: 'application/json; charset=utf-8'
+                    });
+                }
+            },
+        },
         Language: {},
         Skill: {},
         Certification: {},
@@ -776,7 +890,38 @@
                         </div>
                     </div>
                 </div>
-                <div id="contentTraining">1</div>
+                <div id="contentTraining">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-training">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>TRAINING
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-training">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-training" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
                 <div id="contentLanguage">1</div>
                 <div id="contentSkill">1</div>
                 <div id="contentCertification">1</div>
