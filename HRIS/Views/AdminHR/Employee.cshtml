@@ -115,6 +115,20 @@
             }
         });
 
+        $("#profileLanguage").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentLanguage").toggle();
+                console.log(Profile.Language.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Language.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Language.Load();
+                }
+            }
+        });
+
         $('#employeeDB').on('rowselect', function (event) {
             // event arguments.
             var args = event.args;
@@ -522,7 +536,71 @@
                 }
             },
         },
-        Language: {},
+        Language: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Language.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileLanguage/' + Profile.Language.ID,
+                    success: function (data) {
+                        console.log("Language", data);
+                        Profile.Language.Data = data;
+                        Profile.Language.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-language").empty();
+                $("#task-tab-language").empty();
+                $.each(Profile.Language.Data, function (i, v) {
+                    $('#recent-tab-language').append('<li><a data-toggle="tab" href="#task-tab-language' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Language.CreateForm(v);
+                });
+                $('#recent-tab-language li:first').addClass("active");
+                $("#task-tab-language div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-language")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-language' + data.ID));
+                $("#task-tab-language" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "languageName" + data.ID).text("Name"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'languageName' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "spoken" + data.ID).text("Spoken"))
+                    .append($("<div>").addClass("form-control").attr('id', 'spoken' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "written" + data.ID).text("Written"))
+                    .append($("<div>").addClass("form-control").attr('id', 'written' + data.ID))))));
+                Profile.Language.BindForm(data);
+            },
+            BindForm: function (data) {
+                
+                Profile.Bind.Input("languageName" + data.ID, data.languageName);
+                Profile.Bind.DropDown("spoken" + data.ID, "SkillLevel", data.spoken);
+                Profile.Bind.DropDown("written" + data.ID, "SkillLevel", data.written);
+            },
+            Custom: {
+                
+            },
+        },
         Skill: {},
         Certification: {},
         Matrix: {},
@@ -922,7 +1000,38 @@
                         </div>
                     </div>
                 </div>
-                <div id="contentLanguage">1</div>
+                <div id="contentLanguage">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-language">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>LANGUAGE
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-language">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-language" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
                 <div id="contentSkill">1</div>
                 <div id="contentCertification">1</div>
                 <div id="contentMatrix">1</div>
