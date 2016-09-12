@@ -87,6 +87,20 @@
             }
         });
 
+        $("#profileDependant").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentDependant").toggle();
+                console.log(Profile.Dependant.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Dependant.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Dependant.Load();
+                }
+            }
+        });
+
         $("#profileEducation").on("click", function () {
             Profile.HideAll();
             if (Profile.DB.selectedRow.IDV == undefined) {
@@ -125,6 +139,34 @@
                 console.log(Profile.Language.ID, Profile.DB.selectedRow.IDV);
                 if (Profile.Language.ID != Profile.DB.selectedRow.IDV) {
                     Profile.Language.Load();
+                }
+            }
+        });
+
+        $("#profileSKill").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentSkill").toggle();
+                console.log(Profile.Skill.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Skill.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Skill.Load();
+                }
+            }
+        });
+
+        $("#profileCertification").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentCertification").toggle();
+                console.log(Profile.Certification.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Certification.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Certification.Load();
                 }
             }
         });
@@ -358,7 +400,74 @@
                 Profile.Bind.DropDown("idType" + data.ID, "ID", data.idType);
             }
         },
-        Dependant: {},
+        Dependant: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Dependant.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileDependent/' + Profile.Dependant.ID,
+                    success: function (data) {
+                        console.log("Dependant", data);
+                        Profile.Dependant.Data = data;
+                        Profile.Dependant.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-dependant").empty();
+                $("#task-tab-dependant").empty();
+                $.each(Profile.Dependant.Data, function (i, v) {
+                    $('#recent-tab-dependant').append('<li><a data-toggle="tab" href="#task-tab-dependant' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Dependant.CreateForm(v);
+                });
+                $('#recent-tab-dependant li:first').addClass("active");
+                $("#task-tab-dependant div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-dependant")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-dependant' + data.ID));
+                $("#task-tab-dependant" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "relationType" + data.ID).text("Relation"))
+                    .append($("<div>").addClass("form-control").attr('id', 'relationType' + data.ID))))
+                    )
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "insuranceCovered" + data.ID).text("Insurance Covered"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'insuranceCovered' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "taxDependent" + data.ID).text("Tax Dependant"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'taxDependent' + data.ID))))
+                    ));
+                Profile.Dependant.BindForm(data);
+            },
+            BindForm: function (data) {
+
+                Profile.Bind.Input("insuranceCovered" + data.ID, data.insuranceCovered);
+                Profile.Bind.Input("taxDependent" + data.ID, data.taxDependent);
+                //Profile.Bind.DropDown("relationType" + data.ID, "SkillLevel", data.relationType);
+            },
+            Custom: {
+
+            },
+        },
         Education: {
             ID: 0,
             Data: [],
@@ -601,8 +710,143 @@
                 
             },
         },
-        Skill: {},
-        Certification: {},
+        Skill: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Skill.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileSkill/' + Profile.Skill.ID,
+                    success: function (data) {
+                        console.log("Skill", data);
+                        Profile.Skill.Data = data;
+                        Profile.Skill.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-skill").empty();
+                $("#task-tab-skill").empty();
+                $.each(Profile.Skill.Data, function (i, v) {
+                    $('#recent-tab-skill').append('<li><a data-toggle="tab" href="#task-tab-skill' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Skill.CreateForm(v);
+                });
+                $('#recent-tab-skill li:first').addClass("active");
+                $("#task-tab-skill div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-skill")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-skill' + data.ID));
+                $("#task-tab-skill" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "skillName" + data.ID).text("Name"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'skillName' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "skillLevel" + data.ID).text("Level"))
+                    .append($("<div>").addClass("form-control").attr('id', 'skillLevel' + data.ID))))));
+                Profile.Skill.BindForm(data);
+            },
+            BindForm: function (data) {
+
+                Profile.Bind.Input("skillName" + data.ID, data.skillName);
+                Profile.Bind.DropDown("skillLevel" + data.ID, "SkillLevel", data.skillLevel);
+            },
+            Custom: {
+
+            },
+        },
+        Certification: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Certification.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileCertification/' + Profile.Certification.ID,
+                    success: function (data) {
+                        console.log("Certification", data);
+                        Profile.Certification.Data = data;
+                        Profile.Certification.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-certification").empty();
+                $("#task-tab-certification").empty();
+                $.each(Profile.Certification.Data, function (i, v) {
+                    $('#recent-tab-certification').append('<li><a data-toggle="tab" href="#task-tab-certification' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Certification.CreateForm(v);
+                });
+                $('#recent-tab-certification li:first').addClass("active");
+                $("#task-tab-certification div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-certification")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-certification' + data.ID));
+                $("#task-tab-certification" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "certificationName" + data.ID).text("Name"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'certificationName' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "issuedCountry" + data.ID).text("Country"))
+                    .append($("<div>").addClass("form-control").attr('id', 'issuedCountry' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "issuedCity" + data.ID).text("City"))
+                    .append($("<div>").addClass("form-control").attr('id', 'issuedCity' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "issuedDate" + data.ID).text("Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'issuedDate' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "issuedExpiredDate" + data.ID).text("Expired Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'issuedExpiredDate' + data.ID))))));
+                Profile.Certification.BindForm(data);
+            },
+            BindForm: function (data) {
+
+                Profile.Bind.Input("certificationName" + data.ID, data.certificationName);
+                Profile.Bind.DropDown("issuedCountry" + data.ID, "Country", data.issuedCountry);
+                Profile.Bind.DropDown("issuedCity" + data.ID, "Kabupaten", data.issuedCity);
+                Profile.Bind.Date("issuedDate" + data.ID, data.issuedDate);
+                Profile.Bind.Date("issuedExpiredDate" + data.ID, data.issuedExpiredDate);
+            },
+            Custom: {
+
+            },
+        },
         Matrix: {},
         Bind: {
             DropDown: function (div, list, value) {
@@ -866,8 +1110,12 @@
                 <div id="contentGrid">
                     <div id="employeeDB"></div>
                 </div>
-                <div id="contentDetail">1</div>
-                <div id="contentAddress">1</div>
+                <div id="contentDetail">
+                    Content for Detail, There is no API yet!
+                </div>
+                <div id="contentAddress">
+                    Content for Address, There is no API yet!
+                </div>
                 <div id="contentJob">
                     <div class="page-content">
                         <div class="row">
@@ -901,7 +1149,7 @@
                     </div>
                 </div>
                 <div id="contentBank">
-                    Content for Bank
+                    Content for Bank, There is no API yet!
                 </div>
                 <div id="contentIdentity">
                     <div class="page-content">
@@ -935,7 +1183,38 @@
                         </div>
                     </div>
                 </div>
-                <div id="contentDependant">1</div>
+                <div id="contentDependant">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-dependant">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>DEPENDANT
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-dependant">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-dependant" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
                 <div id="contentEducation">
                     <div class="page-content">
                         <div class="row">
@@ -1032,8 +1311,70 @@
                         </div>
                     </div>
                 </div>
-                <div id="contentSkill">1</div>
-                <div id="contentCertification">1</div>
+                <div id="contentSkill">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-skill">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>SKILL
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-skill">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-skill" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
+                <div id="contentCertification">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-certification">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>CERTIFICATION
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-certification">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-certification" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
                 <div id="contentMatrix">1</div>
 
             </div><!-- /.col -->
