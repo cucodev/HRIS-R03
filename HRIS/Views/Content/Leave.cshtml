@@ -39,20 +39,21 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-2 pull-left">
-            <input type="button" value="COMMON" id='isAnnual' style="margin-left:5px" />
+        <div class="col-xs-2">
+            <input type="button" value="COMMON" id='isAnnual' style="margin-left:0" />
         </div>
 
-        <div class="col-xs-5">
+        <div class="col-xs-7">
             <div id="PolicyType"></div>
         </div>
-        <div class="col-xs-5 ">
+        <div class="col-xs-3 pull-right">
             <input type="button" value="APPLY" id='Apply' />
         </div>
     </div>
+
     <div class="row">
-        <div class="col-md-9">
-            <div id="full-year" style="display: inline; !important;"></div>
+        <div class="col-xs-9">
+            <div id="full-year" style="padding-top: 10px;"></div>
         </div>
         <div class="col-xs-3">
 
@@ -61,76 +62,54 @@
                     <div id="table" style="margin-top:15px"></div>
                 </div>
             </div>
-            <br />
-            <div class="row" style="margin-top:5px">
-                <div class="col-xs-5">
-                    <div class="HR-Div alert-success">Balance</div>
-                </div>
-                <div class="col-xs-7 ">
-                    <div id="balanceProgress"></div>
-                    <div class="HR-Div " id="totalBalance">Days</div>
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-xs-5">
-                    <div class="HR-Div HR-Info">Applied Days</div>
-                </div>
-                <div class="col-xs-7 ">
-                    <div class="HR-Div " id="totalFullDays">Days</div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <hr class="Line" style="margin-bottom: 0" />
-                </div>
-            </div>
-
-
-
-
-            <div id="labelCommon">
-                <div class="row" style="margin-top:0">
-                    <div class="col-xs-5">
-                        <div class="HR-Div alert-info">Entitled </div>
-                    </div>
-                    <div class="col-xs-5">
-                        <div class="HR-Div" id="totalEntitled"> Days</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <hr class="Line" />
-                </div>
-            </div>
-
-
-            <div class="row" style="margin-top:0">
-                <div class="col-xs-5">
-                    <div class="HR-Div alert-info" id="totalAnnualCarryLabel">Carry Over</div>
-                </div>
-                <div class="col-xs-5">
-                    <div class="HR-Div" id="totalAnnualCarry"> Days</div>
-                </div>
-            </div>
-            <div class="row" style="margin-top:0">
-                <div class="col-xs-5">
-                    <div class="HR-Div alert-info" id="totalAnnualCurrentLabel">Annual </div>
-                </div>
-                <div class="col-xs-5">
-                    <div class="HR-Div" id="totalAnnualCurrent"> Days</div>
-                </div>
-            </div>
-
         </div>
-
-
     </div>
+
+    <div class="row" style="padding-top: 20px;">
+        <div class="col-xs-3">
+            <div class="form-group thumbnail text-center" style="background-color:#48c2fe">
+                <label for="totalAmount">Annual & Carry Over</label>
+                <p class="form-control-static" id="totalAnnualCarry"></p>
+                <p class="form-control-static"  id="totalAnnualCurrent"></p>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="form-group thumbnail text-center" style="background-color:#ff974d">
+                <label for="totalAmount">Entitled</label>
+                <p class="form-control-static" id="totalEntitled"></p>
+                <p class="form-control-static" ></p>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="form-group thumbnail text-center" style="background-color:#bce8f1">
+                <label for="totalAmount">Balance</label>
+                <div id="balanceProgress""></div>
+                <p class="form-control-static" id="totalBalance"></p>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="form-group thumbnail text-center" style="background-color:#d8ff75">
+                <label for="totalAmount">Apply Now</label>
+                <p class="form-control-static" id="totalAmount">
+                    <div id="totalFullDays">Days</div>
+                </p>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+
+
+
+
 
 <script type="text/javascript">
     var Balance = 0;
+    var Entitled = 0;
+
+    var isHalf = false;
+    var dataTable = [];
 
     var dateInArray = [];
     var totalDays = 0;
@@ -147,12 +126,17 @@
     var roleBasedValue = [];
     var policyID = 0;
     var policyType = 0;
+    var noWeekEnd = $.datepicker.noWeekends;
 
     $(document).ready(function () {
+        
 
-        //API 
+
+        //API
         var MasterSource = hris.source._employeeLeaveRoleBased(cIDV);
         var MasterDataAdapter = hris.data._dataAdapter(MasterSource);
+
+       // console.log(MasterDataAdapter);// = MasterDataAdapter.records[];
 
         var getLovType = hris.list._getLOV("PolicyType");
 
@@ -166,8 +150,12 @@
         var Leave = {
             Init: function (MasterDataAdapter, Balance, data) {
 
+
                 Leave.Table.Source.localdata = data;
-                
+                //Leave.DatePicker.Bind();
+                //Leave.Calculate.MaxDate(Balance);
+                //Leave.DatePicker.Disable();
+
                 Leave.Table.Bind();
                 Leave.CreateComponent.PolicyType(MasterDataAdapter);
                 Leave.CreateComponent.AnnualButton();
@@ -176,7 +164,7 @@
 
                 $("#PolicyType").hide();
             },
-            Clear: function() {
+            Clear: function () {
                 $('#full-year').multiDatesPicker('resetDates', 'picked');
                 $('#PolicyType').jqxDropDownList('clearSelection');
                 td = 0;
@@ -189,99 +177,202 @@
                 document.getElementById('full-year').style.pointerEvents = 'auto';
             },
             Calculate: {
+                Half: function (val, valBalance) {
+                    isHalf = false;
+                    if ((valBalance - val) == 0.5) {
+                        isHalf = true;
+                        console.log('HalfDay Mode Enable');
+                    }
+                },
+                MaxDate: function(maxDate) {
+                    if (maxDate == 0 || maxDate == null) {
+                        Leave.DatePicker.Disable();
+                    } else {
+                        Leave.DatePicker.Enable();
+                    }
+                },
                 updateBalance: function (maxDays, allDays) {
                     CurrentValue = maxDays - allDays;
                     $("#balanceProgress").jqxProgressBar({
                         value: CurrentValue,
                         max: maxDays
                     });
+                    $("#totalEntitled").html("<strong style='font-size:48px'>" + Entitled.toLocaleString() + "</strong> Days");
+
+                    if (CurrentValue <= 0) {
+                        Leave.DatePicker.Disable();
+                        //console.log('Disabled CurrentValue: ', CurrentValue);
+                    } 
+                    
                     //.val(CurrentValue);
-                    $("#totalBalance").html("<strong>" + CurrentValue.toLocaleString() + "</strong> Days Left");
-                    $("#totalFullDays").html("<strong>" + allDays.toLocaleString() + "</strong> Days");
-                    $("#totalBalance").html("<strong>" + maxDays.toLocaleString() + "</strong> Days");
-                    $("#totalRemaining").html("<strong>" + CurrentValue.toLocaleString() + "</strong> Days");
+                    $("#totalBalance").html("<strong style='font-size:48px'>" + CurrentValue.toLocaleString() + "</strong> Days Left");
+                    $("#totalFullDays").html("<strong style='font-size:48px'>" + allDays.toLocaleString() + "</strong> Days");
+                    //$("#totalBalance").html("<strong>" + maxDays.toLocaleString() + "</strong> Days");
+                    $("#totalRemaining").html("<strong style='font-size:48px'>" + CurrentValue.toLocaleString() + "</strong> Days");
+
+                    //Leave.DatePicker.Destroy();
+                    //Leave.DatePicker.Bind();
+                    
                 },
                 checkBalance: function (varData, varBalance) {
-                    if (varData <= (varBalance)) return true;
+                    if (varData <= varBalance) return true;
                 }
             },
             CalculateDate: {
+                add: function (varDate) {
+
+                },
                 addDate: function (varDate, varDateInArray) {
+                    dateInArray = [];
+                    
                     if (varDateInArray.find(Leave.CalculateDate.checkDate, varDate)) {
                         var i = varDateInArray.indexOf(varDate, 0);
                         if (i != -1) varDateInArray.splice(i, 1);
                     } else {
-                        varDateInArray.push(varDate);
+                        if (totalDays < Balance) {
+                            varDateInArray.push(varDate);
+                        }
                     }
+                    totalDays = 0;
                     return varDateInArray;
                 },
-                checkDate: function () {
-                    return dateInArray == dateTemp;
+                checkDate: function (dateInArrayTemp) {
+                    return dateInArrayTemp == dateTemp;
                 },
                 dateSelected(item, index) {
+                    var duration = 0.5;
+                    if ((Balance - totalDays) == 0.5) duration == 0.5;
                     data.push({
                         "ID": index,
                         "Date": item,
-                        "Duration": 1,
+                        "Duration": duration,
                         "DurationLabel": true,
                         "vCreatedBy": cIDV,
                         "createTime": null,
                         "policyID": policyType,
                         "IDV": cIDV
                     });
-                    totalDays = totalDays + 1;
+                    totalDays = totalDays + duration;
+                   
                 }
             },
             CreateComponent: {
-                PolicyType: function(varData) {
+                PolicyType: function (varData) {
                     $('#PolicyType').jqxDropDownList({ source: varData, theme: 'fresh', disabled: false, height: '35px', displayMember: "policyTypeName", valueMember: "ID", width: '100%' });
                 },
-                ProgreesBar: function(varData) {
+                ProgreesBar: function (varData) {
                     $("#balanceProgress").jqxProgressBar({ animationDuration: 0, showText: false, renderText: renderText, template: "info", width: '100%', height: 25, value: varData, max: varData });
                 },
-                AnnualButton: function() {
+                AnnualButton: function () {
                     $('#isAnnual').jqxSwitchButton({ height: 35, width: '100%', checked: true, onLabel: 'ANNUAL', offLabel: 'COMMON', theme: 'orange' });
                 },
                 ApplyButton: function () {
                     hris.general.bindButton('Apply');
                 }
             },
-            Table: {
-                Column:  [{ text: 'Index', dataField: 'ID', width: 10, hidden: true },
-                          { text: 'Date', dataField: 'Date', cellsformat: 'D', width: '65%', editable: false },
-                          { text: 'Full Days', dataField: 'DurationLabel', columntype: 'checkbox', width: '35%' }],
-                Source : {  localdata: [],
-                            dataType: "array",
-                            dataFields:
-                            [
-                                { name: 'ID', type: 'number' },
-                                { name: 'Date', type: 'date' },
-                                { name: 'Duration', type: 'int' },
-                                { name: 'DurationLabel', type: 'bool' }
-                            ],
-                            updaterow: function (rowid, rowdata, commit) {
-                                if (rowdata.DurationLabel) {
-                                    data[rowdata.ID].Duration = 1;
-                                    data[rowdata.ID].DurationLabel = true;
-                                } else {
-                                    data[rowdata.ID].Duration = 0.5;
-                                    data[rowdata.ID].DurationLabel = false;
+            DatePicker: {
+                Bind: function () {
+                    //console.log('Datepicker Init()');
+                    noWeekEnd = $.datepicker.noWeekends;
+                    $('#full-year').multiDatesPicker({
+                        disabled: false,
+                        beforeShowDay: $.datepicker.noWeekends,
+                        numberOfMonths: [1, 3],
+                        dateFormat: "mm/dd/yy",
+                        onSelect: function (date, el) {
+                            data = [];
+                            
+                            //console.log("Date Selected: ", date);
+                            dateTemp = date;
+                            //dateInArray.forEach(dateSelected);
+                            dateInArray = Leave.CalculateDate.addDate(date, dateInArray);
+                            dateInArray.forEach(Leave.CalculateDate.dateSelected);
+                            console.log('totalDays:', totalDays);
+                            if (Leave.Calculate.checkBalance(totalDays, Balance)) {
+                                // if (checkBalance(totalDays)) {
+                                try {
+                                    Leave.Table.Source.localdata = data;
+                                    Leave.Calculate.updateBalance(Balance, totalDays);
+                                    //updateBalance(Balance, totalDays)
+                                    $("#table").jqxGrid('updatebounddata');
+                                } catch (err) {
+                                    console.log("Error : ", err.message);
                                 }
-                                totalDays = 0;
-                                for (i = 0; i < data.length; i++) {
-                                    b = data[i].Duration;
-                                    totalDays = totalDays + b;
-                                };
-                                Leave.Calculate.updateBalance(Balance, totalDays);
-                                Leave.Table.Source.localdata = data;
-
-                                commit(true);
-                            }   
+                            } else {
+                                //document.getElementById('full-year').style.pointerEvents = 'none';
+                                $('#full-year').multiDatesPicker('removeDates', date);
+                                console.log("Maximum Days !! Balance: " + Balance);
+                            }
+                        }
+                    });
+                    $('#full-year').multiDatesPicker('removeDates', new Date());
+                    $('#full-year').multiDatesPicker('resetDates', 'disabled');
+                    //$('#full-year').multiDatesPicker({ beforeShowDay: $.datepicker.noWeekends }); error behaviour when added
                 },
-                SourceReturn : function() {
+                Destroy: function () {
+                    //$('#full-year').multiDatesPicker('destroy');
+                },
+                Disable: function () {
+                    /*
+                    try {
+                        console.log(dateInArray);
+                        $('#full-year').multiDatesPicker({
+                            disabled: true,
+                            addDates: dateInArray
+                        });
+
+                    } catch (err) {
+                        console.log('Error to disable Calendar: ', err.message);
+                    }
+                    */
+                },
+                Enable: function () {
+                    $('#full-year').multiDatesPicker({ disabled: false });
+                }
+            },
+            Table: {
+                Column: [{ text: 'Index', dataField: 'ID', width: 10, hidden: true },
+                          { text: 'Date', dataField: 'Date', cellsformat: 'D', width: '65%', editable: false },
+                          { text: 'Half Days', dataField: 'DurationLabel', columntype: 'checkbox', width: '35%' }],
+                Source: {
+                    localdata: [],
+                    dataType: "array",
+                    dataFields:
+                    [
+                        { name: 'ID', type: 'number' },
+                        { name: 'Date', type: 'date' },
+                        { name: 'Duration', type: 'int' },
+                        { name: 'DurationLabel', type: 'bool' }
+                    ],
+                    updaterow: function (rowid, rowdata, commit) {
+                        if (rowdata.DurationLabel) {
+                            data[rowdata.ID].Duration = 0.5;
+                            data[rowdata.ID].DurationLabel = true;
+                        } else {
+                            data[rowdata.ID].Duration = 1;
+                            data[rowdata.ID].DurationLabel = false;
+                        }
+                        totalDays = 0;
+                        for (i = 0; i < data.length; i++) {
+                            b = data[i].Duration;
+                            totalDays = totalDays + b;
+                        };
+                        //console.log('Balance:', Balance);
+                        //console.log('Total Days', totalDays);
+
+                        //Check if Next Duration must be Half Days
+                        Leave.Calculate.Half(totalDays,Balance);
+
+                        Leave.Calculate.updateBalance(Balance, totalDays);
+                        Leave.Table.Source.localdata = data;
+
+                        commit(true);
+                    }
+                },
+                SourceReturn: function () {
                     return this.Source;
                 },
-                dataAdapter: function() {
+                dataAdapter: function () {
                     var s = this.Source;
                     //console.log("dataAdapter Source: ", s);
                     return new $.jqx.dataAdapter(s, { autoBind: true })
@@ -302,42 +393,13 @@
         Leave.Init(MasterDataAdapter, Balance, data);
         
         //COMPONENT
-             
-        $('#full-year').multiDatesPicker({
-            numberOfMonths: [1, 3],
-            dateFormat: "mm/dd/yy",
-            onSelect: function (date, el) {
-                data = [];
-                totalDays = 0;
-                console.log("Date Selected: ", date);
-                dateTemp = date;
-                dateInArray = Leave.CalculateDate.addDate(date, dateInArray);
-                //addDate(date);
-                dateInArray.forEach(Leave.CalculateDate.dateSelected);
-                //dateInArray.forEach(dateSelected);
-                if (Leave.Calculate.checkBalance(totalDays,Balance)) {
-               // if (checkBalance(totalDays)) {
-                    try {
-                        Leave.Table.Source.localdata = data;
-                        //Leave.Table.Bind();
-                        //source.localdata = data;
-                        Leave.Calculate.updateBalance(Balance, totalDays);
-                        //updateBalance(Balance, totalDays)
-                        $("#table").jqxGrid('updatebounddata');
-                    } catch (err) {
-                        console.log("Error : ", err);
-                    }
-                } else {
-                    //document.getElementById('full-year').style.pointerEvents = 'none';
-                    alert("Maximum Days !! Balance: " + Balance);
-                }
-            }
-        });
+
         
 
+
         function getRoleBasedValue(policyType) {
-            var uri = baseURL + 'api/employee/getRoleBasedValue/'+ cIDV + '/' + policyType;
-            
+            var uri = baseURL + 'api/employee/getRoleBasedValue/' + cIDV + '/' + policyType;
+
         }
 
         //EVENT
@@ -358,37 +420,39 @@
             Leave.Clear();
         });
 
-        $('#PolicyType').on('select', function (event) {
+
+
+        $('#PolicyType').on('change', function (event) {
             var i = $('#PolicyType');
             var index = event.args.index;
             var MasterData = MasterDataAdapter.records[index];
-            
-            console.log(MasterData);
+
+            //console.log(MasterData);
             policyType = MasterData.policyType;
+
             //Reset
-            $('#full-year').multiDatesPicker('resetDates', 'picked');
-            
             td = 0;
             totalDays = 0;
             data = [];
             dateInArray = [];
             Leave.Table.Source.localdata = [];
             $("#table").jqxGrid('updatebounddata');
+            Leave.DatePicker.Bind();
             //document.getElementById('full-year').style.pointerEvents = 'auto';
 
 
             //Calculate
-            Balance = MasterData.roleBasedValue;
+            Balance = MasterData.balanceValue;
+            if (Balance == null) Balance = 0;
+            Entitled = MasterData.roleBasedValue;
             i.jqxDropDownList({ selectedIndex: index });
             Leave.Calculate.updateBalance(Balance, totalDays);
-
-            
         });
-       
+
         $('#Apply').on('click', function (event) {
             console.log("Posted: ", data);
-            $.post(baseURL + 'api/employeeForm/postLeave/'+cIDV, { '': data })
-                .done(function(data){
+            $.post(baseURL + 'api/employeeForm/postLeave/' + cIDV, { '': data })
+                .done(function (data) {
                     console.log("ajax, Data Posted: ", data);
                     BootstrapDialog.show({
                         message: 'Leave Has Been Submitted !!'
@@ -397,19 +461,31 @@
                 });
         });
 
-        
+
     })
 </script>
 <style>
     #full-year li[style] {
-    display: inline !important;
-} 
+        display: inline !important;
+    }
+
+    .ui-widget-content {
+        background-image: none;
+        background: none;
+    }
+
+    element.style {
+        display: block;
+        width: auto !important;
+    }
+
     .HR-Div {
         padding: 5px;
         margin-bottom: 3px;
         border: 1px solid transparent;
         border-radius: 4px;
     }
+
     .HR-Warning {
         color: #c09853;
         background-color: #fcf8e3;
@@ -421,13 +497,12 @@
         background-color: #d9edf7;
         border-color: #bce8f1;
     }
+
     table {
-    /* border-collapse: collapse; */
-    /* border-spacing: 0; */
+        /* border-collapse: collapse; */
+        /* border-spacing: 0; */
     }
-
 </style>
-
 
 
 

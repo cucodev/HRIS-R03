@@ -156,6 +156,8 @@
     }
         
     $(document).ready(function () {
+        hris.menu.roots("subMenuProfile");
+        hris.menu.sub("subMenuMyID");
         loadIdentity(Identity.Modal.create);
         $("#submit").click(Identity.Modal.submit);
         $("#editButton").click(Identity.Modal.edit);

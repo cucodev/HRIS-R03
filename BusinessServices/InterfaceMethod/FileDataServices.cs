@@ -11,6 +11,7 @@ using BusinessEntities.CrudEntities;
 using System.Transactions;
 using System.IO;
 using System.Web.Hosting;
+using DataModel.Model;
 
 namespace BusinessServices.InterfaceMethod
 {

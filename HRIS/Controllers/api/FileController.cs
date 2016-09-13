@@ -1,7 +1,7 @@
 ﻿using BusinessEntities.CrudEntities;
 using BusinessServices.Interface;
 using BusinessServices.InterfaceMethod;
-using DataModel;
+//using DataModel;
 using HRIS.Controllers.api;
 using System;
 using System.Collections.Generic;

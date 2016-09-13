@@ -19,6 +19,14 @@ namespace HRIS_R03.Controllers.shared
         private const string UserCred = GlobalVariable.UserCred;
         private const string ParentList = "ParentList";
 
+        private const int roleAdmin = 15;
+        private const int roleHRD = 10;
+        private const int roleSuperior = 5;
+        private const int roleUser = 1;
+
+        public new UserCredModel User;
+        public RequestContext CurrentRequestContext;
+
         private readonly Isecurity _pServices;
 
         //private 
@@ -35,6 +43,7 @@ namespace HRIS_R03.Controllers.shared
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
+            CurrentRequestContext = requestContext;
 
             ViewData[UserCred] = null;
             Session[UserCred] = null;
@@ -43,6 +52,29 @@ namespace HRIS_R03.Controllers.shared
             if (!IsNonSessionController(requestContext) && !HasSession())
             {
                 Rederect(requestContext, Url.Action(LogOnAction, LogOnController));
+            } else
+            {
+                if (UserVariable.User != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("CurrentRequestContext:", CurrentRequestContext);
+                    System.Diagnostics.Debug.WriteLine("User Role: ", UserVariable.User.role);
+                }
+            }
+        }
+
+        //PageSection
+        public void adminRole()
+        {
+            User = UserVariable.User;
+            if (User != null)
+            {
+                System.Diagnostics.Debug.WriteLine("Name: " + User.Name.Trim() + ", Role:" + User.role);
+                if (User.role != 3)
+                {
+                    System.Diagnostics.Debug.WriteLine("Role Not Allowed");
+                    //Rederect(CurrentRequestContext, Url.Action("Error", "NotAllowed"));
+                    RedirectToAction("Error", "NotAllowed");
+                }
             }
         }
 
@@ -120,8 +152,6 @@ namespace HRIS_R03.Controllers.shared
         }
 
        
-        
-
         protected void AbandonSession()
         {
             if (HasSession())

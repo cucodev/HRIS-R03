@@ -1,6 +1,7 @@
 ﻿using BusinessEntities.CrudEntities;
 using BusinessServices.InterfaceMethod;
 using DataModel;
+using DataModel.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataModel;
+using DataModel.Model;
 using DataModel.UnitOfWork;
 using BusinessEntities;
 using BusinessServices.Interface;
 using BusinessEntities.CrudEntities;
+using DataModel;
 
 namespace BusinessServices.InterfaceMethod
 {

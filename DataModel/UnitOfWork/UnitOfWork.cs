@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data.Entity.Validation;
 using DataModel.GenericRepository;
-using DataModel;
+using DataModel.Model;
 using DataModel.FileRepository;
 
 #endregion

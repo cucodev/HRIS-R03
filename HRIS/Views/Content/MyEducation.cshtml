@@ -164,6 +164,9 @@
     }
 
     $(document).ready(function () {
+        hris.menu.roots("subMenuProfile");
+        hris.menu.sub("subMenuMyEdu");
+
         loadEducation(Education.Modal.create);
         $("#submit").click(Education.Modal.submit);
         $("#editButton").click(Education.Modal.edit);

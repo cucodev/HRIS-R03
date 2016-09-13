@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0f1f2a3b50684aad8a5afa99b6407464" Name="Diagram1">
+        <EntityTypeShape EntityType="HRDModel.BPJS_Ms_Desa" Width="1.5" PointX="13.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.BPJS_Ms_Faskes" Width="1.5" PointX="13.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.BPJS_Ms_Karyawan" Width="1.5" PointX="0.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.BPJS_Tr_Migrasi" Width="1.5" PointX="15.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.hrd_UserOption" Width="1.5" PointX="16.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_AccessControlSettings" Width="1.5" PointX="0.75" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_AreaTime" Width="1.5" PointX="17.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_AttLeaveRecord" Width="1.5" PointX="11.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_AttRecord" Width="1.5" PointX="11.25" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_AttResultRecord" Width="1.5" PointX="8.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_AttType" Width="1.5" PointX="6.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_AttTypeItem" Width="1.5" PointX="9" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Dept" Width="1.5" PointX="0.75" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Device" Width="1.5" PointX="14" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Enroll" Width="1.5" PointX="17.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_EnrollDevice" Width="1.5" PointX="5.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_GroupTime" Width="1.5" PointX="17.75" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Holiday" Width="1.5" PointX="18.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_ImageBin" Width="1.5" PointX="18.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Log" Width="1.5" PointX="16" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_LogType" Width="1.5" PointX="13.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_PassTime" Width="1.5" PointX="13.75" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Place" Width="1.5" PointX="11.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Resources" Width="1.5" PointX="9" PointY="25.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_RoleResources" Width="1.5" PointX="11.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Roles" Width="1.5" PointX="9" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Rule" Width="1.5" PointX="6" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_RuleList" Width="1.5" PointX="3.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_SegmentList" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Shift" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_ShiftGroup" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_ShiftList" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_ShiftRecord" Width="1.5" PointX="8.25" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_ShiftSegment" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_SysSettings" Width="1.5" PointX="19.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_UserColumns" Width="1.5" PointX="19.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_UserDepts" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_UserEx" Width="1.5" PointX="8.25" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_UserRoles" Width="1.5" PointX="11.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Users" Width="1.5" PointX="6" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_UserSettings" Width="1.5" PointX="10.75" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRDModel.ras_Weekend" Width="1.5" PointX="3.75" PointY="16.5" IsExpanded="true" />
+        <AssociationConnector Association="HRDModel.ras_AttTypeItem_ras_AttLeaveRecord_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Users_ras_AttLeaveRecord_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_AttTypeItem_ras_AttRecord_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Users_ras_AttResultRecord_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_AttType_ras_AttTypeItem_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Dept_ras_UserDepts_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Dept_ras_Users_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Place_ras_Device_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_LogType_ras_Log_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Resources_ras_RoleResources_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Roles_ras_RoleResources_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Roles_ras_UserRoles_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_RuleList_ras_Rule_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_RuleList_ras_Users_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Shift_ras_SegmentList_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_ShiftSegment_ras_SegmentList_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Shift_ras_ShiftList_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_ShiftGroup_ras_ShiftList_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Users_ras_ShiftRecord_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Users_ras_UserDepts_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Users_ras_UserEx_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Users_ras_UserRoles_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRDModel.ras_Weekend_ras_Users_FK1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

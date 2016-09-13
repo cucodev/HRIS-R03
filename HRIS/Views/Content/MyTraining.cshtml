@@ -191,6 +191,9 @@
         },
     }
     $(document).ready(function () {
+        hris.menu.roots("subMenuProfile");
+        hris.menu.sub("subMenuMyTraining");
+
         loadTraining(Training.Modal.create);
         $("#submit").click(Training.Modal.submit);
         $("#editButton").click(Training.Modal.edit);

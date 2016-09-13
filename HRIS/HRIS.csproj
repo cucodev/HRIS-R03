@@ -257,6 +257,7 @@
     <Compile Include="Controllers\api\profileController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\shared\ApplicationController.cs" />
     <Compile Include="Controllers\shared\DataController.cs" />
@@ -399,6 +400,7 @@
     <Content Include="Content\bg\hollit-logo-large.png" />
     <Content Include="Content\bg\hollit-logo-small.png" />
     <Content Include="Content\bg\lo-bg.png" />
+    <Content Include="Content\bg\UnauthorizedAccess.jpg" />
     <Content Include="Content\bootstrap-dialog.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -1184,6 +1186,7 @@
     <Content Include="Views\AdminHR\Approval.cshtml" />
     <Content Include="Views\AdminHR\_roleBasedMatrix.cshtml" />
     <Content Include="Views\AdminHR\shared\Matrix.cshtml" />
+    <Content Include="Views\Error\NotAllowed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1200,6 +1203,12 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\BusinessEntities\BusinessEntities.csproj">
       <Project>{33d74034-0d67-44b9-b1ad-8c3a27ce0f7e}</Project>
       <Name>BusinessEntities</Name>
@@ -1208,16 +1217,6 @@
       <Project>{076d9abe-7f79-4418-b075-aa398a4fb8c3}</Project>
       <Name>BusinessServices</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataModel\DataModel.csproj">
-      <Project>{DF9728C3-BB3E-4A95-AD30-3532F08B7049}</Project>
-      <Name>DataModel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

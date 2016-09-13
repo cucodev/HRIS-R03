@@ -6,7 +6,15 @@
 <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#MenuProfile").addClass("active");
+        //$("#MenuProfile").addClass("active");
+        hris.menu.roots("subMenuProfile");
+        hris.menu.sub("subMenuMyMatrix");
+
+        //$("#subMenuProfile").addClass("nav-show");
+        //$("#subMenuProfile").css("display", "Block");
+        //$("#subMenuMyMatrix").addClass("active");
+
+        //submenu 
 
         var PolicyName = hris.list._getLOV('PolicyType');
         var ValueName = hris.list._getLOV('ValueType');

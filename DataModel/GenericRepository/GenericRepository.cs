@@ -1,5 +1,6 @@
 ﻿#region Using Namespaces...
 
+using DataModel.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;

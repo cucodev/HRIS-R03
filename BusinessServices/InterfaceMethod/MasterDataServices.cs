@@ -2,6 +2,7 @@
 using BusinessEntities.CrudEntities;
 using BusinessServices.Interface;
 using DataModel;
+using DataModel.Model;
 using DataModel.UnitOfWork;
 using System;
 using System.Collections.Generic;

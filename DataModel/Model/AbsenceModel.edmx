@@ -1,0 +1,2856 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HRDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BPJS_Ms_Desa">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KDPROP" Type="varchar" MaxLength="255" />
+          <Property Name="NMPROP" Type="varchar" MaxLength="255" />
+          <Property Name="KDDATI2" Type="varchar" MaxLength="255" />
+          <Property Name="NMDATI2" Type="varchar" MaxLength="255" />
+          <Property Name="KDKEC" Type="varchar" MaxLength="255" />
+          <Property Name="NMKEC" Type="varchar" MaxLength="255" />
+          <Property Name="KDDESA" Type="varchar" MaxLength="255" />
+          <Property Name="NMDESA" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="BPJS_Ms_Faskes">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KODE_DIVRE" Type="varchar" MaxLength="255" />
+          <Property Name="NAMA_REGIONAL" Type="varchar" MaxLength="255" />
+          <Property Name="NAMA_KC" Type="varchar" MaxLength="255" />
+          <Property Name="NAMA_DATI2" Type="varchar" MaxLength="255" />
+          <Property Name="KODE_FASKES" Type="varchar" MaxLength="255" />
+          <Property Name="NAMA_FASKES" Type="varchar" MaxLength="255" />
+          <Property Name="JENIS_FASKES" Type="varchar" MaxLength="255" />
+          <Property Name="ALAMAT_FASKES" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="BPJS_Ms_Karyawan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="NIP" Type="varchar" MaxLength="255" />
+          <Property Name="NamaLengkap" Type="varchar" MaxLength="255" />
+          <Property Name="Access" Type="varchar" MaxLength="255" />
+          <Property Name="TanggalLahir" Type="datetime" />
+          <Property Name="Password" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="BPJS_Tr_Migrasi">
+          <Key>
+            <PropertyRef Name="Idx" />
+          </Key>
+          <Property Name="Idx" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SortNo" Type="int" />
+          <Property Name="KaryawanID" Type="int" />
+          <Property Name="NoKK" Type="varchar" MaxLength="255" />
+          <Property Name="NoKTP" Type="varchar" MaxLength="255" />
+          <Property Name="NamaLengkap" Type="varchar" MaxLength="255" />
+          <Property Name="HubKeluarga" Type="varchar" MaxLength="255" />
+          <Property Name="TempatLahir" Type="varchar" MaxLength="255" />
+          <Property Name="TanggalLahir" Type="varchar" MaxLength="255" />
+          <Property Name="JenisKelamin" Type="varchar" MaxLength="255" />
+          <Property Name="StatusKawin" Type="varchar" MaxLength="255" />
+          <Property Name="AlamatTinggal" Type="varchar" MaxLength="255" />
+          <Property Name="RT" Type="varchar" MaxLength="255" />
+          <Property Name="RW" Type="varchar" MaxLength="255" />
+          <Property Name="KodePos" Type="varchar" MaxLength="255" />
+          <Property Name="KodeKecamatan" Type="varchar" MaxLength="255" />
+          <Property Name="NamaKecamatan" Type="varchar" MaxLength="255" />
+          <Property Name="KodeDesa" Type="varchar" MaxLength="255" />
+          <Property Name="NamaDesa" Type="varchar" MaxLength="255" />
+          <Property Name="KodeFaskesTK1" Type="varchar" MaxLength="255" />
+          <Property Name="NamaFaskesTK1" Type="varchar" MaxLength="255" />
+          <Property Name="KodeFaskesGigi" Type="varchar" MaxLength="255" />
+          <Property Name="NamaFaskesGigi" Type="varchar" MaxLength="255" />
+          <Property Name="Telepon" Type="varchar" MaxLength="255" />
+          <Property Name="Email" Type="varchar" MaxLength="255" />
+          <Property Name="NPP" Type="varchar" MaxLength="255" />
+          <Property Name="Jabatan" Type="varchar" MaxLength="255" />
+          <Property Name="StatusKerja" Type="varchar" MaxLength="255" />
+          <Property Name="KelasRawat" Type="varchar" MaxLength="255" />
+          <Property Name="TMTKerja" Type="varchar" MaxLength="255" />
+          <Property Name="Gaji" Type="varchar" MaxLength="255" />
+          <Property Name="WargaNegara" Type="varchar" MaxLength="255" />
+          <Property Name="NoPolis" Type="varchar" MaxLength="255" />
+          <Property Name="NamaAsuransi" Type="varchar" MaxLength="255" />
+          <Property Name="NoNPWP" Type="varchar" MaxLength="255" />
+          <Property Name="NoPassport" Type="varchar" MaxLength="255" />
+          <Property Name="NoBPJS" Type="varchar" MaxLength="50" />
+          <Property Name="AlasanMutasi" Type="varchar" MaxLength="50" />
+          <Property Name="TanggalMutasi" Type="datetime" />
+          <Property Name="IsDownload" Type="bit" />
+        </EntityType>
+        <EntityType Name="hrd_UserOption">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="32" />
+          <Property Name="ResignDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ras_AccessControlSettings">
+          <Key>
+            <PropertyRef Name="CreateDate" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="Wiegand" Type="int" />
+          <Property Name="FireAlarm" Type="int" />
+          <Property Name="Lock2Control" Type="int" />
+          <Property Name="Lock1OpenDelay" Type="int" />
+          <Property Name="CheckDoor1Status" Type="int" />
+          <Property Name="Lock1OpenOvertimeAlarm" Type="int" />
+          <Property Name="Lock1IllegalOpenAlarm" Type="int" />
+          <Property Name="Lock2OpenDelay" Type="int" />
+          <Property Name="CheckDoor2Status" Type="int" />
+          <Property Name="Lock2OpenOvertimeAlarm" Type="int" />
+          <Property Name="Lock2IllegalOpenAlarm" Type="int" />
+          <Property Name="Unlock1PassGroup" Type="int" />
+          <Property Name="Unlock2PassGroup" Type="int" />
+          <Property Name="EnableAntiHijack" Type="int" />
+          <Property Name="HijackOpen" Type="int" />
+          <Property Name="HijackAlarm" Type="int" />
+          <Property Name="HijackPassword" Type="varchar" MaxLength="8" />
+          <Property Name="HijackFpNo" Type="int" />
+          <Property Name="AntiPassback" Type="int" />
+          <Property Name="MultOpen" Type="int" />
+          <Property Name="LinkageOpen" Type="int" />
+          <Property Name="LinkageAlarm" Type="int" />
+          <Property Name="EnableRelayAlarm" Type="int" />
+          <Property Name="VerifyMode" Type="int" />
+          <Property Name="Res1" Type="int" />
+          <Property Name="Res2" Type="int" />
+        </EntityType>
+        <EntityType Name="ras_AreaTime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DN" />
+          </Key>
+          <Property Name="ID" Type="tinyint" Nullable="false" />
+          <Property Name="DN" Type="smallint" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Sunday" Type="int" />
+          <Property Name="Monday" Type="int" />
+          <Property Name="Tuesday" Type="int" />
+          <Property Name="Wednesday" Type="int" />
+          <Property Name="Thursday" Type="int" />
+          <Property Name="Friday" Type="int" />
+          <Property Name="Saturday" Type="int" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_AttLeaveRecord">
+          <Key>
+            <PropertyRef Name="UID" />
+            <PropertyRef Name="FromDate" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="FromDate" Type="datetime" Nullable="false" />
+          <Property Name="ToDate" Type="datetime" />
+          <Property Name="AttTypeId" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="ResultTime" Type="smallmoney" />
+          <Property Name="LastUpdatedUID" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_AttRecord">
+          <Key>
+            <PropertyRef Name="DIN" />
+            <PropertyRef Name="Clock" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DN" Type="smallint" />
+          <Property Name="DIN" Type="bigint" Nullable="false" />
+          <Property Name="Clock" Type="datetime" Nullable="false" />
+          <Property Name="VerifyMode" Type="tinyint" />
+          <Property Name="Action" Type="tinyint" />
+          <Property Name="AttTypeId" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="CollectDate" Type="datetime" Nullable="false" />
+          <Property Name="JobCode" Type="int" />
+          <Property Name="Antipassback" Type="bit" />
+          <Property Name="LastUpdatedUID" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_AttResultRecord">
+          <Key>
+            <PropertyRef Name="UID" />
+            <PropertyRef Name="AttDate" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="AttDate" Type="datetime" Nullable="false" />
+          <Property Name="AttId" Type="varchar" MaxLength="4" />
+          <Property Name="TimeString" Type="varchar" MaxLength="360" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+          <Property Name="A01" Type="money" />
+          <Property Name="B01" Type="money" />
+          <Property Name="B02" Type="money" />
+          <Property Name="B03" Type="money" />
+          <Property Name="C01" Type="money" />
+          <Property Name="D01" Type="money" />
+          <Property Name="D02" Type="money" />
+          <Property Name="D03" Type="money" />
+          <Property Name="D04" Type="money" />
+          <Property Name="D05" Type="money" />
+          <Property Name="D06" Type="money" />
+          <Property Name="D07" Type="money" />
+          <Property Name="D08" Type="money" />
+          <Property Name="D09" Type="money" />
+          <Property Name="D10" Type="money" />
+          <Property Name="E01" Type="money" />
+          <Property Name="F01" Type="money" />
+          <Property Name="G01" Type="money" />
+          <Property Name="G02" Type="money" />
+          <Property Name="G03" Type="money" />
+        </EntityType>
+        <EntityType Name="ras_AttType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_AttTypeItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeId" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ItemId" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Unit" Type="tinyint" Nullable="false" />
+          <Property Name="ShowTimes" Type="bit" Nullable="false" />
+          <Property Name="MiniCalcValue" Type="real" />
+          <Property Name="RoundType" Type="tinyint" />
+          <Property Name="Symbol" Type="varchar" MaxLength="4" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedUID" Type="int" />
+        </EntityType>
+        <EntityType Name="ras_Dept">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeptId" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ParentId" Type="varchar" MaxLength="64" />
+          <Property Name="DeptName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_Device">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DN" Type="smallint" Nullable="false" />
+          <Property Name="Communication" Type="tinyint" />
+          <Property Name="Baudrate" Type="int" />
+          <Property Name="ComPort" Type="int" />
+          <Property Name="Password" Type="int" />
+          <Property Name="IpPort" Type="int" />
+          <Property Name="IpAddress" Type="varchar" MaxLength="32" />
+          <Property Name="SN" Type="varchar" MaxLength="64" />
+          <Property Name="Use" Type="tinyint" />
+          <Property Name="Model" Type="varchar" MaxLength="64" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedUID" Type="int" />
+          <Property Name="PlaceId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="Label" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="ras_Enroll">
+          <Key>
+            <PropertyRef Name="DIN" />
+            <PropertyRef Name="BackupNumber" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DIN" Type="bigint" Nullable="false" />
+          <Property Name="BackupNumber" Type="tinyint" Nullable="false" />
+          <Property Name="Privilege" Type="tinyint" />
+          <Property Name="Password" Type="varchar" MaxLength="16" />
+          <Property Name="Fingerprint" Type="varchar(max)" />
+          <Property Name="Enable" Type="bit" />
+          <Property Name="AccessTimeZone" Type="tinyint" />
+          <Property Name="ValidDate" Type="datetime" Nullable="false" />
+          <Property Name="InvalidDate" Type="datetime" Nullable="false" />
+          <Property Name="UnlockGroup" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="ras_EnrollDevice">
+          <Key>
+            <PropertyRef Name="DIN" />
+            <PropertyRef Name="BackupNumber" />
+            <PropertyRef Name="DN" />
+          </Key>
+          <Property Name="DIN" Type="bigint" Nullable="false" />
+          <Property Name="BackupNumber" Type="tinyint" Nullable="false" />
+          <Property Name="DN" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ras_GroupTime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DN" />
+          </Key>
+          <Property Name="ID" Type="tinyint" Nullable="false" />
+          <Property Name="DN" Type="smallint" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="64" />
+          <Property Name="PassTime0" Type="int" />
+          <Property Name="PassTime1" Type="int" />
+          <Property Name="PassTime2" Type="int" />
+          <Property Name="PassTime3" Type="int" />
+          <Property Name="PassTime4" Type="int" />
+          <Property Name="PassTime5" Type="int" />
+          <Property Name="PassTime6" Type="int" />
+          <Property Name="PassTime7" Type="int" />
+          <Property Name="PassTime8" Type="int" />
+          <Property Name="PassTime9" Type="int" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_Holiday">
+          <Key>
+            <PropertyRef Name="HolidayId" />
+          </Key>
+          <Property Name="HolidayId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="HolidyName" Type="nvarchar" MaxLength="64" />
+          <Property Name="BeginDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedUID" Type="int" />
+        </EntityType>
+        <EntityType Name="ras_ImageBin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ImageData" Type="varbinary" MaxLength="8000" />
+          <Property Name="ImageName" Type="nvarchar" MaxLength="128" />
+          <Property Name="ImageType" Type="varchar" MaxLength="64" />
+          <Property Name="ImageLength" Type="int" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedUID" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_Log">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogTypeId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="LogDate" Type="datetime" Nullable="false" />
+          <Property Name="OperateUID" Type="int" />
+          <Property Name="LogContent" Type="text" />
+          <Property Name="OperateResult" Type="bit" />
+        </EntityType>
+        <EntityType Name="ras_LogType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_PassTime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DN" />
+          </Key>
+          <Property Name="ID" Type="tinyint" Nullable="false" />
+          <Property Name="DN" Type="smallint" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_Place">
+          <Key>
+            <PropertyRef Name="PlaceId" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlaceId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="PlaceName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="DeptId" Type="varchar" MaxLength="64" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedUID" Type="int" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_Resources">
+          <Key>
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="ResourceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeId" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="ResourceName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_RoleResources">
+          <Key>
+            <PropertyRef Name="RoleResourceId" />
+          </Key>
+          <Property Name="RoleResourceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="ResourceId" Type="int" Nullable="false" />
+          <Property Name="OperLevel" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ras_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_Rule">
+          <Key>
+            <PropertyRef Name="RuleId" />
+            <PropertyRef Name="Item" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RuleId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="Item" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ItemValue" Type="nvarchar(max)" />
+          <Property Name="IsValid" Type="bit" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedUID" Type="int" />
+        </EntityType>
+        <EntityType Name="ras_RuleList">
+          <Key>
+            <PropertyRef Name="RuleId" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RuleId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="RuleName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="IsVoid" Type="bit" Nullable="false" />
+          <Property Name="IsDefault" Type="bit" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_SegmentList">
+          <Key>
+            <PropertyRef Name="SegmentId" />
+            <PropertyRef Name="ShiftId" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SegmentId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="ShiftId" Type="char" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ras_Shift">
+          <Key>
+            <PropertyRef Name="ShiftId" />
+          </Key>
+          <Property Name="ShiftId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="ShiftName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_ShiftGroup">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="64" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_ShiftList">
+          <Key>
+            <PropertyRef Name="ShiftId" />
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShiftId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="GroupId" Type="char" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ras_ShiftRecord">
+          <Key>
+            <PropertyRef Name="UID" />
+            <PropertyRef Name="DutyDay" />
+            <PropertyRef Name="ShiftId" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="DutyDay" Type="datetime" Nullable="false" />
+          <Property Name="ShiftId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="CreateUID" Type="int" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedUID" Type="int" />
+        </EntityType>
+        <EntityType Name="ras_ShiftSegment">
+          <Key>
+            <PropertyRef Name="SegmentId" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SegmentId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="SegmentName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="TypeId" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="BeginAttTime" Type="varchar" MaxLength="5" />
+          <Property Name="EndAttTime" Type="varchar" MaxLength="5" />
+          <Property Name="StartWorkTime" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="OffWorkTime" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ToPunchIn" Type="bit" />
+          <Property Name="ToPunchOut" Type="bit" />
+          <Property Name="CalcBeLate" Type="bit" />
+          <Property Name="CalcLeaveEarly" Type="bit" />
+          <Property Name="CalcAbsence" Type="bit" />
+          <Property Name="CalcStayAway" Type="bit" />
+          <Property Name="CrossDays" Type="bit" Nullable="false" />
+          <Property Name="ResultHours" Type="smallmoney" />
+          <Property Name="ResultDays" Type="smallmoney" />
+          <Property Name="DeductMinutes" Type="smallmoney" />
+          <Property Name="Color" Type="varchar" MaxLength="32" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ras_SysSettings">
+          <Key>
+            <PropertyRef Name="Item" />
+          </Key>
+          <Property Name="Item" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ItemValue" Type="nvarchar(max)" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedUID" Type="int" />
+        </EntityType>
+        <EntityType Name="ras_UserColumns">
+          <Key>
+            <PropertyRef Name="UserColumnId" />
+          </Key>
+          <Property Name="UserColumnId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="ReportId" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="ColumnName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Width" Type="int" />
+          <Property Name="Visible" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ras_UserDepts">
+          <Key>
+            <PropertyRef Name="UserDeptId" />
+          </Key>
+          <Property Name="UserDeptId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="DeptId" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ras_UserEx">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="128" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="Title" Type="varchar" MaxLength="64" />
+          <Property Name="RegisterDate" Type="datetime" />
+          <Property Name="IDNumber" Type="varchar" MaxLength="32" />
+          <Property Name="HomeAddress" Type="varchar" MaxLength="128" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="32" />
+          <Property Name="AttType" Type="int" />
+          <Property Name="AccessControl" Type="int" />
+          <Property Name="ValidityPeriod" Type="bit" />
+          <Property Name="UseUserGroupACTZ" Type="bit" />
+          <Property Name="UseUserGroupVM" Type="bit" />
+          <Property Name="Department" Type="int" />
+          <Property Name="AccessTimeZone" Type="int" />
+          <Property Name="ValidDate" Type="datetime" />
+          <Property Name="InvalidDate" Type="datetime" />
+          <Property Name="UserGroup" Type="int" />
+        </EntityType>
+        <EntityType Name="ras_UserRoles">
+          <Key>
+            <PropertyRef Name="UserRoleId" />
+          </Key>
+          <Property Name="UserRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <EntityType Name="ras_Users">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="DIN" Type="bigint" Nullable="false" />
+          <Property Name="PIN" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="64" />
+          <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="32" />
+          <Property Name="PasswordQuestion" Type="nvarchar" MaxLength="64" />
+          <Property Name="PasswordAnswer" Type="nvarchar" MaxLength="32" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+          <Property Name="IsLockedOut" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="LastLoginDate" Type="datetime" />
+          <Property Name="DeptId" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="AttId" Type="char" MaxLength="4" />
+          <Property Name="RuleId" Type="char" MaxLength="4" />
+          <Property Name="WeekendId" Type="char" MaxLength="4" />
+          <Property Name="LastUpdatedUID" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="ras_UserSettings">
+          <Key>
+            <PropertyRef Name="UID" />
+            <PropertyRef Name="Item" />
+          </Key>
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="Item" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ItemValue" Type="nvarchar(max)" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ras_Weekend">
+          <Key>
+            <PropertyRef Name="WeekendId" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WeekendId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="WeekendName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="MonAm" Type="bit" />
+          <Property Name="MonPm" Type="bit" />
+          <Property Name="TueAm" Type="bit" />
+          <Property Name="TuePm" Type="bit" />
+          <Property Name="WedAm" Type="bit" />
+          <Property Name="WedPm" Type="bit" />
+          <Property Name="ThurAm" Type="bit" />
+          <Property Name="ThurPm" Type="bit" />
+          <Property Name="FriAm" Type="bit" />
+          <Property Name="FriPm" Type="bit" />
+          <Property Name="SatAm" Type="bit" />
+          <Property Name="SatPm" Type="bit" />
+          <Property Name="SunAm" Type="bit" />
+          <Property Name="SunPm" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedUID" Type="int" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'HRD.dbo.vReport1' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="vReport1">
+          <Property Name="Account" Type="varchar" MaxLength="255" />
+          <Property Name="NoKK" Type="varchar" MaxLength="255" />
+          <Property Name="NoKTP" Type="varchar" MaxLength="255" />
+          <Property Name="NamaLengkap" Type="varchar" MaxLength="255" />
+          <Property Name="HubKeluarga" Type="varchar" MaxLength="255" />
+          <Property Name="TempatLahir" Type="varchar" MaxLength="255" />
+          <Property Name="TanggalLahir" Type="varchar" MaxLength="255" />
+          <Property Name="JenisKelamin" Type="varchar" MaxLength="255" />
+          <Property Name="StatusKawin" Type="varchar" MaxLength="255" />
+          <Property Name="AlamatTinggal" Type="varchar" MaxLength="255" />
+          <Property Name="RT" Type="varchar" MaxLength="255" />
+          <Property Name="RW" Type="varchar" MaxLength="255" />
+          <Property Name="KodePos" Type="varchar" MaxLength="255" />
+          <Property Name="KodeKecamatan" Type="varchar" MaxLength="255" />
+          <Property Name="NamaKecamatan" Type="varchar" MaxLength="255" />
+          <Property Name="KodeDesa" Type="varchar" MaxLength="255" />
+          <Property Name="NamaDesa" Type="varchar" MaxLength="255" />
+          <Property Name="KodeFaskesTK1" Type="varchar" MaxLength="255" />
+          <Property Name="NamaFaskesTK1" Type="varchar" MaxLength="255" />
+          <Property Name="KodeFaskesGigi" Type="varchar" MaxLength="255" />
+          <Property Name="NamaFaskesGigi" Type="varchar" MaxLength="255" />
+          <Property Name="Telepon" Type="varchar" MaxLength="255" />
+          <Property Name="Email" Type="varchar" MaxLength="255" />
+          <Property Name="NPP" Type="varchar" MaxLength="255" />
+          <Property Name="Jabatan" Type="varchar" MaxLength="255" />
+          <Property Name="StatusKerja" Type="varchar" MaxLength="255" />
+          <Property Name="KelasRawat" Type="varchar" MaxLength="255" />
+          <Property Name="TMTKerja" Type="varchar" MaxLength="255" />
+          <Property Name="Gaji" Type="varchar" MaxLength="255" />
+          <Property Name="WargaNegara" Type="varchar" MaxLength="255" />
+          <Property Name="NoPolis" Type="varchar" MaxLength="255" />
+          <Property Name="NamaAsuransi" Type="varchar" MaxLength="255" />
+          <Property Name="NoNPWP" Type="varchar" MaxLength="255" />
+          <Property Name="NoPassport" Type="varchar" MaxLength="255" />
+          <Property Name="NoBPJS" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+        <Association Name="ras_AttType_ras_AttTypeItem_FK1">
+          <End Role="ras_AttType" Type="Self.ras_AttType" Multiplicity="1" />
+          <End Role="ras_AttTypeItem" Type="Self.ras_AttTypeItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_AttType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="ras_AttTypeItem">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_AttTypeItem_ras_AttLeaveRecord_FK1">
+          <End Role="ras_AttTypeItem" Type="Self.ras_AttTypeItem" Multiplicity="1" />
+          <End Role="ras_AttLeaveRecord" Type="Self.ras_AttLeaveRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_AttTypeItem">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="ras_AttLeaveRecord">
+              <PropertyRef Name="AttTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_AttTypeItem_ras_AttRecord_FK1">
+          <End Role="ras_AttTypeItem" Type="Self.ras_AttTypeItem" Multiplicity="1" />
+          <End Role="ras_AttRecord" Type="Self.ras_AttRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_AttTypeItem">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="ras_AttRecord">
+              <PropertyRef Name="AttTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Dept_ras_UserDepts_FK1">
+          <End Role="ras_Dept" Type="Self.ras_Dept" Multiplicity="1" />
+          <End Role="ras_UserDepts" Type="Self.ras_UserDepts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Dept">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="ras_UserDepts">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Dept_ras_Users_FK1">
+          <End Role="ras_Dept" Type="Self.ras_Dept" Multiplicity="1" />
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Dept">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="ras_Users">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_LogType_ras_Log_FK1">
+          <End Role="ras_LogType" Type="Self.ras_LogType" Multiplicity="1" />
+          <End Role="ras_Log" Type="Self.ras_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_LogType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="ras_Log">
+              <PropertyRef Name="LogTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Place_ras_Device_FK1">
+          <End Role="ras_Place" Type="Self.ras_Place" Multiplicity="1" />
+          <End Role="ras_Device" Type="Self.ras_Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="ras_Device">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Resources_ras_RoleResources_FK1">
+          <End Role="ras_Resources" Type="Self.ras_Resources" Multiplicity="1" />
+          <End Role="ras_RoleResources" Type="Self.ras_RoleResources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Resources">
+              <PropertyRef Name="ResourceId" />
+            </Principal>
+            <Dependent Role="ras_RoleResources">
+              <PropertyRef Name="ResourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Roles_ras_RoleResources_FK1">
+          <End Role="ras_Roles" Type="Self.ras_Roles" Multiplicity="1" />
+          <End Role="ras_RoleResources" Type="Self.ras_RoleResources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="ras_RoleResources">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Roles_ras_UserRoles_FK1">
+          <End Role="ras_Roles" Type="Self.ras_Roles" Multiplicity="0..1" />
+          <End Role="ras_UserRoles" Type="Self.ras_UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="ras_UserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_RuleList_ras_Rule_FK1">
+          <End Role="ras_RuleList" Type="Self.ras_RuleList" Multiplicity="1" />
+          <End Role="ras_Rule" Type="Self.ras_Rule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_RuleList">
+              <PropertyRef Name="RuleId" />
+            </Principal>
+            <Dependent Role="ras_Rule">
+              <PropertyRef Name="RuleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_RuleList_ras_Users_FK1">
+          <End Role="ras_RuleList" Type="Self.ras_RuleList" Multiplicity="0..1" />
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_RuleList">
+              <PropertyRef Name="RuleId" />
+            </Principal>
+            <Dependent Role="ras_Users">
+              <PropertyRef Name="RuleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Shift_ras_SegmentList_FK1">
+          <End Role="ras_Shift" Type="Self.ras_Shift" Multiplicity="1" />
+          <End Role="ras_SegmentList" Type="Self.ras_SegmentList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Shift">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="ras_SegmentList">
+              <PropertyRef Name="ShiftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Shift_ras_ShiftList_FK1">
+          <End Role="ras_Shift" Type="Self.ras_Shift" Multiplicity="1" />
+          <End Role="ras_ShiftList" Type="Self.ras_ShiftList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Shift">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="ras_ShiftList">
+              <PropertyRef Name="ShiftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_ShiftGroup_ras_ShiftList_FK1">
+          <End Role="ras_ShiftGroup" Type="Self.ras_ShiftGroup" Multiplicity="1" />
+          <End Role="ras_ShiftList" Type="Self.ras_ShiftList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_ShiftGroup">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="ras_ShiftList">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_ShiftSegment_ras_SegmentList_FK1">
+          <End Role="ras_ShiftSegment" Type="Self.ras_ShiftSegment" Multiplicity="1" />
+          <End Role="ras_SegmentList" Type="Self.ras_SegmentList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_ShiftSegment">
+              <PropertyRef Name="SegmentId" />
+            </Principal>
+            <Dependent Role="ras_SegmentList">
+              <PropertyRef Name="SegmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_AttLeaveRecord_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="1" />
+          <End Role="ras_AttLeaveRecord" Type="Self.ras_AttLeaveRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_AttLeaveRecord">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_AttResultRecord_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="1" />
+          <End Role="ras_AttResultRecord" Type="Self.ras_AttResultRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_AttResultRecord">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_ShiftRecord_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="1" />
+          <End Role="ras_ShiftRecord" Type="Self.ras_ShiftRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_ShiftRecord">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_UserDepts_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="1" />
+          <End Role="ras_UserDepts" Type="Self.ras_UserDepts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_UserDepts">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_UserEx_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="1" />
+          <End Role="ras_UserEx" Type="Self.ras_UserEx" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_UserEx">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_UserRoles_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="0..1" />
+          <End Role="ras_UserRoles" Type="Self.ras_UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_UserRoles">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Weekend_ras_Users_FK1">
+          <End Role="ras_Weekend" Type="Self.ras_Weekend" Multiplicity="0..1" />
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Weekend">
+              <PropertyRef Name="WeekendId" />
+            </Principal>
+            <Dependent Role="ras_Users">
+              <PropertyRef Name="WeekendId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HRDModelStoreContainer">
+          <EntitySet Name="BPJS_Ms_Desa" EntityType="Self.BPJS_Ms_Desa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BPJS_Ms_Faskes" EntityType="Self.BPJS_Ms_Faskes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BPJS_Ms_Karyawan" EntityType="Self.BPJS_Ms_Karyawan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BPJS_Tr_Migrasi" EntityType="Self.BPJS_Tr_Migrasi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hrd_UserOption" EntityType="Self.hrd_UserOption" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_AccessControlSettings" EntityType="Self.ras_AccessControlSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_AreaTime" EntityType="Self.ras_AreaTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_AttLeaveRecord" EntityType="Self.ras_AttLeaveRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_AttRecord" EntityType="Self.ras_AttRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_AttResultRecord" EntityType="Self.ras_AttResultRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_AttType" EntityType="Self.ras_AttType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_AttTypeItem" EntityType="Self.ras_AttTypeItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Dept" EntityType="Self.ras_Dept" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Device" EntityType="Self.ras_Device" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Enroll" EntityType="Self.ras_Enroll" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_EnrollDevice" EntityType="Self.ras_EnrollDevice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_GroupTime" EntityType="Self.ras_GroupTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Holiday" EntityType="Self.ras_Holiday" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_ImageBin" EntityType="Self.ras_ImageBin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Log" EntityType="Self.ras_Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_LogType" EntityType="Self.ras_LogType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_PassTime" EntityType="Self.ras_PassTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Place" EntityType="Self.ras_Place" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Resources" EntityType="Self.ras_Resources" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_RoleResources" EntityType="Self.ras_RoleResources" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Roles" EntityType="Self.ras_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Rule" EntityType="Self.ras_Rule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_RuleList" EntityType="Self.ras_RuleList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_SegmentList" EntityType="Self.ras_SegmentList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Shift" EntityType="Self.ras_Shift" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_ShiftGroup" EntityType="Self.ras_ShiftGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_ShiftList" EntityType="Self.ras_ShiftList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_ShiftRecord" EntityType="Self.ras_ShiftRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_ShiftSegment" EntityType="Self.ras_ShiftSegment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_SysSettings" EntityType="Self.ras_SysSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_UserColumns" EntityType="Self.ras_UserColumns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_UserDepts" EntityType="Self.ras_UserDepts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_UserEx" EntityType="Self.ras_UserEx" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_UserRoles" EntityType="Self.ras_UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Users" EntityType="Self.ras_Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_UserSettings" EntityType="Self.ras_UserSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ras_Weekend" EntityType="Self.ras_Weekend" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="ras_AttType_ras_AttTypeItem_FK1" Association="Self.ras_AttType_ras_AttTypeItem_FK1">
+            <End Role="ras_AttType" EntitySet="ras_AttType" />
+            <End Role="ras_AttTypeItem" EntitySet="ras_AttTypeItem" />
+          </AssociationSet>
+          <AssociationSet Name="ras_AttTypeItem_ras_AttLeaveRecord_FK1" Association="Self.ras_AttTypeItem_ras_AttLeaveRecord_FK1">
+            <End Role="ras_AttTypeItem" EntitySet="ras_AttTypeItem" />
+            <End Role="ras_AttLeaveRecord" EntitySet="ras_AttLeaveRecord" />
+          </AssociationSet>
+          <AssociationSet Name="ras_AttTypeItem_ras_AttRecord_FK1" Association="Self.ras_AttTypeItem_ras_AttRecord_FK1">
+            <End Role="ras_AttTypeItem" EntitySet="ras_AttTypeItem" />
+            <End Role="ras_AttRecord" EntitySet="ras_AttRecord" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Dept_ras_UserDepts_FK1" Association="Self.ras_Dept_ras_UserDepts_FK1">
+            <End Role="ras_Dept" EntitySet="ras_Dept" />
+            <End Role="ras_UserDepts" EntitySet="ras_UserDepts" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Dept_ras_Users_FK1" Association="Self.ras_Dept_ras_Users_FK1">
+            <End Role="ras_Dept" EntitySet="ras_Dept" />
+            <End Role="ras_Users" EntitySet="ras_Users" />
+          </AssociationSet>
+          <AssociationSet Name="ras_LogType_ras_Log_FK1" Association="Self.ras_LogType_ras_Log_FK1">
+            <End Role="ras_LogType" EntitySet="ras_LogType" />
+            <End Role="ras_Log" EntitySet="ras_Log" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Place_ras_Device_FK1" Association="Self.ras_Place_ras_Device_FK1">
+            <End Role="ras_Place" EntitySet="ras_Place" />
+            <End Role="ras_Device" EntitySet="ras_Device" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Resources_ras_RoleResources_FK1" Association="Self.ras_Resources_ras_RoleResources_FK1">
+            <End Role="ras_Resources" EntitySet="ras_Resources" />
+            <End Role="ras_RoleResources" EntitySet="ras_RoleResources" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Roles_ras_RoleResources_FK1" Association="Self.ras_Roles_ras_RoleResources_FK1">
+            <End Role="ras_Roles" EntitySet="ras_Roles" />
+            <End Role="ras_RoleResources" EntitySet="ras_RoleResources" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Roles_ras_UserRoles_FK1" Association="Self.ras_Roles_ras_UserRoles_FK1">
+            <End Role="ras_Roles" EntitySet="ras_Roles" />
+            <End Role="ras_UserRoles" EntitySet="ras_UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="ras_RuleList_ras_Rule_FK1" Association="Self.ras_RuleList_ras_Rule_FK1">
+            <End Role="ras_RuleList" EntitySet="ras_RuleList" />
+            <End Role="ras_Rule" EntitySet="ras_Rule" />
+          </AssociationSet>
+          <AssociationSet Name="ras_RuleList_ras_Users_FK1" Association="Self.ras_RuleList_ras_Users_FK1">
+            <End Role="ras_RuleList" EntitySet="ras_RuleList" />
+            <End Role="ras_Users" EntitySet="ras_Users" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Shift_ras_SegmentList_FK1" Association="Self.ras_Shift_ras_SegmentList_FK1">
+            <End Role="ras_Shift" EntitySet="ras_Shift" />
+            <End Role="ras_SegmentList" EntitySet="ras_SegmentList" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Shift_ras_ShiftList_FK1" Association="Self.ras_Shift_ras_ShiftList_FK1">
+            <End Role="ras_Shift" EntitySet="ras_Shift" />
+            <End Role="ras_ShiftList" EntitySet="ras_ShiftList" />
+          </AssociationSet>
+          <AssociationSet Name="ras_ShiftGroup_ras_ShiftList_FK1" Association="Self.ras_ShiftGroup_ras_ShiftList_FK1">
+            <End Role="ras_ShiftGroup" EntitySet="ras_ShiftGroup" />
+            <End Role="ras_ShiftList" EntitySet="ras_ShiftList" />
+          </AssociationSet>
+          <AssociationSet Name="ras_ShiftSegment_ras_SegmentList_FK1" Association="Self.ras_ShiftSegment_ras_SegmentList_FK1">
+            <End Role="ras_ShiftSegment" EntitySet="ras_ShiftSegment" />
+            <End Role="ras_SegmentList" EntitySet="ras_SegmentList" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_AttLeaveRecord_FK1" Association="Self.ras_Users_ras_AttLeaveRecord_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_AttLeaveRecord" EntitySet="ras_AttLeaveRecord" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_AttResultRecord_FK1" Association="Self.ras_Users_ras_AttResultRecord_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_AttResultRecord" EntitySet="ras_AttResultRecord" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_ShiftRecord_FK1" Association="Self.ras_Users_ras_ShiftRecord_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_ShiftRecord" EntitySet="ras_ShiftRecord" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_UserDepts_FK1" Association="Self.ras_Users_ras_UserDepts_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_UserDepts" EntitySet="ras_UserDepts" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_UserEx_FK1" Association="Self.ras_Users_ras_UserEx_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_UserEx" EntitySet="ras_UserEx" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_UserRoles_FK1" Association="Self.ras_Users_ras_UserRoles_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_UserRoles" EntitySet="ras_UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Weekend_ras_Users_FK1" Association="Self.ras_Weekend_ras_Users_FK1">
+            <End Role="ras_Weekend" EntitySet="ras_Weekend" />
+            <End Role="ras_Users" EntitySet="ras_Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HRDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BPJS_Ms_Desa">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KDPROP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NMPROP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="KDDATI2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NMDATI2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="KDKEC" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NMKEC" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="KDDESA" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NMDESA" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="BPJS_Ms_Faskes">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KODE_DIVRE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NAMA_REGIONAL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NAMA_KC" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NAMA_DATI2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="KODE_FASKES" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NAMA_FASKES" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="JENIS_FASKES" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ALAMAT_FASKES" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="BPJS_Ms_Karyawan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="NIP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NamaLengkap" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Access" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalLahir" Type="DateTime" Precision="3" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="BPJS_Tr_Migrasi">
+          <Key>
+            <PropertyRef Name="Idx" />
+          </Key>
+          <Property Name="Idx" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SortNo" Type="Int32" />
+          <Property Name="KaryawanID" Type="Int32" />
+          <Property Name="NoKK" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NoKTP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NamaLengkap" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="HubKeluarga" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TempatLahir" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalLahir" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="JenisKelamin" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StatusKawin" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="AlamatTinggal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RT" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RW" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="KodePos" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="KodeKecamatan" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NamaKecamatan" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="KodeDesa" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NamaDesa" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="KodeFaskesTK1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NamaFaskesTK1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="KodeFaskesGigi" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NamaFaskesGigi" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Telepon" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NPP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Jabatan" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StatusKerja" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="KelasRawat" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TMTKerja" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Gaji" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="WargaNegara" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NoPolis" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NamaAsuransi" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NoNPWP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NoPassport" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NoBPJS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AlasanMutasi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalMutasi" Type="DateTime" Precision="3" />
+          <Property Name="IsDownload" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="hrd_UserOption">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ResignDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ras_AccessControlSettings">
+          <Key>
+            <PropertyRef Name="CreateDate" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Wiegand" Type="Int32" />
+          <Property Name="FireAlarm" Type="Int32" />
+          <Property Name="Lock2Control" Type="Int32" />
+          <Property Name="Lock1OpenDelay" Type="Int32" />
+          <Property Name="CheckDoor1Status" Type="Int32" />
+          <Property Name="Lock1OpenOvertimeAlarm" Type="Int32" />
+          <Property Name="Lock1IllegalOpenAlarm" Type="Int32" />
+          <Property Name="Lock2OpenDelay" Type="Int32" />
+          <Property Name="CheckDoor2Status" Type="Int32" />
+          <Property Name="Lock2OpenOvertimeAlarm" Type="Int32" />
+          <Property Name="Lock2IllegalOpenAlarm" Type="Int32" />
+          <Property Name="Unlock1PassGroup" Type="Int32" />
+          <Property Name="Unlock2PassGroup" Type="Int32" />
+          <Property Name="EnableAntiHijack" Type="Int32" />
+          <Property Name="HijackOpen" Type="Int32" />
+          <Property Name="HijackAlarm" Type="Int32" />
+          <Property Name="HijackPassword" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="HijackFpNo" Type="Int32" />
+          <Property Name="AntiPassback" Type="Int32" />
+          <Property Name="MultOpen" Type="Int32" />
+          <Property Name="LinkageOpen" Type="Int32" />
+          <Property Name="LinkageAlarm" Type="Int32" />
+          <Property Name="EnableRelayAlarm" Type="Int32" />
+          <Property Name="VerifyMode" Type="Int32" />
+          <Property Name="Res1" Type="Int32" />
+          <Property Name="Res2" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ras_AreaTime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DN" />
+          </Key>
+          <Property Name="ID" Type="Byte" Nullable="false" />
+          <Property Name="DN" Type="Int16" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sunday" Type="Int32" />
+          <Property Name="Monday" Type="Int32" />
+          <Property Name="Tuesday" Type="Int32" />
+          <Property Name="Wednesday" Type="Int32" />
+          <Property Name="Thursday" Type="Int32" />
+          <Property Name="Friday" Type="Int32" />
+          <Property Name="Saturday" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ras_AttLeaveRecord">
+          <Key>
+            <PropertyRef Name="UID" />
+            <PropertyRef Name="FromDate" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Precision="3" />
+          <Property Name="AttTypeId" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ResultTime" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_AttTypeItem" Relationship="Self.ras_AttTypeItem_ras_AttLeaveRecord_FK1" FromRole="ras_AttLeaveRecord" ToRole="ras_AttTypeItem" />
+          <NavigationProperty Name="ras_Users" Relationship="Self.ras_Users_ras_AttLeaveRecord_FK1" FromRole="ras_AttLeaveRecord" ToRole="ras_Users" />
+        </EntityType>
+        <EntityType Name="ras_AttRecord">
+          <Key>
+            <PropertyRef Name="DIN" />
+            <PropertyRef Name="Clock" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DN" Type="Int16" />
+          <Property Name="DIN" Type="Int64" Nullable="false" />
+          <Property Name="Clock" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="VerifyMode" Type="Byte" />
+          <Property Name="Action" Type="Byte" />
+          <Property Name="AttTypeId" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CollectDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="JobCode" Type="Int32" />
+          <Property Name="Antipassback" Type="Boolean" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_AttTypeItem" Relationship="Self.ras_AttTypeItem_ras_AttRecord_FK1" FromRole="ras_AttRecord" ToRole="ras_AttTypeItem" />
+        </EntityType>
+        <EntityType Name="ras_AttResultRecord">
+          <Key>
+            <PropertyRef Name="UID" />
+            <PropertyRef Name="AttDate" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="AttDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AttId" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="TimeString" Type="String" MaxLength="360" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="A01" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="B01" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="B02" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="B03" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="C01" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="D01" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="D02" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="D03" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="D04" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="D05" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="D06" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="D07" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="D08" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="D09" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="D10" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="E01" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="F01" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="G01" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="G02" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="G03" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="ras_Users" Relationship="Self.ras_Users_ras_AttResultRecord_FK1" FromRole="ras_AttResultRecord" ToRole="ras_Users" />
+        </EntityType>
+        <EntityType Name="ras_AttType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_AttTypeItem" Relationship="Self.ras_AttType_ras_AttTypeItem_FK1" FromRole="ras_AttType" ToRole="ras_AttTypeItem" />
+        </EntityType>
+        <EntityType Name="ras_AttTypeItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeId" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ItemId" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Unit" Type="Byte" Nullable="false" />
+          <Property Name="ShowTimes" Type="Boolean" Nullable="false" />
+          <Property Name="MiniCalcValue" Type="Single" />
+          <Property Name="RoundType" Type="Byte" />
+          <Property Name="Symbol" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+          <NavigationProperty Name="ras_AttLeaveRecord" Relationship="Self.ras_AttTypeItem_ras_AttLeaveRecord_FK1" FromRole="ras_AttTypeItem" ToRole="ras_AttLeaveRecord" />
+          <NavigationProperty Name="ras_AttRecord" Relationship="Self.ras_AttTypeItem_ras_AttRecord_FK1" FromRole="ras_AttTypeItem" ToRole="ras_AttRecord" />
+          <NavigationProperty Name="ras_AttType" Relationship="Self.ras_AttType_ras_AttTypeItem_FK1" FromRole="ras_AttTypeItem" ToRole="ras_AttType" />
+        </EntityType>
+        <EntityType Name="ras_Dept">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeptId" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ParentId" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="DeptName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_UserDepts" Relationship="Self.ras_Dept_ras_UserDepts_FK1" FromRole="ras_Dept" ToRole="ras_UserDepts" />
+          <NavigationProperty Name="ras_Users" Relationship="Self.ras_Dept_ras_Users_FK1" FromRole="ras_Dept" ToRole="ras_Users" />
+        </EntityType>
+        <EntityType Name="ras_Device">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DN" Type="Int16" Nullable="false" />
+          <Property Name="Communication" Type="Byte" />
+          <Property Name="Baudrate" Type="Int32" />
+          <Property Name="ComPort" Type="Int32" />
+          <Property Name="Password" Type="Int32" />
+          <Property Name="IpPort" Type="Int32" />
+          <Property Name="IpAddress" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="SN" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Use" Type="Byte" />
+          <Property Name="Model" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+          <Property Name="PlaceId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Label" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_Place" Relationship="Self.ras_Place_ras_Device_FK1" FromRole="ras_Device" ToRole="ras_Place" />
+        </EntityType>
+        <EntityType Name="ras_Enroll">
+          <Key>
+            <PropertyRef Name="DIN" />
+            <PropertyRef Name="BackupNumber" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DIN" Type="Int64" Nullable="false" />
+          <Property Name="BackupNumber" Type="Byte" Nullable="false" />
+          <Property Name="Privilege" Type="Byte" />
+          <Property Name="Password" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Fingerprint" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Enable" Type="Boolean" />
+          <Property Name="AccessTimeZone" Type="Byte" />
+          <Property Name="ValidDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="InvalidDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UnlockGroup" Type="Byte" />
+        </EntityType>
+        <EntityType Name="ras_EnrollDevice">
+          <Key>
+            <PropertyRef Name="DIN" />
+            <PropertyRef Name="BackupNumber" />
+            <PropertyRef Name="DN" />
+          </Key>
+          <Property Name="DIN" Type="Int64" Nullable="false" />
+          <Property Name="BackupNumber" Type="Byte" Nullable="false" />
+          <Property Name="DN" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ras_GroupTime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DN" />
+          </Key>
+          <Property Name="ID" Type="Byte" Nullable="false" />
+          <Property Name="DN" Type="Int16" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PassTime0" Type="Int32" />
+          <Property Name="PassTime1" Type="Int32" />
+          <Property Name="PassTime2" Type="Int32" />
+          <Property Name="PassTime3" Type="Int32" />
+          <Property Name="PassTime4" Type="Int32" />
+          <Property Name="PassTime5" Type="Int32" />
+          <Property Name="PassTime6" Type="Int32" />
+          <Property Name="PassTime7" Type="Int32" />
+          <Property Name="PassTime8" Type="Int32" />
+          <Property Name="PassTime9" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ras_Holiday">
+          <Key>
+            <PropertyRef Name="HolidayId" />
+          </Key>
+          <Property Name="HolidayId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="HolidyName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="BeginDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ras_ImageBin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImageData" Type="Binary" MaxLength="8000" FixedLength="false" />
+          <Property Name="ImageName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ImageType" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ImageLength" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ras_Log">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogTypeId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OperateUID" Type="Int32" />
+          <Property Name="LogContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OperateResult" Type="Boolean" />
+          <NavigationProperty Name="ras_LogType" Relationship="Self.ras_LogType_ras_Log_FK1" FromRole="ras_Log" ToRole="ras_LogType" />
+        </EntityType>
+        <EntityType Name="ras_LogType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_Log" Relationship="Self.ras_LogType_ras_Log_FK1" FromRole="ras_LogType" ToRole="ras_Log" />
+        </EntityType>
+        <EntityType Name="ras_PassTime">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="DN" />
+          </Key>
+          <Property Name="ID" Type="Byte" Nullable="false" />
+          <Property Name="DN" Type="Int16" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ras_Place">
+          <Key>
+            <PropertyRef Name="PlaceId" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlaceId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PlaceName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DeptId" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_Device" Relationship="Self.ras_Place_ras_Device_FK1" FromRole="ras_Place" ToRole="ras_Device" />
+        </EntityType>
+        <EntityType Name="ras_Resources">
+          <Key>
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="ResourceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeId" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ResourceName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_RoleResources" Relationship="Self.ras_Resources_ras_RoleResources_FK1" FromRole="ras_Resources" ToRole="ras_RoleResources" />
+        </EntityType>
+        <EntityType Name="ras_RoleResources">
+          <Key>
+            <PropertyRef Name="RoleResourceId" />
+          </Key>
+          <Property Name="RoleResourceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="ResourceId" Type="Int32" Nullable="false" />
+          <Property Name="OperLevel" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="ras_Resources" Relationship="Self.ras_Resources_ras_RoleResources_FK1" FromRole="ras_RoleResources" ToRole="ras_Resources" />
+          <NavigationProperty Name="ras_Roles" Relationship="Self.ras_Roles_ras_RoleResources_FK1" FromRole="ras_RoleResources" ToRole="ras_Roles" />
+        </EntityType>
+        <EntityType Name="ras_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_RoleResources" Relationship="Self.ras_Roles_ras_RoleResources_FK1" FromRole="ras_Roles" ToRole="ras_RoleResources" />
+          <NavigationProperty Name="ras_UserRoles" Relationship="Self.ras_Roles_ras_UserRoles_FK1" FromRole="ras_Roles" ToRole="ras_UserRoles" />
+        </EntityType>
+        <EntityType Name="ras_Rule">
+          <Key>
+            <PropertyRef Name="RuleId" />
+            <PropertyRef Name="Item" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RuleId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Item" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ItemValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+          <NavigationProperty Name="ras_RuleList" Relationship="Self.ras_RuleList_ras_Rule_FK1" FromRole="ras_Rule" ToRole="ras_RuleList" />
+        </EntityType>
+        <EntityType Name="ras_RuleList">
+          <Key>
+            <PropertyRef Name="RuleId" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RuleId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="RuleName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsVoid" Type="Boolean" Nullable="false" />
+          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_Rule" Relationship="Self.ras_RuleList_ras_Rule_FK1" FromRole="ras_RuleList" ToRole="ras_Rule" />
+          <NavigationProperty Name="ras_Users" Relationship="Self.ras_RuleList_ras_Users_FK1" FromRole="ras_RuleList" ToRole="ras_Users" />
+        </EntityType>
+        <EntityType Name="ras_SegmentList">
+          <Key>
+            <PropertyRef Name="SegmentId" />
+            <PropertyRef Name="ShiftId" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SegmentId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ShiftId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ras_Shift" Relationship="Self.ras_Shift_ras_SegmentList_FK1" FromRole="ras_SegmentList" ToRole="ras_Shift" />
+          <NavigationProperty Name="ras_ShiftSegment" Relationship="Self.ras_ShiftSegment_ras_SegmentList_FK1" FromRole="ras_SegmentList" ToRole="ras_ShiftSegment" />
+        </EntityType>
+        <EntityType Name="ras_Shift">
+          <Key>
+            <PropertyRef Name="ShiftId" />
+          </Key>
+          <Property Name="ShiftId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ShiftName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_SegmentList" Relationship="Self.ras_Shift_ras_SegmentList_FK1" FromRole="ras_Shift" ToRole="ras_SegmentList" />
+          <NavigationProperty Name="ras_ShiftList" Relationship="Self.ras_Shift_ras_ShiftList_FK1" FromRole="ras_Shift" ToRole="ras_ShiftList" />
+        </EntityType>
+        <EntityType Name="ras_ShiftGroup">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="GroupName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_ShiftList" Relationship="Self.ras_ShiftGroup_ras_ShiftList_FK1" FromRole="ras_ShiftGroup" ToRole="ras_ShiftList" />
+        </EntityType>
+        <EntityType Name="ras_ShiftList">
+          <Key>
+            <PropertyRef Name="ShiftId" />
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShiftId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="GroupId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ras_Shift" Relationship="Self.ras_Shift_ras_ShiftList_FK1" FromRole="ras_ShiftList" ToRole="ras_Shift" />
+          <NavigationProperty Name="ras_ShiftGroup" Relationship="Self.ras_ShiftGroup_ras_ShiftList_FK1" FromRole="ras_ShiftList" ToRole="ras_ShiftGroup" />
+        </EntityType>
+        <EntityType Name="ras_ShiftRecord">
+          <Key>
+            <PropertyRef Name="UID" />
+            <PropertyRef Name="DutyDay" />
+            <PropertyRef Name="ShiftId" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="DutyDay" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ShiftId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CreateUID" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+          <NavigationProperty Name="ras_Users" Relationship="Self.ras_Users_ras_ShiftRecord_FK1" FromRole="ras_ShiftRecord" ToRole="ras_Users" />
+        </EntityType>
+        <EntityType Name="ras_ShiftSegment">
+          <Key>
+            <PropertyRef Name="SegmentId" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SegmentId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="SegmentName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypeId" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="BeginAttTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="EndAttTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="StartWorkTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OffWorkTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ToPunchIn" Type="Boolean" />
+          <Property Name="ToPunchOut" Type="Boolean" />
+          <Property Name="CalcBeLate" Type="Boolean" />
+          <Property Name="CalcLeaveEarly" Type="Boolean" />
+          <Property Name="CalcAbsence" Type="Boolean" />
+          <Property Name="CalcStayAway" Type="Boolean" />
+          <Property Name="CrossDays" Type="Boolean" Nullable="false" />
+          <Property Name="ResultHours" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="ResultDays" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="DeductMinutes" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="Color" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_SegmentList" Relationship="Self.ras_ShiftSegment_ras_SegmentList_FK1" FromRole="ras_ShiftSegment" ToRole="ras_SegmentList" />
+        </EntityType>
+        <EntityType Name="ras_SysSettings">
+          <Key>
+            <PropertyRef Name="Item" />
+          </Key>
+          <Property Name="Item" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ItemValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ras_UserColumns">
+          <Key>
+            <PropertyRef Name="UserColumnId" />
+          </Key>
+          <Property Name="UserColumnId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="ReportId" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ColumnName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Width" Type="Int32" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ras_UserDepts">
+          <Key>
+            <PropertyRef Name="UserDeptId" />
+          </Key>
+          <Property Name="UserDeptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="DeptId" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ras_Dept" Relationship="Self.ras_Dept_ras_UserDepts_FK1" FromRole="ras_UserDepts" ToRole="ras_Dept" />
+          <NavigationProperty Name="ras_Users" Relationship="Self.ras_Users_ras_UserDepts_FK1" FromRole="ras_UserDepts" ToRole="ras_Users" />
+        </EntityType>
+        <EntityType Name="ras_UserEx">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="Title" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <Property Name="IDNumber" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="HomeAddress" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="AttType" Type="Int32" />
+          <Property Name="AccessControl" Type="Int32" />
+          <Property Name="ValidityPeriod" Type="Boolean" />
+          <Property Name="UseUserGroupACTZ" Type="Boolean" />
+          <Property Name="UseUserGroupVM" Type="Boolean" />
+          <Property Name="Department" Type="Int32" />
+          <Property Name="AccessTimeZone" Type="Int32" />
+          <Property Name="ValidDate" Type="DateTime" Precision="3" />
+          <Property Name="InvalidDate" Type="DateTime" Precision="3" />
+          <Property Name="UserGroup" Type="Int32" />
+          <NavigationProperty Name="ras_Users" Relationship="Self.ras_Users_ras_UserEx_FK1" FromRole="ras_UserEx" ToRole="ras_Users" />
+        </EntityType>
+        <EntityType Name="ras_UserRoles">
+          <Key>
+            <PropertyRef Name="UserRoleId" />
+          </Key>
+          <Property Name="UserRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="ras_Roles" Relationship="Self.ras_Roles_ras_UserRoles_FK1" FromRole="ras_UserRoles" ToRole="ras_Roles" />
+          <NavigationProperty Name="ras_Users" Relationship="Self.ras_Users_ras_UserRoles_FK1" FromRole="ras_UserRoles" ToRole="ras_Users" />
+        </EntityType>
+        <EntityType Name="ras_Users">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="DIN" Type="Int64" Nullable="false" />
+          <Property Name="PIN" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordQuestion" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordAnswer" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="IsLockedOut" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+          <Property Name="DeptId" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AttId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="RuleId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="WeekendId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Comment" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_AttLeaveRecord" Relationship="Self.ras_Users_ras_AttLeaveRecord_FK1" FromRole="ras_Users" ToRole="ras_AttLeaveRecord" />
+          <NavigationProperty Name="ras_AttResultRecord" Relationship="Self.ras_Users_ras_AttResultRecord_FK1" FromRole="ras_Users" ToRole="ras_AttResultRecord" />
+          <NavigationProperty Name="ras_Dept" Relationship="Self.ras_Dept_ras_Users_FK1" FromRole="ras_Users" ToRole="ras_Dept" />
+          <NavigationProperty Name="ras_RuleList" Relationship="Self.ras_RuleList_ras_Users_FK1" FromRole="ras_Users" ToRole="ras_RuleList" />
+          <NavigationProperty Name="ras_ShiftRecord" Relationship="Self.ras_Users_ras_ShiftRecord_FK1" FromRole="ras_Users" ToRole="ras_ShiftRecord" />
+          <NavigationProperty Name="ras_UserDepts" Relationship="Self.ras_Users_ras_UserDepts_FK1" FromRole="ras_Users" ToRole="ras_UserDepts" />
+          <NavigationProperty Name="ras_UserEx" Relationship="Self.ras_Users_ras_UserEx_FK1" FromRole="ras_Users" ToRole="ras_UserEx" />
+          <NavigationProperty Name="ras_UserRoles" Relationship="Self.ras_Users_ras_UserRoles_FK1" FromRole="ras_Users" ToRole="ras_UserRoles" />
+          <NavigationProperty Name="ras_Weekend" Relationship="Self.ras_Weekend_ras_Users_FK1" FromRole="ras_Users" ToRole="ras_Weekend" />
+        </EntityType>
+        <EntityType Name="ras_UserSettings">
+          <Key>
+            <PropertyRef Name="UID" />
+            <PropertyRef Name="Item" />
+          </Key>
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="Item" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ItemValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ras_Weekend">
+          <Key>
+            <PropertyRef Name="WeekendId" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WeekendId" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="WeekendName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MonAm" Type="Boolean" />
+          <Property Name="MonPm" Type="Boolean" />
+          <Property Name="TueAm" Type="Boolean" />
+          <Property Name="TuePm" Type="Boolean" />
+          <Property Name="WedAm" Type="Boolean" />
+          <Property Name="WedPm" Type="Boolean" />
+          <Property Name="ThurAm" Type="Boolean" />
+          <Property Name="ThurPm" Type="Boolean" />
+          <Property Name="FriAm" Type="Boolean" />
+          <Property Name="FriPm" Type="Boolean" />
+          <Property Name="SatAm" Type="Boolean" />
+          <Property Name="SatPm" Type="Boolean" />
+          <Property Name="SunAm" Type="Boolean" />
+          <Property Name="SunPm" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedUID" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ras_Users" Relationship="Self.ras_Weekend_ras_Users_FK1" FromRole="ras_Weekend" ToRole="ras_Users" />
+        </EntityType>
+        <Association Name="ras_AttTypeItem_ras_AttLeaveRecord_FK1">
+          <End Role="ras_AttTypeItem" Type="Self.ras_AttTypeItem" Multiplicity="1" />
+          <End Role="ras_AttLeaveRecord" Type="Self.ras_AttLeaveRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_AttTypeItem">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="ras_AttLeaveRecord">
+              <PropertyRef Name="AttTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_AttLeaveRecord_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="1" />
+          <End Role="ras_AttLeaveRecord" Type="Self.ras_AttLeaveRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_AttLeaveRecord">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_AttTypeItem_ras_AttRecord_FK1">
+          <End Role="ras_AttTypeItem" Type="Self.ras_AttTypeItem" Multiplicity="1" />
+          <End Role="ras_AttRecord" Type="Self.ras_AttRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_AttTypeItem">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="ras_AttRecord">
+              <PropertyRef Name="AttTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_AttResultRecord_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="1" />
+          <End Role="ras_AttResultRecord" Type="Self.ras_AttResultRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_AttResultRecord">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_AttType_ras_AttTypeItem_FK1">
+          <End Role="ras_AttType" Type="Self.ras_AttType" Multiplicity="1" />
+          <End Role="ras_AttTypeItem" Type="Self.ras_AttTypeItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_AttType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="ras_AttTypeItem">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Dept_ras_UserDepts_FK1">
+          <End Role="ras_Dept" Type="Self.ras_Dept" Multiplicity="1" />
+          <End Role="ras_UserDepts" Type="Self.ras_UserDepts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Dept">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="ras_UserDepts">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Dept_ras_Users_FK1">
+          <End Role="ras_Dept" Type="Self.ras_Dept" Multiplicity="1" />
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Dept">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="ras_Users">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Place_ras_Device_FK1">
+          <End Role="ras_Place" Type="Self.ras_Place" Multiplicity="1" />
+          <End Role="ras_Device" Type="Self.ras_Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Place">
+              <PropertyRef Name="PlaceId" />
+            </Principal>
+            <Dependent Role="ras_Device">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_LogType_ras_Log_FK1">
+          <End Role="ras_LogType" Type="Self.ras_LogType" Multiplicity="1" />
+          <End Role="ras_Log" Type="Self.ras_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_LogType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="ras_Log">
+              <PropertyRef Name="LogTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Resources_ras_RoleResources_FK1">
+          <End Role="ras_Resources" Type="Self.ras_Resources" Multiplicity="1" />
+          <End Role="ras_RoleResources" Type="Self.ras_RoleResources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Resources">
+              <PropertyRef Name="ResourceId" />
+            </Principal>
+            <Dependent Role="ras_RoleResources">
+              <PropertyRef Name="ResourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Roles_ras_RoleResources_FK1">
+          <End Role="ras_Roles" Type="Self.ras_Roles" Multiplicity="1" />
+          <End Role="ras_RoleResources" Type="Self.ras_RoleResources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="ras_RoleResources">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Roles_ras_UserRoles_FK1">
+          <End Role="ras_Roles" Type="Self.ras_Roles" Multiplicity="0..1" />
+          <End Role="ras_UserRoles" Type="Self.ras_UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="ras_UserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_RuleList_ras_Rule_FK1">
+          <End Role="ras_RuleList" Type="Self.ras_RuleList" Multiplicity="1" />
+          <End Role="ras_Rule" Type="Self.ras_Rule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_RuleList">
+              <PropertyRef Name="RuleId" />
+            </Principal>
+            <Dependent Role="ras_Rule">
+              <PropertyRef Name="RuleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_RuleList_ras_Users_FK1">
+          <End Role="ras_RuleList" Type="Self.ras_RuleList" Multiplicity="0..1" />
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_RuleList">
+              <PropertyRef Name="RuleId" />
+            </Principal>
+            <Dependent Role="ras_Users">
+              <PropertyRef Name="RuleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Shift_ras_SegmentList_FK1">
+          <End Role="ras_Shift" Type="Self.ras_Shift" Multiplicity="1" />
+          <End Role="ras_SegmentList" Type="Self.ras_SegmentList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Shift">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="ras_SegmentList">
+              <PropertyRef Name="ShiftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_ShiftSegment_ras_SegmentList_FK1">
+          <End Role="ras_ShiftSegment" Type="Self.ras_ShiftSegment" Multiplicity="1" />
+          <End Role="ras_SegmentList" Type="Self.ras_SegmentList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_ShiftSegment">
+              <PropertyRef Name="SegmentId" />
+            </Principal>
+            <Dependent Role="ras_SegmentList">
+              <PropertyRef Name="SegmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Shift_ras_ShiftList_FK1">
+          <End Role="ras_Shift" Type="Self.ras_Shift" Multiplicity="1" />
+          <End Role="ras_ShiftList" Type="Self.ras_ShiftList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Shift">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="ras_ShiftList">
+              <PropertyRef Name="ShiftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_ShiftGroup_ras_ShiftList_FK1">
+          <End Role="ras_ShiftGroup" Type="Self.ras_ShiftGroup" Multiplicity="1" />
+          <End Role="ras_ShiftList" Type="Self.ras_ShiftList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_ShiftGroup">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="ras_ShiftList">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_ShiftRecord_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="1" />
+          <End Role="ras_ShiftRecord" Type="Self.ras_ShiftRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_ShiftRecord">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_UserDepts_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="1" />
+          <End Role="ras_UserDepts" Type="Self.ras_UserDepts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_UserDepts">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_UserEx_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="1" />
+          <End Role="ras_UserEx" Type="Self.ras_UserEx" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_UserEx">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Users_ras_UserRoles_FK1">
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="0..1" />
+          <End Role="ras_UserRoles" Type="Self.ras_UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="ras_UserRoles">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ras_Weekend_ras_Users_FK1">
+          <End Role="ras_Weekend" Type="Self.ras_Weekend" Multiplicity="0..1" />
+          <End Role="ras_Users" Type="Self.ras_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ras_Weekend">
+              <PropertyRef Name="WeekendId" />
+            </Principal>
+            <Dependent Role="ras_Users">
+              <PropertyRef Name="WeekendId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HRDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BPJS_Ms_Desa" EntityType="Self.BPJS_Ms_Desa" />
+          <EntitySet Name="BPJS_Ms_Faskes" EntityType="Self.BPJS_Ms_Faskes" />
+          <EntitySet Name="BPJS_Ms_Karyawan" EntityType="Self.BPJS_Ms_Karyawan" />
+          <EntitySet Name="BPJS_Tr_Migrasi" EntityType="Self.BPJS_Tr_Migrasi" />
+          <EntitySet Name="hrd_UserOption" EntityType="Self.hrd_UserOption" />
+          <EntitySet Name="ras_AccessControlSettings" EntityType="Self.ras_AccessControlSettings" />
+          <EntitySet Name="ras_AreaTime" EntityType="Self.ras_AreaTime" />
+          <EntitySet Name="ras_AttLeaveRecord" EntityType="Self.ras_AttLeaveRecord" />
+          <EntitySet Name="ras_AttRecord" EntityType="Self.ras_AttRecord" />
+          <EntitySet Name="ras_AttResultRecord" EntityType="Self.ras_AttResultRecord" />
+          <EntitySet Name="ras_AttType" EntityType="Self.ras_AttType" />
+          <EntitySet Name="ras_AttTypeItem" EntityType="Self.ras_AttTypeItem" />
+          <EntitySet Name="ras_Dept" EntityType="Self.ras_Dept" />
+          <EntitySet Name="ras_Device" EntityType="Self.ras_Device" />
+          <EntitySet Name="ras_Enroll" EntityType="Self.ras_Enroll" />
+          <EntitySet Name="ras_EnrollDevice" EntityType="Self.ras_EnrollDevice" />
+          <EntitySet Name="ras_GroupTime" EntityType="Self.ras_GroupTime" />
+          <EntitySet Name="ras_Holiday" EntityType="Self.ras_Holiday" />
+          <EntitySet Name="ras_ImageBin" EntityType="Self.ras_ImageBin" />
+          <EntitySet Name="ras_Log" EntityType="Self.ras_Log" />
+          <EntitySet Name="ras_LogType" EntityType="Self.ras_LogType" />
+          <EntitySet Name="ras_PassTime" EntityType="Self.ras_PassTime" />
+          <EntitySet Name="ras_Place" EntityType="Self.ras_Place" />
+          <EntitySet Name="ras_Resources" EntityType="Self.ras_Resources" />
+          <EntitySet Name="ras_RoleResources" EntityType="Self.ras_RoleResources" />
+          <EntitySet Name="ras_Roles" EntityType="Self.ras_Roles" />
+          <EntitySet Name="ras_Rule" EntityType="Self.ras_Rule" />
+          <EntitySet Name="ras_RuleList" EntityType="Self.ras_RuleList" />
+          <EntitySet Name="ras_SegmentList" EntityType="Self.ras_SegmentList" />
+          <EntitySet Name="ras_Shift" EntityType="Self.ras_Shift" />
+          <EntitySet Name="ras_ShiftGroup" EntityType="Self.ras_ShiftGroup" />
+          <EntitySet Name="ras_ShiftList" EntityType="Self.ras_ShiftList" />
+          <EntitySet Name="ras_ShiftRecord" EntityType="Self.ras_ShiftRecord" />
+          <EntitySet Name="ras_ShiftSegment" EntityType="Self.ras_ShiftSegment" />
+          <EntitySet Name="ras_SysSettings" EntityType="Self.ras_SysSettings" />
+          <EntitySet Name="ras_UserColumns" EntityType="Self.ras_UserColumns" />
+          <EntitySet Name="ras_UserDepts" EntityType="Self.ras_UserDepts" />
+          <EntitySet Name="ras_UserEx" EntityType="Self.ras_UserEx" />
+          <EntitySet Name="ras_UserRoles" EntityType="Self.ras_UserRoles" />
+          <EntitySet Name="ras_Users" EntityType="Self.ras_Users" />
+          <EntitySet Name="ras_UserSettings" EntityType="Self.ras_UserSettings" />
+          <EntitySet Name="ras_Weekend" EntityType="Self.ras_Weekend" />
+          <AssociationSet Name="ras_AttTypeItem_ras_AttLeaveRecord_FK1" Association="Self.ras_AttTypeItem_ras_AttLeaveRecord_FK1">
+            <End Role="ras_AttTypeItem" EntitySet="ras_AttTypeItem" />
+            <End Role="ras_AttLeaveRecord" EntitySet="ras_AttLeaveRecord" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_AttLeaveRecord_FK1" Association="Self.ras_Users_ras_AttLeaveRecord_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_AttLeaveRecord" EntitySet="ras_AttLeaveRecord" />
+          </AssociationSet>
+          <AssociationSet Name="ras_AttTypeItem_ras_AttRecord_FK1" Association="Self.ras_AttTypeItem_ras_AttRecord_FK1">
+            <End Role="ras_AttTypeItem" EntitySet="ras_AttTypeItem" />
+            <End Role="ras_AttRecord" EntitySet="ras_AttRecord" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_AttResultRecord_FK1" Association="Self.ras_Users_ras_AttResultRecord_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_AttResultRecord" EntitySet="ras_AttResultRecord" />
+          </AssociationSet>
+          <AssociationSet Name="ras_AttType_ras_AttTypeItem_FK1" Association="Self.ras_AttType_ras_AttTypeItem_FK1">
+            <End Role="ras_AttType" EntitySet="ras_AttType" />
+            <End Role="ras_AttTypeItem" EntitySet="ras_AttTypeItem" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Dept_ras_UserDepts_FK1" Association="Self.ras_Dept_ras_UserDepts_FK1">
+            <End Role="ras_Dept" EntitySet="ras_Dept" />
+            <End Role="ras_UserDepts" EntitySet="ras_UserDepts" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Dept_ras_Users_FK1" Association="Self.ras_Dept_ras_Users_FK1">
+            <End Role="ras_Dept" EntitySet="ras_Dept" />
+            <End Role="ras_Users" EntitySet="ras_Users" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Place_ras_Device_FK1" Association="Self.ras_Place_ras_Device_FK1">
+            <End Role="ras_Place" EntitySet="ras_Place" />
+            <End Role="ras_Device" EntitySet="ras_Device" />
+          </AssociationSet>
+          <AssociationSet Name="ras_LogType_ras_Log_FK1" Association="Self.ras_LogType_ras_Log_FK1">
+            <End Role="ras_LogType" EntitySet="ras_LogType" />
+            <End Role="ras_Log" EntitySet="ras_Log" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Resources_ras_RoleResources_FK1" Association="Self.ras_Resources_ras_RoleResources_FK1">
+            <End Role="ras_Resources" EntitySet="ras_Resources" />
+            <End Role="ras_RoleResources" EntitySet="ras_RoleResources" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Roles_ras_RoleResources_FK1" Association="Self.ras_Roles_ras_RoleResources_FK1">
+            <End Role="ras_Roles" EntitySet="ras_Roles" />
+            <End Role="ras_RoleResources" EntitySet="ras_RoleResources" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Roles_ras_UserRoles_FK1" Association="Self.ras_Roles_ras_UserRoles_FK1">
+            <End Role="ras_Roles" EntitySet="ras_Roles" />
+            <End Role="ras_UserRoles" EntitySet="ras_UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="ras_RuleList_ras_Rule_FK1" Association="Self.ras_RuleList_ras_Rule_FK1">
+            <End Role="ras_RuleList" EntitySet="ras_RuleList" />
+            <End Role="ras_Rule" EntitySet="ras_Rule" />
+          </AssociationSet>
+          <AssociationSet Name="ras_RuleList_ras_Users_FK1" Association="Self.ras_RuleList_ras_Users_FK1">
+            <End Role="ras_RuleList" EntitySet="ras_RuleList" />
+            <End Role="ras_Users" EntitySet="ras_Users" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Shift_ras_SegmentList_FK1" Association="Self.ras_Shift_ras_SegmentList_FK1">
+            <End Role="ras_Shift" EntitySet="ras_Shift" />
+            <End Role="ras_SegmentList" EntitySet="ras_SegmentList" />
+          </AssociationSet>
+          <AssociationSet Name="ras_ShiftSegment_ras_SegmentList_FK1" Association="Self.ras_ShiftSegment_ras_SegmentList_FK1">
+            <End Role="ras_ShiftSegment" EntitySet="ras_ShiftSegment" />
+            <End Role="ras_SegmentList" EntitySet="ras_SegmentList" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Shift_ras_ShiftList_FK1" Association="Self.ras_Shift_ras_ShiftList_FK1">
+            <End Role="ras_Shift" EntitySet="ras_Shift" />
+            <End Role="ras_ShiftList" EntitySet="ras_ShiftList" />
+          </AssociationSet>
+          <AssociationSet Name="ras_ShiftGroup_ras_ShiftList_FK1" Association="Self.ras_ShiftGroup_ras_ShiftList_FK1">
+            <End Role="ras_ShiftGroup" EntitySet="ras_ShiftGroup" />
+            <End Role="ras_ShiftList" EntitySet="ras_ShiftList" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_ShiftRecord_FK1" Association="Self.ras_Users_ras_ShiftRecord_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_ShiftRecord" EntitySet="ras_ShiftRecord" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_UserDepts_FK1" Association="Self.ras_Users_ras_UserDepts_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_UserDepts" EntitySet="ras_UserDepts" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_UserEx_FK1" Association="Self.ras_Users_ras_UserEx_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_UserEx" EntitySet="ras_UserEx" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Users_ras_UserRoles_FK1" Association="Self.ras_Users_ras_UserRoles_FK1">
+            <End Role="ras_Users" EntitySet="ras_Users" />
+            <End Role="ras_UserRoles" EntitySet="ras_UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="ras_Weekend_ras_Users_FK1" Association="Self.ras_Weekend_ras_Users_FK1">
+            <End Role="ras_Weekend" EntitySet="ras_Weekend" />
+            <End Role="ras_Users" EntitySet="ras_Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HRDModelStoreContainer" CdmEntityContainer="HRDEntities">
+          <EntitySetMapping Name="BPJS_Ms_Desa">
+            <EntityTypeMapping TypeName="HRDModel.BPJS_Ms_Desa">
+              <MappingFragment StoreEntitySet="BPJS_Ms_Desa">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="KDPROP" ColumnName="KDPROP" />
+                <ScalarProperty Name="NMPROP" ColumnName="NMPROP" />
+                <ScalarProperty Name="KDDATI2" ColumnName="KDDATI2" />
+                <ScalarProperty Name="NMDATI2" ColumnName="NMDATI2" />
+                <ScalarProperty Name="KDKEC" ColumnName="KDKEC" />
+                <ScalarProperty Name="NMKEC" ColumnName="NMKEC" />
+                <ScalarProperty Name="KDDESA" ColumnName="KDDESA" />
+                <ScalarProperty Name="NMDESA" ColumnName="NMDESA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BPJS_Ms_Faskes">
+            <EntityTypeMapping TypeName="HRDModel.BPJS_Ms_Faskes">
+              <MappingFragment StoreEntitySet="BPJS_Ms_Faskes">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="KODE_DIVRE" ColumnName="KODE_DIVRE" />
+                <ScalarProperty Name="NAMA_REGIONAL" ColumnName="NAMA_REGIONAL" />
+                <ScalarProperty Name="NAMA_KC" ColumnName="NAMA_KC" />
+                <ScalarProperty Name="NAMA_DATI2" ColumnName="NAMA_DATI2" />
+                <ScalarProperty Name="KODE_FASKES" ColumnName="KODE_FASKES" />
+                <ScalarProperty Name="NAMA_FASKES" ColumnName="NAMA_FASKES" />
+                <ScalarProperty Name="JENIS_FASKES" ColumnName="JENIS_FASKES" />
+                <ScalarProperty Name="ALAMAT_FASKES" ColumnName="ALAMAT_FASKES" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BPJS_Ms_Karyawan">
+            <EntityTypeMapping TypeName="HRDModel.BPJS_Ms_Karyawan">
+              <MappingFragment StoreEntitySet="BPJS_Ms_Karyawan">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NIP" ColumnName="NIP" />
+                <ScalarProperty Name="NamaLengkap" ColumnName="NamaLengkap" />
+                <ScalarProperty Name="Access" ColumnName="Access" />
+                <ScalarProperty Name="TanggalLahir" ColumnName="TanggalLahir" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BPJS_Tr_Migrasi">
+            <EntityTypeMapping TypeName="HRDModel.BPJS_Tr_Migrasi">
+              <MappingFragment StoreEntitySet="BPJS_Tr_Migrasi">
+                <ScalarProperty Name="Idx" ColumnName="Idx" />
+                <ScalarProperty Name="SortNo" ColumnName="SortNo" />
+                <ScalarProperty Name="KaryawanID" ColumnName="KaryawanID" />
+                <ScalarProperty Name="NoKK" ColumnName="NoKK" />
+                <ScalarProperty Name="NoKTP" ColumnName="NoKTP" />
+                <ScalarProperty Name="NamaLengkap" ColumnName="NamaLengkap" />
+                <ScalarProperty Name="HubKeluarga" ColumnName="HubKeluarga" />
+                <ScalarProperty Name="TempatLahir" ColumnName="TempatLahir" />
+                <ScalarProperty Name="TanggalLahir" ColumnName="TanggalLahir" />
+                <ScalarProperty Name="JenisKelamin" ColumnName="JenisKelamin" />
+                <ScalarProperty Name="StatusKawin" ColumnName="StatusKawin" />
+                <ScalarProperty Name="AlamatTinggal" ColumnName="AlamatTinggal" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="RW" ColumnName="RW" />
+                <ScalarProperty Name="KodePos" ColumnName="KodePos" />
+                <ScalarProperty Name="KodeKecamatan" ColumnName="KodeKecamatan" />
+                <ScalarProperty Name="NamaKecamatan" ColumnName="NamaKecamatan" />
+                <ScalarProperty Name="KodeDesa" ColumnName="KodeDesa" />
+                <ScalarProperty Name="NamaDesa" ColumnName="NamaDesa" />
+                <ScalarProperty Name="KodeFaskesTK1" ColumnName="KodeFaskesTK1" />
+                <ScalarProperty Name="NamaFaskesTK1" ColumnName="NamaFaskesTK1" />
+                <ScalarProperty Name="KodeFaskesGigi" ColumnName="KodeFaskesGigi" />
+                <ScalarProperty Name="NamaFaskesGigi" ColumnName="NamaFaskesGigi" />
+                <ScalarProperty Name="Telepon" ColumnName="Telepon" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NPP" ColumnName="NPP" />
+                <ScalarProperty Name="Jabatan" ColumnName="Jabatan" />
+                <ScalarProperty Name="StatusKerja" ColumnName="StatusKerja" />
+                <ScalarProperty Name="KelasRawat" ColumnName="KelasRawat" />
+                <ScalarProperty Name="TMTKerja" ColumnName="TMTKerja" />
+                <ScalarProperty Name="Gaji" ColumnName="Gaji" />
+                <ScalarProperty Name="WargaNegara" ColumnName="WargaNegara" />
+                <ScalarProperty Name="NoPolis" ColumnName="NoPolis" />
+                <ScalarProperty Name="NamaAsuransi" ColumnName="NamaAsuransi" />
+                <ScalarProperty Name="NoNPWP" ColumnName="NoNPWP" />
+                <ScalarProperty Name="NoPassport" ColumnName="NoPassport" />
+                <ScalarProperty Name="NoBPJS" ColumnName="NoBPJS" />
+                <ScalarProperty Name="AlasanMutasi" ColumnName="AlasanMutasi" />
+                <ScalarProperty Name="TanggalMutasi" ColumnName="TanggalMutasi" />
+                <ScalarProperty Name="IsDownload" ColumnName="IsDownload" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hrd_UserOption">
+            <EntityTypeMapping TypeName="HRDModel.hrd_UserOption">
+              <MappingFragment StoreEntitySet="hrd_UserOption">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ResignDate" ColumnName="ResignDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_AccessControlSettings">
+            <EntityTypeMapping TypeName="HRDModel.ras_AccessControlSettings">
+              <MappingFragment StoreEntitySet="ras_AccessControlSettings">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Wiegand" ColumnName="Wiegand" />
+                <ScalarProperty Name="FireAlarm" ColumnName="FireAlarm" />
+                <ScalarProperty Name="Lock2Control" ColumnName="Lock2Control" />
+                <ScalarProperty Name="Lock1OpenDelay" ColumnName="Lock1OpenDelay" />
+                <ScalarProperty Name="CheckDoor1Status" ColumnName="CheckDoor1Status" />
+                <ScalarProperty Name="Lock1OpenOvertimeAlarm" ColumnName="Lock1OpenOvertimeAlarm" />
+                <ScalarProperty Name="Lock1IllegalOpenAlarm" ColumnName="Lock1IllegalOpenAlarm" />
+                <ScalarProperty Name="Lock2OpenDelay" ColumnName="Lock2OpenDelay" />
+                <ScalarProperty Name="CheckDoor2Status" ColumnName="CheckDoor2Status" />
+                <ScalarProperty Name="Lock2OpenOvertimeAlarm" ColumnName="Lock2OpenOvertimeAlarm" />
+                <ScalarProperty Name="Lock2IllegalOpenAlarm" ColumnName="Lock2IllegalOpenAlarm" />
+                <ScalarProperty Name="Unlock1PassGroup" ColumnName="Unlock1PassGroup" />
+                <ScalarProperty Name="Unlock2PassGroup" ColumnName="Unlock2PassGroup" />
+                <ScalarProperty Name="EnableAntiHijack" ColumnName="EnableAntiHijack" />
+                <ScalarProperty Name="HijackOpen" ColumnName="HijackOpen" />
+                <ScalarProperty Name="HijackAlarm" ColumnName="HijackAlarm" />
+                <ScalarProperty Name="HijackPassword" ColumnName="HijackPassword" />
+                <ScalarProperty Name="HijackFpNo" ColumnName="HijackFpNo" />
+                <ScalarProperty Name="AntiPassback" ColumnName="AntiPassback" />
+                <ScalarProperty Name="MultOpen" ColumnName="MultOpen" />
+                <ScalarProperty Name="LinkageOpen" ColumnName="LinkageOpen" />
+                <ScalarProperty Name="LinkageAlarm" ColumnName="LinkageAlarm" />
+                <ScalarProperty Name="EnableRelayAlarm" ColumnName="EnableRelayAlarm" />
+                <ScalarProperty Name="VerifyMode" ColumnName="VerifyMode" />
+                <ScalarProperty Name="Res1" ColumnName="Res1" />
+                <ScalarProperty Name="Res2" ColumnName="Res2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_AreaTime">
+            <EntityTypeMapping TypeName="HRDModel.ras_AreaTime">
+              <MappingFragment StoreEntitySet="ras_AreaTime">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DN" ColumnName="DN" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="Sunday" ColumnName="Sunday" />
+                <ScalarProperty Name="Monday" ColumnName="Monday" />
+                <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
+                <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
+                <ScalarProperty Name="Thursday" ColumnName="Thursday" />
+                <ScalarProperty Name="Friday" ColumnName="Friday" />
+                <ScalarProperty Name="Saturday" ColumnName="Saturday" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_AttLeaveRecord">
+            <EntityTypeMapping TypeName="HRDModel.ras_AttLeaveRecord">
+              <MappingFragment StoreEntitySet="ras_AttLeaveRecord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="AttTypeId" ColumnName="AttTypeId" />
+                <ScalarProperty Name="ResultTime" ColumnName="ResultTime" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_AttRecord">
+            <EntityTypeMapping TypeName="HRDModel.ras_AttRecord">
+              <MappingFragment StoreEntitySet="ras_AttRecord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DN" ColumnName="DN" />
+                <ScalarProperty Name="DIN" ColumnName="DIN" />
+                <ScalarProperty Name="Clock" ColumnName="Clock" />
+                <ScalarProperty Name="VerifyMode" ColumnName="VerifyMode" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="AttTypeId" ColumnName="AttTypeId" />
+                <ScalarProperty Name="CollectDate" ColumnName="CollectDate" />
+                <ScalarProperty Name="JobCode" ColumnName="JobCode" />
+                <ScalarProperty Name="Antipassback" ColumnName="Antipassback" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_AttResultRecord">
+            <EntityTypeMapping TypeName="HRDModel.ras_AttResultRecord">
+              <MappingFragment StoreEntitySet="ras_AttResultRecord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="AttDate" ColumnName="AttDate" />
+                <ScalarProperty Name="AttId" ColumnName="AttId" />
+                <ScalarProperty Name="TimeString" ColumnName="TimeString" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="A01" ColumnName="A01" />
+                <ScalarProperty Name="B01" ColumnName="B01" />
+                <ScalarProperty Name="B02" ColumnName="B02" />
+                <ScalarProperty Name="B03" ColumnName="B03" />
+                <ScalarProperty Name="C01" ColumnName="C01" />
+                <ScalarProperty Name="D01" ColumnName="D01" />
+                <ScalarProperty Name="D02" ColumnName="D02" />
+                <ScalarProperty Name="D03" ColumnName="D03" />
+                <ScalarProperty Name="D04" ColumnName="D04" />
+                <ScalarProperty Name="D05" ColumnName="D05" />
+                <ScalarProperty Name="D06" ColumnName="D06" />
+                <ScalarProperty Name="D07" ColumnName="D07" />
+                <ScalarProperty Name="D08" ColumnName="D08" />
+                <ScalarProperty Name="D09" ColumnName="D09" />
+                <ScalarProperty Name="D10" ColumnName="D10" />
+                <ScalarProperty Name="E01" ColumnName="E01" />
+                <ScalarProperty Name="F01" ColumnName="F01" />
+                <ScalarProperty Name="G01" ColumnName="G01" />
+                <ScalarProperty Name="G02" ColumnName="G02" />
+                <ScalarProperty Name="G03" ColumnName="G03" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_AttType">
+            <EntityTypeMapping TypeName="HRDModel.ras_AttType">
+              <MappingFragment StoreEntitySet="ras_AttType">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_AttTypeItem">
+            <EntityTypeMapping TypeName="HRDModel.ras_AttTypeItem">
+              <MappingFragment StoreEntitySet="ras_AttTypeItem">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="ShowTimes" ColumnName="ShowTimes" />
+                <ScalarProperty Name="MiniCalcValue" ColumnName="MiniCalcValue" />
+                <ScalarProperty Name="RoundType" ColumnName="RoundType" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Dept">
+            <EntityTypeMapping TypeName="HRDModel.ras_Dept">
+              <MappingFragment StoreEntitySet="ras_Dept">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Device">
+            <EntityTypeMapping TypeName="HRDModel.ras_Device">
+              <MappingFragment StoreEntitySet="ras_Device">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DN" ColumnName="DN" />
+                <ScalarProperty Name="Communication" ColumnName="Communication" />
+                <ScalarProperty Name="Baudrate" ColumnName="Baudrate" />
+                <ScalarProperty Name="ComPort" ColumnName="ComPort" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IpPort" ColumnName="IpPort" />
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
+                <ScalarProperty Name="Use" ColumnName="Use" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Enroll">
+            <EntityTypeMapping TypeName="HRDModel.ras_Enroll">
+              <MappingFragment StoreEntitySet="ras_Enroll">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DIN" ColumnName="DIN" />
+                <ScalarProperty Name="BackupNumber" ColumnName="BackupNumber" />
+                <ScalarProperty Name="Privilege" ColumnName="Privilege" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Fingerprint" ColumnName="Fingerprint" />
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+                <ScalarProperty Name="AccessTimeZone" ColumnName="AccessTimeZone" />
+                <ScalarProperty Name="ValidDate" ColumnName="ValidDate" />
+                <ScalarProperty Name="InvalidDate" ColumnName="InvalidDate" />
+                <ScalarProperty Name="UnlockGroup" ColumnName="UnlockGroup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_EnrollDevice">
+            <EntityTypeMapping TypeName="HRDModel.ras_EnrollDevice">
+              <MappingFragment StoreEntitySet="ras_EnrollDevice">
+                <ScalarProperty Name="DIN" ColumnName="DIN" />
+                <ScalarProperty Name="BackupNumber" ColumnName="BackupNumber" />
+                <ScalarProperty Name="DN" ColumnName="DN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_GroupTime">
+            <EntityTypeMapping TypeName="HRDModel.ras_GroupTime">
+              <MappingFragment StoreEntitySet="ras_GroupTime">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DN" ColumnName="DN" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="PassTime0" ColumnName="PassTime0" />
+                <ScalarProperty Name="PassTime1" ColumnName="PassTime1" />
+                <ScalarProperty Name="PassTime2" ColumnName="PassTime2" />
+                <ScalarProperty Name="PassTime3" ColumnName="PassTime3" />
+                <ScalarProperty Name="PassTime4" ColumnName="PassTime4" />
+                <ScalarProperty Name="PassTime5" ColumnName="PassTime5" />
+                <ScalarProperty Name="PassTime6" ColumnName="PassTime6" />
+                <ScalarProperty Name="PassTime7" ColumnName="PassTime7" />
+                <ScalarProperty Name="PassTime8" ColumnName="PassTime8" />
+                <ScalarProperty Name="PassTime9" ColumnName="PassTime9" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Holiday">
+            <EntityTypeMapping TypeName="HRDModel.ras_Holiday">
+              <MappingFragment StoreEntitySet="ras_Holiday">
+                <ScalarProperty Name="HolidayId" ColumnName="HolidayId" />
+                <ScalarProperty Name="HolidyName" ColumnName="HolidyName" />
+                <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_ImageBin">
+            <EntityTypeMapping TypeName="HRDModel.ras_ImageBin">
+              <MappingFragment StoreEntitySet="ras_ImageBin">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
+                <ScalarProperty Name="ImageLength" ColumnName="ImageLength" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Log">
+            <EntityTypeMapping TypeName="HRDModel.ras_Log">
+              <MappingFragment StoreEntitySet="ras_Log">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogTypeId" ColumnName="LogTypeId" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="OperateUID" ColumnName="OperateUID" />
+                <ScalarProperty Name="LogContent" ColumnName="LogContent" />
+                <ScalarProperty Name="OperateResult" ColumnName="OperateResult" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_LogType">
+            <EntityTypeMapping TypeName="HRDModel.ras_LogType">
+              <MappingFragment StoreEntitySet="ras_LogType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_PassTime">
+            <EntityTypeMapping TypeName="HRDModel.ras_PassTime">
+              <MappingFragment StoreEntitySet="ras_PassTime">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DN" ColumnName="DN" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Place">
+            <EntityTypeMapping TypeName="HRDModel.ras_Place">
+              <MappingFragment StoreEntitySet="ras_Place">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="PlaceName" ColumnName="PlaceName" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Resources">
+            <EntityTypeMapping TypeName="HRDModel.ras_Resources">
+              <MappingFragment StoreEntitySet="ras_Resources">
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="ResourceName" ColumnName="ResourceName" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_RoleResources">
+            <EntityTypeMapping TypeName="HRDModel.ras_RoleResources">
+              <MappingFragment StoreEntitySet="ras_RoleResources">
+                <ScalarProperty Name="RoleResourceId" ColumnName="RoleResourceId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+                <ScalarProperty Name="OperLevel" ColumnName="OperLevel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Roles">
+            <EntityTypeMapping TypeName="HRDModel.ras_Roles">
+              <MappingFragment StoreEntitySet="ras_Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Rule">
+            <EntityTypeMapping TypeName="HRDModel.ras_Rule">
+              <MappingFragment StoreEntitySet="ras_Rule">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RuleId" ColumnName="RuleId" />
+                <ScalarProperty Name="Item" ColumnName="Item" />
+                <ScalarProperty Name="ItemValue" ColumnName="ItemValue" />
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_RuleList">
+            <EntityTypeMapping TypeName="HRDModel.ras_RuleList">
+              <MappingFragment StoreEntitySet="ras_RuleList">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RuleId" ColumnName="RuleId" />
+                <ScalarProperty Name="RuleName" ColumnName="RuleName" />
+                <ScalarProperty Name="IsVoid" ColumnName="IsVoid" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_SegmentList">
+            <EntityTypeMapping TypeName="HRDModel.ras_SegmentList">
+              <MappingFragment StoreEntitySet="ras_SegmentList">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SegmentId" ColumnName="SegmentId" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Shift">
+            <EntityTypeMapping TypeName="HRDModel.ras_Shift">
+              <MappingFragment StoreEntitySet="ras_Shift">
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_ShiftGroup">
+            <EntityTypeMapping TypeName="HRDModel.ras_ShiftGroup">
+              <MappingFragment StoreEntitySet="ras_ShiftGroup">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_ShiftList">
+            <EntityTypeMapping TypeName="HRDModel.ras_ShiftList">
+              <MappingFragment StoreEntitySet="ras_ShiftList">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_ShiftRecord">
+            <EntityTypeMapping TypeName="HRDModel.ras_ShiftRecord">
+              <MappingFragment StoreEntitySet="ras_ShiftRecord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="DutyDay" ColumnName="DutyDay" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="CreateUID" ColumnName="CreateUID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_ShiftSegment">
+            <EntityTypeMapping TypeName="HRDModel.ras_ShiftSegment">
+              <MappingFragment StoreEntitySet="ras_ShiftSegment">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SegmentId" ColumnName="SegmentId" />
+                <ScalarProperty Name="SegmentName" ColumnName="SegmentName" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="BeginAttTime" ColumnName="BeginAttTime" />
+                <ScalarProperty Name="EndAttTime" ColumnName="EndAttTime" />
+                <ScalarProperty Name="StartWorkTime" ColumnName="StartWorkTime" />
+                <ScalarProperty Name="OffWorkTime" ColumnName="OffWorkTime" />
+                <ScalarProperty Name="ToPunchIn" ColumnName="ToPunchIn" />
+                <ScalarProperty Name="ToPunchOut" ColumnName="ToPunchOut" />
+                <ScalarProperty Name="CalcBeLate" ColumnName="CalcBeLate" />
+                <ScalarProperty Name="CalcLeaveEarly" ColumnName="CalcLeaveEarly" />
+                <ScalarProperty Name="CalcAbsence" ColumnName="CalcAbsence" />
+                <ScalarProperty Name="CalcStayAway" ColumnName="CalcStayAway" />
+                <ScalarProperty Name="CrossDays" ColumnName="CrossDays" />
+                <ScalarProperty Name="ResultHours" ColumnName="ResultHours" />
+                <ScalarProperty Name="ResultDays" ColumnName="ResultDays" />
+                <ScalarProperty Name="DeductMinutes" ColumnName="DeductMinutes" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_SysSettings">
+            <EntityTypeMapping TypeName="HRDModel.ras_SysSettings">
+              <MappingFragment StoreEntitySet="ras_SysSettings">
+                <ScalarProperty Name="Item" ColumnName="Item" />
+                <ScalarProperty Name="ItemValue" ColumnName="ItemValue" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_UserColumns">
+            <EntityTypeMapping TypeName="HRDModel.ras_UserColumns">
+              <MappingFragment StoreEntitySet="ras_UserColumns">
+                <ScalarProperty Name="UserColumnId" ColumnName="UserColumnId" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="ReportId" ColumnName="ReportId" />
+                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Visible" ColumnName="Visible" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_UserDepts">
+            <EntityTypeMapping TypeName="HRDModel.ras_UserDepts">
+              <MappingFragment StoreEntitySet="ras_UserDepts">
+                <ScalarProperty Name="UserDeptId" ColumnName="UserDeptId" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_UserEx">
+            <EntityTypeMapping TypeName="HRDModel.ras_UserEx">
+              <MappingFragment StoreEntitySet="ras_UserEx">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="IDNumber" ColumnName="IDNumber" />
+                <ScalarProperty Name="HomeAddress" ColumnName="HomeAddress" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="AttType" ColumnName="AttType" />
+                <ScalarProperty Name="AccessControl" ColumnName="AccessControl" />
+                <ScalarProperty Name="ValidityPeriod" ColumnName="ValidityPeriod" />
+                <ScalarProperty Name="UseUserGroupACTZ" ColumnName="UseUserGroupACTZ" />
+                <ScalarProperty Name="UseUserGroupVM" ColumnName="UseUserGroupVM" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="AccessTimeZone" ColumnName="AccessTimeZone" />
+                <ScalarProperty Name="ValidDate" ColumnName="ValidDate" />
+                <ScalarProperty Name="InvalidDate" ColumnName="InvalidDate" />
+                <ScalarProperty Name="UserGroup" ColumnName="UserGroup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_UserRoles">
+            <EntityTypeMapping TypeName="HRDModel.ras_UserRoles">
+              <MappingFragment StoreEntitySet="ras_UserRoles">
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Users">
+            <EntityTypeMapping TypeName="HRDModel.ras_Users">
+              <MappingFragment StoreEntitySet="ras_Users">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="DIN" ColumnName="DIN" />
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+                <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="AttId" ColumnName="AttId" />
+                <ScalarProperty Name="RuleId" ColumnName="RuleId" />
+                <ScalarProperty Name="WeekendId" ColumnName="WeekendId" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_UserSettings">
+            <EntityTypeMapping TypeName="HRDModel.ras_UserSettings">
+              <MappingFragment StoreEntitySet="ras_UserSettings">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Item" ColumnName="Item" />
+                <ScalarProperty Name="ItemValue" ColumnName="ItemValue" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ras_Weekend">
+            <EntityTypeMapping TypeName="HRDModel.ras_Weekend">
+              <MappingFragment StoreEntitySet="ras_Weekend">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="WeekendId" ColumnName="WeekendId" />
+                <ScalarProperty Name="WeekendName" ColumnName="WeekendName" />
+                <ScalarProperty Name="MonAm" ColumnName="MonAm" />
+                <ScalarProperty Name="MonPm" ColumnName="MonPm" />
+                <ScalarProperty Name="TueAm" ColumnName="TueAm" />
+                <ScalarProperty Name="TuePm" ColumnName="TuePm" />
+                <ScalarProperty Name="WedAm" ColumnName="WedAm" />
+                <ScalarProperty Name="WedPm" ColumnName="WedPm" />
+                <ScalarProperty Name="ThurAm" ColumnName="ThurAm" />
+                <ScalarProperty Name="ThurPm" ColumnName="ThurPm" />
+                <ScalarProperty Name="FriAm" ColumnName="FriAm" />
+                <ScalarProperty Name="FriPm" ColumnName="FriPm" />
+                <ScalarProperty Name="SatAm" ColumnName="SatAm" />
+                <ScalarProperty Name="SatPm" ColumnName="SatPm" />
+                <ScalarProperty Name="SunAm" ColumnName="SunAm" />
+                <ScalarProperty Name="SunPm" ColumnName="SunPm" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedUID" ColumnName="LastUpdatedUID" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

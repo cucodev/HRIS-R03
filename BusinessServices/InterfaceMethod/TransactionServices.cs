@@ -9,6 +9,7 @@ using BusinessEntities.DataEntities;
 using BusinessEntities;
 using DataModel;
 using System.Transactions;
+using DataModel.Model;
 
 namespace BusinessServices.InterfaceMethod
 {

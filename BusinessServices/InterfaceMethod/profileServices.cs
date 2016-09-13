@@ -10,6 +10,7 @@ using AutoMapper;
 using BusinessServices.Interface;
 using BusinessEntities.CrudEntities;
 using System.Transactions;
+using DataModel.Model;
 
 namespace BusinessServices.InterfaceMethod
 {

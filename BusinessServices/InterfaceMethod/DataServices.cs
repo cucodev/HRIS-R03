@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BusinessServices.Interface;
 using BusinessEntities.CrudEntities;
 using System.Transactions;
-using DataModel;
+using DataModel.Model;
 using DataModel.UnitOfWork;
 using BusinessEntities;
 

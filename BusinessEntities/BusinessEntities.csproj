@@ -46,6 +46,7 @@
     <Compile Include="CrudEntities\generalEntities.cs" />
     <Compile Include="CrudEntities\setupEntities.cs" />
     <Compile Include="CrudEntities\employeeEntities.cs" />
+    <Compile Include="CrudEntities\UserEntities.cs" />
     <Compile Include="DataEntities\summaryEntities.cs" />
     <Compile Include="DataEntities\transaction.cs" />
     <Compile Include="GlobalVariable.cs" />
@@ -53,6 +54,12 @@
     <Compile Include="CrudEntities\sessionEntities.cs" />
     <Compile Include="CrudEntities\profileEntities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataModel\DataModel.csproj">
+      <Project>{DF9728C3-BB3E-4A95-AD30-3532F08B7049}</Project>
+      <Name>DataModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

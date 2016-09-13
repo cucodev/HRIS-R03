@@ -4,6 +4,7 @@
     var th = "ui-redmond";
     var themeButton = "orange";
 
+    
     hris.list = {
         _getLOV: function (name) {
             if (obj[name] == null) {
@@ -349,5 +350,13 @@
             //console.log("hris.ajax cb", cb);
         }
     };
-
+    hris.menu = {
+        roots: function (menuID) {
+            $("#" + menuID).addClass("nav-show");
+            $("#" + menuID).css("display", "Block");
+        },
+        sub: function(menuID) {
+            $("#" + menuID).addClass("active");
+        }
+    };
 })(jQuery);

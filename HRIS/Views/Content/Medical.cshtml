@@ -4,87 +4,138 @@
     Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
 }
 
-@{ Html.RenderPartial("~/Views/Shared/_SessionUser.cshtml"); }
-
 <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
 <script src=@Url.Content("~/Scripts/jquery.ui.min.js")></script>
 <script type="text/javascript">
-    $(document).ready(function () {
+    //Variable Declaration
+    var srcDoctor = [
+                    { label: "General Practitioners", value: 1 },
+                    { label: "Dentist", value: 2 },
+                    { label: "Spetialist", value: 3 },
+                    { label: "Others", value: 4 }];
+    var Balance = 0;
+    var MasterBalance = 0;
+    var totalValue = 0;
+    var empRoleBased = [];
 
-        //Variable Declaration
-        var srcDoctor = [
-            { label: "General Practitioners", value: 1 },
-            { label: "Dentist", value: 2 },
-            { label: "Spetialist", value: 3 },
-            { label: "Others", value: 4 }];
-        var Balance = 0;
-        var MasterBalance = 0;
-        var totalValue = 0;
-        var empRoleBased = [];
+    //Variable for Component
+    var renderText = function (text, value) {
+        if (value < 55) {
+            return "<span style='color: #333;'>" + text + " Days </span>";
+        }
+        return "<span style='color: #fff;'>" + text + " Days </span>";
+    }
 
-        //Variable API 
-        var Name = hris.list._getLOV("Name");
-        var MasterSource = hris.source._employeeMedicalRoleBased(cIDV);
+    //Variable API 
+    var Name = hris.list._getLOV("Name");
+    var MasterSource = hris.source._employeeMedicalRoleBased(cIDV);
 
-        var listofMedicalID = [1, 4, 5, 6]; //Medical Only
+    var listofMedicalID = [1, 4, 5, 6]; //Medical Only
 
-        var MasterDataAdapter = new $.jqx.dataAdapter(MasterSource, {
-            autoBind: true,
-            loadComplete: function (records) {
-                console.log('records: ', records);
-                // update the loaded records. Dynamically add EmployeeName and EmployeeID fields. 
-                for (var i = 0; i < records.length; i++) {
-                    var emp = records[i];
-                    var x = emp.policyType;
-                    if (listofMedicalID.indexOf(x) < 0) {
-                        //console.log('remove non medicalType: ', emp);
-                    } else {
-                        empRoleBased.push(emp);
-                        console.log('Add medicalType: ', emp);
-                    }
-
-                    
+    //API
+    var MasterDataAdapter = new $.jqx.dataAdapter(MasterSource, {
+        autoBind: true,
+        loadComplete: function (records) {
+            console.log('records: ', records);
+            // update the loaded records. Dynamically add EmployeeName and EmployeeID fields. 
+            for (var i = 0; i < records.length; i++) {
+                var emp = records[i];
+                var x = emp.policyType;
+                if (listofMedicalID.indexOf(x) < 0) {
+                    //console.log('remove non medicalType: ', emp);
+                } else {
+                    empRoleBased.push(emp);
+                    console.log('Add medicalType: ', emp);
                 }
-                return empRoleBased;
-            }
-        });
 
+
+            }
+            return empRoleBased;
+        }
+    });
+    var uri = baseURL + 'api/profileDependent/' + cIDV;
+    console.log("URI:" + uri);
+    var sourceDependant = {
+        datatype: "json",
+        datafields: [
+            { name: 'IDV' },
+            { name: 'IDVName', value: 'IDV', values: { source: Name.records, value: 'value', name: 'label' } }
+        ],
+        url: uri,
+        async: false,
+        cache: false
+    };
+    var dependantAdapter = new $.jqx.dataAdapter(sourceDependant, {
+        loadComplete: function (records) {
+            console.log("Dependent: ", records);
+        }
+    });
+
+    var Medical = {
+        Var: function () {
+
+        },
+        Component: function () {
+            //Component
+            $("#typeClaim").jqxComboBox({ selectedIndex: -1, theme: 'orange', source: dependantAdapter, displayMember: 'IDVName', valueMember: 'IDV', width: '100%', height: '25px', autoDropDownHeight: true });
+            $("#typeDoctor").jqxComboBox({ theme: 'orange', source: srcDoctor, displayMember: 'label', valueMember: 'value', width: '100%', height: '25px', autoDropDownHeight: true });
+            $('#PolicyType').jqxDropDownList({ selectedIndex: -1, source: MasterDataAdapter, theme: 'orange', disabled: false, height: '35px', displayMember: "policyTypeName", valueMember: "ID", width: '100%' });
+            $("#balanceProgress").jqxProgressBar({ animationDuration: 0, showText: false, renderText: renderText, template: "info", width: '100%', height: 25, value: Balance, max: Balance });
+            $("#doctorFee").jqxNumberInput({ theme: 'orange', width: '100%', height: '25px', symbol: "Rp ", decimalDigits: 0, min: 0, spinButtons: true });
+            $("#prescribeMedicines").jqxNumberInput({ theme: 'orange', width: '100%', height: '25px', symbol: "Rp ", decimalDigits: 0, min: 0, spinButtons: true });
+            hris.general.bindButton('Apply');
+        },
+        func: {
+            setProgress: function (value) {
+                $("#totalBalance").html("<strong>Rp. " + Balance.toLocaleString() + "</strong>");
+                $("#balanceProgress").jqxProgressBar({
+                    value: value,
+                    max: Balance
+                });
+            },
+            checkMaximum: function (value) {
+                if (value > Balance) {
+                    $("#doctorFee").val(0);
+                    $("#prescribeMedicines").val(0);
+                    BootstrapDialog.show({
+                        message: 'Error : Maximum Reached Balance  !!'
+                    });
+                }
+            },
+            getTotalAndClaim: function () {
+                var totalFee = parseInt($("#doctorFee").val()) + parseInt($("#prescribeMedicines").val());
+                var totalClaim = totalFee - ((totalFee * 20) / 100);
+                if (isNaN(totalFee)) {
+                    $("#totalAmount").html("Rp. 0");
+                    $("#totalClaim").html("Rp. 0");
+                } else {
+                    if (totalClaim <= Balance) {
+
+                        setProgress(Balance - totalClaim);
+                        $("#totalAmount").html("Rp. " + $.number(totalFee, '.'));
+                        $("#totalClaim").html("Rp. " + $.number(totalClaim, '.'));
+                    } else {
+                        checkMaximum(totalClaim);
+                    }
+                
+                }
+             }
+        }
+        
+
+    };
+
+    Medical.Var();
+    $(document).ready(function () {
+        
+        Medical.Component();
+        
+        
         console.log('empRoleBased: ', empRoleBased);
         //var MasterDataAdapter = hris.data._dataAdapter(MasterSource);
 
 
-        //Variable for Component
-        var renderText = function (text, value) {
-            if (value < 55) {
-                return "<span style='color: #333;'>" + text + " Days </span>";
-            }
-            return "<span style='color: #fff;'>" + text + " Days </span>";
-        }
-
-        //API
-        var sourceDependant =
-                {
-                    datatype: "json",
-                    datafields: [
-                        { name: 'IDV' },
-                        { name: 'IDVName', value: 'IDV', values: { source: Name.records, value: 'value', name: 'label' } }
-                    ],
-                    url: baseURL + 'api/profileDependent/' + cIDV,
-                    async: false
-                };
-        var dependantAdapter = new $.jqx.dataAdapter(sourceDependant);
-
         
-
-        //Component
-        $("#typeClaim").jqxComboBox({ selectedIndex: -1, theme: 'orange', source: dependantAdapter, displayMember: 'IDVName', valueMember: 'IDV', width: '100%', height: '25px', autoDropDownHeight: true });
-        $("#typeDoctor").jqxComboBox({ theme: 'orange', source: srcDoctor, displayMember: 'label', valueMember:'value', width: '100%', height: '25px', autoDropDownHeight: true });
-        $('#PolicyType').jqxDropDownList({ selectedIndex: -1, source: MasterDataAdapter, theme: 'orange', disabled: false, height: '35px', displayMember: "policyTypeName", valueMember: "ID", width: '100%' });
-        $("#balanceProgress").jqxProgressBar({ animationDuration: 0, showText: false, renderText: renderText, template: "info", width: '100%', height: 25, value: Balance, max: Balance });
-        hris.general.bindButton('Apply');
-        $("#doctorFee").jqxNumberInput({ theme: 'orange', width: '100%', height: '25px', symbol: "Rp ", decimalDigits: 0, min: 0, spinButtons: true });
-        $("#prescribeMedicines").jqxNumberInput({ theme: 'orange', width: '100%', height: '25px', symbol: "Rp ", decimalDigits: 0, min: 0, spinButtons: true });
-        // Settings
         
         //Event
         $('#PolicyType').on('select', function (event) {
@@ -92,65 +143,32 @@
             var index = event.args.index;
             var MasterData = MasterDataAdapter.records[index];
             
-            //Reset
-            
-
             //Calculate
             Balance = MasterData.roleBasedValue;
             MasterBalance = MasterData.roleBasedValue;
             $("#doctorFee").jqxNumberInput({ max: Balance });
             $("#prescribeMedicines").jqxNumberInput({ max: Balance });
-            setProgress(Balance);
+            Medical.func.setProgress(Balance);
         });
+
         $("#doctorFee").on("valueChanged", function (event) {
             //var value = event.args.value;
             //checkMaximum(value);
-            getTotalAndClaim();
+            Medical.func.getTotalAndClaim();
         });
+
         $("#prescribeMedicines").on("valueChanged", function (event) {
             //var value = event.args.value;
             //checkMaximum(value);
-            getTotalAndClaim();
+            Medical.func.getTotalAndClaim();
         });
 
         //Function
-        function setProgress(value) {
-            $("#totalBalance").html("<strong>Rp. " + Balance.toLocaleString() + "</strong>");
-            $("#balanceProgress").jqxProgressBar({
-                value: value,
-                max: Balance
-            });
-        }
-
-        function checkMaximum(value) {
-            if (value > Balance) {
-                $("#doctorFee").val(0);
-                $("#prescribeMedicines").val(0);
-                BootstrapDialog.show({
-                    message: 'Error : Maximum Reached Balance  !!'
-                });
-            }
-        }
+        
+        
        
 
-        function getTotalAndClaim() {
-            var totalFee = parseInt($("#doctorFee").val()) + parseInt($("#prescribeMedicines").val());
-            var totalClaim = totalFee - ((totalFee * 20) / 100);
-            if (isNaN(totalFee)) {
-                $("#totalAmount").html("Rp. 0");
-                $("#totalClaim").html("Rp. 0");
-            } else {
-                if (totalClaim <= Balance) {
-
-                    setProgress(Balance - totalClaim);
-                    $("#totalAmount").html("Rp. " + $.number(totalFee, '.'));
-                    $("#totalClaim").html("Rp. " + $.number(totalClaim, '.'));
-                } else {
-                    checkMaximum(totalClaim);
-                }
-                
-            }
-        }
+        
 
         //Test
         
@@ -190,13 +208,14 @@
      background-image:url(@Url.Content("~/Content/bg/medical.jpg"));
      background-size: 90% 100%;
      background-repeat: no-repeat;">
-        <div class="col-xs-8" style="width:100%">
-
+        <div class="col-xs-6">
+            <div class="row"></div>
+            <div class="row"></div>
         </div>
-        <div class="col-xs-4" style="background: rgba(255, 255, 255, .7); margin-top:0;  height:350px; margin-left:10px;">
+        <div class="col-xs-4" style="background: rgba(255, 255, 255, .7); margin-top:0;  height:380px; margin-left:10px;">
             <div class="row pull-right">
                 <div class="col-xs-12 pull-right">
-                    <div style="">
+                    
                         <div class="form-group">
                             <br />
                             <label>Type:</label>
@@ -219,12 +238,14 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    
                 </div>
             </div>
-            <div class="row">
+            <div class="row pull-right">
                 <div class="col-xs-12 pull-right">
-                    <input type="submit" value="Submit" id='Apply' />
+                    <div class="form-group">
+                        <input type="submit" value="Submit" id='Apply' />
+                    </div>
                 </div>
             </div>
         </div>

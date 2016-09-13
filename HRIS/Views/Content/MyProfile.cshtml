@@ -119,6 +119,8 @@
     }
 
     $(document).ready(function () {
+        hris.menu.roots("subMenuProfile");
+        hris.menu.sub("subMenuMyProfile");
         Profile.load();
         $("#submit").click(Profile.submit);
     });

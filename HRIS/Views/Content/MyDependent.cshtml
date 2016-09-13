@@ -149,6 +149,9 @@
         },
     }
     $(document).ready(function () {
+        hris.menu.roots("subMenuProfile");
+        hris.menu.sub("subMenuMyDependent");
+
         loadDependent(Dependent.Modal.create);
         $("#submit").click(Dependent.Modal.submit);
         $("#editButton").click(Dependent.Modal.edit);

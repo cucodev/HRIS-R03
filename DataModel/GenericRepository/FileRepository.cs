@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataModel;
+using DataModel.Model;
 using System.Data.Entity;
 
 #endregion
