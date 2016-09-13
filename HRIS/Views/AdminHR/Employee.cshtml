@@ -12,8 +12,25 @@
     }
 </style>
 <script src="~/Scripts/hrisframework/hris.js"></script>
+<script src="~/Content/assets/js/wizard.min.js"></script>
+<script src="~/Content/assets/js/jquery.validate.min.js"></script>
+<script src="~/Content/assets/js/jquery-additional-methods.min.js"></script>
+<script src="~/Content/assets/js/bootbox.js"></script>
+<script src="~/Content/assets/js/jquery.maskedinput.min.js"></script>
+<script src="~/Content/assets/js/select2.min.js"></script>
+
+<!-- ace scripts -->
+<script src="~/Content/assets/js/ace-elements.min.js"></script>
+<script src="~/Content/assets/js/ace.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $('#modal-wizard-container').ace_wizard();
+        $('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
+
+
+
         Profile.HideAll();
         $("#contentGrid").toggle();
         hris.general.bindDropDown("Organization", null);
@@ -38,6 +55,118 @@
                 console.log(Profile.Job.ID, Profile.DB.selectedRow.IDV);
                 if (Profile.Job.ID != Profile.DB.selectedRow.IDV) {
                     Profile.Job.Load();
+                }
+            }
+        });
+
+        $("#profileBank").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentBank").toggle();
+                console.log(Profile.Bank.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Bank.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Bank.Load();
+                }
+            }
+        });
+
+        $("#profileIdentity").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentIdentity").toggle();
+                console.log(Profile.Identity.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Identity.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Identity.Load();
+                }
+            }
+        });
+
+        $("#profileDependant").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentDependant").toggle();
+                console.log(Profile.Dependant.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Dependant.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Dependant.Load();
+                }
+            }
+        });
+
+        $("#profileEducation").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentEducation").toggle();
+                console.log(Profile.Education.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Education.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Education.Load();
+                }
+            }
+        });
+
+        $("#profileTraining").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentTraining").toggle();
+                console.log(Profile.Training.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Training.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Training.Load();
+                }
+            }
+        });
+
+        $("#profileLanguage").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentLanguage").toggle();
+                console.log(Profile.Language.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Language.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Language.Load();
+                }
+            }
+        });
+
+        $("#profileSKill").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentSkill").toggle();
+                console.log(Profile.Skill.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Skill.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Skill.Load();
+                }
+            }
+        });
+
+        $("#profileCertification").on("click", function () {
+            Profile.HideAll();
+            if (Profile.DB.selectedRow.IDV == undefined) {
+                $("#myErrorModal").modal("show", true);
+                $("#profilegrid").click();
+            } else {
+                $("#contentCertification").toggle();
+                console.log(Profile.Certification.ID, Profile.DB.selectedRow.IDV);
+                if (Profile.Certification.ID != Profile.DB.selectedRow.IDV) {
+                    Profile.Certification.Load();
                 }
             }
         });
@@ -192,8 +321,6 @@
                     .append($("<label>").attr("for", "Status" + data.ID).text("Status"))
                     .append($("<div>").addClass("form-control").attr('id', 'Status' + data.ID)))))
                     );
-
-                
                 Profile.Job.BindForm(data);
             },
             BindForm: function (data) {
@@ -206,13 +333,520 @@
             }
         },
         Bank: {},
-        Identity: {},
-        Dependant: {},
-        Education: {},
-        Training: {},
-        Language: {},
-        Skill: {},
-        Certification: {},
+        Identity: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Identity.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileIdentity/' + Profile.Identity.ID,
+                    success: function (data) {
+                        console.log("Identity",data);
+                        Profile.Identity.Data = data;
+                        Profile.Identity.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-identity").empty();
+                $("#task-tab-identity").empty();
+                $.each(Profile.Identity.Data, function (i, v) {
+                    $('#recent-tab-identity').append('<li><a data-toggle="tab" href="#task-tab-identity' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Identity.CreateForm(v);
+                });
+                $('#recent-tab-identity li:first').addClass("active");
+                $("#task-tab-identity div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-identity")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-identity' + data.ID));
+                $("#task-tab-identity" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "expiredDate" + data.ID).text("Expired Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'expiredDate' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "idType" + data.ID).text("Type"))
+                    .append($("<div>").addClass("form-control").attr('id', 'idType' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "idNumber" + data.ID).text("Number"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'idNumber' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "issuedCountry" + data.ID).text("Country"))
+                    .append($("<div>").addClass("form-control").attr('id', 'issuedCountry' + data.ID)))))
+                    );
+                Profile.Identity.BindForm(data);
+            },
+            BindForm: function (data) {
+                Profile.Bind.Date("expiredDate" + data.ID, data.expiredDate);
+                Profile.Bind.Input("idNumber" + data.ID, data.idNumber);
+                Profile.Bind.DropDown("issuedCountry" + data.ID, "Country", data.issuedCountry);
+                Profile.Bind.DropDown("idType" + data.ID, "ID", data.idType);
+            }
+        },
+        Dependant: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Dependant.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileDependent/' + Profile.Dependant.ID,
+                    success: function (data) {
+                        console.log("Dependant", data);
+                        Profile.Dependant.Data = data;
+                        Profile.Dependant.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-dependant").empty();
+                $("#task-tab-dependant").empty();
+                $.each(Profile.Dependant.Data, function (i, v) {
+                    $('#recent-tab-dependant').append('<li><a data-toggle="tab" href="#task-tab-dependant' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Dependant.CreateForm(v);
+                });
+                $('#recent-tab-dependant li:first').addClass("active");
+                $("#task-tab-dependant div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-dependant")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-dependant' + data.ID));
+                $("#task-tab-dependant" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "relationType" + data.ID).text("Relation"))
+                    .append($("<div>").addClass("form-control").attr('id', 'relationType' + data.ID))))
+                    )
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "insuranceCovered" + data.ID).text("Insurance Covered"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'insuranceCovered' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "taxDependent" + data.ID).text("Tax Dependant"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'taxDependent' + data.ID))))
+                    ));
+                Profile.Dependant.BindForm(data);
+            },
+            BindForm: function (data) {
+
+                Profile.Bind.Input("insuranceCovered" + data.ID, data.insuranceCovered);
+                Profile.Bind.Input("taxDependent" + data.ID, data.taxDependent);
+                //Profile.Bind.DropDown("relationType" + data.ID, "SkillLevel", data.relationType);
+            },
+            Custom: {
+
+            },
+        },
+        Education: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Education.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileEdu/' + Profile.Education.ID,
+                    success: function (data) {
+                        console.log("Education", data);
+                        Profile.Education.Data = data;
+                        Profile.Education.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-education").empty();
+                $("#task-tab-education").empty();
+                $.each(Profile.Education.Data, function (i, v) {
+                    $('#recent-tab-education').append('<li><a data-toggle="tab" href="#task-tab-education' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Education.CreateForm(v);
+                });
+                $('#recent-tab-education li:first').addClass("active");
+                $("#task-tab-education div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-education")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-education' + data.ID));
+                $("#task-tab-education" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "eduLevel" + data.ID).text("Level"))
+                    .append($("<div>").addClass("form-control").attr('id', 'eduLevel' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "eduCountry" + data.ID).text("Country"))
+                    .append($("<div>").addClass("form-control").attr('id', 'eduCountry' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "eduMajor" + data.ID).text("Major"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'eduMajor' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "eduValue" + data.ID).text("Value"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'eduValue' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "eduGraduate" + data.ID).text("Graduate Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'eduGraduate' + data.ID))))
+                    )
+                    );
+                Profile.Education.BindForm(data);
+            },
+            BindForm: function (data) {
+                Profile.Bind.Date("eduGraduate" + data.ID, data.eduGraduate);
+                Profile.Bind.Input("eduMajor" + data.ID, data.eduMajor);
+                Profile.Bind.Input("eduValue" + data.ID, data.eduValue);
+                Profile.Bind.DropDown("eduCountry" + data.ID, "Country", data.eduCountry);
+                Profile.Bind.DropDown("eduLevel" + data.ID, "Edu", data.eduLevel);
+            }
+        },
+        Training: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Training.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileTraining/' + Profile.Training.ID,
+                    success: function (data) {
+                        console.log("Training", data);
+                        Profile.Training.Data = data;
+                        Profile.Training.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-training").empty();
+                $("#task-tab-training").empty();
+                $.each(Profile.Training.Data, function (i, v) {
+                    $('#recent-tab-training').append('<li><a data-toggle="tab" href="#task-tab-training' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Training.CreateForm(v);
+                });
+                $('#recent-tab-training li:first').addClass("active");
+                $("#task-tab-training div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-training")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-training' + data.ID));
+                $("#task-tab-training" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "TrainingName" + data.ID).text("Training Name"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'TrainingName' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "TrainingSponsor" + data.ID).text("Training Sponsor"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'TrainingSponsor' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "startDate" + data.ID).text("Start Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'startDate' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "endDate" + data.ID).text("End Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'endDate' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "Certificate" + data.ID).text("Certificate"))
+                    .append($("<div>").addClass("form-control").attr('id', 'Certificate' + data.ID)))))
+                    );
+                Profile.Training.BindForm(data);
+            },
+            BindForm: function (data) {
+                Profile.Bind.Date("startDate" + data.ID, data.startDate);
+                Profile.Bind.Date("endDate" + data.ID, data.endDate);
+                Profile.Bind.Input("TrainingName" + data.ID, data.TrainingName);
+                Profile.Bind.Input("TrainingSponsor" + data.ID, data.TrainingSponsor);
+                
+                Profile.Training.Custom.bindDropDown("Certificate" + data.ID, data.Certificate);
+            },
+            Custom: {
+                bindDropDown: function (div, value) {
+                    var list = this.list();
+                    var i = $("#" + div);
+                    i.jqxDropDownList({ source: list, disabled: false, height: '25px', displayMember: "certificationName", valueMember: "ID", width: '96%' });
+                    if (value !== null) { i.jqxDropDownList('val', value); }
+                },
+                list: function () {
+                    var source = {
+                        datatype: "json",
+                        dataFields: [
+                        { name: 'ID', type: 'number' },
+                        { name: 'certificationName', type: 'string' }
+                        ],
+                        url: baseURL + 'api/profileCertification/' + cIDV,
+                        async: false
+                    };
+
+
+                    return jsList = new $.jqx.dataAdapter(source, {
+                        autoBind: true,
+                        contentType: 'application/json; charset=utf-8'
+                    });
+                }
+            },
+        },
+        Language: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Language.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileLanguage/' + Profile.Language.ID,
+                    success: function (data) {
+                        console.log("Language", data);
+                        Profile.Language.Data = data;
+                        Profile.Language.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-language").empty();
+                $("#task-tab-language").empty();
+                $.each(Profile.Language.Data, function (i, v) {
+                    $('#recent-tab-language').append('<li><a data-toggle="tab" href="#task-tab-language' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Language.CreateForm(v);
+                });
+                $('#recent-tab-language li:first').addClass("active");
+                $("#task-tab-language div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-language")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-language' + data.ID));
+                $("#task-tab-language" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "languageName" + data.ID).text("Name"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'languageName' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "spoken" + data.ID).text("Spoken"))
+                    .append($("<div>").addClass("form-control").attr('id', 'spoken' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "written" + data.ID).text("Written"))
+                    .append($("<div>").addClass("form-control").attr('id', 'written' + data.ID))))));
+                Profile.Language.BindForm(data);
+            },
+            BindForm: function (data) {
+                
+                Profile.Bind.Input("languageName" + data.ID, data.languageName);
+                Profile.Bind.DropDown("spoken" + data.ID, "SkillLevel", data.spoken);
+                Profile.Bind.DropDown("written" + data.ID, "SkillLevel", data.written);
+            },
+            Custom: {
+                
+            },
+        },
+        Skill: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Skill.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileSkill/' + Profile.Skill.ID,
+                    success: function (data) {
+                        console.log("Skill", data);
+                        Profile.Skill.Data = data;
+                        Profile.Skill.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-skill").empty();
+                $("#task-tab-skill").empty();
+                $.each(Profile.Skill.Data, function (i, v) {
+                    $('#recent-tab-skill').append('<li><a data-toggle="tab" href="#task-tab-skill' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Skill.CreateForm(v);
+                });
+                $('#recent-tab-skill li:first').addClass("active");
+                $("#task-tab-skill div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-skill")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-skill' + data.ID));
+                $("#task-tab-skill" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "skillName" + data.ID).text("Name"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'skillName' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "skillLevel" + data.ID).text("Level"))
+                    .append($("<div>").addClass("form-control").attr('id', 'skillLevel' + data.ID))))));
+                Profile.Skill.BindForm(data);
+            },
+            BindForm: function (data) {
+
+                Profile.Bind.Input("skillName" + data.ID, data.skillName);
+                Profile.Bind.DropDown("skillLevel" + data.ID, "SkillLevel", data.skillLevel);
+            },
+            Custom: {
+
+            },
+        },
+        Certification: {
+            ID: 0,
+            Data: [],
+            Load: function () {
+                Profile.Certification.ID = Profile.DB.selectedRow.IDV;
+                $.ajax({
+                    url: baseURL + 'api/profileCertification/' + Profile.Certification.ID,
+                    success: function (data) {
+                        console.log("Certification", data);
+                        Profile.Certification.Data = data;
+                        Profile.Certification.CreateTab();
+                    },
+                    error: function (e) { }
+                });
+            },
+            CreateTab: function () {
+                console.log("CreateTab");
+                $("#recent-tab-certification").empty();
+                $("#task-tab-certification").empty();
+                $.each(Profile.Certification.Data, function (i, v) {
+                    $('#recent-tab-certification').append('<li><a data-toggle="tab" href="#task-tab-certification' + v.ID + '">ID ' + v.ID + '</a></li>');
+                    Profile.Certification.CreateForm(v);
+                });
+                $('#recent-tab-certification li:first').addClass("active");
+                $("#task-tab-certification div:first").addClass("active");
+            },
+            CreateForm: function (data) {
+                var xs6 = "col-xs-6";
+                console.log("createForm", data);
+                $("#task-tab-certification")
+                    .append($('<div>')
+                    .attr('class', 'tab-pane')
+                    .attr('id', 'task-tab-certification' + data.ID));
+                $("#task-tab-certification" + data.ID)
+                    .html(
+                    $("<div>").addClass("panel-body")
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "certificationName" + data.ID).text("Name"))
+                    .append($("<input>").addClass("form-control")
+                    .attr("type", "text").attr('id', 'certificationName' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "issuedCountry" + data.ID).text("Country"))
+                    .append($("<div>").addClass("form-control").attr('id', 'issuedCountry' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "issuedCity" + data.ID).text("City"))
+                    .append($("<div>").addClass("form-control").attr('id', 'issuedCity' + data.ID)))))
+                    .append(
+                    $("<div>").addClass("row")
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "issuedDate" + data.ID).text("Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'issuedDate' + data.ID))))
+                    .append($("<div>").addClass(xs6)
+                    .html($("<div>").addClass("form-group")
+                    .append($("<label>").attr("for", "issuedExpiredDate" + data.ID).text("Expired Date"))
+                    .append($("<div>").addClass("form-control").attr('id', 'issuedExpiredDate' + data.ID))))));
+                Profile.Certification.BindForm(data);
+            },
+            BindForm: function (data) {
+
+                Profile.Bind.Input("certificationName" + data.ID, data.certificationName);
+                Profile.Bind.DropDown("issuedCountry" + data.ID, "Country", data.issuedCountry);
+                Profile.Bind.DropDown("issuedCity" + data.ID, "Kabupaten", data.issuedCity);
+                Profile.Bind.Date("issuedDate" + data.ID, data.issuedDate);
+                Profile.Bind.Date("issuedExpiredDate" + data.ID, data.issuedExpiredDate);
+            },
+            Custom: {
+
+            },
+        },
         Matrix: {},
         Bind: {
             DropDown: function (div, list, value) {
@@ -225,12 +859,217 @@
                 i.jqxInput({ width: "99%", height: '35px' });
                 value = $.trim(value);
                 if (value !== null) { i.jqxInput('val', value); }
+            },
+            Date: function (div, value) {
+                var i = $("#" + div);
+                value = $.trim(value);
+                i.jqxDateTimeInput({ width: '75%', height: '35px' });
+                if (value !== null) { i.jqxDateTimeInput({ value: new Date(value) }); }
             }
         },
         HideAll: function () {
-            $("#contentGrid,#contentDetail,#contentAddress,#contentJob,#contentBank,#contentIdentity,#contentDependant,#contentEdu,#contentTraining,#contentLanguage,#contentSkill,#contentCertification,#contentMatrix").hide();
+            $("#contentGrid,#contentDetail,#contentAddress,#contentJob,#contentBank,#contentIdentity,#contentDependant,#contentEducation,#contentTraining,#contentLanguage,#contentSkill,#contentCertification,#contentMatrix").hide();
         }
     }
+</script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+			jQuery(function($) {
+
+				$('[data-rel=tooltip]').tooltip();
+
+				$('.select2').css('width','200px').select2({allowClear:true})
+				.on('change', function(){
+					$(this).closest('form').validate().element($(this));
+				});
+
+
+				var $validation = false;
+				$('#fuelux-wizard-container')
+				.ace_wizard({
+					//step: 2 //optional argument. wizard will jump to step "2" at first
+					//buttons: '.wizard-actions:eq(0)'
+				})
+				.on('actionclicked.fu.wizard' , function(e, info){
+					if(info.step == 1 && $validation) {
+						if(!$('#validation-form').valid()) e.preventDefault();
+					}
+				})
+				//.on('changed.fu.wizard', function() {
+				//})
+				.on('finished.fu.wizard', function(e) {
+					bootbox.dialog({
+						message: "Thank you! Your information was successfully saved!",
+						buttons: {
+							"success" : {
+								"label" : "OK",
+								"className" : "btn-sm btn-primary"
+							}
+						}
+					});
+				}).on('stepclick.fu.wizard', function(e){
+					//e.preventDefault();//this will prevent clicking and selecting steps
+				});
+
+
+				//jump to a step
+				/**
+				var wizard = $('#fuelux-wizard-container').data('fu.wizard')
+				wizard.currentStep = 3;
+				wizard.setState();
+				*/
+
+				//determine selected step
+				//wizard.selectedItem().step
+
+
+
+				//hide or show the other form which requires validation
+				//this is for demo only, you usullay want just one form in your application
+				$('#skip-validation').removeAttr('checked').on('click', function(){
+					$validation = this.checked;
+					if(this.checked) {
+						$('#sample-form').hide();
+						$('#validation-form').removeClass('hide');
+					}
+					else {
+						$('#validation-form').addClass('hide');
+						$('#sample-form').show();
+					}
+				})
+
+
+
+				//documentation : http://docs.jquery.com/Plugins/Validation/validate
+
+
+				$.mask.definitions['~']='[+-]';
+				$('#phone').mask('(999) 999-9999');
+
+				jQuery.validator.addMethod("phone", function (value, element) {
+					return this.optional(element) || /^\(\d{3}\) \d{3}\-\d{4}( x\d{1,6})?$/.test(value);
+				}, "Enter a valid phone number.");
+
+				$('#validation-form').validate({
+					errorElement: 'div',
+					errorClass: 'help-block',
+					focusInvalid: false,
+					ignore: "",
+					rules: {
+						email: {
+							required: true,
+							email:true
+						},
+						password: {
+							required: true,
+							minlength: 5
+						},
+						password2: {
+							required: true,
+							minlength: 5,
+							equalTo: "#password"
+						},
+						name: {
+							required: true
+						},
+						phone: {
+							required: true,
+							phone: 'required'
+						},
+						url: {
+							required: true,
+							url: true
+						},
+						comment: {
+							required: true
+						},
+						state: {
+							required: true
+						},
+						platform: {
+							required: true
+						},
+						subscription: {
+							required: true
+						},
+						gender: {
+							required: true,
+						},
+						agree: {
+							required: true,
+						}
+					},
+
+					messages: {
+						email: {
+							required: "Please provide a valid email.",
+							email: "Please provide a valid email."
+						},
+						password: {
+							required: "Please specify a password.",
+							minlength: "Please specify a secure password."
+						},
+						state: "Please choose state",
+						subscription: "Please choose at least one option",
+						gender: "Please choose gender",
+						agree: "Please accept our policy"
+					},
+
+
+					highlight: function (e) {
+						$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+					},
+
+					success: function (e) {
+						$(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+						$(e).remove();
+					},
+
+					errorPlacement: function (error, element) {
+						if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+							var controls = element.closest('div[class*="col-"]');
+							if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+							else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+						}
+						else if(element.is('.select2')) {
+							error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+						}
+						else if(element.is('.chosen-select')) {
+							error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+						}
+						else error.insertAfter(element.parent());
+					},
+
+					submitHandler: function (form) {
+					},
+					invalidHandler: function (form) {
+					}
+				});
+
+
+
+
+				$('#modal-wizard-container').ace_wizard();
+				$('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
+
+
+				/**
+				$('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
+					$(this).closest('form').validate().element($(this));
+				});
+
+				$('#mychosen').chosen().on('change', function(ev) {
+					$(this).closest('form').validate().element($(this));
+				});
+				*/
+
+
+				$(document).one('ajaxloadstart.page', function(e) {
+					//in ajax mode, remove remaining elements before leaving page
+					$('[class*=select2]').remove();
+				});
+			})
 </script>
 <div class="main-content-inner">
     <div id="sidebar2" class="sidebar h-sidebar navbar-collapse collapse ace-save-state" data-sidebar="true" data-sidebar-scroll="true" data-sidebar-hover="true">
@@ -242,7 +1081,7 @@
             <li class="hover"><a href="#" id="profileBank"><i class="menu-icon fa fa-dollar"></i><span class="menu-text">Bank</span></a><b class="arrow"></b></li>
             <li class="hover"><a href="#" id="profileIdentity"><i class="menu-icon fa fa-qrcode"></i><span class="menu-text">Identity</span></a><b class="arrow"></b></li>
             <li class="hover"><a href="#" id="profileDependant"><i class="menu-icon fa fa-sitemap"></i><span class="menu-text">Dependant</span></a><b class="arrow"></b></li>
-            <li class="hover"><a href="#" id="profileEdu"><i class="menu-icon fa fa-bank"></i><span class="menu-text">Education</span></a><b class="arrow"></b></li>
+            <li class="hover"><a href="#" id="profileEducation"><i class="menu-icon fa fa-bank"></i><span class="menu-text">Education</span></a><b class="arrow"></b></li>
             <li class="hover"><a href="#" id="profileTraining"><i class="menu-icon fa fa-book"></i><span class="menu-text">Training</span></a><b class="arrow"></b></li>
             <li class="hover"><a href="#" id="profileLanguage"><i class="menu-icon fa fa-language"></i><span class="menu-text">Language</span></a><b class="arrow"></b></li>
             <li class="hover"><a href="#" id="profileSKill"><i class="menu-icon fa fa-star"></i><span class="menu-text">Skill</span></a><b class="arrow"></b></li>
@@ -254,7 +1093,14 @@
     <div class="page-content">
         
         <div class="page-header">
-            <h1>Employee Management <div id="Organization"></div></h1>
+            <h1>
+                Employee Management
+                <h4 class="lighter">
+                <i class="ace-icon fa fa-plus-circle icon-animated-hand-pointer blue"></i>
+                <a href="#modal-wizard" data-toggle="modal" class="pink"> NEW EMPLOYEE </a>
+            </h4>
+                <div id="Organization"></div>
+            </h1>
             
         </div><!-- /.page-header -->
 
@@ -264,8 +1110,12 @@
                 <div id="contentGrid">
                     <div id="employeeDB"></div>
                 </div>
-                <div id="contentDetail">1</div>
-                <div id="contentAddress">1</div>
+                <div id="contentDetail">
+                    Content for Detail, There is no API yet!
+                </div>
+                <div id="contentAddress">
+                    Content for Address, There is no API yet!
+                </div>
                 <div id="contentJob">
                     <div class="page-content">
                         <div class="row">
@@ -298,14 +1148,233 @@
                         </div>
                     </div>
                 </div>
-                <div id="contentBank">1</div>
-                <div id="contentIdentity">1</div>
-                <div id="contentDependant">1</div>
-                <div id="contentEdu">1</div>
-                <div id="contentTraining">1</div>
-                <div id="contentLanguage">1</div>
-                <div id="contentSkill">1</div>
-                <div id="contentCertification">1</div>
+                <div id="contentBank">
+                    Content for Bank, There is no API yet!
+                </div>
+                <div id="contentIdentity">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-identity">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>IDENTITY
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-identity">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-identity" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
+                <div id="contentDependant">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-dependant">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>DEPENDANT
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-dependant">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-dependant" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
+                <div id="contentEducation">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-education">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>EDUCATION
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-education">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-education" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
+                <div id="contentTraining">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-training">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>TRAINING
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-training">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-training" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
+                <div id="contentLanguage">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-language">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>LANGUAGE
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-language">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-language" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
+                <div id="contentSkill">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-skill">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>SKILL
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-skill">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-skill" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
+                <div id="contentCertification">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent" id="recent-box-certification">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title lighter smaller">
+                                            <i class="ace-icon fa fa-rss orange"></i>CERTIFICATION
+                                        </h4>
+
+                                        <div class="widget-toolbar no-border">
+                                            <ul class="nav nav-tabs" id="recent-tab-certification">
+                                                <!--// Dinamic Tab-->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-4">
+                                            <div id="task-tab-certification" class="tab-content padding-8">
+                                                <!--// Dinamic Div-->
+
+                                            </div>
+                                        </div><!-- /.widget-main -->
+                                    </div><!-- /.widget-body -->
+                                </div><!-- /.widget-box -->
+                            </div><!-- /.col -->
+
+
+                        </div>
+                    </div>
+                </div>
                 <div id="contentMatrix">1</div>
 
             </div><!-- /.col -->
@@ -330,3 +1399,4 @@
 
     </div>
 </div>
+

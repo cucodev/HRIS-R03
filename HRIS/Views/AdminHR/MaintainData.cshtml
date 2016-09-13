@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "MaintainData";
     Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
+    string contentType;
 }
 
 @section scripts
@@ -28,12 +29,14 @@
             },
             Matrix: function () {
                 $("#ContentHeader").html("HRD Matrix");
+                @{ contentType = "matrix"; }
                 //$('#ContentFrame').prop('src', "");
-                $("#Content").html("@{ Html.RenderPartial("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml"); }")
+               
             },
             Leave: function () {
                 $("#ContentHeader").html("Leave Setting");
-                $("#Content").load("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml")
+                @{ contentType = "leave"; }
+               // $("#Content").load("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml")
             }
         },
         Click: function (tabID) {
@@ -75,8 +78,22 @@
         <div class="row">
             <div class="col-xs-12">
                 <!-- PAGE CONTENT BEGINS -->
-                <iframe id="ContentFrame"></iframe>
-                <div id="Content"></div>
+                @{
+                    switch (contentType)
+                    {
+                        case "leave":
+                            //Html.RenderPartial("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml");
+                            break;  // Always break each case
+                        case "matrix":
+                            <text><h1>No Render</h1> </text>
+                            Html.RenderPartial("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml");
+                            break;
+                        default:
+                            <text><h1>Default Site</h1></text>
+                            Html.RenderPartial("~/Views/SharedMaintainData/_roleBasedMatrix.cshtml");
+                            break;
+                    }
+                }
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.page-content -->

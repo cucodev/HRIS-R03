@@ -268,55 +268,6 @@
             }
         }
 
-        /* DYNAMIC COLUMN
-        var colSource =
-                {
-                    datatype: 'json',
-                    url: baseURL + 'api/list/getColumnJobLevel'
-                };
-
-
-        var dataAdapter = new $.jqx.dataAdapter(colSource, {
-            autoBind: true,
-            downloadComplete: function (data) {
-
-                //Assign Dynamic Column
-                var columns = data;
-
-
-                var datafieldSource =
-                               {
-                                   datatype: 'json',
-                                   url: baseURL + 'api/list/getDatafieldJobLevel'
-                               };
-                var rows = {};
-                var datafieldAdapter = new $.jqx.dataAdapter(datafieldSource, {
-                    autoBind: true,
-                    downloadComplete: function (data) {
-                        console.log('datafields: ', data);
-                        var gridAdapter = new $.jqx.dataAdapter({
-                            datafields:
-                                data,
-                                id: 'ID',
-                                localdata: rows
-                        });
-                        $("#jqxgrid").jqxGrid('hideloadelement');
-                        $("#jqxgrid").jqxGrid('beginupdate', true);
-                        $("#jqxgrid").jqxGrid(
-                          {
-                              source: gridAdapter,
-                              width: '100%',
-                              columns: columns
-                          });
-                        $("#jqxgrid").jqxGrid('endupdate');
-                    }
-                });
-
-
-
-
-            }
-        }); */
     })
 </script>
 
