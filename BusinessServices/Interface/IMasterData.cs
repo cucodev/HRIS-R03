@@ -14,6 +14,15 @@ namespace BusinessServices.Interface
        
     }
 
+    public interface IHoliday
+    {
+        IEnumerable<holidayEntities> getAll();
+        holidayEntities get(int ID);
+        int post(holidayEntities holiday);
+        bool put(int ID, holidayEntities holiday);
+        bool delete(int ID);
+    }
+
     //Maintain RoleBased Data, tree type, unused
     public interface IRoleBased
     {

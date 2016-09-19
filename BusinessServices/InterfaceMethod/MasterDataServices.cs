@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessEntities;
 using BusinessEntities.CrudEntities;
 using BusinessServices.Interface;
 using DataModel;
@@ -14,6 +15,64 @@ namespace BusinessServices.InterfaceMethod
     public class LevelServices : IcategoryLevel
     {
 
+    }
+
+    public class HolidayServices : IHoliday
+    {
+        public new UserCredModel User;
+        private readonly UnitOfWork _u;
+
+        public HolidayServices()
+        {
+            User = UserVariable.User;
+            _u = new UnitOfWork();
+        }
+
+        public bool delete(int ID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public holidayEntities get(int ID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<holidayEntities> getAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int post(holidayEntities p)
+        {
+            using (var scope = new TransactionScope())
+            {
+                if (p != null)
+                {
+                    holiday px = new holiday();
+                    px.Name = p.Name;
+                    px.Description = p.Description;
+                    px.dateBegin = p.dateBegin;
+                    px.dateEnd = p.dateEnd;
+                    px.duration = (int)((p.dateEnd - p.dateBegin).TotalDays);
+                    px.createTime = DateTime.Now;
+                    px.vCreatedBy = User.IDV;
+                    px.vUpdatedBy = 0;
+                    px.updateTime = DateTime.Now;
+
+                    _u.holidayRepository.Insert(px);
+                    _u.Save();
+                    scope.Complete();
+                    return px.ID;
+                }
+            }
+            return 0;
+        }
+
+        public bool put(int ID, holidayEntities holiday)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     //Manage RoleBasedMatrix, Data and Category Implementation

@@ -130,8 +130,10 @@
 
     $(document).ready(function () {
         
+            hris.menu.roots("MenuForm");
+            hris.menu.sub("subMenuFormLeave");
 
-
+        
         //API
         var MasterSource = hris.source._employeeLeaveRoleBased(cIDV);
         var MasterDataAdapter = hris.data._dataAdapter(MasterSource);

@@ -2,6 +2,7 @@
 using BusinessEntities.CrudEntities;
 using BusinessServices.Interface;
 using BusinessServices.InterfaceMethod;
+using HRIS.Controllers;
 using HRIS_R03.Controllers.shared;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,12 @@ namespace HRIS_R03.Controllers
         {
             User = UserVariable.User;
         }
-        
-        // GET: Content
+
+        public ActionResult Holiday()
+        {
+            return View(User);
+        }
+
         public ActionResult Index()
         {
             return View();

@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Holiday";
+    Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
+}
+<link rel="stylesheet" href=@Url.Content("~/Content/assets/css/bootstrap-datepicker3.min.css") />
+<link rel="stylesheet" href=@Url.Content("~/Content/assets/css/daterangepicker.min.css") />
+<!--<link rel="stylesheet" href=@Url.Content("~/Content/assets/css/jquery-ui.min.css") />-->
+<link rel="stylesheet" href=@Url.Content("~/Content/assets/css/bootstrap-datepicker3.min.css") />
+<!--<link rel="stylesheet" href=@Url.Content("~/Content/assets/css/ui.jqgrid.min.css") />-->
+
+<link rel="stylesheet" href=@Url.Content("~/Content/assets/css/ace-skins.min.css") />
+<link rel="stylesheet" href=@Url.Content("~/Content/assets/css/ace-rtl.min.css") />
+
+<!--<link href=@Url.Content("~/Content/multidatepicker/mdp.css") rel="stylesheet" type="text/css">-->
+
+<script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
+<script src=@Url.Content("~/Scripts/jquery.ui.min.js")></script>
+<!--<script src=@Url.Content("~/Scripts/multidatepicker/jquery-ui.multidatespicker.js")></script>-->
+<script src=@Url.Content("~/Content/assets/js/bootstrap.min.js")></script>
+<script src=@Url.Content("~/Content/assets/js/bootstrap-datepicker.min.js")></script>
+<script src=@Url.Content("~/Content/assets/js/jquery.jqGrid.min.js")></script>
+<script src=@Url.Content("~/Content/assets/js/grid.locale-en.js")></script>
+
+<script src=@Url.Content("~/Content/assets/js/ace-elements.min.js")></script>
+<script src=@Url.Content("~/Content/assets/js/ace.min.js")></script>
+
+<style>
+    .ui-widget-content {
+        background-image: none;
+        background: none;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        hris.menu.sub("MenuHoliday");
+    });
+</script>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">Home</a>
+        </li>
+        <li class="">Holiday</li>
+        <li class="active">Grid</li>
+    </ul><!-- /.breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="ace-icon fa fa-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- /.nav-search -->
+</div>
+
+
+@{ Html.RenderPartial("~/Views/SharedForm/_Holiday.cshtml"); }

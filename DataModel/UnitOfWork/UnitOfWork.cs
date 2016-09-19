@@ -57,6 +57,9 @@ namespace DataModel.UnitOfWork
         private GenericRepository<roleBased> _roleBasedRepository;
         private GenericRepository<roleBasedMatrix> _roleBasedMatrixRepository;
 
+        private GenericRepository<holiday> _holidayRepository;
+
+
         private GenericRepository<user> _userRepository;
         private GenericRepository<Token> _tokenRepository;
         #endregion
@@ -102,6 +105,17 @@ namespace DataModel.UnitOfWork
                 return _roleBasedRepository;
             }
         }
+
+        public GenericRepository<holiday> holidayRepository
+        {
+            get
+            {
+                if (this._holidayRepository == null)
+                    this._holidayRepository = new GenericRepository<holiday>(_context);
+                return _holidayRepository;
+            }
+        }
+
         public GenericRepository<roleBasedMatrix> roleBasedMatrixRepository
         {
             get

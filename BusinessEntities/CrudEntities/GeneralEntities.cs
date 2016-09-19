@@ -29,5 +29,18 @@ namespace BusinessEntities.CrudEntities
         public string catName { get; set; }
     }
 
+    public class holidayEntities
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public System.DateTime dateBegin { get; set; }
+        public System.DateTime dateEnd { get; set; }
+        public Nullable<int> duration { get; set; }
+        public int vCreatedBy { get; set; }
+        public int vUpdatedBy { get; set; }
+        public System.DateTime createTime { get; set; }
+        public System.DateTime updateTime { get; set; }
+    }
 
 }
