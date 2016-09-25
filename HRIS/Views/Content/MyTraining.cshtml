@@ -4,9 +4,10 @@
     Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
 }
 
-
+<script src=@Url.Content("~/Scripts/fullcalendar/moment.js")></script>
 <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
 <script src=@Url.Content("~/Scripts/jquery.ui.min.js")></script>
+
 
 <script type="text/javascript">
     function loadTraining(callback) {
@@ -135,8 +136,8 @@
                     TrainingName: hris.general.getData("TrainingName"),
                     TrainingSponsor: hris.general.getData("TrainingSponsor"),
                     Certificate: hris.general.getData("Certificate"),
-                    startDate: hris.general.getData("startDate"),
-                    endDate: hris.general.getData("endDate")
+                    startDate: hris.general.dateParse(hris.general.getData("startDate")),
+                    endDate: hris.general.dateParse(hris.general.getData("endDate"))
                 }
                 console.log("Modal Submit", data);
                 // Proses save

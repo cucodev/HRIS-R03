@@ -342,6 +342,10 @@
             i.jqxDateTimeInput({ width: '75%', height: '35px' });
             if (value !== null) { i.jqxDateTimeInput({ value: new Date(value) }); }
         },
+        dateParse: function(val){
+            var date = moment(val).format("DD-MM-YYYY");
+            return date;
+        },
         ajax: function (method, url, data, cb) {
             // Prototype for general AJAX
             //console.log("hris.ajax method", method);
