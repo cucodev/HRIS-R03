@@ -11,8 +11,8 @@
 
 <script type="text/javascript">
     function loadTraining(callback) {
-        var CertificateName = Training.Modal.custom.list();
-        console.log("ako", CertificateName);
+        var CertificateNameList = Training.Modal.custom.list();
+        console.log("ako", CertificateNameList);
         var url = "/api/profileTraining/" + cIDV;
         // prepare the data
         var source =
@@ -24,7 +24,7 @@
                 { name: 'TrainingName', type: 'string' },
                 { name: 'TrainingSponsor', type: 'string' },
                 { name: 'Certificate', type: 'int' },
-                { name: 'CertificateName', value: 'Certificate', values: { source: CertificateName.records, value: 'ID', name: 'certificationName' } },
+                { name: 'CertificateName', value: 'Certificate', values: { source: CertificateNameList.records, value: 'ID', name: 'certificationName' } },
                 { name: 'startDate', type: 'date' },
                 { name: 'endDate', type: 'date' }
             ],

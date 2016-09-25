@@ -339,11 +339,14 @@
         bindDateTime: function (div, value) {
             var i = $("#" + div);
             value = $.trim(value);
-            i.jqxDateTimeInput({ width: '75%', height: '35px' });
+            i.jqxDateTimeInput({ width: '75%', height: '35px', formatString: "dd MMM yyyy" });
             if (value !== null) { i.jqxDateTimeInput({ value: new Date(value) }); }
         },
-        dateParse: function(val){
-            var date = moment(val).format("DD-MM-YYYY");
+        dateParse: function (val) {
+            val = new Date(val);
+            console.log("Log",val);
+            var date = moment(val).format("YYYY MM DD");
+            console.log("Log Date", date);
             return date;
         },
         ajax: function (method, url, data, cb) {
