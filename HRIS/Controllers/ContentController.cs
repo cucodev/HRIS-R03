@@ -34,6 +34,8 @@ namespace HRIS_R03.Controllers
         public ActionResult Leave()
         {
             ViewBag.menuForm = "Active";
+
+
             return View(User);
         }
 

@@ -22,6 +22,7 @@ namespace BusinessServices.InterfaceMethod
         private readonly Mapping _map;
         private readonly FileDataServices _file;
         private readonly ListServices _list;
+        private readonly SettingServices _setting;
         private int isDelete = 0;
 
         public employeeServices()
@@ -30,6 +31,7 @@ namespace BusinessServices.InterfaceMethod
             _map = new Mapping();
             _file = new FileDataServices();
             _list = new ListServices();
+            _setting = new SettingServices();
         }
 
         public IEnumerable<employeeStructure> getStructure()
@@ -149,7 +151,7 @@ namespace BusinessServices.InterfaceMethod
 
             return ms.AsEnumerable();
         }
-
+        
         private List<int> filterPolicyID(string catCode)
         {
             List<int> inPolicyType = new List<int>();
@@ -163,7 +165,7 @@ namespace BusinessServices.InterfaceMethod
                     {
                         foreach (roleBasedMatrix cx in listRolePolicyID)
                         {
-                            System.Diagnostics.Debug.WriteLine("Data : " + cx.ID + ':' + px.catCode);
+                            //System.Diagnostics.Debug.WriteLine("Data : " + cx.ID + ':' + px.catCode);
                             inPolicyType.Add(cx.ID);
                         }
                     }
@@ -199,7 +201,9 @@ namespace BusinessServices.InterfaceMethod
             List<employeeRoleBasedEntities> ms = new List<employeeRoleBasedEntities>();
             var inPolicyType = new int[] { };
             inPolicyType = filterPolicyID(GlobalVariable.policyTypeAnnual).ToArray();
-            var emp = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == IDV && b.validDateStop >= DateTime.Now && inPolicyType.Contains(b.policyType));
+            var emp = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == IDV 
+                                                                && b.validDateStop >= DateTime.Now
+                                                                && inPolicyType.Contains(b.policyType));
             if (emp.Any())
             {
                 foreach (employeeRoleBased px in emp)
@@ -211,7 +215,62 @@ namespace BusinessServices.InterfaceMethod
             return ms.AsEnumerable();
         }
 
+        public Annual getAnnual(int IDV)
+        {
+            //Get Today
+            DateTime Today = DateTime.Now;
+            Int32 TodayYears = Today.Year;
+            Int32 TodayMonth = Today.Month;
+            Int32 TodayDay = Today.Day;
+            
+            //Get CarryOver Setting
+            SettingEntities carryOverSetting = new SettingEntities();
+            carryOverSetting = _setting.getValue(GlobalVariable.policyTypeAnnualCarry);
+            int carryOverYears = Convert.ToInt32(carryOverSetting.value);
+            System.Diagnostics.Debug.WriteLine("Carryover Years @ " + carryOverYears);
 
+            //Calculate CarryOver Datetime
+            List <DateTime> CarryDateTime = new List<DateTime>();
+            for (int i = carryOverYears; i >= 0; i--)
+            {
+                CarryDateTime.Add(DateTime.Now.AddYears(-i));
+                //tempCarry.AddYears();
+
+                System.Diagnostics.Debug.WriteLine(i.ToString(), ':', DateTime.Now.AddYears(-i));
+
+                //System.Diagnostics.Debug.WriteLine("CarryDateTime @ " + i + ':' + CarryDateTime[i]);
+            }
+            System.Diagnostics.Debug.WriteLine("Datetime: ", CarryDateTime);
+
+            Annual t = new Annual();
+            List<AnnualLeave> ms = new List<AnnualLeave>();
+            var inPolicyType = new int[] { };
+            inPolicyType = filterPolicyID(GlobalVariable.policyTypeAnnual).ToArray();
+            var emp = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == IDV
+                                                                && b.validDateStop >= DateTime.Now
+                                                                && inPolicyType.Contains(b.policyType));
+            if (emp.Any())
+            {
+                t.IDV = IDV;
+                foreach (employeeRoleBased px in emp)
+                {
+                    AnnualLeave dt = new AnnualLeave();
+                    dt.ID = px.ID;
+                    dt.policyType = px.policyType;
+                    dt.roleBasedValue = px.roleBasedValue;
+                    dt.balanceValue = px.balanceValue;
+                    dt.currentValue = px.currentValue;
+                    dt.validDateStart = px.validDateStart;
+                    dt.validDateStop = px.validDateStop;
+                    ms.Add(dt);
+                    //ms.Add(_map.EmployeeRoleBasedFromModel(px));
+                }
+                t.AnnualData = ms;
+            }
+            return t;
+        }
+
+        
         public IEnumerable<employeeRoleBasedEntities> GetRoleBased(int IDV)
         {
             List<employeeRoleBasedEntities> ms = new List<employeeRoleBasedEntities>();

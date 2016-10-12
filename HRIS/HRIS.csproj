@@ -1106,6 +1106,7 @@
     <Content Include="Scripts\jstorage.js" />
     <Content Include="Scripts\List\jsMasterList.js" />
     <Content Include="Scripts\List\jsVar.js" />
+    <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\multidatepicker\jquery-ui.multidatespicker.js" />
     <Content Include="Scripts\primitives\bporgeditor.latest.css" />

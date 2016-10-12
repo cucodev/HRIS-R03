@@ -12,17 +12,13 @@ namespace DataModel.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class holiday
+    public partial class setting
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public System.DateTime dateBegin { get; set; }
-        public System.DateTime dateEnd { get; set; }
-        public Nullable<int> duration { get; set; }
-        public int vCreatedBy { get; set; }
+        public int id { get; set; }
+        public string type { get; set; }
+        public string description { get; set; }
+        public string value { get; set; }
         public int vUpdatedBy { get; set; }
-        public System.DateTime createTime { get; set; }
         public System.DateTime updateTime { get; set; }
     }
 }

@@ -27,6 +27,8 @@ namespace DataModel.UnitOfWork
         private FileRepository<dataFile> _fileUploadRepository;
         //private FileRepository<fileUpload> _fileUpload;
 
+        //Setting
+        private GenericRepository<setting> _settingRepository;
 
         private GenericRepository<person> _personRepository;
         private GenericRepository<personAddress> _personAddressRepository;
@@ -71,6 +73,8 @@ namespace DataModel.UnitOfWork
         }
 
 
+       
+
         #region FileRepository Creation properties...
         public FileRepository<filePersonImage>  filePersonImageRepository
         {
@@ -81,6 +85,8 @@ namespace DataModel.UnitOfWork
                 return _filePersonImageRepository;
             }
         }
+
+
         public FileRepository<dataFile> fileUploadRepository
         {
             get
@@ -94,6 +100,15 @@ namespace DataModel.UnitOfWork
 
         #region Public Repository Creation properties...
 
+        public GenericRepository<setting> settingRepository
+        {
+            get
+            {
+                if (this._settingRepository == null)
+                    this._settingRepository = new GenericRepository<setting>(_context);
+                return _settingRepository; 
+            }
+        }
 
 
         public GenericRepository<roleBased> roleBasedRepository

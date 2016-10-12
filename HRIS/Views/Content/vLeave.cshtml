@@ -1,42 +1,731 @@
-﻿
+﻿@model BusinessEntities.CrudEntities.UserCredModel
 @{
-    ViewBag.Title = "vLeave";
+    ViewBag.Title = "Leave";
     Layout = "~/Views/Shared/_LayoutLeftNav.cshtml";
 }
+<script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
+<script src=@Url.Content("~/Scripts/jquery.ui.min.js")></script>
 
-@section scripts
-{
-    <script src=@Url.Content("~/Scripts/hrisframework/hris.js")></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            th = "ui-redmond";
-            //$('#dataForm').jqxTabs({ theme: th, width: '100%', height: 500 });
-        })
-    </script>
-}
-<h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">LEAVE FORM</h1>
-<h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Apply Leave and See Your Form Status</h2>
-<div class="container">
-    @{ Html.RenderPartial("~/Views/SharedMaintainData/_leaveForm.cshtml"); }
+
+<script src=@Url.Content("~/Scripts/multidatepicker/jquery-ui.multidatespicker.js")></script>
+
+<link rel="stylesheet" type="text/css" href=@Url.Content("~/Content/multidatepicker/mdp.css")>
+
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">Form</li>
+        <li class="active">Leave</li>
+    </ul><!-- /.breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="ace-icon fa fa-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- /.nav-search -->
 </div>
 
-<div class="container">
-    <div class="col-md-9" id="dataForm">
-        <ul>
-            <li style="margin-left:30px">Apply</li>
-            <li>Status</li>
-        </ul>
-        <div style="margin-right:20px;margin-top:20px; margin-left:30px">
-           
+<div class="page-content">
+    <div class="row">
+        <!--<h2 style="border-bottom: 1px solid #052135">Matrix - HRD</h2style="border-bottom:>-->
+        <h1 style="margin-bottom:0; margin-top:0; text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">LEAVE FORM</h1>
+        <h2 style="margin-bottom:15px; margin-top:0;   border-bottom: solid 1px #d7e9f3; padding-left:30px; font-size:14px; font-family:Calibri">Apply Leave and See Your Form Status</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-2">
+            <input type="button" value="COMMON" id='isAnnual' style="margin-left:0" />
         </div>
-        <div style="margin-right:20px;margin-top:20px; ">
-            @{ Html.RenderPartial("~/Views/SharedMaintainData/_leaveGrid.cshtml"); }
+
+        <div class="col-xs-7">
+            <div id="PolicyType"></div>
+        </div>
+        <div class="col-xs-3 pull-right">
+            <input type="button" value="APPLY" id='Apply' />
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-9">
-        
 
+    <div class="row">
+        <div class="col-xs-9">
+            <div id="full-year" style="padding-top: 10px;"></div>
+        </div>
+        <div class="col-xs-3">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="table" style="margin-top:15px"></div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="row" style="padding-top: 20px;">
+        <div class="col-xs-3">
+            <div class="form-group thumbnail text-center" style="background-color:#48c2fe">
+                <label for="totalAmount">Annual & Carry Over</label>
+                <p class="form-control-static" id="totalAnnualCarry"></p>
+                <p class="form-control-static" id="totalAnnualCurrent"></p>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="form-group thumbnail text-center" style="background-color:#ff974d">
+                <label for="totalAmount">Entitled</label>
+                <p class="form-control-static" id="totalEntitled"></p>
+                <p class="form-control-static"></p>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="form-group thumbnail text-center" style="background-color:#bce8f1">
+                <label for="totalAmount">Balance</label>
+                <div id="balanceProgress" "></div>
+                <p class="form-control-static" id="totalBalance"></p>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="form-group thumbnail text-center" style="background-color:#d8ff75">
+                <label for="totalAmount">Apply Now</label>
+                <p class="form-control-static" id="totalAmount">
+                    <div id="totalFullDays">Days</div>
+                </p>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+
+
+
+
+
+<script type="text/javascript">
+    //Use
+    var MasterSource = hris.source._employeeLeaveRoleBased(cIDV);
+    var MasterDataAdapter = hris.data._dataAdapter(MasterSource);
+    var AllSource = hris.source._employeeRoleBased(cIDV);
+    var MasterAllAdapter = hris.data._dataAdapter(AllSource);
+
+    console.log('Row: ',MasterDataAdapter);
+
+    $(document).ready(function () {
+
+        var ROW = MasterDataAdapter.records[1];
+        console.log('OnReady:', ROW);
+
+        hris.menu.roots("MenuForm");
+        hris.menu.sub("subMenuFormLeave");
+
+        page.Init();
+
+        table.Bind();
+        datepicker.Bind();
+
+        page.Event();
+    });
+
+
+
+    var Data = {
+        this: this,
+        Init: function() {
+            hris.source._employeeRoleBased(cIDV);
+        },
+        Func: {
+            Duration: {
+                Reset: function () { this.Selected.TotalDuration = 0; },
+                Calculate: function () {
+                    this.Func.Duration.Reset();
+                    for (i = 0; i < this.Process.length; i++) {
+                        b = this.Process[i].Duration;
+                        this.Selected.TotalDuration = this.Selected.TotalDuration + b;
+                    };
+                }
+            },
+            Selected: {
+                Reset: function () {
+                    this.Selected.TotalDuration = 0;
+                    this.Selected.Date = {};
+                    this.Selected.Type = [];
+                },
+                Update: function (label, id) {
+                    if (label) {
+                        this.Selected.Type[id].Duration = 0.5;
+                        this.Selected.Type[id].DurationLabel = true;
+                    } else {
+                        this.Selected.Type[id].Duration = 1;
+                        this.Selected.Type[id].DurationLabel = false;
+                    }
+                    return this.Process;
+                }
+            },
+            SelectedPolicyType: {
+                Get: function (vardata) {
+                    this.SelectedPolicyType.Row = vardata;
+                    this.SelectedPolicyType.Leave.Balance = vardata.balanceValue;
+                    this.SelectedPolicyType.Leave.Entitled = vardata.roleBasedValue;
+                    this.SelectedPolicyType.Leave.Remaining = vardata.remainingValue;
+                }
+            },
+            Adapter: function (source) {
+                dataAdapter = new $.jqx.dataAdapter(source, {
+                    autoBind: true,
+                    loadComplete: function () {
+                        //alert(dataAdapter.records[0]);
+
+                    },
+                    loadError: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            }
+        },
+        Selected: {
+            Type: [],
+            Date: {},
+            TotalDuration: 0
+        },
+        SelectedPolicyType: {
+            Row: [],
+            Leave: {
+                Balance: 0,
+                Remaining: 0,
+                Entitled: 0
+            },
+            Annual: {
+                Balance: 0,
+                Remaining: 0,
+                CarryOver: 0
+            }
+        },
+        Table: [],
+        SourceLeave: MasterDataAdapter,
+        SourceAll: MasterAllAdapter,
+    }
+
+    var datepicker= {
+        Bind: function () {
+            //console.log('Datepicker Init()');
+            noWeekEnd = $.datepicker.noWeekends;
+            $('#full-year').multiDatesPicker({
+                disabled: false,
+                beforeShowDay: $.datepicker.noWeekends,
+                numberOfMonths: [1, 3],
+                dateFormat: "mm/dd/yy",
+                onSelect: function (date, el) {
+
+                    Data.Func.Selected.Reset();
+
+                    Data.Selected.Date = date;
+
+
+
+                    //dateInArray.forEach(dateSelected);
+                    dateInArray = Leave.CalculateDate.addDate(date, dateInArray);
+                    dateInArray.forEach(Leave.CalculateDate.dateSelected);
+                    console.log('totalDays:', totalDays);
+                    if (Leave.Calculate.checkBalance(totalDays, Balance)) {
+                        // if (checkBalance(totalDays)) {
+                        try {
+                            Leave.Table.Source.localdata = data;
+                            Leave.Calculate.updateBalance(Balance, totalDays);
+                            //updateBalance(Balance, totalDays)
+                            $("#table").jqxGrid('updatebounddata');
+                        } catch (err) {
+                            console.log("Error : ", err.message);
+                        }
+                    } else {
+                        //document.getElementById('full-year').style.pointerEvents = 'none';
+                        $('#full-year').multiDatesPicker('removeDates', date);
+                        console.log("Maximum Days !! Balance: " + Balance);
+                    }
+                }
+            });
+            $('#full-year').multiDatesPicker('removeDates', new Date());
+            $('#full-year').multiDatesPicker('resetDates', 'disabled');
+            //$('#full-year').multiDatesPicker({ beforeShowDay: $.datepicker.noWeekends }); error behaviour when added
+        },
+        Destroy: function () { },
+        Disable: function () { },
+        Enable: function () { $('#full-year').multiDatesPicker({ disabled: false }); }
+    };
+
+    var table = {
+        Func: {
+
+        },
+        Column: [{ text: 'Index', dataField: 'ID', width: 10, hidden: true },
+                  { text: 'Date', dataField: 'Date', cellsformat: 'D', width: '65%', editable: false },
+                  { text: 'Half Days', dataField: 'DurationLabel', columntype: 'checkbox', width: '35%' }],
+        Source: {
+            localdata: Data.Table,
+            dataType: "array",
+            dataFields:
+            [
+                { name: 'ID', type: 'number' },
+                { name: 'Date', type: 'date' },
+                { name: 'Duration', type: 'int' },
+                { name: 'DurationLabel', type: 'bool' }
+            ],
+            updaterow: function (rowid, rowdata, commit) {
+
+                Data.Func.Duration.Calculate();
+                this.Source.localdata = Data.Func.Selected.Update(rowdata.DurationLabel, rowdata.ID);
+                commit(true);
+            }
+        },
+        SourceReturn: function () {
+            return this.Source;
+        },
+        dataAdapter: function () {
+            var s = this.Source;
+            //console.log("dataAdapter Source: ", s);
+            return new $.jqx.dataAdapter(s, { autoBind: true })
+        },
+        Bind: function () {
+            $("#table").jqxGrid({
+                width: '100%',
+                height: 200,
+                theme: 'metro',
+                editable: true,
+                source: this.dataAdapter(),
+                columns: this.Column
+            });
+        }
+    };
+
+
+    var page = {
+        Init: function () {
+            this.Component();
+            this.Event();
+        },
+        Component: function () {
+            $('#PolicyType').jqxDropDownList({ source: Data.SourceLeave, theme: 'fresh', disabled: false, height: '35px', displayMember: "policyTypeName", valueMember: "ID", width: '100%' });
+            $("#balanceProgress").jqxProgressBar({ animationDuration: 0, showText: false, template: "info", width: '100%', height: 25, value: Data.SourceAll, max: Data.SourceAll });
+            $('#isAnnual').jqxSwitchButton({ height: 35, width: '100%', checked: true, onLabel: 'ANNUAL', offLabel: 'COMMON', theme: 'orange' });
+            hris.general.bindButton('Apply');
+
+        },
+        func: {
+            clear: function() {
+                $('#full-year').multiDatesPicker('resetDates', 'picked');
+                $('#PolicyType').jqxDropDownList('clearSelection');
+                $("#table").jqxGrid('updatebounddata');
+                document.getElementById('full-year').style.pointerEvents = 'auto';
+            }
+        },
+        Event: function () {
+            $('.jqx-switchbutton').on('unchecked', function (event) {
+                $('#isAnnual').jqxSwitchButton({ offLabel: 'COMMON' });
+                $("#totalAnnualCarry").show();
+                $("#totalAnnualCurrent").show();
+                $("#totalAnnualCarryLabel").show();
+                $("#totalAnnualCurrentLabel").show();
+                $('#PolicyType').hide();
+                page.func.clear();
+            });
+
+            $('.jqx-switchbutton').on('checked', function (event) {
+                $('#isAnnual').jqxSwitchButton({ onLabel: 'ANNUAL' });
+                $('#PolicyType').show();
+                $('labelCommon').show();
+                page.func.clear();
+            });
+
+            $('#PolicyType').on('change', function (event) {
+
+
+
+
+                var i = $('#PolicyType');
+                var index = event.args.index;
+                var MasterData = MasterDataAdapter.records[index];
+                Data.Func.SelectedPolicyType.Get(Data.SourceLeave.records[index]);
+
+                console.log(Data.SelectedPolicyType);
+
+                //console.log(MasterData);
+                policyType = MasterData.policyType;
+
+                //Reset
+                td = 0;
+                totalDays = 0;
+                data = [];
+                dateInArray = [];
+                Leave.Table.Source.localdata = [];
+                $("#table").jqxGrid('updatebounddata');
+                datepicker.Bind();
+                //document.getElementById('full-year').style.pointerEvents = 'auto';
+
+
+                //Calculate
+                Balance = MasterData.balanceValue;
+                if (Balance == null) Balance = 0;
+                Entitled = MasterData.roleBasedValue;
+                i.jqxDropDownList({ selectedIndex: index });
+                Leave.Calculate.updateBalance(Balance, totalDays);
+            });
+
+            $('#Apply').on('click', function (event) {
+                console.log("Posted: ", data);
+                $.post(baseURL + 'api/employeeForm/postLeave/' + cIDV, { '': data })
+                    .done(function (data) {
+                        console.log("ajax, Data Posted: ", data);
+                        BootstrapDialog.show({
+                            message: 'Leave Has Been Submitted !!'
+                        });
+                        clear();
+                    });
+            });
+        }
+    }
+
+
+    //will be removed ..............................................................................
+    var Balance = 0;
+    var Entitled = 0;
+
+    var isHalf = false;
+    var dataTable = [];
+
+    var dateInArray = [];
+    var totalDays = 0;
+    //var data = new Array();
+
+    var data = [];
+    var row = {};
+
+    var subrow = {};
+    var durations = new Array();
+    var today = new Date();
+    var y = today.getFullYear();
+
+    var roleBasedValue = [];
+    var policyID = 0;
+    var policyType = 0;
+    var noWeekEnd = $.datepicker.noWeekends;
+
+    $(document).ready(function () {
+
+        var getLovType = hris.list._getLOV("PolicyType");
+
+        var renderText = function (text, value) {
+            if (value < 55) {
+                return "<span style='color: #333;'>" + text + " Days </span>";
+            }
+            return "<span style='color: #fff;'>" + text + " Days </span>";
+        }
+
+        var Leave = {
+            Init: function (MasterDataAdapter, Balance, data) {
+
+
+                Leave.Table.Source.localdata = data;
+                //Leave.DatePicker.Bind();
+                //Leave.Calculate.MaxDate(Balance);
+                //Leave.DatePicker.Disable();
+
+                Leave.Table.Bind();
+                Leave.CreateComponent.PolicyType(MasterDataAdapter);
+                Leave.CreateComponent.AnnualButton();
+                Leave.CreateComponent.ApplyButton();
+                Leave.CreateComponent.ProgreesBar(Balance);
+
+                $("#PolicyType").hide();
+            },
+            Clear: function () {
+                $('#full-year').multiDatesPicker('resetDates', 'picked');
+                $('#PolicyType').jqxDropDownList('clearSelection');
+                td = 0;
+                totalDays = 0;
+                data = [];
+                dateInArray = [];
+                Leave.Table.Source.localdata = [];
+                //source.localdata = data;
+                $("#table").jqxGrid('updatebounddata');
+                document.getElementById('full-year').style.pointerEvents = 'auto';
+            },
+            Calculate: {
+                Half: function (val, valBalance) {
+                    isHalf = false;
+                    if ((valBalance - val) == 0.5) {
+                        isHalf = true;
+                        console.log('HalfDay Mode Enable');
+                    }
+                },
+                MaxDate: function(maxDate) {
+                    if (maxDate == 0 || maxDate == null) {
+                        Leave.DatePicker.Disable();
+                    } else {
+                        Leave.DatePicker.Enable();
+                    }
+                },
+                updateBalance: function (maxDays, allDays) {
+                    CurrentValue = maxDays - allDays;
+                    $("#balanceProgress").jqxProgressBar({
+                        value: CurrentValue,
+                        max: maxDays
+                    });
+                    $("#totalEntitled").html("<strong style='font-size:48px'>" + Entitled.toLocaleString() + "</strong> Days");
+
+                    if (CurrentValue <= 0) {
+                        Leave.DatePicker.Disable();
+                        //console.log('Disabled CurrentValue: ', CurrentValue);
+                    }
+
+                    //.val(CurrentValue);
+                    $("#totalBalance").html("<strong style='font-size:48px'>" + CurrentValue.toLocaleString() + "</strong> Days Left");
+                    $("#totalFullDays").html("<strong style='font-size:48px'>" + allDays.toLocaleString() + "</strong> Days");
+                    //$("#totalBalance").html("<strong>" + maxDays.toLocaleString() + "</strong> Days");
+                    $("#totalRemaining").html("<strong style='font-size:48px'>" + CurrentValue.toLocaleString() + "</strong> Days");
+
+                    //Leave.DatePicker.Destroy();
+                    //Leave.DatePicker.Bind();
+
+                },
+                checkBalance: function (varData, varBalance) {
+                    if (varData <= varBalance) return true;
+                }
+            },
+            CalculateDate: {
+                add: function (varDate) {
+
+                },
+                addDate: function (varDate, varDateInArray) {
+                    dateInArray = [];
+
+                    if (varDateInArray.find(Leave.CalculateDate.checkDate, varDate)) {
+                        var i = varDateInArray.indexOf(varDate, 0);
+                        if (i != -1) varDateInArray.splice(i, 1);
+                    } else {
+                        if (totalDays < Balance) {
+                            varDateInArray.push(varDate);
+                        }
+                    }
+                    totalDays = 0;
+                    return varDateInArray;
+                },
+                checkDate: function (dateInArrayTemp) {
+                    return dateInArrayTemp == dateTemp;
+                },
+                dateSelected(item, index) {
+                    var duration = 0.5;
+                    if ((Balance - totalDays) == 0.5) duration == 0.5;
+                    data.push({
+                        "ID": index,
+                        "Date": item,
+                        "Duration": duration,
+                        "DurationLabel": true,
+                        "vCreatedBy": cIDV,
+                        "createTime": null,
+                        "policyID": policyType,
+                        "IDV": cIDV
+                    });
+                    totalDays = totalDays + duration;
+
+                }
+            },
+            CreateComponent: {
+                PolicyType: function (varData) {
+                    $('#PolicyType').jqxDropDownList({ source: varData, theme: 'fresh', disabled: false, height: '35px', displayMember: "policyTypeName", valueMember: "ID", width: '100%' });
+                },
+                ProgreesBar: function (varData) {
+                    $("#balanceProgress").jqxProgressBar({ animationDuration: 0, showText: false, renderText: renderText, template: "info", width: '100%', height: 25, value: varData, max: varData });
+                },
+                AnnualButton: function () {
+                    $('#isAnnual').jqxSwitchButton({ height: 35, width: '100%', checked: true, onLabel: 'ANNUAL', offLabel: 'COMMON', theme: 'orange' });
+                },
+                ApplyButton: function () {
+                    hris.general.bindButton('Apply');
+                }
+            },
+            DatePicker: {
+                Bind: function () {
+                    //console.log('Datepicker Init()');
+                    noWeekEnd = $.datepicker.noWeekends;
+                    $('#full-year').multiDatesPicker({
+                        disabled: false,
+                        beforeShowDay: $.datepicker.noWeekends,
+                        numberOfMonths: [1, 3],
+                        dateFormat: "mm/dd/yy",
+                        onSelect: function (date, el) {
+                            data = [];
+
+                            //console.log("Date Selected: ", date);
+                            dateTemp = date;
+                            //dateInArray.forEach(dateSelected);
+                            dateInArray = Leave.CalculateDate.addDate(date, dateInArray);
+                            dateInArray.forEach(Leave.CalculateDate.dateSelected);
+                            console.log('totalDays:', totalDays);
+                            if (Leave.Calculate.checkBalance(totalDays, Balance)) {
+                                // if (checkBalance(totalDays)) {
+                                try {
+                                    Leave.Table.Source.localdata = data;
+                                    Leave.Calculate.updateBalance(Balance, totalDays);
+                                    //updateBalance(Balance, totalDays)
+                                    $("#table").jqxGrid('updatebounddata');
+                                } catch (err) {
+                                    console.log("Error : ", err.message);
+                                }
+                            } else {
+                                //document.getElementById('full-year').style.pointerEvents = 'none';
+                                $('#full-year').multiDatesPicker('removeDates', date);
+                                console.log("Maximum Days !! Balance: " + Balance);
+                            }
+                        }
+                    });
+                    $('#full-year').multiDatesPicker('removeDates', new Date());
+                    $('#full-year').multiDatesPicker('resetDates', 'disabled');
+                    //$('#full-year').multiDatesPicker({ beforeShowDay: $.datepicker.noWeekends }); error behaviour when added
+                },
+                Destroy: function () {
+                    //$('#full-year').multiDatesPicker('destroy');
+                },
+                Disable: function () {
+                    /*
+                    try {
+                        console.log(dateInArray);
+                        $('#full-year').multiDatesPicker({
+                            disabled: true,
+                            addDates: dateInArray
+                        });
+
+                    } catch (err) {
+                        console.log('Error to disable Calendar: ', err.message);
+                    }
+                    */
+                },
+                Enable: function () {
+                    $('#full-year').multiDatesPicker({ disabled: false });
+                }
+            },
+            Table: {
+                Column: [{ text: 'Index', dataField: 'ID', width: 10, hidden: true },
+                          { text: 'Date', dataField: 'Date', cellsformat: 'D', width: '65%', editable: false },
+                          { text: 'Half Days', dataField: 'DurationLabel', columntype: 'checkbox', width: '35%' }],
+                Source: {
+                    localdata: [],
+                    dataType: "array",
+                    dataFields:
+                    [
+                        { name: 'ID', type: 'number' },
+                        { name: 'Date', type: 'date' },
+                        { name: 'Duration', type: 'int' },
+                        { name: 'DurationLabel', type: 'bool' }
+                    ],
+                    updaterow: function (rowid, rowdata, commit) {
+                        if (rowdata.DurationLabel) {
+                            data[rowdata.ID].Duration = 0.5;
+                            data[rowdata.ID].DurationLabel = true;
+                        } else {
+                            data[rowdata.ID].Duration = 1;
+                            data[rowdata.ID].DurationLabel = false;
+                        }
+                        totalDays = 0;
+                        for (i = 0; i < data.length; i++) {
+                            b = data[i].Duration;
+                            totalDays = totalDays + b;
+                        };
+                        //console.log('Balance:', Balance);
+                        //console.log('Total Days', totalDays);
+
+                        //Check if Next Duration must be Half Days
+                        Leave.Calculate.Half(totalDays,Balance);
+
+                        Leave.Calculate.updateBalance(Balance, totalDays);
+                        Leave.Table.Source.localdata = data;
+
+                        commit(true);
+                    }
+                },
+                SourceReturn: function () {
+                    return this.Source;
+                },
+                dataAdapter: function () {
+                    var s = this.Source;
+                    //console.log("dataAdapter Source: ", s);
+                    return new $.jqx.dataAdapter(s, { autoBind: true })
+                },
+                Bind: function () {
+                    $("#table").jqxGrid({
+                        width: '100%',
+                        height: 200,
+                        theme: 'metro',
+                        editable: true,
+                        source: this.dataAdapter(),
+                        columns: this.Column
+                    });
+                }
+            }
+        };
+
+        //Leave.Init(MasterDataAdapter, Balance, data);
+
+        //COMPONENT
+
+
+
+
+        function getRoleBasedValue(policyType) {
+            var uri = baseURL + 'api/employee/getRoleBasedValue/' + cIDV + '/' + policyType;
+
+        }
+
+
+
+
+
+
+
+
+    })
+</script>
+<style>
+    #full-year li[style] {
+        display: inline !important;
+    }
+
+    .ui-widget-content {
+        background-image: none;
+        background: none;
+    }
+
+    element.style {
+        display: block;
+        width: auto !important;
+    }
+
+    .HR-Div {
+        padding: 5px;
+        margin-bottom: 3px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .HR-Warning {
+        color: #c09853;
+        background-color: #fcf8e3;
+        border-color: #fbeed5;
+    }
+
+    .HR-Info {
+        color: #3a87ad;
+        background-color: #d9edf7;
+        border-color: #bce8f1;
+    }
+
+    table {
+        /* border-collapse: collapse; */
+        /* border-spacing: 0; */
+    }
+</style>
+
+
+
+

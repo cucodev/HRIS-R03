@@ -180,6 +180,9 @@
     <Compile Include="Model\personWorkExperience.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\setting.cs">
+      <DependentUpon>WebApiDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\ras_AccessControlSettings.cs">
       <DependentUpon>AbsenceModel.tt</DependentUpon>

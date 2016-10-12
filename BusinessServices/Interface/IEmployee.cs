@@ -23,6 +23,7 @@ namespace BusinessServices.Interface
         IEnumerable<employeeDetail> getEmployeeByOrg(int OrgID);
         employeeRoleBasedEntities getRoleBasedValue(int IDV, int policyType);
         employeeRoleBasedEntities getRoleBasedAnnualValue(int IDV);
+        Annual getAnnual(int IDV);
         //int CreateRoleBased(roleBasedEntities EroleBased);
         //bool UpdateRoleBased(roleBasedEntities EroleBased);
 

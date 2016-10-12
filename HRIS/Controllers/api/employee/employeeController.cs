@@ -97,6 +97,35 @@ namespace HRIS.Controllers.api.employee
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "HRD Matrix for this employee are not found");
         }
 
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getAnnualRoleBased")]
+        [System.Web.Http.Route("api/employee/getAnnualRoleBased/{IDV}")]
+        public HttpResponseMessage getAnnualRoleBased(int IDV)
+        {
+            var p = _pServices.getCurrentRoleBasedAnnual(IDV);
+            if (p != null)
+            {
+                var pEntities = p as List<employeeRoleBasedEntities> ?? p.ToList();
+                if (pEntities.Any())
+                    return Request.CreateResponse(HttpStatusCode.OK, pEntities);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "HRD Matrix for this employee are not found");
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("getAnnual")]
+        [System.Web.Http.Route("api/employee/getAnnual/{IDV}")]
+        public HttpResponseMessage getAnnual(int IDV)
+        {
+            var p = _pServices.getAnnual(IDV);
+            if (p != null)
+            {
+                var pEntities = p as Annual ?? p;
+                if (pEntities != null)
+                    return Request.CreateResponse(HttpStatusCode.OK, pEntities);
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "HRD Matrix for this employee are not found");
+        }
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("getRoleBasedValue")]

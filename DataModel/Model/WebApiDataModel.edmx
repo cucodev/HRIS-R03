@@ -535,6 +535,17 @@
           <Property Name="createTime" Type="datetime" />
           <Property Name="updateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+          <Property Name="value" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="vUpdatedBy" Type="int" Nullable="false" />
+          <Property Name="updateTime" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tokens">
           <Key>
             <PropertyRef Name="TokenId" />
@@ -959,6 +970,7 @@
           <EntitySet Name="personWorkExperience" EntityType="Self.personWorkExperience" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roleBased" EntityType="Self.roleBased" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roleBasedMatrix" EntityType="Self.roleBasedMatrix" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="catID_parentCategory" Association="Self.catID_parentCategory">
@@ -2125,6 +2137,7 @@
           <EntitySet Name="dataMails" EntityType="HRISModel.dataMail" />
           <EntitySet Name="dataFiles" EntityType="HRISModel.dataFile" />
           <EntitySet Name="holidays" EntityType="HRISModel.holiday" />
+          <EntitySet Name="settings" EntityType="HRISModel.setting" />
         </EntityContainer>
         <EntityType Name="dataLeave">
           <Key>
@@ -2200,6 +2213,17 @@
           <Property Name="vCreatedBy" Type="Int32" Nullable="false" />
           <Property Name="vUpdatedBy" Type="Int32" Nullable="false" />
           <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="vUpdatedBy" Type="Int32" Nullable="false" />
           <Property Name="updateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
@@ -2789,6 +2813,18 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="settings">
+            <EntityTypeMapping TypeName="HRISModel.setting">
+              <MappingFragment StoreEntitySet="setting">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

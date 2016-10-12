@@ -35,6 +35,9 @@ namespace BusinessEntities
         public const string policyTypeLeave = "policyTypeLeave";
         public const string policyTypeMedical = "policyTypeMedical";
 
+        //Category Medical & Leave & Settings
+        public const string policyTypeAnnualCarry = "policyTypeAnnualCarry";
+
         //Employee Level
         public const string lov_level = "empLevel";
         public const string lov_levelRoot = "empLevelRoot";
