@@ -217,6 +217,14 @@ namespace BusinessServices.InterfaceMethod
 
         public Annual getAnnual(int IDV)
         {
+            //Global
+            Annual t = new Annual();
+            List<AnnualLeave> ms = new List<AnnualLeave>();
+            var inPolicyType = new int[] { };
+            inPolicyType = filterPolicyID(GlobalVariable.policyTypeAnnual).ToArray();
+
+
+
             //Get Today
             DateTime Today = DateTime.Now;
             Int32 TodayYears = Today.Year;
@@ -229,33 +237,46 @@ namespace BusinessServices.InterfaceMethod
             int carryOverYears = Convert.ToInt32(carryOverSetting.value);
             System.Diagnostics.Debug.WriteLine("Carryover Years @ " + carryOverYears);
 
+            //Get Current Leave Date
+            var emp = _u.employeeRoleBasedRepository.GetSingle(b => b.IDV == IDV
+                                                                && b.validDateStop >= DateTime.Now.AddYears(+1)
+                                                                && inPolicyType.Contains(b.policyType));
+
             //Calculate CarryOver Datetime
-            List <DateTime> CarryDateTime = new List<DateTime>();
+            List<DateTime> CarryDateTime = new List<DateTime>();
+            var currentLeave = emp.validDateStart ?? DateTime.Now;
             for (int i = carryOverYears; i >= 0; i--)
             {
-                CarryDateTime.Add(DateTime.Now.AddYears(-i));
-                //tempCarry.AddYears();
-
-                System.Diagnostics.Debug.WriteLine(i.ToString(), ':', DateTime.Now.AddYears(-i));
-
-                //System.Diagnostics.Debug.WriteLine("CarryDateTime @ " + i + ':' + CarryDateTime[i]);
+                CarryDateTime.Add(currentLeave.AddYears(-i));
+                System.Diagnostics.Debug.WriteLine(i.ToString() + ':' + DateTime.Now.AddYears(-i));
             }
-            System.Diagnostics.Debug.WriteLine("Datetime: ", CarryDateTime);
 
-            Annual t = new Annual();
-            List<AnnualLeave> ms = new List<AnnualLeave>();
-            var inPolicyType = new int[] { };
-            inPolicyType = filterPolicyID(GlobalVariable.policyTypeAnnual).ToArray();
-            var emp = _u.employeeRoleBasedRepository.GetMany(b => b.IDV == IDV
-                                                                && b.validDateStop >= DateTime.Now
-                                                                && inPolicyType.Contains(b.policyType));
-            if (emp.Any())
+            
+            //Struct Current Leave
+            var px = emp;
+            AnnualLeave dt = new AnnualLeave();
+
+            t.IDV = IDV;
+                dt.ID = px.ID;
+                dt.isCarryOver = false;
+                dt.policyType = px.policyType;
+                dt.roleBasedValue = px.roleBasedValue;
+                dt.balanceValue = px.balanceValue;
+                dt.currentValue = px.currentValue;
+                dt.validDateStart = px.validDateStart;
+                dt.validDateStop = px.validDateStop;
+            ms.Add(dt);
+
+
+            /*
+            if (emp != null)
             {
-                t.IDV = IDV;
+                
                 foreach (employeeRoleBased px in emp)
                 {
                     AnnualLeave dt = new AnnualLeave();
                     dt.ID = px.ID;
+                    dt.isCarryOver = false;
                     dt.policyType = px.policyType;
                     dt.roleBasedValue = px.roleBasedValue;
                     dt.balanceValue = px.balanceValue;
@@ -266,7 +287,7 @@ namespace BusinessServices.InterfaceMethod
                     //ms.Add(_map.EmployeeRoleBasedFromModel(px));
                 }
                 t.AnnualData = ms;
-            }
+            }*/
             return t;
         }
 
