@@ -222,8 +222,7 @@ namespace BusinessServices.InterfaceMethod
             List<AnnualLeave> ms = new List<AnnualLeave>();
             var inPolicyType = new int[] { };
             inPolicyType = filterPolicyID(GlobalVariable.policyTypeAnnual).ToArray();
-
-
+            
 
             //Get Today
             DateTime Today = DateTime.Now;
