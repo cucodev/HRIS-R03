@@ -222,8 +222,7 @@ namespace BusinessServices.InterfaceMethod
             List<AnnualLeave> ms = new List<AnnualLeave>();
             var inPolicyType = new int[] { };
             inPolicyType = filterPolicyID(GlobalVariable.policyTypeAnnual).ToArray();
-
-
+            
 
             //Get Today
             DateTime Today = DateTime.Now;
@@ -268,26 +267,26 @@ namespace BusinessServices.InterfaceMethod
             ms.Add(dt);
 
 
-
-            //if (emp != null)
-            //{
+            /*
+            if (emp != null)
+            {
                 
-            //    foreach (employeeRoleBased px in emp)
-            //    {
-            //        AnnualLeave dt = new AnnualLeave();
-            //        dt.ID = px.ID;
-            //        dt.isCarryOver = false;
-            //        dt.policyType = px.policyType;
-            //        dt.roleBasedValue = px.roleBasedValue;
-            //        dt.balanceValue = px.balanceValue;
-            //        dt.currentValue = px.currentValue;
-            //        dt.validDateStart = px.validDateStart;
-            //        dt.validDateStop = px.validDateStop;
-            //        ms.Add(dt);
-            //        //ms.Add(_map.EmployeeRoleBasedFromModel(px));
-            //    }
-            //    t.AnnualData = ms;
-            //}
+                foreach (employeeRoleBased px in emp)
+                {
+                    AnnualLeave dt = new AnnualLeave();
+                    dt.ID = px.ID;
+                    dt.isCarryOver = false;
+                    dt.policyType = px.policyType;
+                    dt.roleBasedValue = px.roleBasedValue;
+                    dt.balanceValue = px.balanceValue;
+                    dt.currentValue = px.currentValue;
+                    dt.validDateStart = px.validDateStart;
+                    dt.validDateStop = px.validDateStop;
+                    ms.Add(dt);
+                    //ms.Add(_map.EmployeeRoleBasedFromModel(px));
+                }
+                t.AnnualData = ms;
+            }*/
             return t;
         }
 
