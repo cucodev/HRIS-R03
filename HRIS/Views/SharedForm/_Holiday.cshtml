@@ -319,24 +319,18 @@
             //$("#selection").html("<div>From: " + selection.from.toLocaleDateString() + " <br/>To: " + selection.to.toLocaleDateString() + "</div>");
         }
     });
-    
-    var grid_data =
-			[
-				{ no: "1", hname: "New Year", bdate: "2008-01-01", edate: "2008-08-14", remark: "null" },
-				{ no: "2", hname: "Labor Day", bdate: "2008-01-05", edate: "2008-08-14", remark: "null" },
-			];
 
-    var subgrid_data =
-    [
-     { id: "1", name: "sub grid item 1", qty: 11 },
-     { id: "2", name: "sub grid item 2", qty: 3 },
-     { id: "3", name: "sub grid item 3", qty: 12 },
-     { id: "4", name: "sub grid item 4", qty: 5 },
-     { id: "5", name: "sub grid item 5", qty: 2 },
-     { id: "6", name: "sub grid item 6", qty: 9 },
-     { id: "7", name: "sub grid item 7", qty: 3 },
-     { id: "8", name: "sub grid item 8", qty: 8 }
-    ];
+    //var subgrid_data =
+    //[
+    // { id: "1", name: "sub grid item 1", qty: 11 },
+    // { id: "2", name: "sub grid item 2", qty: 3 },
+    // { id: "3", name: "sub grid item 3", qty: 12 },
+    // { id: "4", name: "sub grid item 4", qty: 5 },
+    // { id: "5", name: "sub grid item 5", qty: 2 },
+    // { id: "6", name: "sub grid item 6", qty: 9 },
+    // { id: "7", name: "sub grid item 7", qty: 3 },
+    // { id: "8", name: "sub grid item 8", qty: 8 }
+    //];
 
     jQuery(function ($) {
         var grid_selector = "#grid-table";
@@ -375,43 +369,41 @@
         */
 
 
-
-
-
         jQuery(grid_selector).jqGrid({
             //direction: "rtl",
 
             //subgrid options
-            subGrid: true,
+            //subGrid: true,
             //subGridModel: [{ name : ['No','Item Name','Qty'], width : [55,200,80] }],
             //datatype: "xml",
-            subGridOptions: {
-                plusicon: "ace-icon fa fa-plus center bigger-110 blue",
-                minusicon: "ace-icon fa fa-minus center bigger-110 blue",
-                openicon: "ace-icon fa fa-chevron-right center orange"
-            },
+            //subGridOptions: {
+            //    plusicon: "ace-icon fa fa-plus center bigger-110 blue",
+            //    minusicon: "ace-icon fa fa-minus center bigger-110 blue",
+            //    openicon: "ace-icon fa fa-chevron-right center orange"
+            //},
             //for this example we are using local data
-            subGridRowExpanded: function (subgridDivId, rowId) {
-                var subgridTableId = subgridDivId + "_t";
-                $("#" + subgridDivId).html("<table id='" + subgridTableId + "'></table>");
-                $("#" + subgridTableId).jqGrid({
-                    datatype: 'local',
-                    data: subgrid_data,
-                    colNames: ['No', 'Item Name', 'Qty'],
-                    colModel: [
-                        { name: 'id', width: 50 },
-                        { name: 'name', width: 150 },
-                        { name: 'qty', width: 50 }
-                    ]
-                });
-            },
+            //subGridRowExpanded: function (subgridDivId, rowId) {
+            //    var subgridTableId = subgridDivId + "_t";
+            //    $("#" + subgridDivId).html("<table id='" + subgridTableId + "'></table>");
+            //    $("#" + subgridTableId).jqGrid({
+            //        datatype: 'local',
+            //       data: subgrid_data,
+            //        colNames: ['No', 'Item Name', 'Qty'],
+            //        colModel: [
+            //            { name: 'id', width: 50 },
+            //            { name: 'name', width: 150 },
+            //            { name: 'qty', width: 50 }
+            //        ]
+            //    });
+            //},
 
 
 
-            data: grid_data,
-            datatype: "local",
+            url: "/api/holiday",
+            datatype: 'json',
+            mtype: 'GET',
             height: 250,
-            colNames: [' ', 'No', 'Holiday Name', 'Begin Date', 'End Date', 'Remark'],
+            colNames: [' ', 'ID', 'Name', 'Description', 'Date Begin', 'Date End', 'Duration'],
             colModel: [
                 {
                     name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
@@ -424,16 +416,12 @@
                         //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
                     }
                 },
-                { name: 'no', index: 'no', width: 60, sorttype: "int", editable: true },
-                { name: 'hname', index: 'hname', width: 150, editable: true, editoptions: { size: "20", maxlength: "30" } },
-                { name: 'bdate', index: 'sdate', width: 90, editable: true, sorttype: "date", unformat: pickDate },
-                { name: 'edate', index: 'sdate', width: 90, editable: true, sorttype: "date", unformat: pickDate },
-                { name: 'remark', index: 'remark', width: 150, sortable: false, editable: true, edittype: "textarea", editoptions: { rows: "2", cols: "10" } }
-                //{ name: 'sdate', index: 'sdate', width: 90, editable: true, sorttype: "date", unformat: pickDate },
-                //{ name: 'hname', index: 'name', width: 150, editable: true, editoptions: { size: "20", maxlength: "30" } },
-                //{ name: 'stock', index: 'stock', width: 70, editable: true, edittype: "checkbox", editoptions: { value: "Yes:No" }, unformat: aceSwitch },
-                //{ name: 'ship', index: 'ship', width: 90, editable: true, edittype: "select", editoptions: { value: "FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX" } },
-                //{ name: 'note', index: 'note', width: 150, sortable: false, editable: true, edittype: "textarea", editoptions: { rows: "2", cols: "10" } }
+                { name: 'ID', index: 'ID', width: 60, sorttype: "int", editable: false },
+                { name: 'Name', index: 'Name', width: 150, editable: true, editoptions: { size: "20", maxlength: "30" } },
+                { name: 'Description', index: 'Description', width: 150, sortable: false, editable: true, edittype: "textarea", editoptions: { rows: "2", cols: "10" } },
+                { name: 'dateBegin', index: 'dateBegin', width: 90, editable: true, sorttype: "date", unformat: pickDate },
+                { name: 'dateEnd', index: 'dateEnd', width: 90, editable: true, sorttype: "date", unformat: pickDate },
+                { name: 'duration', index: 'duration', width: 150, editable: false, editoptions: { size: "20", maxlength: "30" } },
             ],
 
             viewrecords: true,
@@ -459,7 +447,7 @@
             },
 
             editurl: "./dummy.php",//nothing is saved
-            caption: "jqGrid with inline editing"
+            caption: "List Of Holiday"
 
             //,autowidth: true,
 

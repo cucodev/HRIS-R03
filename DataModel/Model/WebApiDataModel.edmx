@@ -220,6 +220,21 @@
           <Property Name="createTime" Type="datetime" />
           <Property Name="updateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="holiday">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="dateBegin" Type="date" Nullable="false" />
+          <Property Name="dateEnd" Type="date" Nullable="false" />
+          <Property Name="duration" Type="int" />
+          <Property Name="vCreatedBy" Type="int" Nullable="false" />
+          <Property Name="vUpdatedBy" Type="int" Nullable="false" />
+          <Property Name="createTime" Type="datetime" Nullable="false" />
+          <Property Name="updateTime" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="location">
           <Key>
             <PropertyRef Name="codeNum" />
@@ -519,6 +534,17 @@
           <Property Name="vUpdatedBy" Type="int" />
           <Property Name="createTime" Type="datetime" />
           <Property Name="updateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+          <Property Name="value" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="vUpdatedBy" Type="int" Nullable="false" />
+          <Property Name="updateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Tokens">
           <Key>
@@ -924,6 +950,7 @@
           <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="employeeRoleBased" EntityType="Self.employeeRoleBased" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="file" EntityType="Self.file" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="holiday" EntityType="Self.holiday" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="location" EntityType="Self.location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="organization" EntityType="Self.organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="person" EntityType="Self.person" Schema="dbo" store:Type="Tables" />
@@ -943,6 +970,7 @@
           <EntitySet Name="personWorkExperience" EntityType="Self.personWorkExperience" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roleBased" EntityType="Self.roleBased" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roleBasedMatrix" EntityType="Self.roleBasedMatrix" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="catID_parentCategory" Association="Self.catID_parentCategory">
@@ -2108,6 +2136,8 @@
           <EntitySet Name="dataLeaves" EntityType="HRISModel.dataLeave" />
           <EntitySet Name="dataMails" EntityType="HRISModel.dataMail" />
           <EntitySet Name="dataFiles" EntityType="HRISModel.dataFile" />
+          <EntitySet Name="holidays" EntityType="HRISModel.holiday" />
+          <EntitySet Name="settings" EntityType="HRISModel.setting" />
         </EntityContainer>
         <EntityType Name="dataLeave">
           <Key>
@@ -2169,6 +2199,32 @@
           <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="updateTime" Type="DateTime" Precision="3" />
           <Property Name="isDeleted" Type="Int32" />
+        </EntityType>
+        <EntityType Name="holiday">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="dateBegin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dateEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="duration" Type="Int32" />
+          <Property Name="vCreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="vUpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="vUpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="updateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2741,6 +2797,34 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="stream_id" ColumnName="stream_id" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="holidays">
+            <EntityTypeMapping TypeName="HRISModel.holiday">
+              <MappingFragment StoreEntitySet="holiday">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="vCreatedBy" ColumnName="vCreatedBy" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+                <ScalarProperty Name="dateBegin" ColumnName="dateBegin" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="settings">
+            <EntityTypeMapping TypeName="HRISModel.setting">
+              <MappingFragment StoreEntitySet="setting">
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+                <ScalarProperty Name="vUpdatedBy" ColumnName="vUpdatedBy" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

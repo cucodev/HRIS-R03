@@ -60,5 +60,7 @@ namespace DataModel.Model
         public virtual DbSet<dataLeave> dataLeaves { get; set; }
         public virtual DbSet<dataMail> dataMails { get; set; }
         public virtual DbSet<dataFile> dataFiles { get; set; }
+        public virtual DbSet<holiday> holidays { get; set; }
+        public virtual DbSet<setting> settings { get; set; }
     }
 }

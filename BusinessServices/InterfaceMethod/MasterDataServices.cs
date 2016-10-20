@@ -30,7 +30,22 @@ namespace BusinessServices.InterfaceMethod
 
         public bool delete(int ID)
         {
-            throw new NotImplementedException();
+            var success = false;
+            if (ID > 0)
+            {
+                using (var scope = new TransactionScope())
+                {
+                    var p = _u.holidayRepository.GetByID(ID);
+                    if (p != null)
+                    {
+                        _u.holidayRepository.Delete(p);
+                        _u.Save();
+                        scope.Complete();
+                        success = true;
+                    }
+                }
+            }
+            return success;
         }
 
         public holidayEntities get(int ID)
@@ -52,6 +67,7 @@ namespace BusinessServices.InterfaceMethod
                     x.dateBegin = px.dateBegin;
                     x.dateEnd = px.dateEnd;
                     x.Description = px.Description;
+                    x.duration = px.duration;
                     hd.Add(x);
                 }
 
@@ -86,9 +102,25 @@ namespace BusinessServices.InterfaceMethod
             return 0;
         }
 
-        public bool put(int ID, holidayEntities holiday)
+        public int put(int ID, holidayEntities holiday)
         {
-            throw new NotImplementedException();
+            using (var scope = new TransactionScope())
+            {
+                var p = _u.holidayRepository.GetByID(ID);
+                if (p != null)
+                {
+                    p.Name = holiday.Name;
+                    p.Description = holiday.Description;
+                    p.dateBegin = holiday.dateBegin;
+                    p.dateEnd = holiday.dateEnd;
+                    p.duration = (int)((p.dateEnd - p.dateBegin).TotalDays);
+                    _u.holidayRepository.Update(p);
+                    _u.Save();
+                    scope.Complete();
+                    return ID;
+                }
+            }
+            return 0;
         }
     }
 
