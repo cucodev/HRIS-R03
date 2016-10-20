@@ -1,6 +1,6 @@
 ﻿@model BusinessEntities.CrudEntities.UserCredModel
 
-@if (Model == null || Model.IDV == null)
+@if (Model == null)
 {
     //Response.Redirect("~/Default/LogOn");
     Html.Action("LogOn", "Default");
