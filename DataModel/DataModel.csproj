@@ -124,9 +124,6 @@
     </Compile>
     <Compile Include="GenericRepository\FileRepository.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
-    <Compile Include="Model\holiday.cs">
-      <DependentUpon>WebApiDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\hrd_UserOption.cs">
       <DependentUpon>AbsenceModel.tt</DependentUpon>
     </Compile>
@@ -179,9 +176,6 @@
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\personWorkExperience.cs">
-      <DependentUpon>WebApiDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\setting.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -40,7 +40,24 @@ namespace BusinessServices.InterfaceMethod
 
         public IEnumerable<holidayEntities> getAll()
         {
-            throw new NotImplementedException();
+            List<holidayEntities> hd = new List<holidayEntities>();
+            var p = _u.holidayRepository.GetAll().ToList();
+            if (p.Any())
+            {
+                foreach (holiday px in p)
+                {
+                    holidayEntities x = new holidayEntities();
+                    x.ID = px.ID;
+                    x.Name = px.Name;
+                    x.dateBegin = px.dateBegin;
+                    x.dateEnd = px.dateEnd;
+                    x.Description = px.Description;
+                    hd.Add(x);
+                }
+
+                return hd.AsEnumerable();
+            }
+            return null;
         }
 
         public int post(holidayEntities p)

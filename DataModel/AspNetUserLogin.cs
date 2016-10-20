@@ -7,18 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataModel.Model
+namespace DataModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class setting
+    public partial class AspNetUserLogin
     {
-        public int id { get; set; }
-        public string type { get; set; }
-        public string description { get; set; }
-        public string value { get; set; }
-        public int vUpdatedBy { get; set; }
-        public System.DateTime updateTime { get; set; }
+        public string LoginProvider { get; set; }
+        public string ProviderKey { get; set; }
+        public string UserId { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

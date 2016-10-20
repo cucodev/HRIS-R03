@@ -24,15 +24,11 @@ namespace HRIS.Controllers.api
 
         // GET: api/list
         [System.Web.Http.HttpGet]
-        [System.Web.Http.ActionName("post")]
+        [System.Web.Http.ActionName("getHoliday")]
         [System.Web.Http.Route("api/holiday")]
-        public int post(holidayEntities p)
+        public IEnumerable<holidayEntities> getHoliday()
         {
-            if (p != null)
-            {
-                return _pServices.post(p);
-            }
-            return 0;
+            return _pServices.getAll();
         }
 
     }

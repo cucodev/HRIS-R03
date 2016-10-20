@@ -7,22 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataModel.Model
+namespace DataModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class holiday
+    public partial class roleBased
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public System.DateTime dateBegin { get; set; }
-        public System.DateTime dateEnd { get; set; }
-        public Nullable<int> duration { get; set; }
-        public int vCreatedBy { get; set; }
-        public int vUpdatedBy { get; set; }
-        public System.DateTime createTime { get; set; }
-        public System.DateTime updateTime { get; set; }
+        public Nullable<int> policyType { get; set; }
+        public Nullable<int> empLevel { get; set; }
+        public Nullable<int> valueType { get; set; }
+        public Nullable<int> value { get; set; }
     }
 }

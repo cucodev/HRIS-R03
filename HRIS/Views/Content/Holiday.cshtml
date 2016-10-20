@@ -31,11 +31,6 @@
         background: none;
     }
 </style>
-<script type="text/javascript">
-    $(document).ready(function () {
-        hris.menu.sub("MenuHoliday");
-    });
-</script>
 <div class="breadcrumbs ace-save-state" id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
@@ -58,3 +53,9 @@
 
 
 @{ Html.RenderPartial("~/Views/SharedForm/_Holiday.cshtml"); }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        hris.menu.sub("MenuHoliday");
+    });
+</script>
