@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\HRIS-R03\DataModel\Model\WebApiDataModel.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\KERJA\To Nouval\Project\DataModel\Model\WebApiDataModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
