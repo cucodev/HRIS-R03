@@ -142,7 +142,7 @@
                     idNumber: hris.general.getData("idNumber"),
                     idType: hris.general.getData("ID"),
                     issuedCountry: hris.general.getData("Country"),
-                    expiredDate: hris.general.getData("expiredDate")
+                    expiredDate: hris.general.dateParse(hris.general.getData("expiredDate"))
                 }
                 console.log("Modal Submit", data);
                 // Proses save
