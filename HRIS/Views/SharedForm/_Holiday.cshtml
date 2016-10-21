@@ -75,8 +75,8 @@
 
                     <div class="widget-toolbar no-border">
                         <ul class="nav nav-tabs" id="myTab2">
-                            <li class="active">
-                                <a data-toggle="tab" href="#home2" aria-expanded="true">Grid</a>
+                            <li class="">
+                                <a id="test" data-toggle="tab" href="#home2" aria-expanded="true">Grid</a>
                             </li>
 
                             <li class="">
@@ -295,6 +295,8 @@
     */
     $(document).ready(function () {
     
+        $('#test').click();
+
         //Holiday.Init();
 
         //$("#addbtn").click(function () {
@@ -317,45 +319,18 @@
             //$("#selection").html("<div>From: " + selection.from.toLocaleDateString() + " <br/>To: " + selection.to.toLocaleDateString() + "</div>");
         }
     });
-    
-    var grid_data =
-			[
-				{ id: "1", name: "Desktop Computer", note: "note", stock: "Yes", ship: "FedEx", sdate: "2007-12-03" },
-				{ id: "2", name: "Laptop", note: "Long text ", stock: "Yes", ship: "InTime", sdate: "2007-12-03" },
-				{ id: "3", name: "LCD Monitor", note: "note3", stock: "Yes", ship: "TNT", sdate: "2007-12-03" },
-				{ id: "4", name: "Speakers", note: "note", stock: "No", ship: "ARAMEX", sdate: "2007-12-03" },
-				{ id: "5", name: "Laser Printer", note: "note2", stock: "Yes", ship: "FedEx", sdate: "2007-12-03" },
-				{ id: "6", name: "Play Station", note: "note3", stock: "No", ship: "FedEx", sdate: "2007-12-03" },
-				{ id: "7", name: "Mobile Telephone", note: "note", stock: "Yes", ship: "ARAMEX", sdate: "2007-12-03" },
-				{ id: "8", name: "Server", note: "note2", stock: "Yes", ship: "TNT", sdate: "2007-12-03" },
-				{ id: "9", name: "Matrix Printer", note: "note3", stock: "No", ship: "FedEx", sdate: "2007-12-03" },
-				{ id: "10", name: "Desktop Computer", note: "note", stock: "Yes", ship: "FedEx", sdate: "2007-12-03" },
-				{ id: "11", name: "Laptop", note: "Long text ", stock: "Yes", ship: "InTime", sdate: "2007-12-03" },
-				{ id: "12", name: "LCD Monitor", note: "note3", stock: "Yes", ship: "TNT", sdate: "2007-12-03" },
-				{ id: "13", name: "Speakers", note: "note", stock: "No", ship: "ARAMEX", sdate: "2007-12-03" },
-				{ id: "14", name: "Laser Printer", note: "note2", stock: "Yes", ship: "FedEx", sdate: "2007-12-03" },
-				{ id: "15", name: "Play Station", note: "note3", stock: "No", ship: "FedEx", sdate: "2007-12-03" },
-				{ id: "16", name: "Mobile Telephone", note: "note", stock: "Yes", ship: "ARAMEX", sdate: "2007-12-03" },
-				{ id: "17", name: "Server", note: "note2", stock: "Yes", ship: "TNT", sdate: "2007-12-03" },
-				{ id: "18", name: "Matrix Printer", note: "note3", stock: "No", ship: "FedEx", sdate: "2007-12-03" },
-				{ id: "19", name: "Matrix Printer", note: "note3", stock: "No", ship: "FedEx", sdate: "2007-12-03" },
-				{ id: "20", name: "Desktop Computer", note: "note", stock: "Yes", ship: "FedEx", sdate: "2007-12-03" },
-				{ id: "21", name: "Laptop", note: "Long text ", stock: "Yes", ship: "InTime", sdate: "2007-12-03" },
-				{ id: "22", name: "LCD Monitor", note: "note3", stock: "Yes", ship: "TNT", sdate: "2007-12-03" },
-				{ id: "23", name: "Speakers", note: "note", stock: "No", ship: "ARAMEX", sdate: "2007-12-03" }
-			];
 
-    var subgrid_data =
-    [
-     { id: "1", name: "sub grid item 1", qty: 11 },
-     { id: "2", name: "sub grid item 2", qty: 3 },
-     { id: "3", name: "sub grid item 3", qty: 12 },
-     { id: "4", name: "sub grid item 4", qty: 5 },
-     { id: "5", name: "sub grid item 5", qty: 2 },
-     { id: "6", name: "sub grid item 6", qty: 9 },
-     { id: "7", name: "sub grid item 7", qty: 3 },
-     { id: "8", name: "sub grid item 8", qty: 8 }
-    ];
+    //var subgrid_data =
+    //[
+    // { id: "1", name: "sub grid item 1", qty: 11 },
+    // { id: "2", name: "sub grid item 2", qty: 3 },
+    // { id: "3", name: "sub grid item 3", qty: 12 },
+    // { id: "4", name: "sub grid item 4", qty: 5 },
+    // { id: "5", name: "sub grid item 5", qty: 2 },
+    // { id: "6", name: "sub grid item 6", qty: 9 },
+    // { id: "7", name: "sub grid item 7", qty: 3 },
+    // { id: "8", name: "sub grid item 8", qty: 8 }
+    //];
 
     jQuery(function ($) {
         var grid_selector = "#grid-table";
@@ -394,43 +369,41 @@
         */
 
 
-
-
-
         jQuery(grid_selector).jqGrid({
             //direction: "rtl",
 
             //subgrid options
-            subGrid: true,
+            //subGrid: true,
             //subGridModel: [{ name : ['No','Item Name','Qty'], width : [55,200,80] }],
             //datatype: "xml",
-            subGridOptions: {
-                plusicon: "ace-icon fa fa-plus center bigger-110 blue",
-                minusicon: "ace-icon fa fa-minus center bigger-110 blue",
-                openicon: "ace-icon fa fa-chevron-right center orange"
-            },
+            //subGridOptions: {
+            //    plusicon: "ace-icon fa fa-plus center bigger-110 blue",
+            //    minusicon: "ace-icon fa fa-minus center bigger-110 blue",
+            //    openicon: "ace-icon fa fa-chevron-right center orange"
+            //},
             //for this example we are using local data
-            subGridRowExpanded: function (subgridDivId, rowId) {
-                var subgridTableId = subgridDivId + "_t";
-                $("#" + subgridDivId).html("<table id='" + subgridTableId + "'></table>");
-                $("#" + subgridTableId).jqGrid({
-                    datatype: 'local',
-                    data: subgrid_data,
-                    colNames: ['No', 'Item Name', 'Qty'],
-                    colModel: [
-                        { name: 'id', width: 50 },
-                        { name: 'name', width: 150 },
-                        { name: 'qty', width: 50 }
-                    ]
-                });
-            },
+            //subGridRowExpanded: function (subgridDivId, rowId) {
+            //    var subgridTableId = subgridDivId + "_t";
+            //    $("#" + subgridDivId).html("<table id='" + subgridTableId + "'></table>");
+            //    $("#" + subgridTableId).jqGrid({
+            //        datatype: 'local',
+            //       data: subgrid_data,
+            //        colNames: ['No', 'Item Name', 'Qty'],
+            //        colModel: [
+            //            { name: 'id', width: 50 },
+            //            { name: 'name', width: 150 },
+            //            { name: 'qty', width: 50 }
+            //        ]
+            //    });
+            //},
 
 
 
-            data: grid_data,
-            datatype: "local",
+            url: "/api/holiday",
+            datatype: 'json',
+            mtype: 'GET',
             height: 250,
-            colNames: [' ', 'ID', 'Last Sales', 'Name', 'Stock', 'Ship via', 'Notes'],
+            colNames: [' ', 'ID', 'Name', 'Description', 'Date Begin', 'Date End', 'Duration'],
             colModel: [
                 {
                     name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
@@ -443,12 +416,12 @@
                         //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
                     }
                 },
-                { name: 'id', index: 'id', width: 60, sorttype: "int", editable: true },
-                { name: 'sdate', index: 'sdate', width: 90, editable: true, sorttype: "date", unformat: pickDate },
-                { name: 'name', index: 'name', width: 150, editable: true, editoptions: { size: "20", maxlength: "30" } },
-                { name: 'stock', index: 'stock', width: 70, editable: true, edittype: "checkbox", editoptions: { value: "Yes:No" }, unformat: aceSwitch },
-                { name: 'ship', index: 'ship', width: 90, editable: true, edittype: "select", editoptions: { value: "FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX" } },
-                { name: 'note', index: 'note', width: 150, sortable: false, editable: true, edittype: "textarea", editoptions: { rows: "2", cols: "10" } }
+                { name: 'ID', index: 'ID', width: 60, sorttype: "int", editable: false },
+                { name: 'Name', index: 'Name', width: 150, editable: true, editoptions: { size: "20", maxlength: "30" } },
+                { name: 'Description', index: 'Description', width: 150, sortable: false, editable: true, edittype: "textarea", editoptions: { rows: "2", cols: "10" } },
+                { name: 'dateBegin', index: 'dateBegin', width: 90, editable: true, sorttype: "date", unformat: pickDate },
+                { name: 'dateEnd', index: 'dateEnd', width: 90, editable: true, sorttype: "date", unformat: pickDate },
+                { name: 'duration', index: 'duration', width: 150, editable: false, editoptions: { size: "20", maxlength: "30" } },
             ],
 
             viewrecords: true,
@@ -474,7 +447,7 @@
             },
 
             editurl: "./dummy.php",//nothing is saved
-            caption: "jqGrid with inline editing"
+            caption: "List Of Holiday"
 
             //,autowidth: true,
 

@@ -22,17 +22,38 @@ namespace HRIS.Controllers.api
             User = UserVariable.User;
         }
 
-        // GET: api/list
+        // GET: api/holiday
         [System.Web.Http.HttpGet]
-        [System.Web.Http.ActionName("post")]
+        [System.Web.Http.ActionName("getHoliday")]
         [System.Web.Http.Route("api/holiday")]
-        public int post(holidayEntities p)
+        public IEnumerable<holidayEntities> getHoliday()
         {
-            if (p != null)
+            return _pServices.getAll();
+        }
+
+        // POST api/holiday
+        public int Post([FromBody] holidayEntities hEntity)
+        {
+            return _pServices.post(hEntity);
+        }
+
+        // PUT api/holiday/5
+        public bool Put(int id, holidayEntities hEntity)
+        {
+            System.Diagnostics.Debug.WriteLine("apiConsole: holidayEntities", hEntity);
+            if (id > 0)
             {
-                return _pServices.post(p);
+                return _pServices.put(id, hEntity);
             }
-            return 0;
+            return false;
+        }
+
+        // DELETE api/holiday/5
+        public bool Delete(int id)
+        {
+            if (id > 0)
+                return _pServices.delete(id);
+            return false;
         }
 
     }
