@@ -59,9 +59,6 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <div class="col-xs-6 form-actions" style="background-color: none; background: none;">
-                <div id="full-year"></div>
-            </div>
             <div class="col-xs-3 form-actions" style="background-color: none; background: none;">
                 <div class="widget-box" style="height:100%">
                     <div class="widget-header">
@@ -92,6 +89,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-xs-6 form-actions" style="background-color: none; background: none;">
+                <div id="full-year"></div>
             </div>
             <div class="col-xs-3 form-actions" style="background-color: none; background: none;">
                 <div class="widget-box">
@@ -136,28 +136,20 @@
 
     console.log('Row: ', MasterDataAdapter);
 
-    $(document).ready(function () {
-
-        var ROW = MasterDataAdapter.records[1];
-        console.log('OnReady:', ROW);
-
-        hris.menu.roots("MenuForm");
-        hris.menu.sub("subMenuFormLeave");
-
-        page.Init();
-
-        table.Bind();
-        datepicker.Bind();
-
-        page.Event();
-    });
-
+    
+    var Func = {
+        Getdata: function(url) {
+            $.getJSON(url, function (data) {
+                return data;
+            });
+        }
+    };
 
 
     var Data = {
-        this: this,
         Init: function () {
             hris.source._employeeRoleBased(cIDV);
+            Data.Annual = Func.Getdata('/api/employee/getAnnual/' + cIDV);
         },
         Func: {
             Duration: {
@@ -195,6 +187,11 @@
                     this.SelectedPolicyType.Leave.Remaining = vardata.remainingValue;
                 }
             },
+            Getdata: function (url) {
+                $.getJSON(url, function (data) {
+                    return data;
+                });
+            },
             Adapter: function (source) {
                 dataAdapter = new $.jqx.dataAdapter(source, {
                     autoBind: true,
@@ -227,6 +224,7 @@
             }
         },
         Table: [],
+        Annual: [],
         SourceLeave: MasterDataAdapter,
         SourceAll: MasterAllAdapter,
     }
@@ -322,7 +320,6 @@
         }
     };
 
-
     var page = {
         Init: function () {
             this.Component();
@@ -409,13 +406,25 @@
         }
     }
 
-
-    //will be removed ..............................................................................
-    
     $(document).ready(function () {
 
-        
-    })
+        var ROW = MasterDataAdapter.records[1];
+        console.log('OnReady:', ROW);
+
+        hris.menu.roots("MenuForm");
+        hris.menu.sub("subMenuFormLeave");
+
+        page.Init();
+        Data.Init();
+
+        console.log('Annual:' + Data.Annual);
+
+        table.Bind();
+        datepicker.Bind();
+
+        page.Event();
+    });
+
 </script>
 <style>
     #full-year li[style] {

@@ -565,6 +565,7 @@
           <Property Name="IDVMAIL" Type="varchar" MaxLength="200" />
           <Property Name="IDVMAILPASSWORD" Type="varchar" MaxLength="50" />
           <Property Name="IDVROLE" Type="int" />
+          <Property Name="IDVSuperior" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="catID_parentCategory">
           <End Role="categoryParent" Type="Self.categoryParent" Multiplicity="0..1" />
@@ -1623,6 +1624,7 @@
           <Property Name="IDVROLE" Type="Int32" />
           <NavigationProperty Name="person" Relationship="Self.IDV_user" FromRole="user" ToRole="person" />
           <NavigationProperty Name="Tokens" Relationship="Self.FK_Tokens_User" FromRole="user" ToRole="Tokens" />
+          <Property Name="IDVSuperior" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="purposeType">
           <End Role="C_purpose" Type="Self.C_purpose" Multiplicity="0..1" />
@@ -2720,6 +2722,7 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="HRISModel.user">
               <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="IDVSuperior" ColumnName="IDVSuperior" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="IDVMAIL" ColumnName="IDVMAIL" />

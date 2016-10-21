@@ -222,7 +222,9 @@ namespace BusinessServices.InterfaceMethod
             List<AnnualLeave> ms = new List<AnnualLeave>();
             var inPolicyType = new int[] { };
             inPolicyType = filterPolicyID(GlobalVariable.policyTypeAnnual).ToArray();
+
             
+
 
             //Get Today
             DateTime Today = DateTime.Now;
@@ -236,35 +238,84 @@ namespace BusinessServices.InterfaceMethod
             int carryOverYears = Convert.ToInt32(carryOverSetting.value);
             System.Diagnostics.Debug.WriteLine("Carryover Years @ " + carryOverYears);
 
+            //Set Crud
+            t.Years = carryOverYears;
+
+            var sup = _u.userRepository.Get(b => b.IDV == IDV);
+            var supname = _u.personDetailRepository.Get(c => c.IDV == sup.IDVSuperior);
+            t.IDVSuperior = sup.IDVSuperior;
+            t.SuperiorName = supname.Name;
+
+
+
             //Get Current Leave Date
-            var emp = _u.employeeRoleBasedRepository.GetSingle(b => b.IDV == IDV
-                                                                && b.validDateStop >= DateTime.Now.AddYears(+1)
+            var emp = _u.employeeRoleBasedRepository.GetFirst(b => b.IDV == IDV
+                                                                && b.validDateStop.Value.Year >= DateTime.Now.Year
                                                                 && inPolicyType.Contains(b.policyType));
 
-            //Calculate CarryOver Datetime
-            List<DateTime> CarryDateTime = new List<DateTime>();
-            var currentLeave = emp.validDateStart ?? DateTime.Now;
-            for (int i = carryOverYears; i >= 0; i--)
+            if (emp.validDateStart != null)
             {
-                CarryDateTime.Add(currentLeave.AddYears(-i));
-                System.Diagnostics.Debug.WriteLine(i.ToString() + ':' + DateTime.Now.AddYears(-i));
+
+                //Struct Current Leave
+                var px = emp;
+                AnnualLeave dt = new AnnualLeave();
+
+                //Current Year
+                t.IDV = IDV;
+                    dt.ID = px.ID;
+                    dt.isCarryOver = false;
+                    dt.policyType = px.policyType;
+                    dt.roleBasedValue = px.roleBasedValue;
+                    dt.balanceValue = px.balanceValue;
+                    dt.currentValue = px.currentValue;
+                    dt.validDateStart = px.validDateStart;
+                    dt.validDateStop = px.validDateStop;
+                        ms.Add(dt);
+
+
+                //Calculate CarryOver Datetime
+                List<DateTime> CarryDateTime = new List<DateTime>();
+                var currentLeave = emp.validDateStart ?? DateTime.Now.Date;
+                for (int i = carryOverYears; i > 0; i--)
+                {
+                    dt = new AnnualLeave();
+                    DateTime CarryDate = currentLeave.Date.AddYears(-i);
+                    var getCarry = _u.employeeRoleBasedRepository.GetFirst(b => b.IDV == IDV
+                                                                && b.validDateStop.Value.Date == CarryDate
+                                                                && inPolicyType.Contains(b.policyType));
+
+
+                    
+
+                    CarryDateTime.Add(currentLeave.Date.AddYears(-i));
+                    dt.ID = getCarry.ID;
+                    dt.isCarryOver = true;
+                    dt.policyType = getCarry.policyType;
+                    dt.roleBasedValue = getCarry.roleBasedValue;
+                    dt.balanceValue = getCarry.balanceValue;
+                    dt.currentValue = getCarry.currentValue;
+                    dt.validDateStart = getCarry.validDateStart.Value.Date;
+                    dt.validDateStop = getCarry.validDateStop.Value.Date;
+                    ms.Add(dt);
+                    // System.Diagnostics.Debug.WriteLine(i.ToString() + ':' + DateTime.Now.Date.AddYears(-i));
+                }
+
+                t.AnnualData = ms;
+                
+                //Temp
+                foreach (DateTime p in CarryDateTime)
+                {
+                    System.Diagnostics.Debug.WriteLine("CarryDateTime:" + p.ToString());
+                }
+
+
             }
 
-            
-            //Struct Current Leave
-            var px = emp;
-            AnnualLeave dt = new AnnualLeave();
 
-            t.IDV = IDV;
-                dt.ID = px.ID;
-                dt.isCarryOver = false;
-                dt.policyType = px.policyType;
-                dt.roleBasedValue = px.roleBasedValue;
-                dt.balanceValue = px.balanceValue;
-                dt.currentValue = px.currentValue;
-                dt.validDateStart = px.validDateStart;
-                dt.validDateStop = px.validDateStop;
-            ms.Add(dt);
+
+
+            
+            
 
 
             /*

@@ -21,6 +21,9 @@ namespace BusinessEntities.CrudEntities
     public class Annual
     {
         public int IDV { get; set; }
+        public int Years { get; set; }
+        public int IDVSuperior { get; set; }
+        public string SuperiorName { get; set; }
         public virtual ICollection<AnnualLeave> AnnualData { get; set; }
     }
 }

@@ -15,6 +15,7 @@ namespace BusinessEntities.CrudEntities
         public string IDVMAILPASSWORD { get; set; }
         public Nullable<int> IDVROLE { get; set; }
         public virtual person person { get; set; }
+        public int IDVSuperior { get; set; }
         public virtual ICollection<Token> Tokens { get; set; }
     }
 }
