@@ -104,6 +104,9 @@
     <Compile Include="Model\C_transaction.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\C__MigrationHistory.cs">
+      <DependentUpon>WebApiDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\dataFile.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
@@ -170,6 +173,9 @@
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\personLanguage.cs">
+      <DependentUpon>WebApiDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\personMap.cs">
       <DependentUpon>WebApiDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\personSkill.cs">

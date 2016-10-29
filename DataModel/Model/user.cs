@@ -25,7 +25,6 @@ namespace DataModel.Model
         public string IDVMAIL { get; set; }
         public string IDVMAILPASSWORD { get; set; }
         public Nullable<int> IDVROLE { get; set; }
-        public int IDVSuperior { get; set; }
     
         public virtual person person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

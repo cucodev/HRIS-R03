@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HRISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
         <EntityType Name="_purpose">
           <Key>
             <PropertyRef Name="purposeID" />
@@ -451,6 +461,14 @@
           <Property Name="createTime" Type="datetime" />
           <Property Name="updateTime" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.personMap' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="personMap">
+          <Key>
+            <PropertyRef Name="IDV" />
+          </Key>
+          <Property Name="IDV" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="personSkill">
           <Key>
             <PropertyRef Name="ID" />
@@ -565,7 +583,6 @@
           <Property Name="IDVMAIL" Type="varchar" MaxLength="200" />
           <Property Name="IDVMAILPASSWORD" Type="varchar" MaxLength="50" />
           <Property Name="IDVROLE" Type="int" />
-          <Property Name="IDVSuperior" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="catID_parentCategory">
           <End Role="categoryParent" Type="Self.categoryParent" Multiplicity="0..1" />
@@ -936,6 +953,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="HRISModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="_purpose" EntityType="Self._purpose" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="_transaction" EntityType="Self._transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -974,6 +992,11 @@
           <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personMap" EntityType="Self.personMap" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [personMap].[IDV] AS [IDV]
+    FROM [dbo].[personMap] AS [personMap]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="catID_parentCategory" Association="Self.catID_parentCategory">
             <End Role="categoryParent" EntitySet="categoryParent" />
             <End Role="category" EntitySet="category" />
@@ -1317,7 +1340,7 @@
           <NavigationProperty Name="personSkills" Relationship="Self.IDV_personSkill" FromRole="person" ToRole="personSkill" />
           <NavigationProperty Name="personTrainings" Relationship="Self.IDV_personTraining" FromRole="person" ToRole="personTraining" />
           <NavigationProperty Name="personWorkExperiences" Relationship="Self.IDV_personWorkExperience" FromRole="person" ToRole="personWorkExperience" />
-          <NavigationProperty Name="users" Relationship="Self.IDV_user" FromRole="person" ToRole="user" />
+          <NavigationProperty Name="users" Relationship="HRISModel.IDV_user" FromRole="person" ToRole="user" />
         </EntityType>
         <EntityType Name="personAddress">
           <Key>
@@ -1611,20 +1634,7 @@
           <Property Name="AuthToken" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IssuedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ExpiresOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="user" Relationship="Self.FK_Tokens_User" FromRole="Tokens" ToRole="user" />
-        </EntityType>
-        <EntityType Name="user">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IDV" Type="Int32" Nullable="false" />
-          <Property Name="IDVMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="IDVMAILPASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IDVROLE" Type="Int32" />
-          <NavigationProperty Name="person" Relationship="Self.IDV_user" FromRole="user" ToRole="person" />
-          <NavigationProperty Name="Tokens" Relationship="Self.FK_Tokens_User" FromRole="user" ToRole="Tokens" />
-          <Property Name="IDVSuperior" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="HRISModel.FK_Tokens_User" FromRole="Token" ToRole="user" />
         </EntityType>
         <Association Name="purposeType">
           <End Role="C_purpose" Type="Self.C_purpose" Multiplicity="0..1" />
@@ -1954,30 +1964,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="IDV_user">
-          <End Role="person" Type="Self.person" Multiplicity="1" />
-          <End Role="user" Type="Self.user" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="person">
-              <PropertyRef Name="IDV" />
-            </Principal>
-            <Dependent Role="user">
-              <PropertyRef Name="IDV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tokens_User">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="Tokens" Type="Self.Token" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Tokens">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -2014,7 +2000,6 @@
           <EntitySet Name="roleBaseds" EntityType="Self.roleBased" />
           <EntitySet Name="roleBasedMatrices" EntityType="Self.roleBasedMatrix" />
           <EntitySet Name="Tokens" EntityType="Self.Token" />
-          <EntitySet Name="users" EntityType="Self.user" />
           <AssociationSet Name="purposeType" Association="Self.purposeType">
             <End Role="C_purpose" EntitySet="C_purpose" />
             <End Role="C_transaction" EntitySet="C_transaction" />
@@ -2123,14 +2108,6 @@
             <End Role="person" EntitySet="people" />
             <End Role="personWorkExperience" EntitySet="personWorkExperiences" />
           </AssociationSet>
-          <AssociationSet Name="IDV_user" Association="Self.IDV_user">
-            <End Role="person" EntitySet="people" />
-            <End Role="user" EntitySet="users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tokens_User" Association="Self.FK_Tokens_User">
-            <End Role="user" EntitySet="users" />
-            <End Role="Tokens" EntitySet="Tokens" />
-          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -2140,6 +2117,17 @@
           <EntitySet Name="dataFiles" EntityType="HRISModel.dataFile" />
           <EntitySet Name="holidays" EntityType="HRISModel.holiday" />
           <EntitySet Name="settings" EntityType="HRISModel.setting" />
+          <EntitySet Name="C__MigrationHistory" EntityType="HRISModel.C__MigrationHistory" />
+          <EntitySet Name="users" EntityType="HRISModel.user" />
+          <EntitySet Name="personMaps" EntityType="HRISModel.personMap" />
+          <AssociationSet Name="IDV_user" Association="HRISModel.IDV_user">
+            <End Role="person" EntitySet="people" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tokens_User" Association="HRISModel.FK_Tokens_User">
+            <End Role="user" EntitySet="users" />
+            <End Role="Token" EntitySet="Tokens" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="dataLeave">
           <Key>
@@ -2228,6 +2216,58 @@
           <Property Name="vUpdatedBy" Type="Int32" Nullable="false" />
           <Property Name="updateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" Nullable="false" />
+          <Property Name="IDVMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IDVMAILPASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDVROLE" Type="Int32" />
+          <NavigationProperty Name="person" Relationship="HRISModel.IDV_user" FromRole="user" ToRole="person" />
+          <NavigationProperty Name="Tokens" Relationship="HRISModel.FK_Tokens_User" FromRole="user" ToRole="Token" />
+        </EntityType>
+        <EntityType Name="personMap">
+          <Key>
+            <PropertyRef Name="IDV" />
+          </Key>
+          <Property Name="IDV" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="IDV_user">
+          <End Type="HRISModel.person" Role="person" Multiplicity="1" />
+          <End Type="HRISModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="IDV" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tokens_User">
+          <End Type="HRISModel.user" Role="user" Multiplicity="1" />
+          <End Type="HRISModel.Token" Role="Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2719,18 +2759,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="HRISModel.user">
-              <MappingFragment StoreEntitySet="user">
-                <ScalarProperty Name="IDVSuperior" ColumnName="IDVSuperior" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="IDV" ColumnName="IDV" />
-                <ScalarProperty Name="IDVMAIL" ColumnName="IDVMAIL" />
-                <ScalarProperty Name="IDVMAILPASSWORD" ColumnName="IDVMAILPASSWORD" />
-                <ScalarProperty Name="IDVROLE" ColumnName="IDVROLE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="HRISModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
@@ -2828,6 +2856,34 @@
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="HRISModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="HRISModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="IDVROLE" ColumnName="IDVROLE" />
+                <ScalarProperty Name="IDVMAILPASSWORD" ColumnName="IDVMAILPASSWORD" />
+                <ScalarProperty Name="IDVMAIL" ColumnName="IDVMAIL" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personMaps">
+            <EntityTypeMapping TypeName="HRISModel.personMap">
+              <MappingFragment StoreEntitySet="personMap">
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -242,9 +242,9 @@ namespace BusinessServices.InterfaceMethod
             t.Years = carryOverYears;
 
             var sup = _u.userRepository.Get(b => b.IDV == IDV);
-            var supname = _u.personDetailRepository.Get(c => c.IDV == sup.IDVSuperior);
-            t.IDVSuperior = sup.IDVSuperior;
-            t.SuperiorName = supname.Name;
+            //var supname = _u.personDetailRepository.Get(c => c.IDV == sup.IDVSuperior);
+            //t.IDVSuperior = sup.IDVSuperior;
+            //t.SuperiorName = supname.Name;
 
 
 

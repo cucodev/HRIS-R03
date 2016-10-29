@@ -56,11 +56,13 @@ namespace DataModel.Model
         public virtual DbSet<roleBased> roleBaseds { get; set; }
         public virtual DbSet<roleBasedMatrix> roleBasedMatrices { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
-        public virtual DbSet<user> users { get; set; }
         public virtual DbSet<dataLeave> dataLeaves { get; set; }
         public virtual DbSet<dataMail> dataMails { get; set; }
         public virtual DbSet<dataFile> dataFiles { get; set; }
         public virtual DbSet<holiday> holidays { get; set; }
         public virtual DbSet<setting> settings { get; set; }
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<personMap> personMaps { get; set; }
     }
 }

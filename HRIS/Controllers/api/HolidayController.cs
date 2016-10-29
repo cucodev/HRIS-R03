@@ -24,21 +24,27 @@ namespace HRIS.Controllers.api
 
         // GET: api/holiday
         [System.Web.Http.HttpGet]
-        [System.Web.Http.ActionName("getHoliday")]
+        [System.Web.Http.ActionName("getAll")]
         [System.Web.Http.Route("api/holiday")]
-        public IEnumerable<holidayEntities> getHoliday()
+        public IEnumerable<holidayEntities> getAll()
         {
             return _pServices.getAll();
         }
 
         // POST api/holiday
-        public int Post([FromBody] holidayEntities hEntity)
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.ActionName("create")]
+        [System.Web.Http.Route("api/holiday")]
+        public int create(holidayEntities hEntity)
         {
             return _pServices.post(hEntity);
         }
 
         // PUT api/holiday/5
-        public bool Put(int id, holidayEntities hEntity)
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.ActionName("update")]
+        [System.Web.Http.Route("api/holiday")]
+        public bool update(int id, holidayEntities hEntity)
         {
             System.Diagnostics.Debug.WriteLine("apiConsole: holidayEntities", hEntity);
             if (id > 0)
@@ -49,7 +55,10 @@ namespace HRIS.Controllers.api
         }
 
         // DELETE api/holiday/5
-        public bool Delete(int id)
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.ActionName("delete")]
+        [System.Web.Http.Route("api/holiday")]
+        public bool delete(int id)
         {
             if (id > 0)
                 return _pServices.delete(id);

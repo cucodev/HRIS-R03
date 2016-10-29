@@ -102,7 +102,7 @@ namespace BusinessServices.InterfaceMethod
             return 0;
         }
 
-        public int put(int ID, holidayEntities holiday)
+        public bool put(int ID, holidayEntities holiday)
         {
             using (var scope = new TransactionScope())
             {
@@ -117,10 +117,10 @@ namespace BusinessServices.InterfaceMethod
                     _u.holidayRepository.Update(p);
                     _u.Save();
                     scope.Complete();
-                    return ID;
+                    return true;
                 }
             }
-            return 0;
+            return false;
         }
     }
 

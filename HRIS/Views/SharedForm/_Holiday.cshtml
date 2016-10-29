@@ -132,7 +132,12 @@
                                     <input type="text" id="holidayName" placeholder="Holiday Title" class="col-xs-10">
                                 </div>
                             </div>
-                            
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="holidayDescription"> Description </label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="holidayDescription" placeholder="Holiday Description" class="col-xs-10">
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="holidayDate"> Date </label>
                                 <div class="col-sm-9">
@@ -178,8 +183,6 @@
 <script type="text/javascript">
     var BulkData = [];
 
-    
-    /*
     var Holiday = {
         Init: function () {
             Holiday.Var();
@@ -208,8 +211,20 @@
                 Update: function () {
 
                 },
-                Add: function () {
-
+                Add: function (obj) {
+                    $.ajax({
+                        url: "/api/holiday",
+                        type: 'POST',
+                        contentType:
+                           "application/json;charset=utf-8",
+                        data: JSON.stringify(obj),
+                        success: function (result) {
+                            //alert("OK");
+                        },
+                        error: function (request, message, error) {
+                            handleException(request, message, error);
+                        }
+                    });
                 }
             },
             Calculate: {
@@ -231,7 +246,12 @@
             selectedID: {}
         },
         Modal: {
-            modalData: {},
+            modalData: {
+                Name: {},
+                Description: {},
+                dateBegin: {},
+                dateEnd: {}
+            },
             show: function () {
                 $("#myModal").modal("show", true);
             },
@@ -290,66 +310,57 @@
 
             }
         }
-
     }
-    */
+
+
     $(document).ready(function () {
     
         $('#test').click();
 
         //Holiday.Init();
 
-        //$("#addbtn").click(function () {
-          //  Holiday.Modal.show();
-        //});
+        $("#addbtn").click(function () {
+            Holiday.Modal.show();
+        });
+
+        $("#submit").click(function () {;
+            Holiday.Modal.modalData.Name = $("#holidayName").val();
+            Holiday.Modal.modalData.Description = $("#holidayDescription").val();
+            Holiday.Data.Method.Add(Holiday.Modal.modalData);
+        });
     });
 
-    
     $("#holidayDate").jqxDateTimeInput({
         theme: 'darkblue',
         //width: '100%',
         height: 35,
         selectionMode: 'range',
-        closeCalendarAfterSelection: false
     });
+
     $("#holidayDate").on('change', function (event) {
         var selection = $("#holidayDate").jqxDateTimeInput('getRange');
         if (selection.from != null) {
-            console.log(" : " + selection.to.toLocaleDateString());
-            //$("#selection").html("<div>From: " + selection.from.toLocaleDateString() + " <br/>To: " + selection.to.toLocaleDateString() + "</div>");
+            Holiday.Modal.modalData.dateBegin = selection.from.toLocaleDateString();
+            Holiday.Modal.modalData.dateEnd = selection.to.toLocaleDateString();
         }
     });
-
-    //var subgrid_data =
-    //[
-    // { id: "1", name: "sub grid item 1", qty: 11 },
-    // { id: "2", name: "sub grid item 2", qty: 3 },
-    // { id: "3", name: "sub grid item 3", qty: 12 },
-    // { id: "4", name: "sub grid item 4", qty: 5 },
-    // { id: "5", name: "sub grid item 5", qty: 2 },
-    // { id: "6", name: "sub grid item 6", qty: 9 },
-    // { id: "7", name: "sub grid item 7", qty: 3 },
-    // { id: "8", name: "sub grid item 8", qty: 8 }
-    //];
 
     jQuery(function ($) {
         var grid_selector = "#grid-table";
         var pager_selector = "#grid-pager";
 
-
-        var parent_column = $(grid_selector).closest('[class*="col-"]');
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {
-            $(grid_selector).jqGrid('setGridWidth', parent_column.width());
+            $(grid_selector).jqGrid('setGridWidth', $(".page-content").width());
         })
-
         //resize on sidebar collapse/expand
+        var parent_column = $(grid_selector).closest('[class*="col-"]');
         $(document).on('settings.ace.jqGrid', function (ev, event_name, collapsed) {
             if (event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
                 //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
                 setTimeout(function () {
                     $(grid_selector).jqGrid('setGridWidth', parent_column.width());
-                }, 20);
+                }, 0);
             }
         })
 
@@ -368,37 +379,7 @@
         })
         */
 
-
         jQuery(grid_selector).jqGrid({
-            //direction: "rtl",
-
-            //subgrid options
-            //subGrid: true,
-            //subGridModel: [{ name : ['No','Item Name','Qty'], width : [55,200,80] }],
-            //datatype: "xml",
-            //subGridOptions: {
-            //    plusicon: "ace-icon fa fa-plus center bigger-110 blue",
-            //    minusicon: "ace-icon fa fa-minus center bigger-110 blue",
-            //    openicon: "ace-icon fa fa-chevron-right center orange"
-            //},
-            //for this example we are using local data
-            //subGridRowExpanded: function (subgridDivId, rowId) {
-            //    var subgridTableId = subgridDivId + "_t";
-            //    $("#" + subgridDivId).html("<table id='" + subgridTableId + "'></table>");
-            //    $("#" + subgridTableId).jqGrid({
-            //        datatype: 'local',
-            //       data: subgrid_data,
-            //        colNames: ['No', 'Item Name', 'Qty'],
-            //        colModel: [
-            //            { name: 'id', width: 50 },
-            //            { name: 'name', width: 150 },
-            //            { name: 'qty', width: 50 }
-            //        ]
-            //    });
-            //},
-
-
-
             url: "/api/holiday",
             datatype: 'json',
             mtype: 'GET',
@@ -446,8 +427,8 @@
                 }, 0);
             },
 
-            editurl: "./dummy.php",//nothing is saved
-            caption: "List Of Holiday"
+            editurl: "/dummy.html",//nothing is saved
+            caption: "list Holiday"
 
             //,autowidth: true,
 
@@ -486,7 +467,7 @@
         function pickDate(cellvalue, options, cell) {
             setTimeout(function () {
                 $(cell).find('input[type=text]')
-                    .datepicker({ format: 'yyyy-mm-dd', autoclose: true });
+                        .datepicker({ format: 'yyyy-mm-dd', autoclose: true });
             }, 0);
         }
 
@@ -508,7 +489,7 @@
                 viewicon: 'ace-icon fa fa-search-plus grey',
             },
             {
-                //edit record form
+                //edit record form 
                 //closeAfterEdit: true,
                 //width: 700,
                 recreateForm: true,
@@ -698,9 +679,9 @@
         //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
 
         $(document).one('ajaxloadstart.page', function (e) {
-            $.jgrid.gridDestroy(grid_selector);
+            $(grid_selector).jqGrid('GridUnload');
+
             $('.ui-jqdialog').remove();
         });
     });
-
 </script>
